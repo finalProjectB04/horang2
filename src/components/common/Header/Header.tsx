@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <header className="bg-gray-800 text-white py-6">
       {/* 헤더 컨테이너 */}
-      <div className="container mx-auto max-w-screen-2xl flex items-center px-4">
+      <div className="container mx-auto max-w-[1440px] flex items-center px-4">
         {/* 로고와 네비게이션을 포함하는 컨테이너 (왼쪽에 로고, 오른쪽에 네비게이션 및 버튼) */}
         <div className="flex-grow flex items-center">
           {/* 로고 (왼쪽에 배치) */}
