@@ -1,6 +1,8 @@
-import { useTouristSpots } from "@/axios/location";
+import { useTouristSpots } from "@/hooks/useTouristSpots";
 import { useLocationStore } from "@/zustand/locationStore";
 import { useEffect, useRef } from "react";
+
+const KAKAO_MAP_API = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
 
 const MapComponent: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -9,7 +11,7 @@ const MapComponent: React.FC = () => {
 
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_API_KEY&autoload=false`;
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_API}&autoload=false&libraries=services`;
     script.onload = () => {
       if (window.kakao && mapContainer.current) {
         const kakao = window.kakao;
@@ -17,7 +19,7 @@ const MapComponent: React.FC = () => {
         kakao.maps.load(() => {
           const mapOptions = {
             center: new kakao.maps.LatLng(latitude, longitude),
-            level: 5,
+            level: 3,
           };
 
           const map = new kakao.maps.Map(mapContainer.current, mapOptions);

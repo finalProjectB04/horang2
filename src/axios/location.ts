@@ -1,29 +1,28 @@
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const API_URL = "http://apis.data.go.kr/B551011/KorService/locationBasedList";
-const SERVICE_KEY = "YOUR_SERVICE_KEY";
+export default async function handler(req, res) {
+  const { latitude, longitude } = req.query;
 
-const fetchTouristSpots = async (latitude: number, longitude: number) => {
-  const response = await axios.get(API_URL, {
-    params: {
-      ServiceKey: SERVICE_KEY,
-      mapX: longitude,
-      mapY: latitude,
-      radius: 1000,
-      MobileOS: "ETC",
-      MobileApp: "AppTest",
-      _type: "json",
-    },
-  });
+  if (!latitude || !longitude || latitude === "0" || longitude === "0") {
+    return res.status(400).json({ error: "Invalid coordinates" });
+  }
 
-  console.log("Response data:", response.data);
-  return response.data.response.body.items.item;
-};
+  try {
+    const response = await axios.get(process.env.NEXT_PUBLIC_KOREA_API_URL, {
+      params: {
+        ServiceKey: process.env.NEXT_PUBLIC_KOREA_SERVICE_KEY,
+        mapX: longitude,
+        mapY: latitude,
+        radius: 1000,
+        MobileOS: "ETC",
+        MobileApp: "AppTest",
+        _type: "json",
+      },
+    });
 
-export const useTouristSpots = (latitude: number, longitude: number) => {
-  return useQuery({
-    queryKey: ["touristSpots", latitude, longitude],
-    queryFn: () => fetchTouristSpots(latitude, longitude),
-  });
-};
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error("Error fetching data from API:", error);
+    res.status(500).json({ error: "Failed to fetch data" });
+  }
+}

@@ -8,10 +8,16 @@ const LocationPage = () => {
   const { setLocation } = useLocationStore();
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
-      setLocation(latitude, longitude);
-    });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setLocation(latitude, longitude);
+      },
+      (error) => {
+        console.error("error getting user location: ", error);
+        setLocation(37.5665, 126.978);
+      },
+    );
   }, [setLocation]);
 
   return (
