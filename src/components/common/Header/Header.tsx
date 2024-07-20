@@ -35,7 +35,7 @@ const Header = () => {
             <Link href="/custom-itinerary">
               <span className="hover:text-gray-400 cursor-pointer">내 취향 코스 짜기</span>
             </Link>
-            <Link href="/profile">
+            <Link href="/mypage">
               <span className="hover:text-gray-400 cursor-pointer">마이페이지</span>
             </Link>
           </nav>
