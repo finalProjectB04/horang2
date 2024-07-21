@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
+import { createClient, Session } from "@supabase/supabase-js";
 import Link from "next/link";
 import KakaoLoginButton from "@/components/common/kakaoLogin/KakaoLoginButton";
 
@@ -13,6 +13,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState(""); // 이메일 상태
   const [password, setPassword] = useState(""); // 비밀번호 상태
   const [error, setError] = useState(""); // 에러 메시지 상태
+  const [session, setSession] = useState<Session | null>(null); // 세션 상태
   const router = useRouter(); // 라우터 훅
 
   // 로그인 처리 함수
@@ -28,7 +29,11 @@ const LoginPage = () => {
       return;
     }
 
-    if (data && data.user) {
+    if (data && data.session) {
+      // 로그인 성공 시 세션 정보를 로컬 스토리지에 저장
+      localStorage.setItem("supabaseSession", JSON.stringify(data.session));
+      localStorage.setItem("loginSuccess", "true"); // 로그인 성공 플래그 저장
+      setSession(data.session); // 세션 상태 업데이트
       router.push("/"); // 로그인 성공 후 홈 페이지로 리디렉션
     }
   };

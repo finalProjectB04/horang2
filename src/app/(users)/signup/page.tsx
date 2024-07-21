@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import Image from "next/image";
-import SelectArea from "@/components/SignupPage/SelectArea";
+import SelectArea from "@/components/signuppage/selectarea";
 import KakaoLoginButton from "@/components/common/kakaoLogin/KakaoLoginButton";
 
 // Supabase 클라이언트 초기화
@@ -54,7 +54,7 @@ const SignUpPage = () => {
     }
 
     // 회원가입 요청
-    const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({ email, password });
 
     if (signUpError) {
       setError(`회원가입 실패: ${signUpError.message}`);
@@ -62,11 +62,11 @@ const SignUpPage = () => {
       return;
     }
 
-    if (data && data.user) {
+    if (signUpData && signUpData.user) {
       let profileImagePath = "";
 
       if (profileImage) {
-        const filePath = `${data.user.id}`;
+        const filePath = `${signUpData.user.id}`;
 
         // 이미지 업로드
         const { error: uploadError } = await supabase.storage.from("profiles").upload(filePath, profileImage);
@@ -87,7 +87,7 @@ const SignUpPage = () => {
       // 사용자 정보 저장
       const { error: insertError } = await supabase.from("Users").insert([
         {
-          id: data.user.id,
+          id: signUpData.user.id,
           created_at: new Date().toISOString(),
           user_nickname: nickname,
           profile_url: profileImagePath || DEFAULT_PROFILE_IMAGE_URL, // 기본 이미지 URL을 사용
@@ -102,7 +102,8 @@ const SignUpPage = () => {
         return;
       }
 
-      router.push("/login");
+      // 회원가입 후 로그인 페이지로 리디렉션
+      router.push("/signin");
     }
   };
 
@@ -209,7 +210,7 @@ const SignUpPage = () => {
 
           <div className="text-center mt-4">
             <p className="text-gray-500">이미 계정이 있으신가요?</p>
-            <Link href="/login" className="text-blue-500">
+            <Link href="/signin" className="text-blue-500">
               로그인하기
             </Link>
           </div>
