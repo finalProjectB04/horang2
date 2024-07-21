@@ -1,9 +1,37 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import Image from "next/image";
 
+// Supabase 클라이언트 초기화
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+
 const Header = () => {
+  const [session, setSession] = useState<any>(null);
+  const router = useRouter();
+
+  // 로그인 상태 확인
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setSession(data.session);
+    };
+
+    checkSession();
+    // 로그인 상태를 체크하고 세션이 바뀔 때 업데이트
+    supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session);
+    });
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push("/login"); // 로그아웃 후 로그인 페이지로 리디렉션
+  };
+
   return (
     <header className="bg-gray-800 text-white py-6">
       {/* 헤더 컨테이너 */}
@@ -43,16 +71,27 @@ const Header = () => {
 
         {/* 로그인 및 회원가입 버튼 (오른쪽에 배치) */}
         <div className="flex-shrink-0 flex space-x-4 ml-4">
-          <Link href="/login">
-            <span className="bg-[#222222] text-[#FF912B] border border-[#FF912B] px-4 py-2 rounded hover:bg-[#333333] cursor-pointer">
-              로그인
+          {session ? (
+            <span
+              onClick={handleLogout}
+              className="bg-[#222222] text-[#FF912B] border border-[#FF912B] px-4 py-2 rounded hover:bg-[#333333] cursor-pointer"
+            >
+              로그아웃
             </span>
-          </Link>
-          <Link href="/signup">
-            <span className="bg-[#FF912B] text-[#222222] border border-[#FF912B] px-4 py-2 rounded hover:bg-[#FFAB80] cursor-pointer">
-              회원가입
-            </span>
-          </Link>
+          ) : (
+            <>
+              <Link href="/login">
+                <span className="bg-[#222222] text-[#FF912B] border border-[#FF912B] px-4 py-2 rounded hover:bg-[#333333] cursor-pointer">
+                  로그인
+                </span>
+              </Link>
+              <Link href="/signup">
+                <span className="bg-[#FF912B] text-[#222222] border border-[#FF912B] px-4 py-2 rounded hover:bg-[#FFAB80] cursor-pointer">
+                  회원가입
+                </span>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
