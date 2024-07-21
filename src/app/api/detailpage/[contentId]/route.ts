@@ -37,10 +37,10 @@
 import { ContentItem } from "@/types/ContentItem.type";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
-const getContentId = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { contentId } = req.query;
-
+export const GET = async (request: NextApiRequest, response: NextApiResponse) => {
+  const id = response.params.contentId; // 이 경로로 값을 내려받는데 왜 오류나는지 모르겠음.
   try {
     const response = await axios.get("http://apis.data.go.kr/B551011/KorService1/detailCommon1", {
       params: {
@@ -49,7 +49,7 @@ const getContentId = async (req: NextApiRequest, res: NextApiResponse) => {
         pageNo: 1,
         MobileOS: "ETC",
         MobileApp: "AppTest",
-        contentId: contentId,
+        contentId: id,
         firstImageYN: "Y",
         areacodeYN: "Y",
         catcodeYN: "Y",
@@ -61,16 +61,27 @@ const getContentId = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
 
-    if (response.data && response.data.response.body.items.item.length > 0) {
+    if (response.data) {
       const data: ContentItem = response.data.response.body.items.item[0];
-      res.status(200).json(data);
+
+      return NextResponse.json({ data });
     } else {
-      res.status(404).json({ message: "No data found" });
+      return NextResponse.json({ messasge: "데이타가 없습니다" });
     }
   } catch (error) {
     console.error("Error fetching data:", error);
-    res.status(500).json({ message: "Error fetching data" });
+    return NextResponse.json({ message: "데이터 펫칭 실패" });
   }
 };
 
-export default getContentId;
+// if (response.data) {
+//   const data: ContentItem = response.data.response.body.items.item[0];
+
+//   return NextResponse.json({ data });
+// } else {
+//   return NextResponse.json({ messasge: "데이타가 없습니다" });
+// }
+// } catch (error) {
+// console.error("Error fetching data:", error);
+// return NextResponse.json({ message: "데이터 펫칭 실패" });
+// }
