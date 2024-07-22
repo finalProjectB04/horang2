@@ -55,12 +55,9 @@ const DetailPage = () => {
   return (
     <main className="max-w-[1440px] mx-auto grid justify-items-center">
       <section>
-        <Image
-          src={contentItemData.data.firstimage} //에러는 나는데 데이터는불러온다..이상하다
-          alt="First Image"
-          width={720}
-          height={350}
-        />
+        {contentItemData.data.firstimage && (
+          <Image src={contentItemData.data.firstimage} alt="First Image" width={720} height={350} />
+        )}
       </section>
       <section className="flex justify-between items-center w-full max-w-[720px] mt-4">
         <div className="text-left">
