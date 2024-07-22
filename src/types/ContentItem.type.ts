@@ -113,7 +113,7 @@
 //   overview?: string;
 // }
 
-export interface ContentItem {
+export type ContentItem = {
   data: {
     addr1?: string;
     addr2?: string;
@@ -157,4 +157,4 @@ export interface ContentItem {
       totalCount: number;
     };
   };
-}
+};

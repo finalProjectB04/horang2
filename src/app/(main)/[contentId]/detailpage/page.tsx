@@ -56,7 +56,7 @@ const DetailPage = () => {
     <main className="max-w-[1440px] mx-auto grid justify-items-center">
       <section>
         {contentItemData.data.firstimage && (
-          <Image src={contentItemData.data.firstimage} alt="First Image" width={720} height={350} />
+          <Image src={contentItemData.data.firstimage} alt="First Image" width={720} height={350} priority />
         )}
       </section>
       <section className="flex justify-between items-center w-full max-w-[720px] mt-4">
@@ -96,7 +96,7 @@ const DetailPage = () => {
                 <p>{contentItemData.data.overview.substring(0, 100)}...</p>
               )}
             </div>
-            {contentItemData.data.overview.length > 200 && (
+            {contentItemData.data.overview.length > 100 && (
               <div className="flex justify-center mt-2">
                 <button onClick={handleShowMore} className="px-4 py-2 bg-slate-200 text-gray-950 rounded">
                   {showMore ? "접기" : "더보기"}

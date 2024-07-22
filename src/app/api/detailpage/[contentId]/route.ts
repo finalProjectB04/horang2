@@ -44,7 +44,7 @@ export const GET = async (request: NextApiRequest, response: NextApiResponse) =>
   try {
     const response = await axios.get("http://apis.data.go.kr/B551011/KorService1/detailCommon1", {
       params: {
-        serviceKey: process.env.NEXT_PUBLIC_MY_API_KEY,
+        serviceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
         numOfRows: 1,
         pageNo: 1,
         MobileOS: "ETC",
