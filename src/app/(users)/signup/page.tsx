@@ -12,7 +12,7 @@ import KakaoLoginButton from "@/components/common/kakaoLogin/KakaoLoginButton";
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
 
 // 기본 프로필 이미지 URL
-const DEFAULT_PROFILE_IMAGE_URL = "/assets/images/default-profile.png";
+const DEFAULT_PROFILE_IMAGE_URL = "/assets/images/profile_ex.png";
 
 const SignUpPage = () => {
   const [email, setEmail] = useState(""); // 이메일 상태
