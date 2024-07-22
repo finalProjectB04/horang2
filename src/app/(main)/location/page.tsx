@@ -8,16 +8,24 @@ const LocationPage = () => {
   const { setLocation } = useLocationStore();
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setLocation(latitude, longitude);
-      },
-      (error) => {
-        console.error("error getting user location: ", error);
-        setLocation(37.5665, 126.978);
-      },
-    );
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation(latitude, longitude);
+        },
+        (error) => {
+          console.error(`Geolocation error: ${error.message}`);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
+        },
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
   }, [setLocation]);
 
   return (
