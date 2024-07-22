@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import Image from "next/image";
-import SelectArea from "@/components/signuppage/selectarea";
 import KakaoLoginButton from "@/components/common/kakaoLogin/KakaoLoginButton";
 
 // Supabase 클라이언트 초기화
@@ -14,12 +13,16 @@ const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env
 // 기본 프로필 이미지 URL
 const DEFAULT_PROFILE_IMAGE_URL = "/assets/images/profile_ex.png";
 
+// 이메일 유효성 검사 함수
+const validateEmail = (email: string) => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+};
+
 const SignUpPage = () => {
   const [email, setEmail] = useState(""); // 이메일 상태
   const [password, setPassword] = useState(""); // 비밀번호 상태
   const [confirmPassword, setConfirmPassword] = useState(""); // 비밀번호 확인 상태
-  const [area, setArea] = useState(""); // 지역 상태
-  const [subArea, setSubArea] = useState(""); // 하위 지역 상태
   const [error, setError] = useState(""); // 에러 메시지 상태
   const [nickname, setNickname] = useState(""); // 닉네임 상태
   const [profileImage, setProfileImage] = useState<File | null>(null); // 프로필 이미지 상태
@@ -48,6 +51,23 @@ const SignUpPage = () => {
 
   // 회원가입 처리 함수
   const handleSignUp = async () => {
+    // 유효성 검사
+    if (!nickname) {
+      setError("닉네임을 입력해 주세요.");
+      return;
+    }
+    if (!email) {
+      setError("이메일을 입력해 주세요.");
+      return;
+    }
+    if (!validateEmail(email)) {
+      setError("유효한 이메일 주소를 입력해 주세요.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("비밀번호는 6자 이상이어야 합니다.");
+      return;
+    }
     if (password !== confirmPassword) {
       setError("비밀번호가 일치하지 않습니다.");
       return;
@@ -82,8 +102,6 @@ const SignUpPage = () => {
         profileImagePath = urlData?.publicUrl || "";
       }
 
-      const formattedAddress = `${area.trim()} ${subArea.trim()}`;
-
       // 사용자 정보 저장
       const { error: insertError } = await supabase.from("Users").insert([
         {
@@ -92,7 +110,6 @@ const SignUpPage = () => {
           user_nickname: nickname,
           profile_url: profileImagePath || DEFAULT_PROFILE_IMAGE_URL, // 기본 이미지 URL을 사용
           user_email: email,
-          user_address: formattedAddress,
         },
       ]);
 
@@ -183,11 +200,6 @@ const SignUpPage = () => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
-          </div>
-
-          <div>
-            <p className="text-sm mb-3 font-medium text-gray-500 text-center">거주지를 선택해 주세요!</p>
-            <SelectArea area={area} subArea={subArea} setArea={setArea} setSubArea={setSubArea} />
           </div>
 
           <button

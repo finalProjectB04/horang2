@@ -1,4 +1,3 @@
-// lib/supabaseUtils.ts
 import { supabase } from "@/components/common/contexts/supabase.context";
 
 export interface User {
