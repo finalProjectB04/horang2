@@ -6,6 +6,13 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
+const parseHTMLString = (htmlString: string): string | null => {
+  //홈페이지 링크 때문에 추가된 파트
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, "text/html");
+  const anchor = doc.querySelector("a");
+  return anchor ? anchor.href : null;
+};
 const DetailPage = () => {
   const params = useParams();
   let contentId = params.contentId;
@@ -52,6 +59,9 @@ const DetailPage = () => {
   }
   console.log("🚀 ~ DetailPage ~ contentItemData:", contentItemData);
 
+  const homepageLink = contentItemData.data.homepage ? parseHTMLString(contentItemData.data.homepage) : null;
+  //홈페이지 링크 때문에 추가된 파트
+  //homepage 호출값이 있으면 parseHTMLString 함수를 호출하고 그렇지 않으면 안쓰게 해서 에러안나게 처리
   return (
     <main className="max-w-[1440px] mx-auto grid justify-items-center">
       <section>
@@ -80,8 +90,12 @@ const DetailPage = () => {
             <strong>tel:</strong> {contentItemData.data.tel}
           </div>
           <div>
-            <strong>homepage:</strong>
-            {contentItemData.data.homepage && <p>{contentItemData.data.homepage}</p>}
+            <strong>homepage: </strong>
+            {homepageLink && (
+              <a href={homepageLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                {homepageLink}
+              </a>
+            )}
           </div>
         </div>
       </section>
