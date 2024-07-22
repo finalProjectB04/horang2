@@ -6,7 +6,7 @@ export const getStayList = async () => {
   try {
     const response = await axios.get("https://apis.data.go.kr/B551011/KorService1/searchStay1", {
       params: {
-        serviceKey: process.env.NEXT_PUBLIC_MY_API_KEY,
+        serviceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
         numOfRows: 20, //한 페이지에 표기할 아이템의 갯수
         pageNo: 5, //페이지 갯수
         MobileOS: "ETC",
@@ -30,7 +30,7 @@ export const getRestaurantList = async () => {
   try {
     const response = await axios.get("http://apis.data.go.kr/B551011/KorService1/areaBasedList1", {
       params: {
-        serviceKey: process.env.NEXT_PUBLIC_MY_API_KEY,
+        serviceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
         numOfRows: 20, //한 페이지에 표기할 아이템의 갯수
         pageNo: 5, //페이지 갯수
         MobileApp: "AppTest",
@@ -42,8 +42,12 @@ export const getRestaurantList = async () => {
         _type: "json",
       },
     });
-    console.log(response.data);
-    return response.data;
+    // if (response.data.response.body.items.item.length > 0) {
+    //   return response.data.response.body.items.item[0] as ContentItem;
+    // }
+    if (response.data.response.body.items.item.length > 0) {
+      return response.data.response.body.items.item as ContentItem[];
+    }
   } catch (error) {
     console.error("Error fetching data:", error);
     return null;
@@ -56,7 +60,7 @@ export const getReportsList = async () => {
   try {
     const response = await axios.get("https://apis.data.go.kr/B551011/KorService1/areaBasedList1", {
       params: {
-        serviceKey: process.env.NEXT_PUBLIC_MY_API_KEY,
+        serviceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
         contentTypeId: 28,
         numOfRows: 20, //한 페이지에 표기할 아이템의 갯수
         pageNo: 5, //페이지 갯수
@@ -81,7 +85,7 @@ export const getFestivalList = async () => {
   try {
     const response = await axios.get("https://apis.data.go.kr/B551011/KorService1/areaBasedList1", {
       params: {
-        serviceKey: process.env.NEXT_PUBLIC_MY_API_KEY,
+        serviceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
         contentTypeId: 15,
         numOfRows: 20,
         pageNo: 5,
