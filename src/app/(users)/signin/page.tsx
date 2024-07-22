@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient, Session } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
-import KakaoLoginButton from "@/components/common/kakaoLogin/KakaoLoginButton";
+import KakaoLoginButton from "@/components/common/loginbutton/kakaologin/KakaoLoginButton";
+import GoogleLoginButton from "@/components/common/loginbutton/googleLoginbutton";
+import { useQueryClient } from "@tanstack/react-query";
 
 // Supabase 클라이언트 초기화
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
@@ -13,8 +15,8 @@ const LoginPage = () => {
   const [email, setEmail] = useState(""); // 이메일 상태
   const [password, setPassword] = useState(""); // 비밀번호 상태
   const [error, setError] = useState(""); // 에러 메시지 상태
-  const [session, setSession] = useState<Session | null>(null); // 세션 상태
   const router = useRouter(); // 라우터 훅
+  const queryClient = useQueryClient(); // React Query 클라이언트
 
   // 로그인 처리 함수
   const handleLogin = async () => {
@@ -32,8 +34,13 @@ const LoginPage = () => {
     if (data && data.session) {
       // 로그인 성공 시 세션 정보를 로컬 스토리지에 저장
       localStorage.setItem("supabaseSession", JSON.stringify(data.session));
-      localStorage.setItem("loginSuccess", "true"); // 로그인 성공 플래그 저장
-      setSession(data.session); // 세션 상태 업데이트
+
+      // 세션 쿼리 무효화
+      queryClient.invalidateQueries({
+        queryKey: ["session"],
+        exact: true,
+      });
+
       router.push("/"); // 로그인 성공 후 홈 페이지로 리디렉션
     }
   };
@@ -89,7 +96,7 @@ const LoginPage = () => {
 
           <div className="flex flex-col space-y-4 mt-4">
             <KakaoLoginButton />
-            <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">구글 로그인</button>
+            <GoogleLoginButton />
           </div>
 
           <div className="text-center mt-4">
