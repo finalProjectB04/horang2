@@ -1,3 +1,4 @@
+import Addvertisement from "@/components/mypage/Addvertisement";
 import Community from "@/components/mypage/Community";
 import Profile from "@/components/mypage/Profile";
 import WishList from "@/components/mypage/WishList";
@@ -9,6 +10,7 @@ const myPage: React.FC = () => {
       <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 gap-4">
         <Profile />
         <WishList />
+        <Addvertisement />
         <Community />
       </div>
     </main>

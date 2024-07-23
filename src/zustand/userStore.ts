@@ -1,4 +1,3 @@
-// zustand/userStore.ts
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
@@ -7,8 +6,7 @@ type UserState = {
   user_email: string | null;
   user_nickname: string | null;
   profile_url: string | null;
-  user_address: string | null;
-  setUser: (id: string, user_email: string, user_nickname: string, profile_url: string, user_address: string) => void;
+  setUser: (id: string, user_email: string, user_nickname: string, profile_url: string) => void;
   clearUser: () => void;
 };
 
@@ -20,14 +18,11 @@ export const useUserStore = create<UserState>()(
         user_email: null,
         user_nickname: null,
         profile_url: null,
-        user_address: null,
-        setUser: (id, user_email, user_nickname, profile_url, user_address) =>
-          set({ id, user_email, user_nickname, profile_url, user_address }),
-        clearUser: () =>
-          set({ id: null, user_email: null, user_nickname: null, profile_url: null, user_address: null }),
+        setUser: (id, user_email, user_nickname, profile_url) => set({ id, user_email, user_nickname, profile_url }),
+        clearUser: () => set({ id: null, user_email: null, user_nickname: null, profile_url: null }),
       }),
       {
-        name: "user-storage",
+        name: "user-storage", // key 이름
       },
     ),
   ),
