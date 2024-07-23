@@ -15,7 +15,7 @@ const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
       const { Kakao } = window;
 
       if (!Kakao.isInitialized()) {
-        Kakao.init(process.env.NEXT_PUBLIC_Kakao_JS_SDK_KEY);
+        Kakao.init(process.env.NEXT_PUBLIC_KaKao_JS_SDK_KEY);
       }
     }
   }, []);

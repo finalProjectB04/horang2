@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import KakaoShareButton from "./_components/KakaoShareButton";
+import LinkUrlButton from "./_components/LinkUrlButton";
 
 const parseHTMLString = (htmlString: string): string | null => {
   //홈페이지 링크 때문에 추가된 파트
@@ -75,6 +76,7 @@ const DetailPage = () => {
           <div className="text-4xl font-bold">{contentItemData.data.title}</div>
         </div>
         <div className="flex space-x-2">
+          <LinkUrlButton />
           <KakaoShareButton id={contentId} />
           <button className="px-4 py-2 bg-slate-200 text-gray-950 rounded">좋아요</button>
         </div>

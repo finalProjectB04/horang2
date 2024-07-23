@@ -24,11 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script
-          src="https://developers.kakao.com/sdk/js/kakao.js"
-          strategy="beforeInteractive"
-          integrity="${sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4}"
-        />
+        <Script src="https://developers.kakao.com/sdk/js/kakao.js" strategy="beforeInteractive" />
       </head>
       <body className={inter.className}>
         <QueryProvider>{children}</QueryProvider>
