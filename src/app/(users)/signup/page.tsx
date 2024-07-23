@@ -5,26 +5,32 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import Image from "next/image";
-import SelectArea from "@/components/signuppage/selectarea";
-import KakaoLoginButton from "@/components/common/kakaoLogin/KakaoLoginButton";
+import KakaoLoginButton from "@/components/common/loginbutton/kakaologin/KakaoLoginButton";
+import GoogleLoginButton from "@/components/common/loginbutton/googleLoginbutton/GoogleLoginButton";
+import { useQueryClient } from "@tanstack/react-query";
 
 // Supabase 클라이언트 초기화
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
 
 // 기본 프로필 이미지 URL
-const DEFAULT_PROFILE_IMAGE_URL = "/assets/images/default-profile.png";
+const DEFAULT_PROFILE_IMAGE_URL = "/assets/images/profile_ex.png";
+
+// 이메일 유효성 검사 함수
+const validateEmail = (email: string) => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+};
 
 const SignUpPage = () => {
   const [email, setEmail] = useState(""); // 이메일 상태
   const [password, setPassword] = useState(""); // 비밀번호 상태
   const [confirmPassword, setConfirmPassword] = useState(""); // 비밀번호 확인 상태
-  const [area, setArea] = useState(""); // 지역 상태
-  const [subArea, setSubArea] = useState(""); // 하위 지역 상태
   const [error, setError] = useState(""); // 에러 메시지 상태
   const [nickname, setNickname] = useState(""); // 닉네임 상태
   const [profileImage, setProfileImage] = useState<File | null>(null); // 프로필 이미지 상태
   const [profileImageUrl, setProfileImageUrl] = useState(DEFAULT_PROFILE_IMAGE_URL); // 프로필 이미지 URL 상태
   const router = useRouter(); // 라우터 훅
+  const queryClient = useQueryClient(); // React Query 클라이언트
 
   // 프로필 이미지 클릭 핸들러
   const handleImageClick = () => {
@@ -48,6 +54,23 @@ const SignUpPage = () => {
 
   // 회원가입 처리 함수
   const handleSignUp = async () => {
+    // 유효성 검사
+    if (!nickname) {
+      setError("닉네임을 입력해 주세요.");
+      return;
+    }
+    if (!email) {
+      setError("이메일을 입력해 주세요.");
+      return;
+    }
+    if (!validateEmail(email)) {
+      setError("유효한 이메일 주소를 입력해 주세요.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("비밀번호는 6자 이상이어야 합니다.");
+      return;
+    }
     if (password !== confirmPassword) {
       setError("비밀번호가 일치하지 않습니다.");
       return;
@@ -82,8 +105,6 @@ const SignUpPage = () => {
         profileImagePath = urlData?.publicUrl || "";
       }
 
-      const formattedAddress = `${area.trim()} ${subArea.trim()}`;
-
       // 사용자 정보 저장
       const { error: insertError } = await supabase.from("Users").insert([
         {
@@ -92,7 +113,6 @@ const SignUpPage = () => {
           user_nickname: nickname,
           profile_url: profileImagePath || DEFAULT_PROFILE_IMAGE_URL, // 기본 이미지 URL을 사용
           user_email: email,
-          user_address: formattedAddress,
         },
       ]);
 
@@ -102,8 +122,28 @@ const SignUpPage = () => {
         return;
       }
 
-      // 회원가입 후 로그인 페이지로 리디렉션
-      router.push("/signin");
+      // 자동 로그인
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (signInError) {
+        setError(`자동 로그인 실패: ${signInError.message}`);
+        console.error("자동 로그인 실패:", signInError);
+        return;
+      }
+
+      // 로그인 후 로컬 스토리지에 세션 정보 저장
+      if (signInData.session) {
+        localStorage.setItem("supabaseSession", JSON.stringify(signInData.session));
+      }
+
+      // 세션 쿼리 무효화
+      queryClient.invalidateQueries({
+        queryKey: ["session"],
+        exact: true,
+      });
+
+      // 홈 페이지로 리디렉션
+      router.push("/");
     }
   };
 
@@ -185,18 +225,12 @@ const SignUpPage = () => {
             />
           </div>
 
-          <div>
-            <p className="text-sm mb-3 font-medium text-gray-500 text-center">거주지를 선택해 주세요!</p>
-            <SelectArea area={area} subArea={subArea} setArea={setArea} setSubArea={setSubArea} />
-          </div>
-
           <button
             onClick={handleSignUp}
             className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
           >
             회원가입
           </button>
-
           <div className="flex items-center justify-between mt-4">
             <div className="flex-1 border-t border-gray-300"></div>
             <span className="text-gray-500 mx-4">OR</span>
@@ -205,9 +239,8 @@ const SignUpPage = () => {
 
           <div className="flex flex-col space-y-4 mt-4">
             <KakaoLoginButton />
-            <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">구글 로그인</button>
+            <GoogleLoginButton />
           </div>
-
           <div className="text-center mt-4">
             <p className="text-gray-500">이미 계정이 있으신가요?</p>
             <Link href="/signin" className="text-blue-500">
