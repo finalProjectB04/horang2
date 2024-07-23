@@ -53,9 +53,9 @@ const Profile: React.FC = () => {
       <div className="relative cursor-pointer" onClick={handleGoMap}>
         <div className="w-[600px] h-[200px] relative">
           <ProfileCarousel />
-          <div className="absolute top-1 left-4 p-5 text-white font-extrabold text-3xl pt-10 z-10">
+          <div className="absolute top-1 left-4 p-5 text-white font-extrabold text-3xl pt-10 z-10 text-stroke-1 text-stroke-gray-900">
             <p className="text-start mb-5">이런 여행지는 어떠신가요</p>
-            <p>
+            <p className="">
               주변 여행지 구경하러 가기 <span>&gt;</span>
             </p>
           </div>
