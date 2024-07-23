@@ -11,12 +11,15 @@ const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
   const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/${id}/detailpage`;
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.Kakao) {
-      const { Kakao } = window;
-
-      if (!Kakao.isInitialized()) {
-        Kakao.init(process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY);
-      }
+    if (typeof window !== "undefined" && !window.Kakao) {
+      const script = document.createElement("script");
+      script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
+      script.onload = () => {
+        window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY);
+      };
+      document.head.appendChild(script);
+    } else if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY);
     }
   }, []);
 
