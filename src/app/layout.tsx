@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <QueryProvider>
           <Header />
-          <div className="flex justify-center">{children}</div>
+          <div>{children}</div>
         </QueryProvider>
       </body>
     </html>
