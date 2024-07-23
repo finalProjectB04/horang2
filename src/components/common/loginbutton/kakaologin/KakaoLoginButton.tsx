@@ -9,7 +9,7 @@ const KakaoLoginButton = () => {
     await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_API_URL}`,
+        redirectTo: `${process.env.NEXT_PUBLIC_API_URL}/auth/callback`, // 카카오 인증 후 리디렉션할 URL
       },
     });
   };
