@@ -38,8 +38,11 @@ const Header = () => {
     queryKey: ["session"],
     queryFn: fetchSessionData,
     initialData: () => {
-      const session = localStorage.getItem("supabaseSession");
-      return session ? JSON.parse(session) : null;
+      if (typeof window !== "undefined") {
+        const session = localStorage.getItem("supabaseSession");
+        return session ? JSON.parse(session) : null;
+      }
+      return null;
     },
     refetchOnWindowFocus: true,
     refetchOnMount: true,

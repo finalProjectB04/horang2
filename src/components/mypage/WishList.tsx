@@ -27,7 +27,9 @@ const WishList: React.FC = () => {
         <Tab TapName="숙소" isActive={activeTab === "숙소"} onClick={handleMyAccommodations} />
       </div>
       <div className="border-2 border-solid border-gray-500 h-96">
-        <MyPageCarousel />
+        {activeTab === "나의 일정" && "일정 관련 컴포넌트"}
+        {activeTab === "여행지" && <MyPageCarousel />}
+        {activeTab === "숙소" && <MyPageCarousel />}
       </div>
     </section>
   );
