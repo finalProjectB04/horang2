@@ -1,4 +1,6 @@
 import { ContentItem } from "@/types/ContentItem.type";
+import { createClient } from "@/utils/supabase/server";
+
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -38,3 +40,16 @@ export const GET = async (request: NextRequest, { params }: { params: { contentI
     return NextResponse.json({ message: "데이터 펫칭 실패" });
   }
 };
+
+export async function POST(request: Request) {
+  const supabase = createClient();
+  const { like_id, user_id } = await request.json();
+
+  const { data, error } = await supabase.from("Likes").insert([{ like_id, user_id }]).select().single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return Response.json({ data });
+}

@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import LikeBtn from "./_components/DetailPageLikeButton";
+import KakaoMap from "./_components/KakaoMap";
 import KakaoShareButton from "./_components/KakaoShareButton";
 import LinkUrlButton from "./_components/LinkUrlButton";
 
@@ -78,7 +80,7 @@ const DetailPage = () => {
         <div className="flex space-x-2">
           <LinkUrlButton />
           <KakaoShareButton id={contentId} />
-          <button className="px-4 py-2 bg-slate-200 text-gray-950 rounded">좋아요</button>
+          <LikeBtn contentId={contentId} />
         </div>
       </section>
       <section className="w-full max-w-[720px] mt-4">
@@ -123,6 +125,9 @@ const DetailPage = () => {
           </div>
         </section>
       )}
+      <section className="w-full flex justify-center mt-4">
+        <KakaoMap mapx={parseFloat(contentItemData.data.mapx)} mapy={parseFloat(contentItemData.data.mapy)} />
+      </section>
     </main>
   );
 };
