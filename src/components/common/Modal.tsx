@@ -1,6 +1,5 @@
 import React from "react";
 import useModalStore from "@/zustand/ModalStore";
-import { FaX } from "react-icons/fa6";
 
 interface ModalProps {
   id: string;
@@ -30,7 +29,7 @@ const Modal = ({ id, children }: ModalProps) => {
           className="absolute top-2 right-2 bg-none border-none text-xl cursor-pointer"
           onClick={() => toggleModal(id)}
         >
-          <FaX />
+          X
         </button>
         {children}
       </div>

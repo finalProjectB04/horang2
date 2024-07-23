@@ -1,43 +1,56 @@
+import React, { useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import Image from "next/image";
 
-import React, { useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import "swiper/css";
+import "swiper/css/pagination";
 
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
-import 'swiper/css/pagination';
+import { Pagination } from "swiper/modules";
 
-import { EffectCoverflow, Pagination } from 'swiper/modules';
 const MyPageCarousel: React.FC = () => {
-  return <>
-  <Swiper
-  effect={'coverflow'}
-  grabCursor={true}
-  centeredSlides={true}
-  slidesPerView={'auto'}
-  coverflowEffect={{
-    rotate: 50,
-    stretch: 0,
-    depth: 100,
-    modifier: 1,
-    slideShadows: true,
-  }}
-  pagination={true}
-  modules={[EffectCoverflow, Pagination]}
-  className="mySwiper"
->
-<SwiperSlide className="max-w-[200px] max-h-[200px]">
-  <img src="https://swiperjs.com/demos/images/nature-1.jpg" className="w-full h-full object-cover" />
-</SwiperSlide>
-<SwiperSlide className="max-w-[200px] max-h-[200px]">
-  <img src="https://swiperjs.com/demos/images/nature-1.jpg" className="w-full h-full object-cover" />
-</SwiperSlide>
-
-<SwiperSlide className="max-w-[200px] max-h-[200px]">
-  <img src="https://swiperjs.com/demos/images/nature-1.jpg" className="w-full h-full object-cover" />
-</SwiperSlide>
-
-</Swiper>
-</>;
+  return (
+    <>
+      <Swiper
+        pagination={{
+          dynamicBullets: true,
+        }}
+        modules={[Pagination]}
+        className="mySwiper h-full"
+        style={{ width: "100%", height: "100%" }}
+      >
+        <SwiperSlide className="h-full">
+          <Image
+            src="/assets/images/korea/korea2.jpg"
+            alt="Korea Image 2"
+            className="object-cover w-full h-full"
+            layout="fill"
+          />
+          <div className="absolute inset-y-0 left-0 w-[12%] bg-white opacity-70"></div>
+          <div className="absolute inset-y-0 right-0 w-[12%] bg-white opacity-70"></div>
+        </SwiperSlide>
+        <SwiperSlide className="h-full">
+          <Image
+            src="/assets/images/korea/korea3.jpg"
+            alt="Korea Image 3"
+            className="object-cover w-full h-full"
+            layout="fill"
+          />
+          <div className="absolute inset-y-0 left-0 w-[12%] bg-white opacity-70"></div>
+          <div className="absolute inset-y-0 right-0 w-[12%] bg-white opacity-70"></div>
+        </SwiperSlide>
+        <SwiperSlide className="h-full">
+          <Image
+            src="/assets/images/korea/korea4.jpg"
+            alt="Korea Image 4"
+            className="object-cover w-full h-full"
+            layout="fill"
+          />
+          <div className="absolute inset-y-0 left-0 w-[12%] bg-white opacity-70"></div>
+          <div className="absolute inset-y-0 right-0 w-[12%] bg-white opacity-70"></div>
+        </SwiperSlide>
+      </Swiper>
+    </>
+  );
 };
 
 export default MyPageCarousel;
