@@ -16,7 +16,7 @@ const ProfileCarousel: React.FC = () => {
         dynamicBullets: true,
       }}
       modules={[Pagination, Autoplay]}
-      className="mySwiper h-full"
+      className="mySwiper h-full rounded-xl"
       style={{ width: "100%", height: "100%" }}
       autoplay={{
         delay: 2000,

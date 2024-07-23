@@ -1,6 +1,6 @@
 "use client";
+import ListTitle from "@/components/common/ListTitle";
 import React from "react";
-import ListTitle from "../common/ListTitle";
 
 const MyPost: React.FC = () => {
   const handleGoMyPosts = () => {

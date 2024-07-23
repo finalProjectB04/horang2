@@ -1,7 +1,7 @@
-import Addvertisement from "@/components/mypage/Addvertisement";
-import Community from "@/components/mypage/Community";
-import Profile from "@/components/mypage/Profile";
-import WishList from "@/components/mypage/WishList";
+import Advertisement from "@/components/common/Advertisement";
+import Community from "@/components/mypage/community/Community";
+import Profile from "@/components/mypage/profile/Profile";
+import WishList from "@/components/mypage/wishlist/WishList";
 import React from "react";
 
 const myPage: React.FC = () => {
@@ -10,7 +10,7 @@ const myPage: React.FC = () => {
       <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 gap-4">
         <Profile />
         <WishList />
-        <Addvertisement />
+        <Advertisement />
         <Community />
       </div>
     </main>
