@@ -7,6 +7,7 @@ export type TouristSpot = {
   mapy: number;
   address: string;
   contentid: string;
+  firstimage: string;
 };
 
 const fetchTouristSpots = async (latitude: number, longitude: number): Promise<TouristSpot[]> => {
@@ -14,8 +15,8 @@ const fetchTouristSpots = async (latitude: number, longitude: number): Promise<T
     params: {
       ServiceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
       contentTypeId: 12,
-      numOfRows: 1000, // 전체 데이터 수
-      pageNo: 1, // 첫 페이지
+      numOfRows: 1000,
+      pageNo: 1,
       MobileOS: "ETC",
       MobileApp: "AppTest",
       _type: "json",
@@ -33,6 +34,8 @@ const fetchTouristSpots = async (latitude: number, longitude: number): Promise<T
     mapx: parseFloat(item.mapx),
     mapy: parseFloat(item.mapy),
     address: item.addr1 || "주소 정보 없음",
+    contentid: item.contentid,
+    firstimage: item.firstimage,
   }));
 };
 

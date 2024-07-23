@@ -2,7 +2,9 @@ declare namespace kakao.maps {
   type Map = {
     getBounds(): LatLngBounds;
     relayout(): void;
-    getLevel(): number; // 추가된 부분: getLevel() 메소드
+    setCenter(latlng: LatLng): void;
+    setLevel(level: number): void;
+    getLevel(): number;
   };
 
   type LatLngBounds = {

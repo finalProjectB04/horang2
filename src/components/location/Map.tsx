@@ -17,16 +17,19 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number): nu
 
 const MapComponent: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
+  const infoContainer = useRef<HTMLDivElement>(null);
   const { latitude, longitude } = useLocationStore();
   const { data: spots, isPending, error } = useTouristSpots(latitude ?? 0, longitude ?? 0);
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
-  const [clusterer, setClusterer] = useState<kakao.maps.MarkerClusterer | null>(null);
+  const [markers, setMarkers] = useState<kakao.maps.Marker[]>([]);
+  const [visibleSpots, setVisibleSpots] = useState<any[]>([]);
+  const [selectedSpot, setSelectedSpot] = useState<any | null>(null);
 
   useEffect(() => {
     if (latitude === null || longitude === null) return;
 
     const script = document.createElement("script");
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_API}&autoload=false&libraries=services,clusterer`;
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_MAP_API}&autoload=false&libraries=services`;
     script.onload = () => {
       if (window.kakao && mapContainer.current) {
         const kakao = window.kakao;
@@ -34,83 +37,82 @@ const MapComponent: React.FC = () => {
         kakao.maps.load(() => {
           const mapOptions: kakao.maps.MapOptions = {
             center: new kakao.maps.LatLng(latitude, longitude),
-            level: 5, // 초기 줌 레벨
+            level: 4, // 초기 줌 레벨
           };
 
           const mapInstance = new kakao.maps.Map(mapContainer.current, mapOptions);
           setMap(mapInstance);
 
-          const userMarker = new kakao.maps.Marker({
-            position: new kakao.maps.LatLng(latitude, longitude),
-            title: "현재 위치",
-            map: mapInstance,
-          });
+          const userMarkerContent = `
+            <div class="bg-red-200 w-5 h-5 rounded-full flex items-center justify-center">
+              <div class="bg-red-500 w-3 h-3 border border-white rounded-full"></div>
+            </div>
+          `;
 
-          // 클러스터러 인스턴스 생성
-          const clustererInstance = new kakao.maps.MarkerClusterer({
-            map: mapInstance,
-            averageCenter: true,
-            minClusterSize: 2,
+          const userMarker = new kakao.maps.CustomOverlay({
+            position: new kakao.maps.LatLng(latitude, longitude),
+            content: userMarkerContent,
           });
-          setClusterer(clustererInstance);
+          userMarker.setMap(mapInstance);
+
+          const createMarkers = () => {
+            if (!spots) return [];
+
+            return spots.map((spot) => {
+              const markerPosition = new kakao.maps.LatLng(spot.mapy, spot.mapx);
+              const marker = new kakao.maps.Marker({ position: markerPosition });
+
+              const infowindow = new kakao.maps.InfoWindow({
+                content: `<div style="padding:4px;">${spot.title}</div>`,
+              });
+
+              kakao.maps.event.addListener(marker, "mouseover", () => infowindow.open(mapInstance, marker));
+              kakao.maps.event.addListener(marker, "mouseout", () => infowindow.close());
+
+              kakao.maps.event.addListener(marker, "click", () => {
+                setSelectedSpot(spot);
+              });
+
+              return marker;
+            });
+          };
 
           const updateMarkers = () => {
             if (!mapInstance || !spots) return;
 
-            // 클러스터러에서 기존 마커 제거
-            clustererInstance.clear();
+            const newMarkers = createMarkers();
+            setMarkers(newMarkers);
 
-            const newMarkers: kakao.maps.Marker[] = [];
-            const distanceThreshold = 10; // 10km
+            newMarkers.forEach((marker) => marker.setMap(mapInstance));
+          };
 
-            spots.forEach((spot) => {
-              const markerPosition = new kakao.maps.LatLng(spot.mapy, spot.mapx);
-              const distance = getDistance(latitude, longitude, spot.mapy, spot.mapx);
+          const updateVisibleSpots = () => {
+            if (!mapInstance || !spots) return;
 
-              if (distance <= distanceThreshold) {
-                // 10km 이내의 관광지는 개별 마커로 표시
-                const marker = new kakao.maps.Marker({ position: markerPosition });
-                newMarkers.push(marker);
-
-                const infowindow = new kakao.maps.InfoWindow({
-                  content: `<div style="padding:4px;">${spot.title}</div>`,
-                });
-
-                kakao.maps.event.addListener(marker, "mouseover", () => infowindow.open(mapInstance, marker));
-                kakao.maps.event.addListener(marker, "mouseout", () => infowindow.close());
-
-                marker.setMap(mapInstance);
-              }
+            const bounds = mapInstance.getBounds();
+            const visibleSpots = spots.filter((spot) => {
+              const position = new kakao.maps.LatLng(spot.mapy, spot.mapx);
+              return bounds.contain(position);
             });
-
-            // 10km 이상의 관광지는 클러스터러로 표시
-            const otherMarkers: kakao.maps.Marker[] = spots
-              .filter((spot) => getDistance(latitude, longitude, spot.mapy, spot.mapx) > distanceThreshold)
-              .map((spot) => new kakao.maps.Marker({ position: new kakao.maps.LatLng(spot.mapy, spot.mapx) }));
-
-            clustererInstance.addMarkers(otherMarkers);
+            setVisibleSpots(visibleSpots);
           };
 
-          const handleZoomChange = () => {
-            if (mapInstance && clustererInstance) {
-              const currentZoomLevel = mapInstance.getLevel();
+          kakao.maps.event.addListener(mapInstance, "idle", () => {
+            updateMarkers();
+            updateVisibleSpots();
+          });
+          kakao.maps.event.addListener(mapInstance, "zoom_changed", () => {
+            updateMarkers();
+            updateVisibleSpots();
 
-              if (currentZoomLevel > 6) {
-                // 줌 레벨이 6보다 크면 마커 업데이트
-                updateMarkers();
-              } else {
-                // 줌 레벨이 6 이하이면 클러스터링 표시
-                const currentMarkers = clustererInstance.getMarkers() as kakao.maps.Marker[];
-                clustererInstance.addMarkers(currentMarkers);
-              }
+            const currentZoomLevel = mapInstance.getLevel();
+            if (currentZoomLevel > 8) {
+              mapInstance.setLevel(8);
             }
-          };
+          });
 
-          kakao.maps.event.addListener(mapInstance, "idle", handleZoomChange);
-          kakao.maps.event.addListener(mapInstance, "zoom_changed", handleZoomChange);
-
-          // 초기 마커 업데이트
           updateMarkers();
+          updateVisibleSpots();
         });
       }
     };
@@ -124,11 +126,11 @@ const MapComponent: React.FC = () => {
     };
   }, [latitude, longitude, spots]);
 
-  // 현재 위치로 이동 함수
   const moveToCurrentLocation = () => {
     if (map && latitude !== null && longitude !== null) {
       const moveLatLon = new window.kakao.maps.LatLng(latitude, longitude);
       map.setCenter(moveLatLon);
+      map.setLevel(5);
     }
   };
 
@@ -136,26 +138,66 @@ const MapComponent: React.FC = () => {
   if (error) return <div>{error.message}</div>;
 
   return (
-    <div>
-      <div ref={mapContainer} style={{ width: "100%", height: "480px" }} />
-      <button onClick={moveToCurrentLocation} style={{ position: "absolute", top: "10px", left: "10px", zIndex: 10 }}>
-        내 위치로 이동
+    <div className="relative">
+      <div ref={mapContainer} className="w-full h-96" />
+      <button
+        onClick={moveToCurrentLocation}
+        className="absolute top-2 left-2 z-10 bg-white text-white p-3 rounded-full flex items-center shadow-xl"
+      >
+        <img src="/assets/images/my_location.svg" alt="내 위치" className="w-4 h-4" />
       </button>
-      <div style={{ padding: "10px", background: "#fff", border: "1px solid #ddd", marginTop: "10px" }}>
-        <h3>관광지 리스트</h3>
-        <ul>
-          {spots &&
-            spots.map((spot, index) => {
-              const distance = getDistance(latitude!, longitude!, spot.mapy, spot.mapx);
-              return (
-                <li key={index} style={{ marginBottom: "10px" }}>
-                  <strong>{spot.title}</strong> - {distance.toFixed(2)} km
-                  <br />
-                  주소: {spot.address}
-                </li>
-              );
-            })}
-        </ul>
+      <div className="p-4 bg-white mt-4 z-10 rounded-t-lg shadow">
+        <h3 className="text-lg font-semibold mb-2">관광지 정보</h3>
+        <div ref={infoContainer}>
+          {selectedSpot ? (
+            <div className="flex flex-col md:flex-row">
+              <div className="flex-1">
+                <h4 className="text-xl font-bold">{selectedSpot.title}</h4>
+                <p className="text-gray-400 text-sm">
+                  {getDistance(latitude!, longitude!, selectedSpot.mapy, selectedSpot.mapx).toFixed(2)} km
+                </p>
+                <p className="text-gray-700">{selectedSpot.address}</p>
+                {selectedSpot.image ? (
+                  <img src={selectedSpot.image} alt={selectedSpot.title} className="w-full h-auto mt-2 md:hidden" />
+                ) : null}
+                <p className="text-gray-700 mt-2">{selectedSpot.description}</p>
+                <button
+                  onClick={() => setSelectedSpot(null)}
+                  className="mt-4 px-4 py-2 bg-[#FF5C00] text-white rounded"
+                >
+                  목록으로 돌아가기
+                </button>
+              </div>
+              {selectedSpot.image ? (
+                <div className="hidden md:block md:flex-1">
+                  <img src={selectedSpot.image} alt={selectedSpot.title} className="w-full h-auto" />
+                </div>
+              ) : null}
+            </div>
+          ) : (
+            <ul>
+              {visibleSpots.map((spot, index) => {
+                const distance = getDistance(latitude!, longitude!, spot.mapy, spot.mapx);
+                return (
+                  <li
+                    key={index}
+                    data-title={spot.title}
+                    className={`flex items-center mb-2 pb-2 border-b border-gray-200`}
+                  >
+                    {spot.firstimage && (
+                      <img src={spot.firstimage} alt={spot.title} className="w-16 h-16 object-cover mr-4" />
+                    )}
+                    <div>
+                      <strong className="text-black">{spot.title}</strong>
+                      <p className="text-gray-400 text-sm">{distance.toFixed(2)} km</p>
+                      <p className="text-gray-700">{spot.address}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );

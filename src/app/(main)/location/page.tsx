@@ -30,7 +30,6 @@ const LocationPage = () => {
 
   return (
     <div>
-      <h1>내 근처 관광지</h1>
       <MapComponent />
     </div>
   );
