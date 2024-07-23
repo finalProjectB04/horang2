@@ -1,4 +1,4 @@
-import { useTouristSpots } from "@/hooks/useTouristSpots";
+import { TouristSpot, useTouristSpots } from "@/hooks/useTouristSpots";
 import { useLocationStore } from "@/zustand/locationStore";
 import { useEffect, useRef, useState } from "react";
 
@@ -22,8 +22,8 @@ const MapComponent: React.FC = () => {
   const { data: spots, isPending, error } = useTouristSpots(latitude ?? 0, longitude ?? 0);
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [markers, setMarkers] = useState<kakao.maps.Marker[]>([]);
-  const [visibleSpots, setVisibleSpots] = useState<any[]>([]);
-  const [selectedSpot, setSelectedSpot] = useState<any | null>(null);
+  const [visibleSpots, setVisibleSpots] = useState<TouristSpot[]>([]);
+  const [selectedSpot, setSelectedSpot] = useState<TouristSpot | null>(null);
 
   useEffect(() => {
     if (latitude === null || longitude === null) return;
@@ -37,43 +37,47 @@ const MapComponent: React.FC = () => {
         kakao.maps.load(() => {
           const mapOptions: kakao.maps.MapOptions = {
             center: new kakao.maps.LatLng(latitude, longitude),
-            level: 4, // 초기 줌 레벨
+            level: 4,
           };
 
           const mapInstance = new kakao.maps.Map(mapContainer.current, mapOptions);
           setMap(mapInstance);
 
-          const userMarkerContent = `
+          const myLocationCustomMarker = `
             <div class="bg-red-200 w-5 h-5 rounded-full flex items-center justify-center">
               <div class="bg-red-500 w-3 h-3 border border-white rounded-full"></div>
             </div>
           `;
 
-          const userMarker = new kakao.maps.CustomOverlay({
+          const myLocation = new kakao.maps.CustomOverlay({
             position: new kakao.maps.LatLng(latitude, longitude),
-            content: userMarkerContent,
+            content: myLocationCustomMarker,
           });
-          userMarker.setMap(mapInstance);
+          myLocation.setMap(mapInstance);
 
           const createMarkers = () => {
             if (!spots) return [];
 
             return spots.map((spot) => {
               const markerPosition = new kakao.maps.LatLng(spot.mapy, spot.mapx);
-              const marker = new kakao.maps.Marker({ position: markerPosition });
-
-              const infowindow = new kakao.maps.InfoWindow({
-                content: `<div style="padding:4px;">${spot.title}</div>`,
+              const markerImage = new kakao.maps.MarkerImage("/assets/images/marker.svg", new kakao.maps.Size(26, 40));
+              const newMarker = new kakao.maps.Marker({
+                position: markerPosition,
+                image: markerImage,
               });
 
-              kakao.maps.event.addListener(marker, "mouseover", () => infowindow.open(mapInstance, marker));
-              kakao.maps.event.addListener(marker, "mouseout", () => infowindow.close());
+              const infowindow = new kakao.maps.InfoWindow({
+                content: `<div class="p-1">${spot.title}</div>`,
+              });
 
-              kakao.maps.event.addListener(marker, "click", () => {
+              kakao.maps.event.addListener(newMarker, "mouseover", () => infowindow.open(mapInstance, newMarker));
+              kakao.maps.event.addListener(newMarker, "mouseout", () => infowindow.close());
+
+              kakao.maps.event.addListener(newMarker, "click", () => {
                 setSelectedSpot(spot);
               });
 
-              return marker;
+              return newMarker;
             });
           };
 
@@ -130,7 +134,7 @@ const MapComponent: React.FC = () => {
     if (map && latitude !== null && longitude !== null) {
       const moveLatLon = new window.kakao.maps.LatLng(latitude, longitude);
       map.setCenter(moveLatLon);
-      map.setLevel(5);
+      map.setLevel(4);
     }
   };
 
@@ -152,15 +156,18 @@ const MapComponent: React.FC = () => {
           {selectedSpot ? (
             <div className="flex flex-col md:flex-row">
               <div className="flex-1">
-                <h4 className="text-xl font-bold">{selectedSpot.title}</h4>
-                <p className="text-gray-400 text-sm">
+                <h4 className="text-[28px] font-bold">{selectedSpot.title}</h4>
+                <p className="text-gray-400 text-[16px]">
                   {getDistance(latitude!, longitude!, selectedSpot.mapy, selectedSpot.mapx).toFixed(2)} km
                 </p>
-                <p className="text-gray-700">{selectedSpot.address}</p>
-                {selectedSpot.image ? (
-                  <img src={selectedSpot.image} alt={selectedSpot.title} className="w-full h-auto mt-2 md:hidden" />
-                ) : null}
-                <p className="text-gray-700 mt-2">{selectedSpot.description}</p>
+                <p className="text-gray-700 mt-2">{selectedSpot.address}</p>
+                {selectedSpot.firstimage ? (
+                  <img src={selectedSpot.firstimage} alt={selectedSpot.title} className="w-auto h-60 mt-2 md:hidden" />
+                ) : (
+                  <img src="/assets/images/null_image.svg" alt="No Image" className="w-auto h-60 mt-2 md:hidden" />
+                )}
+                <p className="text-gray-700 mt-2">{selectedSpot.tel}</p>
+                {/* 다른정보 넣을 예정 뭘 넣을까 논의필.... */}
                 <button
                   onClick={() => setSelectedSpot(null)}
                   className="mt-4 px-4 py-2 bg-[#FF5C00] text-white rounded"
@@ -168,11 +175,15 @@ const MapComponent: React.FC = () => {
                   목록으로 돌아가기
                 </button>
               </div>
-              {selectedSpot.image ? (
-                <div className="hidden md:block md:flex-1">
-                  <img src={selectedSpot.image} alt={selectedSpot.title} className="w-full h-auto" />
-                </div>
-              ) : null}
+              <div className="hidden md:block md:flex-1">
+                {selectedSpot.firstimage ? (
+                  <div className="hidden md:block md:flex-1">
+                    <img src={selectedSpot.firstimage} alt={selectedSpot.title} className="w-auto h-60 object-cover" />
+                  </div>
+                ) : (
+                  <img src="/assets/images/null_image.svg" alt="No Image" className="w-auto h-60 object-cover" />
+                )}
+              </div>
             </div>
           ) : (
             <ul>
@@ -184,8 +195,10 @@ const MapComponent: React.FC = () => {
                     data-title={spot.title}
                     className={`flex items-center mb-2 pb-2 border-b border-gray-200`}
                   >
-                    {spot.firstimage && (
+                    {spot.firstimage ? (
                       <img src={spot.firstimage} alt={spot.title} className="w-16 h-16 object-cover mr-4" />
+                    ) : (
+                      <img src="/assets/images/null_image.svg" alt="No Image" className="w-16 h-16 object-cover mr-4" />
                     )}
                     <div>
                       <strong className="text-black">{spot.title}</strong>

@@ -7,7 +7,8 @@ export type TouristSpot = {
   mapy: number;
   address: string;
   contentid: string;
-  firstimage: string;
+  firstimage: string | null;
+  tel: string;
 };
 
 const fetchTouristSpots = async (latitude: number, longitude: number): Promise<TouristSpot[]> => {
