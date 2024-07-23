@@ -22,7 +22,7 @@ export const useUserStore = create<UserState>()(
         clearUser: () => set({ id: null, user_email: null, user_nickname: null, profile_url: null }),
       }),
       {
-        name: "user-storage",
+        name: "user-storage", // key 이름
       },
     ),
   ),
