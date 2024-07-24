@@ -1,1 +1,1 @@
-export { default } from "./kakaologin/KakaoLoginButton";
+export { default } from "./KakaoLoginButton";

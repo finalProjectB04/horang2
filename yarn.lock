@@ -245,9 +245,10 @@
     "@types/ws" "^8.5.10"
     ws "^8.14.2"
 
-"@supabase/ssr@supabase/ssr":
-  version "0.0.0"
-  resolved "https://codeload.github.com/supabase/ssr/tar.gz/4517996a4eea6d41b8ad07c769c78a10b9ee63aa"
+"@supabase/ssr@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@supabase/ssr/-/ssr-0.4.0.tgz#3ecb607e5346e6e09d50c106c2335db0e97903dd"
+  integrity sha512-6WS3NUvHDhCPAFN2kJ79AQDO8+M9fJ7y2fYpxgZqIuJEpnnGsHDNnB5Xnv8CiaJIuRU+0pKboy62RVZBMfZ0Lg==
   dependencies:
     cookie "^0.6.0"
   optionalDependencies:

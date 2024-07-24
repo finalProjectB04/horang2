@@ -2,8 +2,10 @@ import QueryProvider from "@/provider/QueryProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/common/header";
+
 import "swiper/swiper-bundle.css";
+
+import Header from "@/components/common/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <QueryProvider>
           <Header />
-          {children}
+          <div className="flex justify-center">{children}</div>
         </QueryProvider>
       </body>
     </html>
