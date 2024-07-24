@@ -1,21 +1,15 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+
+const getScrollPosition = () => {
+  return window.pageYOffset;
+};
 
 export const ScrollToTopButton: React.FC = () => {
-  const [showScrollTop, setShowScrollTop] = useState(false);
-
-  useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
-        setShowScrollTop(true);
-      } else {
-        setShowScrollTop(false);
-      }
-    };
-
-    window.addEventListener("scroll", toggleVisibility);
-
-    return () => window.removeEventListener("scroll", toggleVisibility);
-  }, []);
+  const { data: scrollPosition } = useQuery({
+    queryKey: ["scrollPosition"],
+    queryFn: getScrollPosition,
+    refetchInterval: 100, // 100ms마다 스크롤 위치 업데이트
+  });
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -24,7 +18,7 @@ export const ScrollToTopButton: React.FC = () => {
     });
   };
 
-  if (!showScrollTop) return null;
+  if (scrollPosition === undefined || scrollPosition <= 300) return null;
 
   return (
     <button

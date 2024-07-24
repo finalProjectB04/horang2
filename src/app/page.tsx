@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useUserStore } from "@/zustand/userStore";
 import { Travel } from "@/components/main/Travel";
 import { MainImage } from "@/components/main/MainSwiper";
@@ -26,7 +26,7 @@ const Home = () => {
   // }, [id, user_email, user_nickname, profile_url, user_address]);
   return (
     <div>
-      <MainImage></MainImage>
+      <MainImage />
       <Control />
       <Travel></Travel>
       <MidImage />
