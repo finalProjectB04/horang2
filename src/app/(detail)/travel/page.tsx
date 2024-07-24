@@ -2,6 +2,7 @@
 
 import { ApiInformation } from "@/types/Main";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import { useState, useMemo, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -73,7 +74,13 @@ const Travel = () => {
         {displayedTravel.map((item) => (
           <div key={item.contentid} className="bg-white rounded-lg shadow-md overflow-hidden">
             {item.firstimage ? (
-              <img src={item.firstimage} alt={item.title} className="w-full h-48 object-cover" />
+              <Image
+                src={item.firstimage}
+                alt={item.title}
+                width={300}
+                height={300}
+                className="w-full h-48 object-cover"
+              />
             ) : (
               <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
                 <span className="text-gray-500">No Image Available</span>
