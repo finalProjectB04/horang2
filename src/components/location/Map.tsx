@@ -75,6 +75,8 @@ const MapComponent: React.FC = () => {
 
               kakao.maps.event.addListener(newMarker, "click", () => {
                 setSelectedSpot(spot);
+                mapInstance.setCenter(markerPosition); // 마커 클릭 시 지도 중심 이동
+                mapInstance.setLevel(4);
               });
 
               return newMarker;
@@ -151,7 +153,6 @@ const MapComponent: React.FC = () => {
         <img src="/assets/images/my_location.svg" alt="내 위치" className="w-4 h-4" />
       </button>
       <div className="p-4 bg-white mt-4 z-10 rounded-t-lg shadow">
-        <h3 className="text-lg font-semibold mb-2">관광지 정보</h3>
         <div ref={infoContainer}>
           {selectedSpot ? (
             <div className="flex flex-col md:flex-row">
@@ -167,7 +168,6 @@ const MapComponent: React.FC = () => {
                   <img src="/assets/images/null_image.svg" alt="No Image" className="w-auto h-60 mt-2 md:hidden" />
                 )}
                 <p className="text-gray-700 mt-2">{selectedSpot.tel}</p>
-                {/* 다른정보 넣을 예정 뭘 넣을까 논의필.... */}
                 <button
                   onClick={() => setSelectedSpot(null)}
                   className="mt-4 px-4 py-2 bg-[#FF5C00] text-white rounded"
@@ -193,7 +193,15 @@ const MapComponent: React.FC = () => {
                   <li
                     key={index}
                     data-title={spot.title}
-                    className={`flex items-center mb-2 pb-2 border-b border-gray-200`}
+                    className={`flex items-center mb-2 pb-2 border-b border-gray-200 cursor-pointer`}
+                    onClick={() => {
+                      const position = new window.kakao.maps.LatLng(spot.mapy, spot.mapx);
+                      if (map) {
+                        map.setCenter(position);
+                        map.setLevel(4);
+                        setSelectedSpot(spot);
+                      }
+                    }}
                   >
                     {spot.firstimage ? (
                       <img src={spot.firstimage} alt={spot.title} className="w-16 h-16 object-cover mr-4" />

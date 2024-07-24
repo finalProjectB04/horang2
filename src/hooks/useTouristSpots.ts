@@ -11,6 +11,16 @@ export type TouristSpot = {
   tel: string;
 };
 
+type ApiTouristSpot = {
+  title: string;
+  mapx: string;
+  mapy: string;
+  addr1?: string;
+  contentid: string;
+  firstimage?: string;
+  tel?: string;
+};
+
 const fetchTouristSpots = async (latitude: number, longitude: number): Promise<TouristSpot[]> => {
   const response = await axios.get("http://apis.data.go.kr/B551011/KorService1/locationBasedList1", {
     params: {
@@ -30,13 +40,17 @@ const fetchTouristSpots = async (latitude: number, longitude: number): Promise<T
       Accept: "application/json",
     },
   });
-  return response.data.response.body.items.item.map((item: any) => ({
+
+  const items: ApiTouristSpot[] = response.data.response.body.items.item;
+
+  return items.map((item) => ({
     title: item.title,
     mapx: parseFloat(item.mapx),
     mapy: parseFloat(item.mapy),
     address: item.addr1 || "주소 정보 없음",
     contentid: item.contentid,
-    firstimage: item.firstimage,
+    firstimage: item.firstimage || null,
+    tel: item.tel || "전화번호 없음",
   }));
 };
 
