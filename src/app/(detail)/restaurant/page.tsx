@@ -66,7 +66,6 @@ const Restaurant = () => {
   return (
     <>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
       <div className="container mx-auto px-4 py-8 relative">
         <div className="flex my-6 gap-3">
           <DetailTitle />

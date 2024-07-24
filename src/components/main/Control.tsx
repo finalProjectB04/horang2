@@ -11,7 +11,7 @@ const Control = () => {
         alt="호텔"
         width={100}
         height={100}
-        onClick={() => router.push("/Hotel")}
+        onClick={() => router.push("/hotel")}
         className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
       />
       <Image

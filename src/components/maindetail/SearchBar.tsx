@@ -18,8 +18,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
         />
         <div className="absolute bottom-10 left-0 w-full px-5 md:px-8 lg:px-10">
           <div className="max-w-6xl mx-auto my-36">
-            {" "}
-            {/* 최대 너비를 조정 */}
             <input
               type="text"
               placeholder="검색어를 입력하세요"
