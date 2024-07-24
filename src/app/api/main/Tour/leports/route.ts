@@ -21,7 +21,7 @@ export async function GET() {
         areaCode: "1",
       },
     });
-    console.log(response.data.response.body.items.item);
+  
     if (response.data.response.body.items.item.length > 0) {
       return NextResponse.json(response.data.response.body.items.item as ApiInformation[]);
     } else {

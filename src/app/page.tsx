@@ -7,6 +7,7 @@ import { useUserStore } from "@/zustand/userStore";
 // import { Leports } from "@/components/main/Leports";
 // import { Restaurants } from "@/components/main/Restaurants";
 import { MainSwiper } from "@/components/main/MainSwiper";
+import Control from "@/components/main/Control";
 
 const Home = () => {
   const { id, user_email, user_nickname, profile_url, user_address } = useUserStore((state) => ({
@@ -28,6 +29,7 @@ const Home = () => {
   return (
     <div>
       <MainSwiper></MainSwiper>
+      <Control />
       {/* <Travel></Travel> */}
       {/* <Festival></Festival>
       <Hotel></Hotel>
