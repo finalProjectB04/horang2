@@ -1,11 +1,11 @@
 "use client";
 import { useEffect } from "react";
 import { useUserStore } from "@/zustand/userStore";
-//import { Travel } from "@/components/main/Travel";
-// import { Festival } from "@/components/main/Festival";
-// import { Hotel } from "@/components/main/Hotel";
-// import { Leports } from "@/components/main/Leports";
-// import { Restaurants } from "@/components/main/Restaurants";
+import { Travel } from "@/components/main/Travel";
+import { Festival } from "@/components/main/Festival";
+import { Hotel } from "@/components/main/Hotel";
+import { Leports } from "@/components/main/Leports";
+import { Restaurants } from "@/components/main/Restaurants";
 import { MainSwiper } from "@/components/main/MainSwiper";
 import Control from "@/components/main/Control";
 
@@ -30,11 +30,11 @@ const Home = () => {
     <div>
       <MainSwiper></MainSwiper>
       <Control />
-      {/* <Travel></Travel> */}
-      {/* <Festival></Festival>
-      <Hotel></Hotel>
-      <Leports></Leports>
-      <Restaurants></Restaurants> */}
+      <Travel></Travel>
+      {/* <Festival></Festival> */}
+      {/* <Hotel></Hotel>
+       <Leports></Leports>
+       <Restaurants></Restaurants> */}
     </div>
   );
 };

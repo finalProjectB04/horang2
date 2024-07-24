@@ -58,8 +58,8 @@ export const Travel = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <ListTitle TitleName="지금뜨는 핫플레이스" onClick={() => router.push("/travel")} />
+    <div className="container mx-auto px-4 py-8 h-96">
+      <ListTitle TitleName={`지금뜨는 핫플레이스`} onClick={() => router.push("/travel")} />
 
       <Swiper
         modules={[Pagination, A11y, Autoplay]}
@@ -69,27 +69,29 @@ export const Travel = () => {
         onAutoplay={(swiper) => {
           swiper.slideTo(swiper.activeIndex + 4);
         }}
-        className="rounded-lg shadow-xl"
+        className="rounded-lg shadow-xl h-full"
       >
         {sortedTravel.map((item) => (
-          <SwiperSlide className="bg-gray-100" key={item.contentid}>
-            {item.firstimage ? (
-              <Image
-                src={item.firstimage}
-                alt={item.title}
-                width={300}
-                height={300}
-                className="w-full h-48 object-cover"
-              />
-            ) : (
-              <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500">No Image Available</span>
-              </div>
-            )}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2 text-gray-800">{item.title}</h2>
-                <p className="text-gray-600 text-sm">{item.addr1 || "Address not available"}</p>
+          <SwiperSlide key={item.contentid}>
+            <div className="bg-gray-100 h-full flex flex-col">
+              {item.firstimage ? (
+                <Image
+                  src={item.firstimage}
+                  alt={item.title}
+                  width={300}
+                  height={300}
+                  className="w-full h-48 object-cover"
+                />
+              ) : (
+                <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+                  <span className="text-gray-500">No Image Available</span>
+                </div>
+              )}
+              <div className="bg-white rounded-lg shadow-md overflow-hidden flex-grow">
+                <div className="p-4">
+                  <h2 className="text-xl font-semibold mb-2 text-gray-800">{item.title}</h2>
+                  <p className="text-gray-600 text-sm">{item.addr1 || "Address not available"}</p>
+                </div>
               </div>
             </div>
           </SwiperSlide>
