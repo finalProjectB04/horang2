@@ -2,39 +2,35 @@
 import { useEffect } from "react";
 import { useUserStore } from "@/zustand/userStore";
 import { Travel } from "@/components/main/Travel";
-import { Festival } from "@/components/main/Festival";
-import { Hotel } from "@/components/main/Hotel";
-import { Leports } from "@/components/main/Leports";
-import { Restaurants } from "@/components/main/Restaurants";
-import { MainSwiper } from "@/components/main/MainSwiper";
+import { MainImage } from "@/components/main/MainSwiper";
 import Control from "@/components/main/Control";
+import { TravelCourse } from "@/components/main/TravelCourse";
+import { MidImage } from "@/components/main/MidImage";
 
 const Home = () => {
-  const { id, user_email, user_nickname, profile_url, user_address } = useUserStore((state) => ({
-    id: state.id,
-    user_email: state.user_email,
-    user_nickname: state.user_nickname,
-    profile_url: state.profile_url,
-    user_address: state.user_address,
-  }));
+  // const { id, user_email, user_nickname, profile_url, user_address } = useUserStore((state) => ({
+  //   id: state.id,
+  //   user_email: state.user_email,
+  //   user_nickname: state.user_nickname,
+  //   profile_url: state.profile_url,
+  //   user_address: state.user_address,
+  // }));
 
-  useEffect(() => {
-    console.log("User Info:");
-    console.log("ID:", id);
-    console.log("Email:", user_email);
-    console.log("Nickname:", user_nickname);
-    console.log("Profile URL:", profile_url);
-    console.log("Address:", user_address);
-  }, [id, user_email, user_nickname, profile_url, user_address]);
+  // useEffect(() => {
+  //   console.log("User Info:");
+  //   console.log("ID:", id);
+  //   console.log("Email:", user_email);
+  //   console.log("Nickname:", user_nickname);
+  //   console.log("Profile URL:", profile_url);
+  //   console.log("Address:", user_address);
+  // }, [id, user_email, user_nickname, profile_url, user_address]);
   return (
     <div>
-      <MainSwiper></MainSwiper>
+      <MainImage></MainImage>
       <Control />
       <Travel></Travel>
-      {/* <Festival></Festival> */}
-      {/* <Hotel></Hotel>
-       <Leports></Leports>
-       <Restaurants></Restaurants> */}
+      <MidImage />
+      {/* <TravelCourse /> */}
     </div>
   );
 };

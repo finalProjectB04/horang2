@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 
-export const MainSwiper = () => {
+export const MainImage = () => {
   return (
     <div className="flex justify-center  w-full h-screen overflow-hidden">
       <div className="relative w-full h-full max-w-[1920px] max-h-[1080px]">

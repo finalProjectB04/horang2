@@ -15,11 +15,11 @@ const Control = () => {
         className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
       />
       <Image
-        src={"/assets/images/travel.png"}
-        alt="여행"
+        src={"/assets/images/travelCourse.png"}
+        alt="여행코스"
         width={100}
         height={100}
-        onClick={() => router.push("/travel")}
+        onClick={() => router.push("/travelCourse")}
         className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
       />
       <Image
@@ -39,11 +39,11 @@ const Control = () => {
         className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
       />
       <Image
-        src={"/assets/images/leports.png"}
-        alt="레포츠"
+        src={"/assets/images/culturalFacilities.png"}
+        alt="문화시설"
         width={100}
         height={100}
-        onClick={() => router.push("/leport")}
+        onClick={() => router.push("/culturalFacilities")}
         className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
       />
     </div>

@@ -5,36 +5,35 @@ import { useState, useMemo } from "react";
 import { ApiInformation } from "@/types/Main";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Autoplay, Pagination } from "swiper/modules";
-
+import ListTitle from "../common/ListTitle";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { MainListTitle } from "../common/MainListTitle";
 
-const fetchTravel = async (): Promise<ApiInformation[]> => {
-  const response = await fetch("/api/main/Tour/travel");
+const fetchTravelCourse = async (): Promise<ApiInformation[]> => {
+  const response = await fetch("/api/main/Tour/travelCourse");
   if (!response.ok) {
     throw new Error("error");
   }
   return response.json();
 };
 
-export const Travel = () => {
+export const TravelCourse = () => {
   const [displayCount, setDisplayCount] = useState(25);
   const router = useRouter();
   const {
-    data: travel,
+    data: travelCourse,
     isLoading,
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["travel"],
-    queryFn: fetchTravel,
+    queryFn: fetchTravelCourse,
   });
 
-  const sortedTravel = useMemo(() => {
-    if (!travel) return [];
+  const sortedTravelCourse = useMemo(() => {
+    if (!travelCourse) return [];
 
     // 데이터를 먼저 섞습니다 (Fisher-Yates 알고리즘 사용)
-    const shuffled = [...travel];
+    const shuffled = [...travelCourse];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -48,7 +47,7 @@ export const Travel = () => {
         return 0;
       })
       .slice(0, displayCount);
-  }, [travel, displayCount]);
+  }, [travelCourse, displayCount]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -60,7 +59,7 @@ export const Travel = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 ">
-      <MainListTitle TitleName={`지금뜨는 핫플레이스`} onClick={() => router.push("/travel")} />
+      <ListTitle TitleName="여행추천" onClick={() => router.push("/travelCourse")} />
 
       <Swiper
         modules={[Pagination, A11y, Autoplay]}
@@ -72,7 +71,7 @@ export const Travel = () => {
         }}
         className="rounded-lg shadow-xl"
       >
-        {sortedTravel.map((item) => (
+        {sortedTravelCourse.map((item) => (
           <SwiperSlide className="bg-gray-100" key={item.contentid}>
             {item.firstimage ? (
               <Image
