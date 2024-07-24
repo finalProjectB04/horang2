@@ -80,7 +80,14 @@ const DetailPage = () => {
         <div className="flex space-x-2">
           <LinkUrlButton />
           <KakaoShareButton id={contentId} />
-          <LikeBtn contentId={contentId} />
+          <LikeBtn
+            contentId={contentId}
+            imageUrl={contentItemData.data.firstimage || ""}
+            title={contentItemData.data.title}
+            contentTypeId={contentItemData.data.contenttypeid}
+            addr1={contentItemData.data.addr1 || ""}
+            tel={contentItemData.data.tel || ""}
+          />
         </div>
       </section>
       <section className="w-full max-w-[720px] mt-4">

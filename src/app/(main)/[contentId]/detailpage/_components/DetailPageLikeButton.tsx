@@ -8,9 +8,14 @@ import { supabase } from "./../../../../../components/common/contexts/supabase.c
 
 interface LikeBtnProps {
   contentId: string;
+  imageUrl: string;
+  contentTypeId: string;
+  title: string;
+  addr1: string;
+  tel: string;
 }
 
-const LikeBtn: React.FC<LikeBtnProps> = ({ contentId }) => {
+const LikeBtn: React.FC<LikeBtnProps> = ({ contentId, imageUrl, contentTypeId, title, addr1, tel }) => {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState<number>(0);
   const [userId, setUserId] = useState<string | null>(null);
@@ -35,14 +40,14 @@ const LikeBtn: React.FC<LikeBtnProps> = ({ contentId }) => {
     const { data: user, error } = await supabase.from("Users").select("id").eq("id", userId).single();
 
     if (error && error.code === "PGRST116") {
-      // 사용자 추가
+      // 사용자 id를 like 테이블에 추가
       const { error: insertError } = await supabase.from("Users").insert([{ id: userId }]);
 
       if (insertError) {
-        console.error("Error inserting user:", insertError);
+        console.error("유저정보(소셜로그인 사용자 데이터 like 테이블 입력) 입력실패:", insertError);
       }
     } else if (error) {
-      console.error("Error fetching user:", error);
+      console.error("유저 정보 가져오기 오류", error);
     }
   };
 
@@ -70,7 +75,7 @@ const LikeBtn: React.FC<LikeBtnProps> = ({ contentId }) => {
       setLikeCount((prev) => prev - 1);
     },
     onError: (error) => {
-      console.error("Mutation error:", error);
+      console.error("뮤테이션 에러: 좋아요 취소실패", error);
     },
   });
 
@@ -80,21 +85,26 @@ const LikeBtn: React.FC<LikeBtnProps> = ({ contentId }) => {
         {
           user_id: userId,
           content_id: contentId,
+          image_url: imageUrl,
+          content_type_id: contentTypeId,
+          title: title,
+          address: addr1,
+          tel: tel,
         },
       ]);
 
       if (error) {
-        console.error("Error adding like:", error);
+        console.error("좋아요 추가 실패", error);
         throw error;
       } else {
-        console.log("Like successfully added.");
+        console.log("좋아요가 성공적으로 등록되었습니다.");
       }
     },
     onSuccess: () => {
       setLikeCount((prev) => prev + 1);
     },
     onError: (error) => {
-      console.error("Mutation error:", error);
+      console.error("뮤테이션 에러: 좋아요 등록 실패", error);
     },
   });
 
@@ -123,7 +133,7 @@ const LikeBtn: React.FC<LikeBtnProps> = ({ contentId }) => {
       }
       setLiked((prevLiked) => !prevLiked);
     } catch (error) {
-      console.error("Error updating like status", error);
+      console.error("좋아요 상태 업데이트를 실패했습니다", error);
     }
   };
 

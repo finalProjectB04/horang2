@@ -25,34 +25,25 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
     console.log("Script element created and appended", script);
 
     script.onload = () => {
-      console.log("Kakao script loaded");
       window.kakao.maps.load(() => {
-        console.log("Kakao maps loaded");
         const mapContainer = document.getElementById("map");
-        console.log("Map container:", mapContainer);
 
         if (mapContainer) {
           const mapOption = {
             center: new window.kakao.maps.LatLng(latitude, longitude),
             level: 4,
           };
-          console.log("Map option:", mapOption);
 
           const map = new window.kakao.maps.Map(mapContainer, mapOption);
-          console.log("Map created:", map);
 
           const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
-          console.log("Marker position:", markerPosition);
 
           const marker = new window.kakao.maps.Marker({
             position: markerPosition,
           });
-          console.log("Marker created:", marker);
 
           marker.setMap(map);
-          console.log("Marker set on map");
         } else {
-          console.error("Map container not found");
         }
       });
     };
@@ -72,11 +63,9 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
 
   return (
     <>
-      <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <div style={{ width: "80%", height: "500px", position: "relative" }}>
-          <h1 className="text-center">Kakao Map</h1>
-          <div id="map" style={{ width: "100%", height: "100%" }}></div>
-        </div>
+      <div style={{ width: "80%", height: "500px", position: "relative" }}>
+        <h1 className="text-center">Kakao Map</h1>
+        <div id="map" style={{ width: "100%", height: "100%" }}></div>
       </div>
     </>
   );
