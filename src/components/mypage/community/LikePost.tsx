@@ -1,9 +1,9 @@
 "use client";
+import ListTitle from "@/components/common/ListTitle";
 import React from "react";
-import ListTitle from "../common/ListTitle";
 
 const LikePost: React.FC = () => {
-  const handleGoLikePosts = () => {
+  const handleGoLikePosts = (): void => {
     console.log("동작");
   };
 
