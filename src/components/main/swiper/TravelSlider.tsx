@@ -13,7 +13,7 @@ export const MainTravelSlider = ({ travel }: TravelSliderProps) => (
     spaceBetween={20}
     slidesPerView={4}
     autoplay={{ delay: 5000, disableOnInteraction: false }}
-    className="rounded-lg"
+    className="rounded-lg "
   >
     {travel.map((item) => (
       <SwiperSlide key={item.contentid}>

@@ -13,7 +13,7 @@ export const MainTravelCard = ({ item }: TravelCardProps) => (
       <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
         <span className="text-gray-500">No Image Available</span>
       </div>
-    )}{" "}
+    )}
     <div className="absolute top-2 right-2 bg-white rounded-full p-1">
       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-500" viewBox="0 0 20 20" fill="currentColor">
         <path
