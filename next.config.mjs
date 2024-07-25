@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: "http",
         hostname: "tong.visitkorea.or.kr",
       },
+      {
+        protocol: "https",
+        hostname: "crjcsxutfsroqsqumefz.supabase.co",
+      },
     ],
   },
 };

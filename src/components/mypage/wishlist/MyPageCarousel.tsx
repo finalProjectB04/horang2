@@ -8,7 +8,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import { Pagination } from "swiper/modules";
-import { supabase } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
 import { useRouter } from "next/navigation";
 
@@ -71,6 +70,33 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
       fetchFilterLikes();
     }
   }, [id, contentType]);
+
+  // axios 캐시 처리 문제로 임시 fetch로 바꿈
+  // useEffect(() => {
+  //   const fetchLikes = async () => {
+  //     try {
+  //       const response = await instance.get(`/likes?id=${id}`);
+  //       setLikes(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching likes:", error);
+  //     }
+  //   };
+
+  //   const fetchFilterLikes = async () => {
+  //     try {
+  //       const response = await instance.get(`/filterlikes?id=${id}&contentType=${contentType}`);
+  //       setLikes(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching likes:", error);
+  //     }
+  //   };
+
+  //   if (carouselName === "전체") {
+  //     fetchLikes();
+  //   } else {
+  //     fetchFilterLikes();
+  //   }
+  // }, [id, contentType]);
 
   if (!likes || likes.length === 0) {
     return (
