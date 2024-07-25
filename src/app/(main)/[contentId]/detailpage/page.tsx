@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import DetailPageAddPost from "./_components/DetailPageAddPost";
 import LikeBtn from "./_components/DetailPageLikeButton";
+import DetailPagePostList from "./_components/DetailPagePostList";
 import KakaoMap from "./_components/KakaoMap";
 import KakaoShareButton from "./_components/KakaoShareButton";
 import LinkUrlButton from "./_components/LinkUrlButton";
@@ -19,6 +20,7 @@ const parseHTMLString = (htmlString: string): string | null => {
   const anchor = doc.querySelector("a");
   return anchor ? anchor.href : null;
 };
+
 const DetailPage = () => {
   const params = useParams();
   let contentId = params.contentId;
@@ -81,10 +83,11 @@ const DetailPage = () => {
     <main className="max-w-[1440px] mx-auto grid justify-items-center">
       <section>
         {contentItemData.data.firstimage && (
-          <Image src={contentItemData.data.firstimage} alt="First Image" width={720} height={350} priority />
+          <Image src={contentItemData.data.firstimage} alt="First Image" width={1200} height={350} priority />
+          //너비 720에서 900으로 바꿈(다른대안 필요)
         )}
       </section>
-      <section className="flex justify-between items-center w-full max-w-[720px] mt-4">
+      <section className="flex justify-between items-center w-full max-w-[1200px] mt-4">
         <div className="text-left">
           <div className="text-4xl font-bold">{contentItemData.data.title}</div>
         </div>
@@ -101,7 +104,7 @@ const DetailPage = () => {
           />
         </div>
       </section>
-      <section className="w-full max-w-[720px] mt-4">
+      <section className="w-full max-w-[1200px] mt-4">
         <div className="text-left">
           <div>
             <strong>장소명 :</strong> {contentItemData.data.telname}
@@ -123,7 +126,7 @@ const DetailPage = () => {
         </div>
       </section>
       {contentItemData.data.overview && (
-        <section className="w-full max-w-[720px] mt-4 text-left py-10">
+        <section className="w-full max-w-[1200px] mt-4 text-left py-10">
           <div>
             <h1 className="text-center text-3xl">overview:</h1>
             <div>
@@ -147,7 +150,12 @@ const DetailPage = () => {
         <KakaoMap mapx={parseFloat(contentItemData.data.mapx)} mapy={parseFloat(contentItemData.data.mapy)} />
       </section>
       <section className="w-full max-w-[840px] mt-4 py-10">
-        <DetailPageAddPost userId={session ? session.user.id : null} contentId={contentId} />
+        <DetailPageAddPost
+          userId={session ? session.user.id : null}
+          contentId={contentId}
+          contenTypeId={contentItemData.data.contenttypeid}
+        />
+        <DetailPagePostList contentId={contentId} />
       </section>
     </main>
   );

@@ -9,9 +9,10 @@ import { useState } from "react";
 interface DetailPageAddPostProps {
   userId: string | null;
   contentId: string;
+  contenTypeId: string;
 }
 
-const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId }) => {
+const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId, contenTypeId }) => {
   const [comment, setComment] = useState("");
   const supabase = createClient();
 
@@ -38,13 +39,16 @@ const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId
       return;
     }
 
-    const { error } = await supabase.from("Comments").insert([{ user_id: userId, content_id: contentId, comment }]);
+    const { error } = await supabase
+      .from("Comments")
+      .insert([{ user_id: userId, content_id: contentId, comment, content_type_id: contenTypeId }]);
     if (error) {
       console.error("댓글 작성 실패:", error.message);
     } else {
       setComment("");
       alert("댓글 작성 성공!");
     }
+    console.log("🚀 ~ handleAddComment ~ setComment:", setComment);
   };
 
   return (
@@ -54,7 +58,7 @@ const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId
       {sessionData && (
         <div className="flex items-center mb-4">
           <Image src="/assets/images/profile_ex.png" alt="유저 프로필 사진" width={25} height={25} />
-          <span className="ml-2">{sessionData.user.email}</span>
+          <span className="ml-2">{sessionData.user.email} 님</span>
         </div>
       )}
       <div className="p-4 border border-orange-300 rounded-lg flex items-center">
