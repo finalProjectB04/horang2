@@ -154,6 +154,8 @@ const DetailPage = () => {
           userId={session ? session.user.id : null}
           contentId={contentId}
           contenTypeId={contentItemData.data.contenttypeid}
+          userEmail={session ? session.user.email : ""}
+          // userProfileImage={session ? session.user.profile_url? : ""}
         />
         <DetailPagePostList contentId={contentId} />
       </section>

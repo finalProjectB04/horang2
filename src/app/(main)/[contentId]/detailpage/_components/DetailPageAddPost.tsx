@@ -10,9 +10,12 @@ interface DetailPageAddPostProps {
   userId: string | null;
   contentId: string;
   contenTypeId: string;
+  userEmail: string | undefined;
+
+  // userProfileImage: string | null;
 }
 
-const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId, contenTypeId }) => {
+const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId, contenTypeId, userEmail }) => {
   const [comment, setComment] = useState("");
   const supabase = createClient();
 
@@ -39,9 +42,16 @@ const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId
       return;
     }
 
-    const { error } = await supabase
-      .from("Comments")
-      .insert([{ user_id: userId, content_id: contentId, comment, content_type_id: contenTypeId }]);
+    const { error } = await supabase.from("Comments").insert([
+      {
+        user_id: userId,
+        content_id: contentId,
+        comment,
+        content_type_id: contenTypeId,
+        user_email: userEmail,
+      },
+      // user_profile_url: userProfileImage,
+    ]);
     if (error) {
       console.error("댓글 작성 실패:", error.message);
     } else {
