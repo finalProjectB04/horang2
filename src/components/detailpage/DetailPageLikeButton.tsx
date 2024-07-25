@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { supabase } from "./../../../../../components/common/contexts/supabase.context";
+import { supabase } from "../common/contexts/supabase.context";
 
 interface LikeBtnProps {
   contentId: string;
@@ -15,7 +15,7 @@ interface LikeBtnProps {
   tel: string;
 }
 
-const LikeBtn: React.FC<LikeBtnProps> = ({ contentId, imageUrl, contentTypeId, title, addr1, tel }) => {
+const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, contentTypeId, title, addr1, tel }) => {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState<number>(0);
   const [userId, setUserId] = useState<string | null>(null);
@@ -151,4 +151,4 @@ const LikeBtn: React.FC<LikeBtnProps> = ({ contentId, imageUrl, contentTypeId, t
     </button>
   );
 };
-export default LikeBtn;
+export default DetailPageLikeButton;

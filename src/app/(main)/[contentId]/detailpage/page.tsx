@@ -1,17 +1,17 @@
 "use client";
 
+import DetailPageAddPost from "@/components/detailpage/DetailPageAddPost";
+import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
+import DetailPagePostList from "@/components/detailpage/DetailPagePostList";
+import KakaoMap from "@/components/detailpage/KakaoMap";
+import KakaoShareButton from "@/components/detailpage/KakaoShareButton";
+import LinkUrlButton from "@/components/detailpage/LinkUrlButton";
 import { ContentItem } from "@/types/ContentItem.type";
 import { fetchSessionData } from "@/utils/fetchSession";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import DetailPageAddPost from "./_components/DetailPageAddPost";
-import LikeBtn from "./_components/DetailPageLikeButton";
-import DetailPagePostList from "./_components/DetailPagePostList";
-import KakaoMap from "./_components/KakaoMap";
-import KakaoShareButton from "./_components/KakaoShareButton";
-import LinkUrlButton from "./_components/LinkUrlButton";
 
 const parseHTMLString = (htmlString: string): string | null => {
   //홈페이지 링크 때문에 추가된 파트
@@ -94,7 +94,7 @@ const DetailPage = () => {
         <div className="flex space-x-2">
           <LinkUrlButton />
           <KakaoShareButton id={contentId} />
-          <LikeBtn
+          <DetailPageLikeButton
             contentId={contentId}
             imageUrl={contentItemData.data.firstimage || ""}
             title={contentItemData.data.title}
@@ -106,16 +106,20 @@ const DetailPage = () => {
       </section>
       <section className="w-full max-w-[1200px] mt-4">
         <div className="text-left">
-          <div>
+          <div className="flex item-center gap-6">
+            <Image src="/assets/images/vector.png" alt="장소명" width={10} height={10} />
             <strong>장소명 :</strong> {contentItemData.data.telname}
           </div>
-          <div>
+          <div className="flex item-center gap-6">
+            <Image src="/assets/images/vector.png" alt="주소" width={10} height={10} />
             <strong>주소:</strong> {contentItemData.data.addr1}
           </div>
-          <div>
+          <div className="flex item-center gap-6">
+            <Image src="/assets/images/vector.png" alt="tel" width={10} height={10} />
             <strong>tel:</strong> {contentItemData.data.tel}
           </div>
-          <div>
+          <div className="flex item-center gap-6">
+            <Image src="/assets/images/vector.png" alt="homepage" width={10} height={10} />
             <strong>homepage: </strong>
             {homepageLink && (
               <a href={homepageLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
@@ -155,7 +159,6 @@ const DetailPage = () => {
           contentId={contentId}
           contenTypeId={contentItemData.data.contenttypeid}
           userEmail={session ? session.user.email : ""}
-          // userProfileImage={session ? session.user.profile_url? : ""}
         />
         <DetailPagePostList contentId={contentId} />
       </section>

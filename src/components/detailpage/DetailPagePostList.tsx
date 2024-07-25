@@ -46,7 +46,6 @@ const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) =>
     if (error) {
       console.error("Error updating comment:", error.message);
     } else {
-      // queryClient.invalidateQueries(["comments", contentId]); 타입에러 관련 일단 빼고 나중에 다시 추가
       setEditCommentId(null);
       setNewComment("");
     }
@@ -59,7 +58,6 @@ const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) =>
     if (error) {
       console.error("Error deleting comment:", error.message);
     } else {
-      // queryClient.invalidateQueries(["comments", contentId]);
     }
   };
 
