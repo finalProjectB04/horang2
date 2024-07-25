@@ -1,19 +1,24 @@
+"use client";
+
 import { Comments } from "@/types/Comments.types";
 import { fetchSessionData } from "@/utils/fetchSession";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
+import DetailPagePagination from "./DetailPagePagination";
 
 interface DetailPagePostListProps {
   contentId: string;
 }
+const ITEMS_PER_PAGE = 10;
 
 const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) => {
   const supabase = createClient();
   const queryClient = useQueryClient();
   const [editCommentId, setEditCommentId] = useState<string | null>(null);
   const [newComment, setNewComment] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
 
   const {
     data: sessionData,
@@ -28,12 +33,17 @@ const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) =>
     data: commentData,
     isLoading: pendingComments,
     error: commentError,
-  } = useQuery<Comments[], Error, Comments[]>({
-    queryKey: ["comments", contentId],
+  } = useQuery({
+    queryKey: ["comments", contentId, page],
     queryFn: async () => {
-      const { data, error } = await supabase.from("Comments").select("*").eq("content_id", contentId);
+      const { data, error, count } = await supabase
+        .from("Comments")
+        .select("*", { count: "exact" })
+        .eq("content_id", contentId)
+        .range((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE - 1);
+
       if (error) throw new Error(error.message);
-      return data;
+      return { comments: data, totalCount: count };
     },
   });
 
@@ -58,7 +68,6 @@ const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) =>
 
     if (error) {
       console.error("Error deleting comment:", error.message);
-    } else {
     }
   };
 
@@ -79,10 +88,12 @@ const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) =>
     return <h1>에러가 발생했습니다: {commentError.message}</h1>;
   }
 
+  const totalPages = Math.ceil((commentData?.totalCount || 0) / ITEMS_PER_PAGE);
+
   return (
     <div className="mt-4 max-w-[1440px] mx-auto">
-      {commentData &&
-        commentData.map((comment: Comments, index) => (
+      {commentData?.comments &&
+        commentData.comments.map((comment: Comments, index) => (
           <div
             className="p-4 border border-gray-300 rounded-lg flex flex-col items-start mx-auto mb-4"
             key={comment.comment_id ? comment.comment_id : `comment-${index}`}
@@ -123,6 +134,7 @@ const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) =>
             </div>
           </div>
         ))}
+      <DetailPagePagination totalPages={totalPages} page={page} setPage={setPage} />
     </div>
   );
 };
