@@ -11,32 +11,41 @@ export type Database = {
     Tables: {
       Comments: {
         Row: {
+          avartar_url: string | null
           comment: string | null
           comment_id: string
           content_id: string | null
           content_type_id: string | null
           created_at: string
+          user_email: string | null
           user_id: string | null
+          user_profile_url: string | null
         }
         Insert: {
+          avartar_url?: string | null
           comment?: string | null
           comment_id?: string
           content_id?: string | null
           content_type_id?: string | null
           created_at?: string
+          user_email?: string | null
           user_id?: string | null
+          user_profile_url?: string | null
         }
         Update: {
+          avartar_url?: string | null
           comment?: string | null
           comment_id?: string
           content_id?: string | null
           content_type_id?: string | null
           created_at?: string
+          user_email?: string | null
           user_id?: string | null
+          user_profile_url?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "comments_user_id_fkey"
+            foreignKeyName: "Comments_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "Users"
@@ -46,29 +55,41 @@ export type Database = {
       }
       Likes: {
         Row: {
+          address: string | null
           content_id: string | null
           content_type_id: string | null
           created_at: string
+          image_url: string | null
           like_id: string
+          tel: string | null
+          title: string | null
           user_id: string | null
         }
         Insert: {
+          address?: string | null
           content_id?: string | null
           content_type_id?: string | null
           created_at?: string
+          image_url?: string | null
           like_id?: string
+          tel?: string | null
+          title?: string | null
           user_id?: string | null
         }
         Update: {
+          address?: string | null
           content_id?: string | null
           content_type_id?: string | null
           created_at?: string
+          image_url?: string | null
           like_id?: string
+          tel?: string | null
+          title?: string | null
           user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "likes_user_id_fkey"
+            foreignKeyName: "Likes_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "Users"
@@ -78,31 +99,31 @@ export type Database = {
       }
       Post: {
         Row: {
-          created_at: string
+          created_at: string | null
           id: string
           img_url: string | null
           modified_at: string | null
           post_content: string | null
           post_title: string | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           id?: string
           img_url?: string | null
           modified_at?: string | null
           post_content?: string | null
           post_title?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           id?: string
           img_url?: string | null
           modified_at?: string | null
           post_content?: string | null
           post_title?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
@@ -119,33 +140,33 @@ export type Database = {
           comment_content: string | null
           created_at: string
           post_comment_id: string
-          post_id: string
-          user_id: string
+          post_id: string | null
+          user_id: string | null
         }
         Insert: {
           comment_content?: string | null
           created_at?: string
           post_comment_id?: string
-          post_id: string
-          user_id: string
+          post_id?: string | null
+          user_id?: string | null
         }
         Update: {
           comment_content?: string | null
           created_at?: string
           post_comment_id?: string
-          post_id?: string
-          user_id?: string
+          post_id?: string | null
+          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "post_comments_post_id_fkey"
+            foreignKeyName: "Post_comments_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
             referencedRelation: "Post"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "post_comments_user_id_fkey"
+            foreignKeyName: "Post_comments_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "Users"
@@ -155,30 +176,30 @@ export type Database = {
       }
       Post_likes: {
         Row: {
-          post_id: string
-          post_likesld: string
-          user_id: string
+          post_id: string | null
+          post_likeId: string
+          user_id: string | null
         }
         Insert: {
-          post_id: string
-          post_likesld?: string
-          user_id: string
+          post_id?: string | null
+          post_likeId?: string
+          user_id?: string | null
         }
         Update: {
-          post_id?: string
-          post_likesld?: string
-          user_id?: string
+          post_id?: string | null
+          post_likeId?: string
+          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "post_Likes_post_id_fkey"
+            foreignKeyName: "Post_likes_post_id_fkey"
             columns: ["post_id"]
             isOneToOne: false
             referencedRelation: "Post"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "post_Likes_user_id_fkey"
+            foreignKeyName: "Post_likes_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "Users"
@@ -197,7 +218,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          id?: string
+          id: string
           profile_url?: string | null
           user_address?: string | null
           user_email?: string | null

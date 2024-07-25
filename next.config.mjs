@@ -5,12 +5,14 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "**.unsplash.com",
-        port: "",
       },
       {
         protocol: "http",
         hostname: "tong.visitkorea.or.kr",
-        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "crjcsxutfsroqsqumefz.supabase.co",
       },
     ],
   },
