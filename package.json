@@ -13,6 +13,7 @@
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.4",
     "@tanstack/react-query": "^5.51.9",
+    "add": "^2.0.6",
     "axios": "^1.7.2",
     "immer": "^10.1.1",
     "next": "14.2.5",
@@ -21,6 +22,7 @@
     "react-dom": "^18",
     "react-kakao-maps-sdk": "^1.1.27",
     "swiper": "^11.1.5",
+    "yarn": "^1.22.22",
     "zustand": "^4.5.4"
   },
   "devDependencies": {

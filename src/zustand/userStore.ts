@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { devtools } from "zustand/middleware";
 
 type UserState = {
   id: string | null;
@@ -11,19 +11,12 @@ type UserState = {
 };
 
 export const useUserStore = create<UserState>()(
-  devtools(
-    persist(
-      (set) => ({
-        id: null,
-        user_email: null,
-        user_nickname: null,
-        profile_url: null,
-        setUser: (id, user_email, user_nickname, profile_url) => set({ id, user_email, user_nickname, profile_url }),
-        clearUser: () => set({ id: null, user_email: null, user_nickname: null, profile_url: null }),
-      }),
-      {
-        name: "user-storage", // key 이름
-      },
-    ),
-  ),
+  devtools((set) => ({
+    id: null,
+    user_email: null,
+    user_nickname: null,
+    profile_url: null,
+    setUser: (id, user_email, user_nickname, profile_url) => set({ id, user_email, user_nickname, profile_url }),
+    clearUser: () => set({ id: null, user_email: null, user_nickname: null, profile_url: null }),
+  })),
 );
