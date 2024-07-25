@@ -81,6 +81,12 @@ const LikeBtn: React.FC<LikeBtnProps> = ({ contentId, imageUrl, contentTypeId, t
 
   const addMutation = useMutation({
     mutationFn: async () => {
+      // 나중에 모달로 띄우고 로그인 페이지로 라우터 쓰거나..기타 활용해볼것.
+      if (!userId) {
+        alert("로그인 후 이용해 주세요.");
+        throw new Error("세션 정보가 없습니다.");
+      }
+
       const { error } = await supabase.from("Likes").insert([
         {
           user_id: userId,
@@ -110,7 +116,7 @@ const LikeBtn: React.FC<LikeBtnProps> = ({ contentId, imageUrl, contentTypeId, t
 
   useEffect(() => {
     if (data) {
-      const result = data.find((item: any) => item.user_id === userId);
+      const result = data.find((item) => item.user_id === userId);
       setLiked(!!result);
       setLikeCount(data.length);
     }

@@ -1,10 +1,12 @@
 "use client";
 
 import { ContentItem } from "@/types/ContentItem.type";
+import { fetchSessionData } from "@/utils/fetchSession";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import DetailPageAddPost from "./_components/DetailPageAddPost";
 import LikeBtn from "./_components/DetailPageLikeButton";
 import KakaoMap from "./_components/KakaoMap";
 import KakaoShareButton from "./_components/KakaoShareButton";
@@ -36,6 +38,15 @@ const DetailPage = () => {
   const handleShowMore = () => {
     setShowMore(!showMore);
   };
+
+  const {
+    data: session,
+    isLoading: sessionLoading,
+    error: sessionError,
+  } = useQuery({
+    queryKey: ["session"],
+    queryFn: fetchSessionData,
+  });
 
   const {
     data: contentItemData,
@@ -112,7 +123,7 @@ const DetailPage = () => {
         </div>
       </section>
       {contentItemData.data.overview && (
-        <section className="w-full max-w-[720px] mt-4 text-left">
+        <section className="w-full max-w-[720px] mt-4 text-left py-10">
           <div>
             <h1 className="text-center text-3xl">overview:</h1>
             <div>
@@ -132,8 +143,11 @@ const DetailPage = () => {
           </div>
         </section>
       )}
-      <section className="w-full flex justify-center mt-4">
+      <section className="w-full flex justify-center mt-4 py-10">
         <KakaoMap mapx={parseFloat(contentItemData.data.mapx)} mapy={parseFloat(contentItemData.data.mapy)} />
+      </section>
+      <section className="w-full max-w-[840px] mt-4 py-10">
+        <DetailPageAddPost userId={session ? session.user.id : null} contentId={contentId} />
       </section>
     </main>
   );
