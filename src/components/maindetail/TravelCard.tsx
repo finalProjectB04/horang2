@@ -17,7 +17,7 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
       )}
       <div className="p-4">
         <h2 className="text-xl font-semibold mb-2 text-gray-800">{item.title}</h2>
-        <p className="text-gray-600 text-sm">{item.addr1 || "Address not available"}</p>
+        <p className="text-gray-600 text-sm">{item.addr1 || null}</p>
       </div>
     </div>
   );

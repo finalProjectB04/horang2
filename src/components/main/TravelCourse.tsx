@@ -3,19 +3,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useMemo } from "react";
 import { ApiInformation } from "@/types/Main";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Autoplay, Pagination } from "swiper/modules";
-import ListTitle from "../common/ListTitle";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-
-const fetchTravelCourse = async (): Promise<ApiInformation[]> => {
-  const response = await fetch("/api/main/Tour/travelCourse");
-  if (!response.ok) {
-    throw new Error("error");
-  }
-  return response.json();
-};
+import { MainListTitle } from "../common/MainListTitle";
+import { MainTravelSlider } from "./swiper/TravelSlider";
+import { FetchTravelCourse } from "@/app/api/main/Tour/AllFetch/travelcourse/route";
 
 export const TravelCourse = () => {
   const [displayCount, setDisplayCount] = useState(25);
@@ -26,10 +17,10 @@ export const TravelCourse = () => {
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["travel"],
-    queryFn: fetchTravelCourse,
+    queryFn: FetchTravelCourse,
   });
 
-  const sortedTravelCourse = useMemo(() => {
+  const sortedTravel = useMemo(() => {
     if (!travelCourse) return [];
 
     // 데이터를 먼저 섞습니다 (Fisher-Yates 알고리즘 사용)
@@ -59,42 +50,8 @@ export const TravelCourse = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 ">
-      <ListTitle TitleName="여행추천" onClick={() => router.push("/travelCourse")} />
-
-      <Swiper
-        modules={[Pagination, A11y, Autoplay]}
-        spaceBetween={20}
-        slidesPerView={4}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
-        onAutoplay={(swiper) => {
-          swiper.slideTo(swiper.activeIndex + 4);
-        }}
-        className="rounded-lg shadow-xl"
-      >
-        {sortedTravelCourse.map((item) => (
-          <SwiperSlide className="bg-gray-100" key={item.contentid}>
-            {item.firstimage ? (
-              <Image
-                src={item.firstimage}
-                alt={item.title}
-                width={300}
-                height={300}
-                className="w-full h-48 object-cover"
-              />
-            ) : (
-              <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500">No Image Available</span>
-              </div>
-            )}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2 text-gray-800">{item.title}</h2>
-                <p className="text-gray-600 text-sm">{item.addr1 || "Address not available"}</p>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <MainListTitle TitleName={`여행코스 추천`} onClick={() => router.push("/travelCourse")} />
+      <MainTravelSlider travel={sortedTravel} />
     </div>
   );
 };

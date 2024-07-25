@@ -1,5 +1,6 @@
 "use client";
 
+import { FetchTravel } from "@/app/api/main/Tour/AllFetch/travel/route";
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 import { SearchBar } from "@/components/maindetail/SearchBar";
@@ -8,14 +9,6 @@ import { ApiInformation } from "@/types/Main";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useMemo, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-
-const fetchTravel = async (): Promise<ApiInformation[]> => {
-  const response = await fetch("/api/main/Tour/travel");
-  if (!response.ok) {
-    throw new Error("Failed to fetch travel data");
-  }
-  return response.json();
-};
 
 const Travel = () => {
   const [displayCount, setDisplayCount] = useState(10);
@@ -28,7 +21,7 @@ const Travel = () => {
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["travel"],
-    queryFn: fetchTravel,
+    queryFn: FetchTravel,
   });
 
   const filteredTravel = useMemo(() => {

@@ -1,24 +1,31 @@
 "use client";
+
+import { DetailTitle } from "@/components/maindetail/DetailTitle";
+import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
+import { SearchBar } from "@/components/maindetail/SearchBar";
+import { TravelCard } from "@/components/maindetail/TravelCard";
 import { ApiInformation } from "@/types/Main";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import React, { useMemo, useState } from "react";
-
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useState, useMemo, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 const fetchHotel = async (): Promise<ApiInformation[]> => {
-  const res = await fetch("/api/main/Tour/hotel");
-  if (!res) {
+  const response = await fetch("/api/main/Tour/hotel");
+  if (!response.ok) {
     throw new Error("error");
   }
-  return res.json();
+  return response.json();
 };
-const Page = () => {
-  const [serachTerm, setSerachTerm] = useState("");
+
+const Hotel = () => {
+  const [displayCount, setDisplayCount] = useState(10);
+  const [searchTerm, setSearchTerm] = useState("");
+  const { ref, inView } = useInView();
+
   const {
     data: hotel,
-    isPending,
-    isError,
+    isLoading,
+    error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["hotel"],
     queryFn: fetchHotel,
@@ -26,47 +33,60 @@ const Page = () => {
 
   const filteredHotel = useMemo(() => {
     if (!hotel) return [];
-    return hotel.filter((item) => item.title.toLowerCase().includes(serachTerm.toLowerCase()));
-  }, [hotel, serachTerm]);
+    return hotel
+      .filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()))
+      .sort((a, b) => {
+        if (a.firstimage && !b.firstimage) return -1;
+        if (!a.firstimage && b.firstimage) return 1;
+        return 0;
+      });
+  }, [hotel, searchTerm]);
 
-  if (isPending) {
-    return <div>isPending</div>;
-  }
-  if (isError) {
-    return <div>isError</div>;
-  }
+  const displayedHotel = useMemo(() => {
+    return filteredHotel.slice(0, displayCount);
+  }, [filteredHotel, displayCount]);
+
+  useEffect(() => {
+    if (inView) {
+      setDisplayCount((prevCount) => prevCount + 10);
+    }
+  }, [inView]);
+
+  if (isLoading)
+    return (
+      <div>
+        <div className="flex flex-col justify-center items-center h-screen">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-orange-500"></div>
+          <p className="text-xl font-semibold mt-4 text-gray-700">불러오는 중입니다...</p>
+        </div>
+      </div>
+    );
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
-      <div>
-        <input
-          type="text"
-          value={serachTerm}
-          onChange={(e) => setSerachTerm(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
+    <>
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-      <Swiper spaceBetween={30} slidesPerView={4} direction={"horizontal"}>
-        {filteredHotel.map((item) => (
-          <SwiperSlide key={item.contentid}>
-            <div className="flex flex-col items-center">
-              <Image
-                src={item.firstimage}
-                alt={item.title}
-                width={200}
-                height={200}
-                objectFit="cover"
-                className="rounded-lg shadow-md"
-              />
-              <p>{item.addr1}</p>
-              <p className="mt-2 text-center font-semibold">{item.title}</p>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+      <div className="container mx-auto px-4 py-8 relative">
+        <div className="flex my-6 gap-3">
+          <DetailTitle />
+
+          <h3>숙소 추천</h3>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {displayedHotel.map((item) => (
+            <TravelCard key={item.contentid} item={item} />
+          ))}
+        </div>
+        {displayedHotel.length < filteredHotel.length && (
+          <div ref={ref} className="py-4 text-center">
+            Loading more...
+          </div>
+        )}
+        <ScrollToTopButton />
+      </div>
+    </>
   );
 };
 
-export default Page;
+export default Hotel;
