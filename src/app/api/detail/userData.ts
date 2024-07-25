@@ -1,31 +1,39 @@
-// import { supabase } from "@/utils/supabase/client";
+import { supabase } from "@/utils/supabase/client";
 
-// export interface User {
-//   id: string;
-//   profile_url: string;
-//   user_nickname: string;
-//   user_email: string;
-// }
+export interface User {
+  id: string;
+  profile_url: string;
+  user_nickname: string;
+  user_email: string;
+}
 
-// export const fetchUserData = async (userId: string): Promise<User | null> => {
-//   try {
-//     const { data, error } = await supabase
-//       .from("Users") // 제네릭 타입 제거
-//       .select("*")
-//       .eq("id", userId)
-//       .single();
+// fetchUserData.ts 파일 혹은 적절한 위치에
+export const fetchUserData = async (email: string): Promise<User | null> => {
+  try {
+    const { data, error } = await supabase
+      .from("Users")
+      .select("id, profile_url, user_nickname, user_email")
+      .eq("user_email", email) // user_email 컬럼을 기준으로 검색
+      .single();
 
-//     if (error) {
-//       console.error("Error fetching user data:", error);
-//       return null;
-//     }
+    if (error) {
+      console.error("Error fetching user data:", error);
+      return null;
+    }
 
-//     // 타입 단언을 통해 반환
-//     return data as User | null;
-//   } catch (error) {
-//     console.error("Error in fetchUserData function:", error);
-//     throw error;
-//   }
-// };
+    if (!data) {
+      console.error("No user data found");
+      return null;
+    }
 
-// 유저 정보 불러오기 중 이 부분은 쓸모 없어 보여서 나중에 제거 할 것 같아서 주석 처리 했습니다 필요 하신 분은 얘기해주세요
+    return {
+      id: data.id,
+      profile_url: data.profile_url,
+      user_nickname: data.user_nickname,
+      user_email: data.user_email,
+    };
+  } catch (error) {
+    console.error("Error in fetchUserData function:", error);
+    throw error;
+  }
+};
