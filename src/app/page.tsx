@@ -1,11 +1,9 @@
 "use client";
 import { Travel } from "@/components/main/Travel";
 import Control from "@/components/main/Control";
-
 import { MainImage } from "@/components/main/image/MainImage";
-import { MidImage } from "@/components/main/image/MidImage";
-import { TravelCourseImage } from "@/components/main/image/TravelCourseImage";
 import { TravelCourse } from "@/components/main/TravelCourse";
+import { Leports } from "@/components/main/Leports";
 
 const Home = () => {
   return (
@@ -13,7 +11,7 @@ const Home = () => {
       <MainImage />
       <Control />
       <Travel></Travel>
-
+      <Leports />
       <TravelCourse />
     </div>
   );

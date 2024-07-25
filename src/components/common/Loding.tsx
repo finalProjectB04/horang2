@@ -1,6 +1,6 @@
 import React from "react";
 
-const Loding = () => {
+export const Loding = () => {
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-orange-500"></div>
@@ -8,5 +8,3 @@ const Loding = () => {
     </div>
   );
 };
-
-export default Loding;

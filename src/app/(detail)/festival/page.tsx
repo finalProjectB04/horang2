@@ -1,5 +1,6 @@
 "use client";
 
+import { Loding } from "@/components/common/Loding";
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 import { SearchBar } from "@/components/maindetail/SearchBar";
@@ -52,15 +53,7 @@ const Festival = () => {
     }
   }, [inView]);
 
-  if (isLoading)
-    return (
-      <div>
-        <div className="flex flex-col justify-center items-center h-screen">
-          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-orange-500"></div>
-          <p className="text-xl font-semibold mt-4 text-gray-700">불러오는 중입니다...</p>
-        </div>
-      </div>
-    );
+  if (isLoading) return <Loding />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
