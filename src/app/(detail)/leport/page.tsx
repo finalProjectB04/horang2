@@ -1,52 +1,78 @@
 "use client";
 
 import { FetchLeports } from "@/app/api/main/Tour/AllFetch/leports/route";
-import { SearchBarButton } from "@/components/maindetail/SearchBarButton";
+import { Loding } from "@/components/common/Loding";
+import { DetailTitle } from "@/components/maindetail/DetailTitle";
+import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
+import { SearchBar } from "@/components/maindetail/SearchBar";
+import { TravelCard } from "@/components/maindetail/TravelCard";
 import { ApiInformation } from "@/types/Main";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import React, { useMemo, useState } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
-const Page = () => {
-  const [inputTerm, setInputTerm] = useState(""); // 입력 중인 검색어
-  const [searchTerm, setSearchTerm] = useState(""); // 실제 검색에 사용되는 검색어
+const Leports = () => {
+  const [displayCount, setDisplayCount] = useState(10);
+  const [searchTerm, setSearchTerm] = useState("");
+  const { ref, inView } = useInView();
+
   const {
     data: leports,
-    isPending,
-    isError,
-  } = useQuery<ApiInformation[]>({
+    isLoading,
+    error,
+  } = useQuery<ApiInformation[], Error>({
     queryKey: ["leports"],
     queryFn: FetchLeports,
   });
 
   const filteredLeports = useMemo(() => {
     if (!leports) return [];
-    return leports.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    return leports
+      .filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()))
+      .sort((a, b) => {
+        if (a.firstimage && !b.firstimage) return -1;
+        if (!a.firstimage && b.firstimage) return 1;
+        return 0;
+      });
   }, [leports, searchTerm]);
 
-  const handleSearch = () => {
-    setSearchTerm(inputTerm);
-  };
+  const displayedLeports = useMemo(() => {
+    return filteredLeports.slice(0, displayCount);
+  }, [filteredLeports, displayCount]);
 
-  if (isPending) {
-    return <div>로딩</div>;
-  }
-  if (isError) {
-    return <div>에러</div>;
-  }
+  useEffect(() => {
+    if (inView) {
+      setDisplayCount((prevCount) => prevCount + 10);
+    }
+  }, [inView]);
+
+  if (isLoading) return <Loding />;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
-      <SearchBarButton searchTerm={inputTerm} setSearchTerm={setInputTerm} onSearch={handleSearch} />
-      {filteredLeports.map((item) => (
-        <div key={item.contentid} className="container mx-auto px-4 py-8 relative">
-          <Image src={item.firstimage} alt="가게이미지" width={300} height={300} className=" w-full object-cover" />
-          <p>{item.title}</p>
-          <p>{item.addr1}</p>
+    <>
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+      <div className="container mx-auto px-4 py-8 relative">
+        <div className="flex my-6 gap-3">
+          <DetailTitle />
+
+          <h3>숙소 추천</h3>
         </div>
-      ))}
-    </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {displayedLeports.map((item) => (
+            <TravelCard key={item.contentid} item={item} />
+          ))}
+        </div>
+        {displayedLeports.length < filteredLeports.length && (
+          <div ref={ref} className="py-4 text-center">
+            Loading more...
+          </div>
+        )}
+        <ScrollToTopButton />
+      </div>
+    </>
   );
 };
 
-export default Page;
+export default Leports;

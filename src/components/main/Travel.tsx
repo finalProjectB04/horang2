@@ -10,6 +10,7 @@ import { FetchTravel } from "@/app/api/main/Tour/AllFetch/travel/route";
 
 export const Travel = () => {
   const [displayCount, setDisplayCount] = useState(25);
+
   const router = useRouter();
   const {
     data: travel,
@@ -31,6 +32,7 @@ export const Travel = () => {
     }
 
     // 섞인 데이터를 이미지 유무에 따라 정렬하고 displayCount만큼 잘라냅니다
+
     return shuffled
       .sort((a, b) => {
         if (a.firstimage && !b.firstimage) return -1;
@@ -41,7 +43,12 @@ export const Travel = () => {
   }, [travel, displayCount]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex flex-col justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-orange-500"></div>
+        <p className="text-xl font-semibold mt-4 text-gray-700">불러오는 중입니다...</p>
+      </div>
+    );
   }
 
   if (error) {

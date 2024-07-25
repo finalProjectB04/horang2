@@ -12,6 +12,7 @@ export const MainTravelSlider = ({ travel }: TravelSliderProps) => (
     modules={[A11y, Autoplay]}
     spaceBetween={20}
     slidesPerView={4}
+    slidesPerGroup={4}
     autoplay={{ delay: 5000, disableOnInteraction: false }}
     className="rounded-lg "
   >

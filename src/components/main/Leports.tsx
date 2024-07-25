@@ -8,7 +8,6 @@ import { A11y, Autoplay, Grid, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { MainListTitle } from "../common/MainListTitle";
 import { useRouter } from "next/navigation";
-import { TravelCourseImage } from "./image/TravelCourseImage";
 
 export const Leports = () => {
   const [displayCount, setDisplayCount] = useState(25);
@@ -45,8 +44,6 @@ export const Leports = () => {
     <div className="container mx-auto px-4 py-8">
       <MainListTitle TitleName={`레포츠 추천`} onClick={() => router.push("/leport")} />
       <div className="flex gap-6 h-[700px]">
-        {" "}
-        {/* 전체 컨테이너 높이 설정 */}
         <Swiper
           modules={[Grid, A11y, Autoplay]}
           spaceBetween={10}
@@ -56,12 +53,12 @@ export const Leports = () => {
             fill: "row",
           }}
           autoplay={{ delay: 5000, disableOnInteraction: false }}
-          className="rounded-lg h-full w-1/2" // 높이를 부모에 맞추고 너비 설정
+          className="rounded-lg h-full w-1/2"
         >
           {sortedLeports.map((item) => (
             <SwiperSlide key={item.contentid} className="h-[340px]">
               <div className="relative bg-white rounded-lg overflow-hidden shadow-md h-full">
-                <div className="h-[200px] relative">
+                <div className="h-[240px] relative">
                   {item.firstimage ? (
                     <Image src={item.firstimage} alt={item.title} layout="fill" objectFit="cover" />
                   ) : (
@@ -84,7 +81,7 @@ export const Leports = () => {
                     </svg>
                   </div>
                 </div>
-                <div className="p-4 h-[140px] overflow-hidden">
+                <div className="p-4 h-[80px] overflow-hidden">
                   <h2 className="text-lg font-semibold mb-2 text-gray-800 line-clamp-2">{item.title}</h2>
                   <p className="text-gray-600 text-sm line-clamp-2">{item.addr1 || "Address not available"}</p>
                 </div>
@@ -93,16 +90,10 @@ export const Leports = () => {
           ))}
         </Swiper>
         <div className="flex flex-col gap-6 w-1/2 h-full">
-          {" "}
-          {/* 이미지 컨테이너 높이 및 너비 조정 */}
           <div className="h-[584px] relative rounded-lg overflow-hidden">
-            {" "}
-            {/* 첫 번째 이미지 컨테이너 */}
             <Image src="/assets/images/ex4.png" alt="profile" layout="fill" objectFit="cover" />
           </div>
           <div className="h-[94px] relative rounded-lg overflow-hidden">
-            {" "}
-            {/* 두 번째 이미지 컨테이너 */}
             <Image src="/assets/images/ex5.png" alt="profile" layout="fill" objectFit="cover" />
           </div>
         </div>
