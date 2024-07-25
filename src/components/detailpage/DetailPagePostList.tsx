@@ -2,6 +2,7 @@ import { Comments } from "@/types/Comments.types";
 import { fetchSessionData } from "@/utils/fetchSession";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import { useState } from "react";
 
 interface DetailPagePostListProps {
@@ -79,25 +80,39 @@ const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) =>
   }
 
   return (
-    <div className="mt-4 max-w-4xl mx-auto">
-      <h1>DetailPagePostList</h1>
-
+    <div className="mt-4 max-w-[1440px] mx-auto">
       {commentData &&
         commentData.map((comment: Comments, index) => (
           <div
-            className="p-4 border border-gray-300 rounded-lg flex items-center-4 max-w-4xl mx-auto"
+            className="p-4 border border-gray-300 rounded-lg flex flex-col items-start mx-auto mb-4"
             key={comment.comment_id ? comment.comment_id : `comment-${index}`}
           >
-            <div>
-              <span className="ml-2">{comment.user_email} 님</span>
+            <div className="flex items-center w-full">
+              <Image
+                src="/assets/images/profile_ex.png"
+                alt="유저 프로필 사진"
+                width={45}
+                height={45}
+                className="mr-4"
+              />
+              <div>
+                <h1 className="font-bold py-2">작성자: {comment.user_email} 님</h1>
+                <h2 className="py-2">{comment.created_at}</h2>
+              </div>
+            </div>
+            <div className="ml-12 mt-2 w-full">
               {editCommentId === comment.comment_id ? (
                 <div>
-                  <textarea value={newComment} onChange={(e) => setNewComment(e.target.value)} />
+                  <textarea
+                    value={newComment}
+                    onChange={(event) => setNewComment(event.target.value)}
+                    className="w-full p-2 border rounded"
+                  />
                   <button onClick={() => handleUpdate(comment.comment_id)}>저장</button>
                   <button onClick={() => setEditCommentId(null)}>취소</button>
                 </div>
               ) : (
-                <p>{comment.comment}</p>
+                <p className="py-2">{comment.comment}</p>
               )}
               {sessionData && sessionData.user.id === comment.user_id && (
                 <div>

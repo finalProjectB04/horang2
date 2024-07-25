@@ -147,7 +147,7 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
 
   return (
     <button onClick={handleLikeBtn} disabled={!userId}>
-      <Image src={likeImage} alt={liked ? "Unlike" : "Like"} width={50} height={50} />
+      <Image src={likeImage} alt={liked ? "Unlike" : "Like"} width={70} height={70} />
     </button>
   );
 };

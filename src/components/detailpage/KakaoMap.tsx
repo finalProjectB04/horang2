@@ -18,7 +18,6 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
   const latitude = mapy;
 
   useEffect(() => {
-    console.log("useEffect started");
     const script = document.createElement("script");
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&autoload=false`;
     script.async = true;
@@ -65,8 +64,8 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
 
   return (
     <>
-      <div style={{ width: "80%", height: "500px", position: "relative" }}>
-        <h1 className="text-center">Kakao Map</h1>
+      <div style={{ width: "100%", height: "500px", position: "relative" }}>
+        <h1 className="item-start py-7 font-extrabold text-2xl">위치</h1>
         <div id="map" style={{ width: "100%", height: "100%" }}></div>
       </div>
     </>

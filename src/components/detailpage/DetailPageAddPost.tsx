@@ -58,7 +58,7 @@ const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId
   };
 
   return (
-    <main className="mt-4 max-w-4xl mx-auto">
+    <main className="mt-4 max-w-[1440px] mx-auto">
       {isPending && <div>프로필 정보를 불러오는 중...</div>}
 
       {sessionData && (

@@ -3,6 +3,7 @@
 import DetailPageAddPost from "@/components/detailpage/DetailPageAddPost";
 import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
 import DetailPagePostList from "@/components/detailpage/DetailPagePostList";
+import DetailPageSwiper from "@/components/detailpage/DetailPageSwiper";
 import KakaoMap from "@/components/detailpage/KakaoMap";
 import KakaoShareButton from "@/components/detailpage/KakaoShareButton";
 import LinkUrlButton from "@/components/detailpage/LinkUrlButton";
@@ -36,6 +37,12 @@ const DetailPage = () => {
     contentId = contentId.replace(/^\[|\]$/g, "");
   }
 
+  const splitText = (text: string, chunkSize: number) => {
+    const regex = new RegExp(`(.{1,${chunkSize}})`, "g");
+    const matched = text.match(regex);
+    return matched ? matched.join("\n") : "";
+  };
+
   const handleShowMore = () => {
     setShowMore(!showMore);
   };
@@ -51,7 +58,7 @@ const DetailPage = () => {
 
   const {
     data: contentItemData,
-    isPending,
+    isPending: pendingContentItem,
     error,
   } = useQuery<ContentItem, Error>({
     queryKey: ["contentItem", contentId],
@@ -61,12 +68,13 @@ const DetailPage = () => {
         throw new Error("데이터를 불러올 수 없습니다");
       }
       const data = await response.json();
+
       return data as ContentItem;
     },
     enabled: !!contentId,
   });
 
-  if (isPending) {
+  if (pendingContentItem) {
     return <div>불러오는중...</div>;
   }
 
@@ -75,15 +83,12 @@ const DetailPage = () => {
   }
 
   const homepageLink = contentItemData.data.homepage ? parseHTMLString(contentItemData.data.homepage) : null;
+  const formattedOverview = contentItemData.data.overview ? splitText(contentItemData.data.overview, 60) : "";
 
   return (
     <main className="max-w-[1440px] mx-auto grid justify-items-center">
-      <section>
-        {contentItemData.data.firstimage && (
-          <Image src={contentItemData.data.firstimage} alt="First Image" width={1200} height={350} priority />
-        )}
-      </section>
-      <section className="flex justify-between items-center w-full max-w-[1200px] mt-4">
+      <DetailPageSwiper contentItemData={contentItemData} />
+      <section className="flex justify-between items-center w-full max-w-[1440px] mt-4">
         <div className="text-left">
           <div className="text-4xl font-bold">{contentItemData.data.title}</div>
         </div>
@@ -100,21 +105,21 @@ const DetailPage = () => {
           />
         </div>
       </section>
-      <section className="w-full max-w-[1200px] mt-4">
+      <section className="w-full max-w-[1440px] mt-4">
         <div className="text-left">
-          <div className="flex item-center gap-6">
+          <div className="flex item-center gap-6 py-2">
             <Image src="/assets/images/smallMaker.png" alt="장소명" width={10} height={10} />
             <strong>장소명 :</strong> {contentItemData.data.telname}
           </div>
-          <div className="flex item-center gap-6">
+          <div className="flex item-center gap-6 py-2">
             <Image src="/assets/images/smallMaker.png" alt="주소" width={10} height={10} />
             <strong>주소:</strong> {contentItemData.data.addr1}
           </div>
-          <div className="flex item-center gap-6">
+          <div className="flex item-center gap-6 py-2">
             <Image src="/assets/images/smallMaker.png" alt="tel" width={10} height={10} />
             <strong>tel:</strong> {contentItemData.data.tel}
           </div>
-          <div className="flex item-center gap-6">
+          <div className="flex item-center gap-6 py-2">
             <Image src="/assets/images/smallMaker.png" alt="homepage" width={10} height={10} />
             <strong>homepage: </strong>
             {homepageLink && (
@@ -126,19 +131,18 @@ const DetailPage = () => {
         </div>
       </section>
       {contentItemData.data.overview && (
-        <section className="w-full max-w-[1200px] mt-4 text-left py-10">
-          <div>
-            <h1 className="text-center text-3xl">overview:</h1>
-            <div>
-              {showMore ? (
-                <p>{contentItemData.data.overview}</p>
-              ) : (
-                <p>{contentItemData.data.overview.substring(0, 100)}...</p>
-              )}
+        <section className="w-full max-w-[1440px] mt-4 text-left py-10">
+          <div className="text-start">
+            <h1 className="text-3xl font-bold py-5">overview:</h1>
+            <div style={{ whiteSpace: "pre-wrap" }}>
+              {showMore ? <p>{formattedOverview}</p> : <p>{formattedOverview.substring(0, 200)}...</p>}
             </div>
             {contentItemData.data.overview.length > 100 && (
               <div className="flex justify-center mt-2">
-                <button onClick={handleShowMore} className="px-4 py-2 bg-slate-200 text-gray-950 rounded">
+                <button
+                  onClick={handleShowMore}
+                  className="px-9 py-3 bg-slate-200 text-orange-600 font-bold bg-white rounded-lg border border-orange-300"
+                >
                   {showMore ? "접기" : "더보기"}
                 </button>
               </div>
@@ -146,10 +150,10 @@ const DetailPage = () => {
           </div>
         </section>
       )}
-      <section className="w-full flex justify-center mt-4 py-10">
+      <section className="w-full [1440px] flex justify-center mt-4 py-10">
         <KakaoMap mapx={parseFloat(contentItemData.data.mapx)} mapy={parseFloat(contentItemData.data.mapy)} />
       </section>
-      <section className="w-full max-w-[840px] mt-4 py-10">
+      <section className="w-full max-w-[1440px] mt-4 py-10">
         <DetailPageAddPost
           userId={session ? session.user.id : null}
           contentId={contentId}
