@@ -10,7 +10,6 @@ import { FetchTravel } from "@/app/api/main/Tour/AllFetch/travel/route";
 
 export const Travel = () => {
   const [displayCount, setDisplayCount] = useState(25);
-
   const router = useRouter();
   const {
     data: travel,
@@ -24,14 +23,11 @@ export const Travel = () => {
   const sortedTravel = useMemo(() => {
     if (!travel) return [];
 
-    // 데이터를 먼저 섞습니다 (Fisher-Yates 알고리즘 사용)
     const shuffled = [...travel];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-
-    // 섞인 데이터를 이미지 유무에 따라 정렬하고 displayCount만큼 잘라냅니다
 
     return shuffled
       .sort((a, b) => {
