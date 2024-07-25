@@ -3,7 +3,7 @@ import ListTitle from "@/components/common/ListTitle";
 import React from "react";
 
 const MyPost: React.FC = () => {
-  const handleGoMyPosts = () => {
+  const handleGoMyPosts = (): void => {
     console.log("동작");
   };
 

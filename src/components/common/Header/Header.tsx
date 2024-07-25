@@ -37,13 +37,13 @@ const Header = () => {
   const { data: session, refetch } = useQuery<Session | null>({
     queryKey: ["session"],
     queryFn: fetchSessionData,
-    initialData: () => {
-      if (typeof window !== "undefined") {
-        const session = localStorage.getItem("supabaseSession");
-        return session ? JSON.parse(session) : null;
-      }
-      return null;
-    },
+    // initialData: () => {
+    //   if (typeof window !== "undefined") {
+    //     const session = localStorage.getItem("supabaseSession");
+    //     return session ? JSON.parse(session) : null;
+    //   }
+    //   return null;
+    // },
     refetchOnWindowFocus: true,
     refetchOnMount: true,
   });
@@ -72,7 +72,7 @@ const Header = () => {
         <div className="flex-grow flex items-center">
           <div className="flex-shrink-0">
             <Link href="/">
-              <Image src="/images/logo.png" alt="MyLogo" width={100} height={40} className="cursor-pointer" />
+              <Image src="/assets/images/logo.png" alt="MyLogo" width={100} height={40} className="cursor-pointer" />
             </Link>
           </div>
           <nav className="ml-auto flex items-center space-x-4">

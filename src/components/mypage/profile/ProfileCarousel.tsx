@@ -27,9 +27,9 @@ const ProfileCarousel: React.FC = () => {
         <Image
           src="/assets/images/korea/korea1.png"
           alt="Korea Travel Destination"
-          layout="fill"
-          objectFit="cover"
           className="w-full h-full"
+          width={600}
+          height={200}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </SwiperSlide>
@@ -38,9 +38,9 @@ const ProfileCarousel: React.FC = () => {
           <Image
             src={`/assets/images/korea/korea${image}.jpg`}
             alt="Korea Travel Destination"
-            layout="fill"
-            objectFit="cover"
             className="w-full h-full"
+            width={600}
+            height={200}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </SwiperSlide>
