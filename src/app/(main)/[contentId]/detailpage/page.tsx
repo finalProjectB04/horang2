@@ -107,19 +107,19 @@ const DetailPage = () => {
       <section className="w-full max-w-[1200px] mt-4">
         <div className="text-left">
           <div className="flex item-center gap-6">
-            <Image src="/assets/images/vector.png" alt="장소명" width={10} height={10} />
+            <Image src="/assets/images/smallMaker.png" alt="장소명" width={10} height={10} />
             <strong>장소명 :</strong> {contentItemData.data.telname}
           </div>
           <div className="flex item-center gap-6">
-            <Image src="/assets/images/vector.png" alt="주소" width={10} height={10} />
+            <Image src="/assets/images/smallMaker.png" alt="주소" width={10} height={10} />
             <strong>주소:</strong> {contentItemData.data.addr1}
           </div>
           <div className="flex item-center gap-6">
-            <Image src="/assets/images/vector.png" alt="tel" width={10} height={10} />
+            <Image src="/assets/images/smallMaker.png" alt="tel" width={10} height={10} />
             <strong>tel:</strong> {contentItemData.data.tel}
           </div>
           <div className="flex item-center gap-6">
-            <Image src="/assets/images/vector.png" alt="homepage" width={10} height={10} />
+            <Image src="/assets/images/smallMaker.png" alt="homepage" width={10} height={10} />
             <strong>homepage: </strong>
             {homepageLink && (
               <a href={homepageLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
