@@ -1,5 +1,3 @@
-"use client";
-
 interface SignUpFormProps {
   email: string;
   setEmail: (email: string) => void;
