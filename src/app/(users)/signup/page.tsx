@@ -107,6 +107,11 @@ const SignUpPage = () => {
             error={error}
             handleSignUp={handleSignUp}
           />
+          <div className="flex items-center justify-between mt-4">
+            <div className="flex-1 border-t border-gray-300"></div>
+            <span className="text-gray-500 mx-4">OR</span>
+            <div className="flex-1 border-t border-gray-300"></div>
+          </div>
           <SocialLoginButtons />
           <SignUpLinks />
         </div>
