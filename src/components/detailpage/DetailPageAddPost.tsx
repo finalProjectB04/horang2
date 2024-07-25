@@ -55,7 +55,6 @@ const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId
       setComment("");
       alert("댓글 작성 성공!");
     }
-    console.log("🚀 ~ handleAddComment ~ setComment:", setComment);
   };
 
   return (

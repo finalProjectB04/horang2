@@ -23,7 +23,6 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&autoload=false`;
     script.async = true;
     document.head.appendChild(script);
-    console.log("Script element created and appended", script);
 
     script.onload = () => {
       window.kakao.maps.load(() => {
@@ -55,15 +54,11 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
       });
     };
 
-    script.onerror = () => {
-      console.error("Failed to load Kakao script");
-    };
+    script.onerror = () => {};
 
     return () => {
-      console.log("Cleanup script");
       if (script.parentNode) {
         script.parentNode.removeChild(script);
-        console.log("Script removed");
       }
     };
   }, [longitude, latitude]);

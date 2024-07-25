@@ -34,7 +34,6 @@ const DetailPage = () => {
   if (contentId) {
     contentId = decodeURIComponent(contentId);
     contentId = contentId.replace(/^\[|\]$/g, "");
-    console.log("🚀 ~ DetailPage ~ contentId:", contentId);
   }
 
   const handleShowMore = () => {
@@ -43,7 +42,7 @@ const DetailPage = () => {
 
   const {
     data: session,
-    isLoading: sessionLoading,
+    isPending: sessionLoading,
     error: sessionError,
   } = useQuery({
     queryKey: ["session"],
@@ -74,17 +73,14 @@ const DetailPage = () => {
   if (error) {
     return <h1>에러가 발생했습니다: {error.message}</h1>;
   }
-  console.log("🚀 ~ DetailPage ~ contentItemData:", contentItemData);
 
   const homepageLink = contentItemData.data.homepage ? parseHTMLString(contentItemData.data.homepage) : null;
-  //홈페이지 링크 때문에 추가된 파트
-  //homepage 호출값이 있으면 parseHTMLString 함수를 호출하고 그렇지 않으면 안쓰게 해서 에러안나게 처리
+
   return (
     <main className="max-w-[1440px] mx-auto grid justify-items-center">
       <section>
         {contentItemData.data.firstimage && (
           <Image src={contentItemData.data.firstimage} alt="First Image" width={1200} height={350} priority />
-          //너비 720에서 900으로 바꿈(다른대안 필요)
         )}
       </section>
       <section className="flex justify-between items-center w-full max-w-[1200px] mt-4">

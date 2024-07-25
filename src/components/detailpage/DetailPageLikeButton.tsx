@@ -34,7 +34,7 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
       }
     };
     fetchSession();
-  }, []);
+  }, []); //급하게 pr 올리느라 못바꿨는데 추후 이것도 useQuery로 바꿀게요
 
   const ensureUserExists = async (userId: string) => {
     const { data: user, error } = await supabase.from("Users").select("id").eq("id", userId).single();
