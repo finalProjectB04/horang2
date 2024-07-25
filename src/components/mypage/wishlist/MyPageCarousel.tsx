@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 
@@ -10,6 +8,10 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { useUserStore } from "@/zustand/userStore";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import LoadingPage from "@/app/loading";
+import ErrorPage from "@/app/error";
+import axios from "axios";
 
 type Like = {
   id: string;
@@ -27,78 +29,64 @@ interface MyPageCarouselProps {
 
 const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
   const { id } = useUserStore();
-  const [likes, setLikes] = useState<Like[]>([]);
   const router = useRouter();
 
   let contentType: number | undefined;
 
-  if (carouselName === "전체") {
-    contentType = undefined;
-  } else if (carouselName === "여행지") {
-    contentType = 12;
-  } else if (carouselName === "액티비티") {
-    contentType = 28;
-  } else if (carouselName === "숙박") {
-    contentType = 32;
-  } else if (carouselName === "음식점") {
-    contentType = 39;
+  switch (carouselName) {
+    case "전체":
+      contentType = undefined;
+      break;
+    case "여행지":
+      contentType = 12;
+      break;
+    case "액티비티":
+      contentType = 28;
+      break;
+    case "숙박":
+      contentType = 32;
+      break;
+    case "음식점":
+      contentType = 39;
+      break;
+    default:
+      contentType = undefined;
   }
 
-  useEffect(() => {
-    const fetchLikes = async () => {
-      try {
-        const response = await fetch(`/api/likes?id=${id}`, { cache: "force-cache" });
-        const data = await response.json();
-        setLikes(data);
-      } catch (error) {
-        console.error("Error fetching likes:", error);
+  const {
+    data: likes = [],
+    error,
+    isPending,
+  } = useQuery<Like[]>({
+    queryKey: ["likes", id, contentType, carouselName],
+    queryFn: async () => {
+      const url = contentType ? `/api/filterlikes?id=${id}&contentType=${contentType}` : `/api/likes?id=${id}`;
+
+      const cacheKey = `likes-${id}-${contentType || ""}`;
+      const cachedData = localStorage.getItem(cacheKey);
+      if (cachedData) {
+        return JSON.parse(cachedData);
       }
-    };
-    const fetchFilterLikes = async () => {
-      try {
-        const response = await fetch(`/api/filterlikes?id=${id}&contentType=${contentType}`, { cache: "force-cache" });
-        const data = await response.json();
-        setLikes(data);
-      } catch (error) {
-        console.error("Error fetching likes:", error);
-      }
-    };
 
-    if (carouselName === "전체") {
-      fetchLikes();
-    } else {
-      fetchFilterLikes();
-    }
-  }, [id, contentType]);
+      const response = await axios.get(url, {
+        headers: { "Cache-Control": "max-age=3600" },
+      });
 
-  // axios 캐시 처리 문제로 임시 fetch로 바꿈
-  // useEffect(() => {
-  //   const fetchLikes = async () => {
-  //     try {
-  //       const response = await instance.get(`/likes?id=${id}`);
-  //       setLikes(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching likes:", error);
-  //     }
-  //   };
+      localStorage.setItem(cacheKey, JSON.stringify(response.data));
+      return response.data;
+    },
+    enabled: !!id,
+  });
 
-  //   const fetchFilterLikes = async () => {
-  //     try {
-  //       const response = await instance.get(`/filterlikes?id=${id}&contentType=${contentType}`);
-  //       setLikes(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching likes:", error);
-  //     }
-  //   };
+  if (isPending) {
+    return <LoadingPage />;
+  }
 
-  //   if (carouselName === "전체") {
-  //     fetchLikes();
-  //   } else {
-  //     fetchFilterLikes();
-  //   }
-  // }, [id, contentType]);
+  if (error) {
+    return <ErrorPage />;
+  }
 
-  if (!likes || likes.length === 0) {
+  if (likes.length === 0) {
     return (
       <div className="h-full flex items-center justify-center text-center font-semibold text-3xl">
         좋아요한 장소가 없습니다.
@@ -116,7 +104,7 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
         className="mySwiper h-full"
         style={{ width: "100%", height: "100%" }}
       >
-        {likes?.map((like) => (
+        {likes.map((like: Like) => (
           <SwiperSlide
             key={`${like.id}-${like.content_id}`}
             className="h-full relative cursor-pointer"

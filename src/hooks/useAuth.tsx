@@ -72,7 +72,7 @@ const useAuth = () => {
   const handleUpadatePassword = async () => {
     const { error: updateError } = await supabase.auth.updateUser({ password: confirmPassword });
     if (!updateError) {
-      alert("비밀번호 변경이 완료되었습니다.");
+      alert("변경이 완료되었습니다.");
       setPassword("");
       setConfirmPassword("");
     } else {
