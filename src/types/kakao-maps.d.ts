@@ -18,6 +18,7 @@ declare namespace kakao.maps {
 
   type Marker = {
     setMap(map: Map | null): void;
+    setImage(image: Image): void;
   };
 
   type InfoWindow = {
