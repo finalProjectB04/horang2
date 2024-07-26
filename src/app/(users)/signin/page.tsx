@@ -7,6 +7,7 @@ import Link from "next/link";
 import KakaoLoginButton from "@/components/common/loginbutton/kakaologin/KakaoLoginButton";
 import GoogleLoginButton from "@/components/common/loginbutton/googleLoginbutton";
 import { useQueryClient } from "@tanstack/react-query";
+import { useUserStore } from "@/zustand/userStore";
 
 // Supabase 클라이언트 초기화
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
@@ -17,13 +18,14 @@ const LoginPage = () => {
   const [error, setError] = useState(""); // 에러 메시지 상태
   const router = useRouter(); // 라우터 훅
   const queryClient = useQueryClient(); // React Query 클라이언트
+  const setUser = useUserStore((state) => state.setUser); // Zustand 스토어에서 setUser 함수 가져오기
 
   // 로그인 처리 함수
   const handleLogin = async () => {
     setError(""); // 에러 메시지 초기화
 
     // 로그인 요청
-    const { data, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+    const { data: sessionData, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
 
     if (loginError) {
       setError(`로그인 실패: ${loginError.message}`);
@@ -31,9 +33,9 @@ const LoginPage = () => {
       return;
     }
 
-    if (data && data.session) {
+    if (sessionData && sessionData.session) {
       // 로그인 성공 시 세션 정보를 로컬 스토리지에 저장
-      localStorage.setItem("supabaseSession", JSON.stringify(data.session));
+      localStorage.setItem("supabaseSession", JSON.stringify(sessionData.session));
 
       // 세션 쿼리 무효화
       queryClient.invalidateQueries({
@@ -41,7 +43,26 @@ const LoginPage = () => {
         exact: true,
       });
 
-      router.push("/"); // 로그인 성공 후 홈 페이지로 리디렉션
+      // 사용자 데이터 가져오기
+      const userId = sessionData.user.id;
+      const { data: userData, error: fetchError } = await supabase
+        .from("Users")
+        .select("id, user_email, user_nickname, profile_url, user_address")
+        .eq("id", userId)
+        .single();
+
+      if (fetchError) {
+        console.error("Error fetching user data:", fetchError);
+        return;
+      }
+
+      if (userData) {
+        // Zustand 스토어에 사용자 정보 저장
+        setUser(userData.id, userData.user_email, userData.user_nickname, userData.profile_url);
+
+        // 홈 페이지로 리디렉션
+        router.push("/");
+      }
     }
   };
 

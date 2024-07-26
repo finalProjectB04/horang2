@@ -1,7 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["tong.visitkorea.or.kr"],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "tong.visitkorea.or.kr",
+      },
+      {
+        protocol: "https",
+        hostname: "crjcsxutfsroqsqumefz.supabase.co",
+      },
+    ],
   },
 };
 

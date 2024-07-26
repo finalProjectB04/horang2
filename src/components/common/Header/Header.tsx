@@ -37,10 +37,13 @@ const Header = () => {
   const { data: session, refetch } = useQuery<Session | null>({
     queryKey: ["session"],
     queryFn: fetchSessionData,
-    initialData: () => {
-      const session = localStorage.getItem("supabaseSession");
-      return session ? JSON.parse(session) : null;
-    },
+    // initialData: () => {
+    //   if (typeof window !== "undefined") {
+    //     const session = localStorage.getItem("supabaseSession");
+    //     return session ? JSON.parse(session) : null;
+    //   }
+    //   return null;
+    // },
     refetchOnWindowFocus: true,
     refetchOnMount: true,
   });
@@ -64,19 +67,19 @@ const Header = () => {
   }
 
   return (
-    <header className="bg-gray-800 text-white py-6">
+    <header className="bg-gray-800 text-white py-4">
       <div className="container mx-auto max-w-[1440px] flex items-center px-4">
         <div className="flex-grow flex items-center">
           <div className="flex-shrink-0">
             <Link href="/">
-              <Image src="/images/logo.png" alt="MyLogo" width={100} height={40} className="cursor-pointer" />
+              <Image src="/assets/images/logo.svg" alt="MyLogo" width={140} height={40} className="cursor-pointer" />
             </Link>
           </div>
           <nav className="ml-auto flex items-center space-x-4">
             <Link href="/travel-recommendations">
               <span className="hover:text-gray-400 cursor-pointer">여행지 추천</span>
             </Link>
-            <Link href="/hot-places">
+            <Link href="/location">
               <span className="hover:text-gray-400 cursor-pointer">내 근처 핫 플레이스</span>
             </Link>
             <Link href="/custom-itinerary">

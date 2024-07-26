@@ -8,6 +8,7 @@ import Image from "next/image";
 import KakaoLoginButton from "@/components/common/loginbutton/kakaologin/KakaoLoginButton";
 import GoogleLoginButton from "@/components/common/loginbutton/googleLoginbutton/GoogleLoginButton";
 import { useQueryClient } from "@tanstack/react-query";
+import { useUserStore } from "@/zustand/userStore";
 
 // Supabase 클라이언트 초기화
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
@@ -31,6 +32,7 @@ const SignUpPage = () => {
   const [profileImageUrl, setProfileImageUrl] = useState(DEFAULT_PROFILE_IMAGE_URL); // 프로필 이미지 URL 상태
   const router = useRouter(); // 라우터 훅
   const queryClient = useQueryClient(); // React Query 클라이언트
+  const setUser = useUserStore((state) => state.setUser); // Zustand 스토어에서 setUser 함수 가져오기
 
   // 프로필 이미지 클릭 핸들러
   const handleImageClick = () => {
@@ -134,6 +136,24 @@ const SignUpPage = () => {
       // 로그인 후 로컬 스토리지에 세션 정보 저장
       if (signInData.session) {
         localStorage.setItem("supabaseSession", JSON.stringify(signInData.session));
+
+        // 사용자 데이터 가져오기
+        const userId = signInData.user.id;
+        const { data: userData, error: fetchError } = await supabase
+          .from("Users")
+          .select("id, user_email, user_nickname, profile_url, user_address")
+          .eq("id", userId)
+          .single();
+
+        if (fetchError) {
+          console.error("Error fetching user data:", fetchError);
+          return;
+        }
+
+        if (userData) {
+          // Zustand 스토어에 사용자 정보 저장
+          setUser(userData.id, userData.user_email, userData.user_nickname, userData.profile_url);
+        }
       }
 
       // 세션 쿼리 무효화
