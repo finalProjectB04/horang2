@@ -70,7 +70,7 @@ const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId
       <div className="p-4 border border-orange-300 rounded-lg flex items-center">
         <textarea
           value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(event) => setComment(event.target.value)}
           placeholder={userId ? "댓글을 작성하세요" : "댓글 작성은 로그인한 유저만 가능합니다"}
           className={`w-full p-2 rounded-l-lg resize-none ${
             !userId ? "bg-gray-200 text-gray-500" : "bg-white text-black"
