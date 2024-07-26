@@ -1,6 +1,6 @@
 "use client";
 
-import DetailPageAddPost from "@/components/detailpage/DetailPageAddPost";
+import DetailPageAddComment from "@/components/detailpage/DetailPageAddComment";
 import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
 import DetailPagePostList from "@/components/detailpage/DetailPagePostList";
 import DetailPageSwiper from "@/components/detailpage/DetailPageSwiper";
@@ -154,7 +154,7 @@ const DetailPage = () => {
         <KakaoMap mapx={parseFloat(contentItemData.data.mapx)} mapy={parseFloat(contentItemData.data.mapy)} />
       </section>
       <section className="w-full max-w-[1440px] mt-4 py-10">
-        <DetailPageAddPost
+        <DetailPageAddComment
           userId={session ? session.user.id : null}
           contentId={contentId}
           contenTypeId={contentItemData.data.contenttypeid}

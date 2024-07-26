@@ -143,7 +143,7 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
     }
   };
 
-  const likeImage = liked ? "/assets/images/Property 1=Default.png" : "/assets/images/Property 1=fail.png";
+  const likeImage = liked ? "/assets/images/successLikeIcon.png" : "/assets/images/defaultLikeIcon.png";
 
   return (
     <button onClick={handleLikeBtn} disabled={!userId}>

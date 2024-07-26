@@ -1,12 +1,6 @@
 "use client";
 import { useEffect } from "react";
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
-
 interface KakaoMapProps {
   mapx: number;
   mapy: number;

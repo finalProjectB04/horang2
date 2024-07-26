@@ -14,7 +14,7 @@ interface DetailPageAddPostProps {
   userEmail: string | undefined;
 }
 
-const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId, contenTypeId, userEmail }) => {
+const DetailPageAddComment: React.FC<DetailPageAddPostProps> = ({ userId, contentId, contenTypeId, userEmail }) => {
   const [comment, setComment] = useState("");
 
   const {
@@ -91,4 +91,4 @@ const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId
   );
 };
 
-export default DetailPageAddPost;
+export default DetailPageAddComment;
