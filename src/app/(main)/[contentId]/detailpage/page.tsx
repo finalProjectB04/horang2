@@ -109,7 +109,7 @@ const DetailPage = () => {
         <div className="text-left">
           <div className="flex item-center gap-6 py-2">
             <Image src="/assets/images/smallMaker.png" alt="장소명" width={10} height={10} />
-            <strong>장소명 :</strong> {contentItemData.data.telname}
+            <strong>장소명 :</strong> {contentItemData.data.title}
           </div>
           <div className="flex item-center gap-6 py-2">
             <Image src="/assets/images/smallMaker.png" alt="주소" width={10} height={10} />
@@ -141,7 +141,7 @@ const DetailPage = () => {
               <div className="flex justify-center mt-2">
                 <button
                   onClick={handleShowMore}
-                  className="px-9 py-3 bg-slate-200 text-orange-600 font-bold bg-white rounded-lg border border-orange-300"
+                  className="px-9 py-3 text-orange-600 font-bold bg-white rounded-lg border border-orange-300"
                 >
                   {showMore ? "접기" : "더보기"}
                 </button>
