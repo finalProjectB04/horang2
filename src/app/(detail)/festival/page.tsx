@@ -25,7 +25,7 @@ const Festival = () => {
 
   const {
     data: festival,
-    isLoading,
+    isPending,
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["festival"],
@@ -53,7 +53,7 @@ const Festival = () => {
     }
   }, [inView]);
 
-  if (isLoading) return <Loading />;
+  if (isPending) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

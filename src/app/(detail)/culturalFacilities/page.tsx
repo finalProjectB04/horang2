@@ -1,7 +1,6 @@
 "use client";
 
 import { Loading } from "@/components/common/Loading";
-
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 import { SearchBar } from "@/components/maindetail/SearchBar";
@@ -26,7 +25,7 @@ const CulturalFacilities = () => {
 
   const {
     data: culturalFacilities,
-    isPending,
+    isLoading,
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["culturalFacilities"],

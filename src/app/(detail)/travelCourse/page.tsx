@@ -22,7 +22,7 @@ const TravelCourse = () => {
     isPending,
     error,
   } = useQuery<ApiInformation[], Error>({
-    queryKey: ["travel"],
+    queryKey: ["travelCourse"],
     queryFn: FetchTravelCourse,
   });
 
