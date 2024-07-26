@@ -2,6 +2,9 @@ import QueryProvider from "@/provider/QueryProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+
+import "swiper/swiper-bundle.css";
+
 import Header from "@/components/common/Header";
 
 const KAKAO_API_KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
