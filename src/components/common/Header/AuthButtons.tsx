@@ -1,4 +1,3 @@
-// Importing necessary types and components
 import { Session } from "@supabase/supabase-js";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -16,10 +15,8 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ session, handleLogout }) => {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    // Render nothing or a loading state while the component is mounting
-    return null;
-  }
+  // Render null if not mounted to prevent mismatches
+  if (!mounted) return null;
 
   return (
     <div className="flex-shrink-0 flex space-x-4 ml-4">

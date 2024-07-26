@@ -9,6 +9,7 @@ import ProfileImage from "@/components/common/userspage/signuppage/ProfileImage"
 import SignUpForm from "@/components/common/userspage/signuppage/SignUpForm";
 import SignUpLinks from "@/components/common/userspage/signuppage/SignInLink";
 import SocialLoginButtons from "@/components/common/userspage/SocialLoginButtons";
+
 const DEFAULT_PROFILE_IMAGE_URL = "/assets/images/profile_ex.png";
 
 const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -31,12 +32,14 @@ const SignUpPage = () => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       setProfileImage(file);
+
       const reader = new FileReader();
       reader.onloadend = () => setProfileImageUrl(reader.result as string);
       reader.readAsDataURL(file);
     }
   };
 
+  // 회원가입 처리 함수
   const handleSignUp = async () => {
     if (!nickname) return setError("닉네임을 입력해 주세요.");
     if (!email) return setError("이메일을 입력해 주세요.");
@@ -49,8 +52,10 @@ const SignUpPage = () => {
 
     if (signUpData?.user) {
       let profileImagePath = "";
+
       if (profileImage) {
         const filePath = `${signUpData.user.id}`;
+
         const { error: uploadError } = await supabase.storage.from("profiles").upload(filePath, profileImage);
         if (uploadError) return setError(`프로필 이미지 업로드 실패: ${uploadError.message}`);
 
@@ -90,30 +95,32 @@ const SignUpPage = () => {
       <div className="flex items-center justify-center pt-10">
         <div className="bg-white p-8 rounded-[40px] border border-gray-300 w-[503px] h-[840px] flex flex-col">
           <h1 className="text-2xl font-bold mb-6 text-center">회원가입</h1>
-          <ProfileImage
-            profileImageUrl={profileImageUrl}
-            onImageClick={handleImageClick}
-            onFileChange={handleFileChange}
-          />
-          <SignUpForm
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            confirmPassword={confirmPassword}
-            setConfirmPassword={setConfirmPassword}
-            nickname={nickname}
-            setNickname={setNickname}
-            error={error}
-            handleSignUp={handleSignUp}
-          />
-          <div className="flex items-center justify-between mt-4">
-            <div className="flex-1 border-t border-gray-300"></div>
-            <span className="text-gray-500 mx-4">OR</span>
-            <div className="flex-1 border-t border-gray-300"></div>
+          <div className="space-y-4 w-[401px] mx-auto h-[740px] flex flex-col">
+            <ProfileImage
+              profileImageUrl={profileImageUrl}
+              onImageClick={handleImageClick}
+              onFileChange={handleFileChange}
+            />
+            <SignUpForm
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              confirmPassword={confirmPassword}
+              setConfirmPassword={setConfirmPassword}
+              nickname={nickname}
+              setNickname={setNickname}
+              error={error}
+              handleSignUp={handleSignUp}
+            />
+            <div className="flex items-center justify-between mt-4">
+              <div className="flex-1 border-t border-gray-300"></div>
+              <span className="text-gray-500 mx-4">OR</span>
+              <div className="flex-1 border-t border-gray-300"></div>
+            </div>
+            <SocialLoginButtons />
+            <SignUpLinks />
           </div>
-          <SocialLoginButtons />
-          <SignUpLinks />
         </div>
       </div>
     </div>

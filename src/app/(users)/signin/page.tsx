@@ -1,4 +1,3 @@
-// pages/login.tsx
 "use client";
 
 import { useState } from "react";
@@ -8,7 +7,7 @@ import EmailInput from "@/components/common/userspage/signinpage/EmailInput";
 import PasswordInput from "@/components/common/userspage/signinpage/PasswordInput";
 import LoginButton from "@/components/common/userspage/signinpage/LoginButton";
 import SocialLoginButtons from "@/components/common/userspage/SocialLoginButtons";
-import SignUpLink from "@/components/common/userspage/signinpage/SignUpLink";
+import SignInLink from "@/components/common/userspage/signinpage/SignInLink";
 import { useUserStore } from "@/zustand/userStore";
 import { supabase } from "@/utils/supabase/client";
 
@@ -25,11 +24,6 @@ const LoginPage = () => {
 
     try {
       const { data: sessionData, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
-
-      if (loginError) {
-        setError(`로그인 실패: ${loginError.message}`);
-        return;
-      }
 
       if (sessionData?.session) {
         localStorage.setItem("supabaseSession", JSON.stringify(sessionData.session));
@@ -68,7 +62,7 @@ const LoginPage = () => {
       <div className="flex items-center justify-center pt-10">
         <div className="bg-white p-8 rounded-[40px] border border-gray-300 w-[503px] h-[530px]">
           <h1 className="text-2xl font-bold mb-6 text-center">로그인</h1>
-          {error && <div className="text-red-500 mb-4">{error}</div>}
+
           <div className="space-y-4 w-[401px] mx-auto h-[740px] overflow-auto">
             <EmailInput email={email} setEmail={setEmail} />
             <PasswordInput password={password} setPassword={setPassword} />
@@ -79,7 +73,7 @@ const LoginPage = () => {
               <div className="flex-1 border-t border-gray-300"></div>
             </div>
             <SocialLoginButtons />
-            <SignUpLink />
+            <SignInLink />
           </div>
         </div>
       </div>
