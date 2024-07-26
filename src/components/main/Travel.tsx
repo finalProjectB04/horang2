@@ -9,7 +9,11 @@ import { MainTravelSlider } from "./swiper/TravelSlider";
 import { FetchTravel } from "@/app/api/main/Tour/AllFetch/travel/route";
 import { Loading } from "../common/Loading";
 
-export const Travel = () => {
+interface TravelProps {
+  searchTerm: string;
+}
+
+export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
   const [displayCount, setDisplayCount] = useState(25);
   const router = useRouter();
   const {
@@ -21,10 +25,16 @@ export const Travel = () => {
     queryFn: FetchTravel,
   });
 
-  const sortedTravel = useMemo(() => {
+  const sortedAndFilteredTravel = useMemo(() => {
     if (!travel) return [];
 
-    const shuffled = [...travel];
+    const filtered = travel.filter(
+      (item) =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.addr1.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    const shuffled = [...filtered];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -37,7 +47,7 @@ export const Travel = () => {
         return 0;
       })
       .slice(0, displayCount);
-  }, [travel, displayCount]);
+  }, [travel, displayCount, searchTerm]);
 
   if (isPending) {
     return <Loading />;
@@ -50,7 +60,7 @@ export const Travel = () => {
   return (
     <div className="container mx-auto px-4 py-8 ">
       <MainListTitle TitleName={`지금뜨는 핫플레이스`} onClick={() => router.push("/travel")} />
-      <MainTravelSlider travel={sortedTravel} />
+      <MainTravelSlider travel={sortedAndFilteredTravel} />
     </div>
   );
 };

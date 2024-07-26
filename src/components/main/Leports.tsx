@@ -9,7 +9,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { MainListTitle } from "../common/MainListTitle";
 import { useRouter } from "next/navigation";
 
-export const Leports = () => {
+interface TravelProps {
+  searchTerm: string;
+}
+export const Leports = ({ searchTerm }) => {
   const [displayCount, setDisplayCount] = useState(25);
   const router = useRouter();
   const {
@@ -23,7 +26,14 @@ export const Leports = () => {
 
   const sortedLeports = useMemo(() => {
     if (!leports) return [];
-    const shuffled = [...leports];
+
+    const filterd = leports.filter(
+      (item) =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.addr1.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    const shuffled = [...filterd];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -35,7 +45,7 @@ export const Leports = () => {
         return 0;
       })
       .slice(0, displayCount);
-  }, [leports, displayCount]);
+  }, [leports, displayCount, searchTerm]);
 
   if (isPending) return <div>Loading...</div>;
   if (error) return <div>Error</div>;

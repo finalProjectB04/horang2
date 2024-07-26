@@ -1,85 +1,73 @@
+// Page.tsx
 "use client";
 
-import { Loading } from "@/components/common/Loading";
-import { DetailTitle } from "@/components/maindetail/DetailTitle";
-import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
-import { SearchBar } from "@/components/maindetail/SearchBar";
-import { TravelCard } from "@/components/maindetail/TravelCard";
+import { SearchBarButton } from "@/components/maindetail/SearchBarButton";
 import { ApiInformation } from "@/types/Main";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo, useEffect } from "react";
-import { useInView } from "react-intersection-observer";
+import Image from "next/image";
+import React, { useMemo, useState } from "react";
 
-const fetchCulturalFacilities = async (): Promise<ApiInformation[]> => {
-  const response = await fetch("/api/main/Tour/culturalFacilities");
-  if (!response.ok) {
+const fetchLeports = async (): Promise<ApiInformation[]> => {
+  const res = await fetch("/api/main/Tour/leports");
+  if (!res.ok) {
     throw new Error("error");
   }
-  return response.json();
+  return res.json();
 };
 
-const CulturalFacilities = () => {
-  const [displayCount, setDisplayCount] = useState(10);
+const Page = () => {
+  const [inputTerm, setInputTerm] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { ref, inView } = useInView();
-
   const {
-    data: culturalFacilities,
-    isLoading,
-    error,
-  } = useQuery<ApiInformation[], Error>({
-    queryKey: ["culturalFacilities"],
-    queryFn: fetchCulturalFacilities,
+    data: leports,
+    isPending,
+    isError,
+  } = useQuery<ApiInformation[]>({
+    queryKey: ["leports"],
+    queryFn: fetchLeports,
   });
 
-  const filteredCulturalFacilities = useMemo(() => {
-    if (!culturalFacilities) return [];
-    return culturalFacilities
-      .filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()))
-      .sort((a, b) => {
-        if (a.firstimage && !b.firstimage) return -1;
-        if (!a.firstimage && b.firstimage) return 1;
-        return 0;
-      });
-  }, [culturalFacilities, searchTerm]);
+  const filteredLeports = useMemo(() => {
+    if (!leports) return [];
+    return leports.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+  }, [leports, searchTerm]);
 
-  const displayedCulturalFacilities = useMemo(() => {
-    return filteredCulturalFacilities.slice(0, displayCount);
-  }, [filteredCulturalFacilities, displayCount]);
+  const handleSearch = () => {
+    setSearchTerm(inputTerm);
+  };
 
-  useEffect(() => {
-    if (inView) {
-      setDisplayCount((prevCount) => prevCount + 10);
-    }
-  }, [inView]);
-
-  if (isLoading) return <Loading />;
-  if (error) return <div>Error: {error.message}</div>;
+  if (isPending) {
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  }
+  if (isError) {
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500">Error occurred while fetching data.</div>
+    );
+  }
 
   return (
-    <>
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
-      <div className="container mx-auto px-4 py-8 relative">
-        <div className="flex my-6 gap-3">
-          <DetailTitle />
-
-          <h3>놀거리 추천</h3>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {displayedCulturalFacilities.map((item) => (
-            <TravelCard key={item.contentid} item={item} />
+    <div className="bg-gray-100 min-h-screen">
+      <SearchBarButton searchTerm={inputTerm} setSearchTerm={setInputTerm} onSearch={handleSearch} />
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {filteredLeports.map((item) => (
+            <div
+              key={item.contentid}
+              className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105"
+            >
+              <div className="relative h-48">
+                <Image src={item.firstimage || item.firstimage2} alt={item.title} layout="fill" objectFit="cover" />
+              </div>
+              <div className="p-4">
+                <h2 className="text-xl font-semibold mb-2 text-gray-800">{item.title}</h2>
+                <p className="text-gray-600">{item.addr1}</p>
+              </div>
+            </div>
           ))}
         </div>
-        {displayedCulturalFacilities.length < filteredCulturalFacilities.length && (
-          <div ref={ref} className="py-4 text-center">
-            Loading more...
-          </div>
-        )}
-        <ScrollToTopButton />
       </div>
-    </>
+    </div>
   );
 };
 
-export default CulturalFacilities;
+export default Page;

@@ -18,10 +18,9 @@ export async function GET() {
         listYN: "Y",
         arrange: "A",
         contentTypeId: "32",
-        areaCode: "1",
       },
     });
-   
+
     if (response.data.response.body.items.item.length > 0) {
       return NextResponse.json(response.data.response.body.items.item as ApiInformation[]);
     } else {

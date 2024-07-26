@@ -18,7 +18,6 @@ export async function GET() {
         listYN: "Y",
         arrange: "A",
         contentTypeId: "14",
-        areaCode: "1",
       },
     });
 

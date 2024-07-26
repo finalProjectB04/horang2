@@ -7,8 +7,10 @@ import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
 import { FetchTravelCourse } from "@/app/api/main/Tour/AllFetch/travelcourse/route";
-
-export const TravelCourse = () => {
+interface TravelProps {
+  searchTerm: string;
+}
+export const TravelCourse = ({ searchTerm }: TravelProps) => {
   const [displayCount, setDisplayCount] = useState(25);
   const router = useRouter();
   const {
@@ -23,7 +25,13 @@ export const TravelCourse = () => {
   const sortedTravel = useMemo(() => {
     if (!travelCourse) return [];
 
-    const shuffled = [...travelCourse];
+    const filterd = travelCourse.filter(
+      (item) =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.addr1.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    const shuffled = [...filterd];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -36,7 +44,7 @@ export const TravelCourse = () => {
         return 0;
       })
       .slice(0, displayCount);
-  }, [travelCourse, displayCount]);
+  }, [travelCourse, displayCount, searchTerm]);
 
   if (isPending) {
     return <div>Loading...</div>;

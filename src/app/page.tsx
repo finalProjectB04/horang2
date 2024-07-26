@@ -4,15 +4,18 @@ import Control from "@/components/main/Control";
 import { MainImage } from "@/components/main/image/MainImage";
 import { TravelCourse } from "@/components/main/TravelCourse";
 import { Leports } from "@/components/main/Leports";
-//MainImage 검색오류입니다 신경 안쓰셔도괜찮습니다
+import { useState } from "react";
+
 const Home = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <div>
-      <MainImage />
+      <MainImage searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <Control />
-      <Travel />
-      <Leports />
-      <TravelCourse />
+      <Travel searchTerm={searchTerm} />
+      <Leports searchTerm={searchTerm} />
+      <TravelCourse searchTerm={searchTerm} />
     </div>
   );
 };
