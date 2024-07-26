@@ -1,7 +1,6 @@
 import { supabase } from "@/utils/supabase/client";
 import { User } from "@/types/User.types";
 
-// 사용자 데이터를 가져오는 함수
 export const fetchUserData = async (userId: string): Promise<User | null> => {
   try {
     const { data, error } = await supabase

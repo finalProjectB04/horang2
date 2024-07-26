@@ -14,7 +14,6 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ session, handleLogout }) => {
   const clearUser = useUserStore((state) => state.clearUser);
 
   useEffect(() => {
-    // Set the mounted state to true when the component is mounted
     setMounted(true);
   }, []);
 

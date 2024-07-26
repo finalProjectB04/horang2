@@ -4,10 +4,9 @@ import { useEffect, useRef, useState } from "react";
 
 const KAKAO_MAP_API = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
 
-// 거리 계산 함수
 const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
   const toRad = (value: number) => (value * Math.PI) / 180;
-  const R = 6371; // 지구의 반지름 (킬로미터)
+  const R = 6371;
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lon2 - lon1);
   const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
@@ -75,7 +74,7 @@ const MapComponent: React.FC = () => {
 
               kakao.maps.event.addListener(newMarker, "click", () => {
                 setSelectedSpot(spot);
-                mapInstance.setCenter(markerPosition); // 마커 클릭 시 지도 중심 이동
+                mapInstance.setCenter(markerPosition);
                 mapInstance.setLevel(4);
               });
 

@@ -62,7 +62,6 @@ const LoginPage = () => {
       <div className="flex items-center justify-center pt-10">
         <div className="bg-white p-8 rounded-[40px] border border-gray-300 w-[503px] h-[530px]">
           <h1 className="text-2xl font-bold mb-6 text-center">로그인</h1>
-
           <div className="space-y-4 w-[401px] mx-auto h-[740px] overflow-auto">
             <EmailInput email={email} setEmail={setEmail} />
             <PasswordInput password={password} setPassword={setPassword} />

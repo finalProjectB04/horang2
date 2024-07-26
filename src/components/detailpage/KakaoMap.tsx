@@ -30,8 +30,8 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
           const map = new window.kakao.maps.Map(mapContainer, mapOption);
 
           const imageSrc = "/assets/images/detailpageMarker.png";
-          const imageSize = new window.kakao.maps.Size(64, 69); // 마커 이미지 크기
-          const imageOption = { offset: new window.kakao.maps.Point(27, 69) }; // 마커 이미지 옵션
+          const imageSize = new window.kakao.maps.Size(64, 69);
+          const imageOption = { offset: new window.kakao.maps.Point(27, 69) };
 
           const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
           const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
