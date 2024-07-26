@@ -2,7 +2,8 @@
 
 import { Comments } from "@/types/Comments.types";
 import { fetchSessionData } from "@/utils/fetchSession";
-import { createClient } from "@/utils/supabase/client";
+
+import { supabase } from "@/utils/supabase/clientSsr";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
@@ -14,7 +15,6 @@ interface DetailPagePostListProps {
 const ITEMS_PER_PAGE = 10;
 
 const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) => {
-  const supabase = createClient();
   const queryClient = useQueryClient();
   const [editCommentId, setEditCommentId] = useState<string | null>(null);
   const [newComment, setNewComment] = useState<string>("");

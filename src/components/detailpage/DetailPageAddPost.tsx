@@ -1,7 +1,8 @@
 "use client";
 
 import { fetchSessionData } from "@/utils/fetchSession";
-import { createClient } from "@/utils/supabase/client";
+import { supabase } from "@/utils/supabase/clientSsr";
+
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
@@ -15,7 +16,6 @@ interface DetailPageAddPostProps {
 
 const DetailPageAddPost: React.FC<DetailPageAddPostProps> = ({ userId, contentId, contenTypeId, userEmail }) => {
   const [comment, setComment] = useState("");
-  const supabase = createClient();
 
   const {
     data: sessionData,

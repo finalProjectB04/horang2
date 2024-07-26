@@ -1,7 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 interface KakaoShareButtonProps {
   id: string;
@@ -9,23 +15,33 @@ interface KakaoShareButtonProps {
 
 const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
   const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/${id}/detailpage`;
+  const [isKakaoLoaded, setIsKakaoLoaded] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && !window.Kakao) {
-      const script = document.createElement("script");
-      script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
-      script.onload = () => {
-        window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY);
-      };
-      document.head.appendChild(script);
-    } else if (window.Kakao && !window.Kakao.isInitialized()) {
-      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY);
+    const initializeKakao = () => {
+      if (window.Kakao) {
+        if (!window.Kakao.isInitialized()) {
+          window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
+        }
+        setIsKakaoLoaded(true);
+      }
+    };
+
+    if (typeof window !== "undefined") {
+      if (window.Kakao) {
+        initializeKakao();
+      } else {
+        const script = document.createElement("script");
+        script.src = "https://developers.kakao.com/sdk/js/kakao.min.js";
+        script.onload = initializeKakao;
+        document.head.appendChild(script);
+      }
     }
   }, []);
 
   const handleShare = () => {
-    if (typeof window === "undefined" || !window.Kakao || !window.Kakao.isInitialized()) {
-      console.error("Kako SDK를 사용 할 수 없습니다.");
+    if (!isKakaoLoaded || typeof window === "undefined" || !window.Kakao || !window.Kakao.Link) {
+      console.error("Kakao SDK를 사용할 수 없습니다.");
       return;
     }
 
@@ -40,7 +56,7 @@ const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
   };
 
   return (
-    <div onClick={handleShare} className="px-4 py-2 bg-slate-200 text-gray-950 rounded">
+    <div onClick={handleShare} className="px-4 py-2 bg-slate-200 text-gray-950 rounded cursor-pointer">
       <Image src="/assets/images/KakaoShare.png" alt="이미지가 없습니다" width={55} height={55} />
     </div>
   );
