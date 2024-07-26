@@ -1,6 +1,7 @@
 export type ApiInformation = {
   addr1: string;
   addr2?: string;
+  areacode: string;
   booktour?: string;
   cat1?: string;
   cat2?: string;

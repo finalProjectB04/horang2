@@ -24,7 +24,7 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
     queryKey: ["travel"],
     queryFn: FetchTravel,
   });
-
+  console.log(travel);
   const sortedAndFilteredTravel = useMemo(() => {
     if (!travel) return [];
 
