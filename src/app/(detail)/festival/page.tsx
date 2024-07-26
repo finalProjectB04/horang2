@@ -1,6 +1,6 @@
 "use client";
 
-import { Loding } from "@/components/common/Loding";
+import { Loading } from "@/components/common/Loading";
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 import { SearchBar } from "@/components/maindetail/SearchBar";
@@ -53,7 +53,7 @@ const Festival = () => {
     }
   }, [inView]);
 
-  if (isLoading) return <Loding />;
+  if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
