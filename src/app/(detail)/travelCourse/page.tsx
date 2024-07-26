@@ -19,7 +19,7 @@ const TravelCourse = () => {
 
   const {
     data: travelCourse,
-    isLoading,
+    isPending,
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["travel"],
@@ -47,7 +47,7 @@ const TravelCourse = () => {
     }
   }, [inView]);
 
-  if (isLoading) return <Loading />;
+  if (isPending) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

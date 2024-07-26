@@ -26,7 +26,7 @@ const CulturalFacilities = () => {
 
   const {
     data: culturalFacilities,
-    isLoading,
+    isPending,
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["culturalFacilities"],
