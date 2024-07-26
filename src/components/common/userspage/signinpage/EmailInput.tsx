@@ -12,7 +12,7 @@ const EmailInput: React.FC<EmailInputProps> = ({ email, setEmail }) => (
       id="email"
       type="email"
       value={email}
-      onChange={(e) => setEmail(e.target.value)}
+      onChange={(event) => setEmail(event.target.value)}
       className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       required
     />

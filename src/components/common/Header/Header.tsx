@@ -15,13 +15,13 @@ const Header = () => {
   const { data: session, refetch } = useQuery<Session | null>({
     queryKey: ["session"],
     queryFn: fetchSessionData,
-    // initialData: () => {
-    //   if (typeof window !== "undefined") {
-    //     const session = localStorage.getItem("supabaseSession");
-    //     return session ? JSON.parse(session) : null;
-    //   }
-    //   return null;
-    // },
+    initialData: () => {
+      if (typeof window !== "undefined") {
+        const session = localStorage.getItem("supabaseSession");
+        return session ? JSON.parse(session) : null;
+      }
+      return null;
+    },
     refetchOnWindowFocus: true,
     refetchOnMount: true,
   });

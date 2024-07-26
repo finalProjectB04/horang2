@@ -15,8 +15,10 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ session, handleLogout }) => {
     setMounted(true);
   }, []);
 
-  // Render null if not mounted to prevent mismatches
-  if (!mounted) return null;
+  if (!mounted) {
+    // Render nothing or a loading state while the component is mounting
+    return null;
+  }
 
   return (
     <div className="flex-shrink-0 flex space-x-4 ml-4">
