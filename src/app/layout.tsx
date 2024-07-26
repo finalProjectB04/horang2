@@ -5,6 +5,10 @@ import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
+import "swiper/swiper-bundle.css";
+
+const KAKAO_API_KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
