@@ -46,7 +46,11 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
   }, [travel, displayCount, searchTerm]);
 
   if (isPending) {
-    return <Loading />;
+    return (
+      <div>
+        <Loading></Loading>
+      </div>
+    );
   }
 
   if (error) {

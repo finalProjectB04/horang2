@@ -2,7 +2,6 @@
 
 import { FetchLeports } from "@/app/api/main/Tour/AllFetch/leports/route";
 import { Loading } from "@/components/common/Loading";
-
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 import { SearchBar } from "@/components/maindetail/SearchBar";
@@ -53,7 +52,6 @@ const Leports = () => {
   return (
     <>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-
       <div className="container mx-auto px-4 py-8 relative">
         <div className="flex my-6 gap-3">
           <DetailTitle />
