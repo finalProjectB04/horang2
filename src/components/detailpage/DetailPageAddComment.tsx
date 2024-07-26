@@ -76,7 +76,7 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ userId, con
             !userId ? "bg-gray-200 text-gray-500" : "bg-white text-black"
           } border-none flex-grow`}
           disabled={!userId}
-          maxLength={200}
+          maxLength={1000}
         />
         <button
           onClick={handleAddComment}
