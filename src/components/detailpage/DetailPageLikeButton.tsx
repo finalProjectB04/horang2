@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { supabase } from "../common/contexts/supabase.context";
+
+import { supabase } from "@/utils/supabase/client";
 
 interface LikeBtnProps {
   contentId: string;
@@ -19,7 +20,7 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState<number>(0);
   const [userId, setUserId] = useState<string | null>(null);
-
+  //supabase ssr로 임포트하면 안되구 client 임포트 하면 좋아요 기능 작동하네요
   useEffect(() => {
     const fetchSession = async () => {
       const {
