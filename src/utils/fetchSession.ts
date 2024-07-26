@@ -1,4 +1,4 @@
-import { supabase } from "@/components/common/contexts/supabase.context";
+import { supabase } from "./supabase/client";
 
 export const fetchSessionData = async () => {
   const { data } = await supabase.auth.getSession();
