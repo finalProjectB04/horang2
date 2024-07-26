@@ -1,20 +1,28 @@
-import { supabase } from "@/components/common/contexts/supabase.context";
+import { supabase } from "@/utils/supabase/client";
+import { User } from "@/types/User.types";
 
-export interface User {
-  id: string;
-  profile_url: string;
-  user_nickname: string;
-  user_address: string;
-  user_email: string;
-}
-
+// 사용자 데이터를 가져오는 함수
 export const fetchUserData = async (userId: string): Promise<User | null> => {
-  const { data, error } = await supabase.from("Users").select("*").eq("id", userId).single();
+  try {
+    const { data, error } = await supabase
+      .from("Users")
+      .select("id, profile_url, user_nickname, user_email, created_at")
+      .eq("id", userId)
+      .single();
 
-  if (error) {
-    console.error("Error fetching user data:", error);
+    if (error) {
+      console.error("Error fetching user data:", error);
+      return null;
+    }
+
+    if (!data) {
+      console.error("No user data found.");
+      return null;
+    }
+
+    return data as User;
+  } catch (error) {
+    console.error("Error in fetchUserData function:", error);
     return null;
   }
-
-  return data as User;
 };
