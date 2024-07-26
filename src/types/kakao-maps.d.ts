@@ -5,13 +5,12 @@ declare namespace kakao.maps {
     setCenter(latlng: LatLng): void;
     setLevel(level: number): void;
     getLevel(): number;
-    setBounds(bounds: LatLngBounds): void; // 여기에 추가
+    setBounds(bounds: LatLngBounds): void;
   };
 
   type LatLngBounds = {
     contains(latlng: LatLng): boolean;
     extend(latlng: LatLng): void;
-    // 추가적인 메서드가 필요한 경우 여기에 추가할 수 있습니다.
   };
 
   type LatLng = {
