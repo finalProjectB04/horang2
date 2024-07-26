@@ -13,7 +13,7 @@ export const Travel = () => {
   const router = useRouter();
   const {
     data: travel,
-    isLoading,
+    isPending,
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["travel"],
@@ -38,7 +38,7 @@ export const Travel = () => {
       .slice(0, displayCount);
   }, [travel, displayCount]);
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className="flex flex-col justify-center items-center h-screen">
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-orange-500"></div>

@@ -13,7 +13,7 @@ export const TravelCourse = () => {
   const router = useRouter();
   const {
     data: travelCourse,
-    isLoading,
+    isPending,
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["travel"],
@@ -38,7 +38,7 @@ export const TravelCourse = () => {
       .slice(0, displayCount);
   }, [travelCourse, displayCount]);
 
-  if (isLoading) {
+  if (isPending) {
     return <div>Loading...</div>;
   }
 

@@ -14,7 +14,7 @@ export const Leports = () => {
   const router = useRouter();
   const {
     data: leports,
-    isLoading,
+    isPending,
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["leports"],
@@ -37,12 +37,12 @@ export const Leports = () => {
       .slice(0, displayCount);
   }, [leports, displayCount]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isPending) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <MainListTitle TitleName={`레포츠 추천`} onClick={() => router.push("/leport")} />
+      <MainListTitle TitleName={`액티비티 추천`} onClick={() => router.push("/leport")} />
       <div className="flex gap-6 h-[700px]">
         <Swiper
           modules={[Grid, A11y, Autoplay]}
