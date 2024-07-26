@@ -9,12 +9,12 @@ import Image from "next/image";
 import { useState } from "react";
 import DetailPagePagination from "./DetailPagePagination";
 
-interface DetailPagePostListProps {
+interface DetailPageCommentListProps {
   contentId: string;
 }
 const ITEMS_PER_PAGE = 10;
 
-const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) => {
+const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId }) => {
   const queryClient = useQueryClient();
   const [editCommentId, setEditCommentId] = useState<string | null>(null);
   const [newComment, setNewComment] = useState<string>("");
@@ -139,4 +139,4 @@ const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) =>
   );
 };
 
-export default DetailPagePostList;
+export default DetailPageCommentList;

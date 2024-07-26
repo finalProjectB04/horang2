@@ -12,6 +12,7 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
   const latitude = mapy;
 
   useEffect(() => {
+    console.log("useEffect started");
     const script = document.createElement("script");
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&autoload=false`;
     script.async = true;

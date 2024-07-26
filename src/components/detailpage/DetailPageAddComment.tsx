@@ -7,14 +7,14 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
 
-interface DetailPageAddPostProps {
+interface DetailPageAddCommentProps {
   userId: string | null;
   contentId: string;
   contenTypeId: string;
   userEmail: string | undefined;
 }
 
-const DetailPageAddComment: React.FC<DetailPageAddPostProps> = ({ userId, contentId, contenTypeId, userEmail }) => {
+const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ userId, contentId, contenTypeId, userEmail }) => {
   const [comment, setComment] = useState("");
 
   const {

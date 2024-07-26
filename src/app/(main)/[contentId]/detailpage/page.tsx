@@ -1,8 +1,8 @@
 "use client";
 
 import DetailPageAddComment from "@/components/detailpage/DetailPageAddComment";
+import DetailPageCommentList from "@/components/detailpage/DetailPageCommentList";
 import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
-import DetailPagePostList from "@/components/detailpage/DetailPagePostList";
 import DetailPageSwiper from "@/components/detailpage/DetailPageSwiper";
 import KakaoMap from "@/components/detailpage/KakaoMap";
 import KakaoShareButton from "@/components/detailpage/KakaoShareButton";
@@ -160,7 +160,7 @@ const DetailPage = () => {
           contenTypeId={contentItemData.data.contenttypeid}
           userEmail={session ? session.user.email : ""}
         />
-        <DetailPagePostList contentId={contentId} />
+        <DetailPageCommentList contentId={contentId} />
       </section>
     </main>
   );
