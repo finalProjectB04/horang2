@@ -28,11 +28,7 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
   const sortedAndFilteredTravel = useMemo(() => {
     if (!travel) return [];
 
-    const filtered = travel.filter(
-      (item) =>
-        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.addr1.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
+    const filtered = travel.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
     const shuffled = [...filtered];
     for (let i = shuffled.length - 1; i > 0; i--) {

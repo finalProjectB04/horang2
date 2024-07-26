@@ -25,11 +25,7 @@ export const TravelCourse = ({ searchTerm }: TravelProps) => {
   const sortedTravel = useMemo(() => {
     if (!travelCourse) return [];
 
-    const filterd = travelCourse.filter(
-      (item) =>
-        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.addr1.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
+    const filterd = travelCourse.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
     const shuffled = [...filterd];
     for (let i = shuffled.length - 1; i > 0; i--) {

@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 interface TravelProps {
   searchTerm: string;
 }
-export const Leports = ({ searchTerm }) => {
+export const Leports = ({ searchTerm }: TravelProps) => {
   const [displayCount, setDisplayCount] = useState(25);
   const router = useRouter();
   const {
@@ -27,11 +27,7 @@ export const Leports = ({ searchTerm }) => {
   const sortedLeports = useMemo(() => {
     if (!leports) return [];
 
-    const filterd = leports.filter(
-      (item) =>
-        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.addr1.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
+    const filterd = leports.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
     const shuffled = [...filterd];
     for (let i = shuffled.length - 1; i > 0; i--) {
