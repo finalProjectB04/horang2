@@ -22,7 +22,7 @@ const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) =>
 
   const {
     data: sessionData,
-    isLoading: pendingSessionData,
+    isPending: pendingSessionData,
     error: sessionError,
   } = useQuery({
     queryKey: ["session"],
@@ -31,7 +31,7 @@ const DetailPagePostList: React.FC<DetailPagePostListProps> = ({ contentId }) =>
 
   const {
     data: commentData,
-    isLoading: pendingComments,
+    isPending: pendingComments,
     error: commentError,
   } = useQuery({
     queryKey: ["comments", contentId, page],

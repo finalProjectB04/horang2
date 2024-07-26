@@ -1,6 +1,6 @@
 "use client";
 
-import { Loading } from "@/components/common/Loading";
+import LoadingPage from "@/app/loading";
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 import { SearchBar } from "@/components/maindetail/SearchBar";
@@ -25,7 +25,7 @@ const Festival = () => {
 
   const {
     data: festival,
-    isLoading,
+    isPending,
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["festival"],
@@ -53,7 +53,7 @@ const Festival = () => {
     }
   }, [inView]);
 
-  if (isLoading) return <Loading />;
+  if (isPending) return <LoadingPage />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

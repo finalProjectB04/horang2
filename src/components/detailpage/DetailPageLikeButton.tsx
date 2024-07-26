@@ -51,7 +51,7 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
     }
   };
 
-  const { isLoading, isError, data } = useQuery({
+  const { isPending, isError, data } = useQuery({
     queryKey: ["likes", contentId],
     queryFn: async () => {
       const { data: likes, error } = await supabase.from("Likes").select("user_id").eq("content_id", contentId);
@@ -122,7 +122,7 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
     }
   }, [data, userId]);
 
-  if (isLoading) {
+  if (isPending) {
     return <div>Loading...</div>;
   }
 

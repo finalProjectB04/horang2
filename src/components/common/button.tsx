@@ -35,7 +35,7 @@ const Button = ({
       } ${buttonWidth ? buttonWidth : null} flex items-center justify-center`}
       onClick={onClick}
     >
-      {/* <Image src={`/assets/images/Vector.png`} alt="Korea Travel Destination" width={10} height={10} className="mr-2" /> */}
+      <Image src={`/assets/images/Vector.png`} alt="Korea Travel Destination" width={10} height={10} className="mr-2" />
       <span>{buttonName}</span>
     </button>
   );

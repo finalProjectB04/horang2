@@ -1,6 +1,6 @@
 "use client";
 
-import { Loding } from "@/components/common/Loding";
+import { Loding } from "@/components/common/Loading";
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 import { SearchBar } from "@/components/maindetail/SearchBar";
@@ -25,7 +25,7 @@ const Hotel = () => {
 
   const {
     data: hotel,
-    isLoading,
+    isPending,
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["hotel"],
@@ -53,7 +53,7 @@ const Hotel = () => {
     }
   }, [inView]);
 
-  if (isLoading) return <Loding />;
+  if (isPending) return <Loding />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

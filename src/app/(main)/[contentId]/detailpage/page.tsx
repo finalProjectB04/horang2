@@ -1,5 +1,7 @@
 "use client";
 
+import ErrorPage from "@/app/error";
+import LoadingPage from "@/app/loading";
 import DetailPageAddComment from "@/components/detailpage/DetailPageAddComment";
 import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
 import DetailPagePostList from "@/components/detailpage/DetailPagePostList";
@@ -75,11 +77,11 @@ const DetailPage = () => {
   });
 
   if (pendingContentItem) {
-    return <div>불러오는중...</div>;
+    return <LoadingPage />;
   }
 
   if (error) {
-    return <h1>에러가 발생했습니다: {error.message}</h1>;
+    return <ErrorPage />;
   }
 
   const homepageLink = contentItemData.data.homepage ? parseHTMLString(contentItemData.data.homepage) : null;

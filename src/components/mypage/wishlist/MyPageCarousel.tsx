@@ -31,27 +31,20 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
   const { id } = useUserStore();
   const router = useRouter();
 
-  let contentType: number | undefined;
+  const getCarouselType = (name: string): number | undefined => {
+    const contentTypeMap: { [key: string]: number | undefined } = {
+      전체: undefined,
+      여행지: 12,
+      숙소: 32,
+      놀거리: 28,
+      음식점: 39,
+      "축제 및 행사": 15,
+    };
 
-  switch (carouselName) {
-    case "전체":
-      contentType = undefined;
-      break;
-    case "여행지":
-      contentType = 12;
-      break;
-    case "액티비티":
-      contentType = 28;
-      break;
-    case "숙박":
-      contentType = 32;
-      break;
-    case "음식점":
-      contentType = 39;
-      break;
-    default:
-      contentType = undefined;
-  }
+    return contentTypeMap[name];
+  };
+
+  const contentType = getCarouselType(carouselName);
 
   const {
     data: likes = [],
