@@ -1,7 +1,8 @@
 "use client";
 
 import { FetchLeports } from "@/app/api/main/Tour/AllFetch/leports/route";
-import { Loding } from "@/components/common/Loding";
+import { Loading } from "@/components/common/Loading";
+
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 import { SearchBar } from "@/components/maindetail/SearchBar";
@@ -18,7 +19,7 @@ const Leports = () => {
 
   const {
     data: leports,
-    isLoading,
+    isPending,
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["leports"],
@@ -46,7 +47,7 @@ const Leports = () => {
     }
   }, [inView]);
 
-  if (isLoading) return <Loding />;
+  if (isPending) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -57,7 +58,7 @@ const Leports = () => {
         <div className="flex my-6 gap-3">
           <DetailTitle />
 
-          <h3>숙소 추천</h3>
+          <h3>액티비티 추천</h3>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {displayedLeports.map((item) => (
