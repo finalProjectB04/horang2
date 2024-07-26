@@ -14,7 +14,7 @@ export const MainTravelSlider = ({ travel }: TravelSliderProps) => (
     slidesPerView={4}
     slidesPerGroup={4}
     autoplay={{ delay: 5000, disableOnInteraction: false }}
-    className="rounded-lg "
+    className="rounded-lg w-full h-full"
   >
     {travel.map((item) => (
       <SwiperSlide key={item.contentid}>
