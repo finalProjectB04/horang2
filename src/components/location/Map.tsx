@@ -17,18 +17,13 @@ const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number): nu
 
 const MapComponent: React.FC = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const infoContainer = useRef<HTMLDivElement>(null);
   const { latitude, longitude } = useLocationStore();
   const { data: spots, isPending, error } = useTouristSpots(latitude ?? 0, longitude ?? 0);
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [markers, setMarkers] = useState<kakao.maps.Marker[]>([]);
   const [visibleSpots, setVisibleSpots] = useState<TouristSpot[]>([]);
   const [selectedSpot, setSelectedSpot] = useState<TouristSpot | null>(null);
-  const [myLocationOverlay, setMyLocationOverlay] = useState<kakao.maps.CustomOverlay | null>(null);
-
-  // 이전 지도 상태를 저장하기 위한 상태
-  const [previousCenter, setPreviousCenter] = useState<kakao.maps.LatLng | null>(null);
-  const [previousLevel, setPreviousLevel] = useState<number | null>(null);
+  const [currentOverlay, setCurrentOverlay] = useState<kakao.maps.CustomOverlay | null>(null); // 현재 오버레이 상태 관리
 
   useEffect(() => {
     if (latitude === null || longitude === null) return;
@@ -48,19 +43,8 @@ const MapComponent: React.FC = () => {
           const mapInstance = new kakao.maps.Map(mapContainer.current, mapOptions);
           setMap(mapInstance);
 
-          // 내 위치 오버레이 설정
-          const myLocationCustomMarker = `
-            <div class="bg-red-200 w-5 h-5 rounded-full flex items-center justify-center">
-              <div class="bg-red-500 w-3 h-3 border border-white rounded-full"></div>
-            </div>
-          `;
-
-          const myLocationOverlayInstance = new kakao.maps.CustomOverlay({
-            position: new kakao.maps.LatLng(latitude, longitude),
-            content: myLocationCustomMarker,
-          });
-          myLocationOverlayInstance.setMap(mapInstance);
-          setMyLocationOverlay(myLocationOverlayInstance); // 상태로 관리
+          // 마커 이미지 URL
+          const markerImageUrl = "/assets/images/marker.svg";
 
           const createMarkers = () => {
             if (!spots) return [];
@@ -68,8 +52,7 @@ const MapComponent: React.FC = () => {
             return spots.map((spot) => {
               const markerPosition = new kakao.maps.LatLng(spot.mapy, spot.mapx);
               const isSelected = selectedSpot?.contentid === spot.contentid; // 선택된 마커 확인
-              const markerImageUrl = "/assets/images/marker.svg";
-              const markerSize = isSelected ? new kakao.maps.Size(36, 60) : new kakao.maps.Size(26, 40); // 크기 조정
+              const markerSize = new kakao.maps.Size(36, 60); // 마커 크기
 
               const markerImage = new kakao.maps.MarkerImage(markerImageUrl, markerSize);
 
@@ -78,28 +61,31 @@ const MapComponent: React.FC = () => {
                 image: markerImage,
               });
 
-              const infowindow = new kakao.maps.InfoWindow({
-                content: `<div class="p-1">${spot.title}</div>`,
-              });
-
-              kakao.maps.event.addListener(newMarker, "mouseover", () => infowindow.open(mapInstance, newMarker));
-              kakao.maps.event.addListener(newMarker, "mouseout", () => {
-                infowindow.close();
-              });
+              // 커스텀 오버레이 HTML 템플릿
+              const overlayContent = `
+                <div class="bg-white border border-gray-300 rounded-lg shadow-lg p-4 text-center">
+                  <img src="${spot.firstimage || "/assets/images/null_image.svg"}" alt="${
+                spot.title
+              }" class="w-32 h-32 object-cover rounded mb-2" />
+                  <div class="font-semibold text-gray-800">${spot.title}</div>
+                </div>
+              `;
 
               kakao.maps.event.addListener(newMarker, "click", () => {
-                // 선택된 마커의 이전 지도 상태를 저장
-                if (mapInstance) {
-                  setPreviousCenter(mapInstance.getCenter());
-                  setPreviousLevel(mapInstance.getLevel());
+                // 이전 오버레이 제거
+                if (currentOverlay) {
+                  currentOverlay.setMap(null);
                 }
-                setSelectedSpot(spot);
-                if (map) {
-                  const position = new kakao.maps.LatLng(spot.mapy, spot.mapx);
-                  map.setCenter(position); // 마커 클릭 시 지도 중심 이동
-                  map.setLevel(4);
-                  infowindow.open(map, newMarker); // 클릭 시 infowindow 열기
-                }
+
+                // 새로운 오버레이 생성 및 설정
+                const newOverlay = new kakao.maps.CustomOverlay({
+                  position: markerPosition,
+                  content: overlayContent,
+                  yAnchor: 1,
+                });
+                newOverlay.setMap(mapInstance);
+                setCurrentOverlay(newOverlay); // 현재 오버레이 상태 업데이트
+                setSelectedSpot(spot); // 선택된 관광지 설정
               });
 
               return newMarker;
@@ -157,7 +143,15 @@ const MapComponent: React.FC = () => {
         document.head.removeChild(script);
       }
     };
-  }, [latitude, longitude, spots, selectedSpot]);
+  }, [latitude, longitude, spots]);
+
+  useEffect(() => {
+    if (map && selectedSpot) {
+      const position = new window.kakao.maps.LatLng(selectedSpot.mapy, selectedSpot.mapx);
+      map.setCenter(position);
+      map.setLevel(4);
+    }
+  }, [map, selectedSpot]);
 
   const moveToCurrentLocation = () => {
     if (map && latitude !== null && longitude !== null) {
@@ -168,47 +162,34 @@ const MapComponent: React.FC = () => {
   };
 
   const handleBackToList = () => {
-    if (map && previousCenter && previousLevel !== null) {
-      map.setCenter(previousCenter); // 이전 중심 위치로 이동
-      map.setLevel(previousLevel); // 이전 확대 수준으로 변경
-    }
     setSelectedSpot(null);
+    if (map) {
+      map.setCenter(new kakao.maps.LatLng(latitude!, longitude!));
+      map.setLevel(4);
+    }
   };
 
   if (isPending) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  if (error) return <div>Error occurred: {error.message}</div>;
 
   return (
-    <div className="relative">
-      <div ref={mapContainer} className="w-full h-96" />
+    <div className="relative h-full">
+      <div ref={mapContainer} style={{ width: "100%", height: "100%" }} className="absolute top-0 left-0" />
       <button
         onClick={moveToCurrentLocation}
-        className="absolute top-2 left-2 z-10 bg-white text-white p-3 rounded-full flex items-center shadow-xl"
+        className="absolute right-2 bottom-2 px-4 py-2 bg-blue-500 text-white rounded"
       >
-        <img src="/assets/images/my_location.svg" alt="내 위치" className="w-4 h-4" />
+        현재 위치로 이동
       </button>
-      <div className="p-4 bg-white mt-4 z-10 rounded-t-lg shadow">
-        <div ref={infoContainer}>
+      <div className="absolute top-0 left-0 w-full h-full overflow-auto">
+        <div className="p-4">
           {selectedSpot ? (
             <div className="flex flex-col md:flex-row">
-              <div className="flex-1">
-                <h4 className="text-[28px] font-bold">{selectedSpot.title}</h4>
-                <p className="text-gray-400 text-[16px]">
-                  {getDistance(latitude!, longitude!, selectedSpot.mapy, selectedSpot.mapx).toFixed(2)} km
-                </p>
-                <p className="text-gray-700 mt-2">{selectedSpot.address}</p>
+              <div className="flex-1 md:hidden">
                 {selectedSpot.firstimage ? (
-                  <img
-                    src={selectedSpot.firstimage}
-                    alt={selectedSpot.title}
-                    className="w-auto h-60 mt-2 md:hidden rounded"
-                  />
+                  <img src={selectedSpot.firstimage} alt={selectedSpot.title} className="w-auto h-60 mt-2 rounded" />
                 ) : (
-                  <img
-                    src="/assets/images/null_image.svg"
-                    alt="No Image"
-                    className="w-auto h-60 mt-2 md:hidden rounded"
-                  />
+                  <img src="/assets/images/null_image.svg" alt="No Image" className="w-auto h-60 mt-2 rounded" />
                 )}
                 <p className="text-gray-700 mt-2">{selectedSpot.tel}</p>
                 <button onClick={handleBackToList} className="mt-4 px-4 py-2 bg-[#FF5C00] text-white rounded">
@@ -239,7 +220,7 @@ const MapComponent: React.FC = () => {
                   <li
                     key={index}
                     data-title={spot.title}
-                    className={`flex items-center mb-6 pb-2 border-b border-gray-200 cursor-pointer`} // mb-6로 변경하여 목록 간의 여백 넓힘
+                    className="flex items-center mb-6 pb-2 border-b border-gray-200 cursor-pointer"
                     onClick={() => {
                       setSelectedSpot(spot); // 마커 클릭 시 선택된 관광지 설정
                     }}
@@ -254,8 +235,7 @@ const MapComponent: React.FC = () => {
                       />
                     )}
                     <div className="flex items-center">
-                      <img src="/assets/images/marker.svg" alt="Marker" className="w-4 h-4 mr-2" />{" "}
-                      {/* 마커 이미지 추가 */}
+                      <img src="/assets/images/marker.svg" alt="Marker" className="w-4 h-4 mr-2" />
                       <div>
                         <strong className="text-black">{spot.title}</strong>
                         <p className="text-gray-400 text-sm">{distance.toFixed(2)} km</p>
