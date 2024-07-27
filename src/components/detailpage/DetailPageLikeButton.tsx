@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 
 import { supabase } from "@/utils/supabase/client";
@@ -18,8 +18,9 @@ interface LikeBtnProps {
 
 const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, contentTypeId, title, addr1, tel }) => {
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState<number>(0);
   const [userId, setUserId] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+
   //supabase ssr로 임포트하면 안되구 client 임포트 하면 좋아요 기능 작동하네요
   useEffect(() => {
     const fetchSession = async () => {
@@ -52,7 +53,7 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
     }
   };
 
-  const { isLoading, isError, data } = useQuery({
+  const { isPending, isError, data } = useQuery({
     queryKey: ["likes", contentId],
     queryFn: async () => {
       const { data: likes, error } = await supabase.from("Likes").select("user_id").eq("content_id", contentId);
@@ -62,18 +63,16 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
       }
       return likes;
     },
+    enabled: !!userId,
   });
 
   const deleteMutation = useMutation({
     mutationFn: async (userId: string) => {
-      const { error } = await supabase.from("Likes").delete().match({ user_id: userId, content_id: contentId });
-
-      if (error) {
-        throw error;
-      }
+      const response = await supabase.from("Likes").delete().match({ user_id: userId, content_id: contentId });
     },
     onSuccess: () => {
-      setLikeCount((prev) => prev - 1);
+      alert("좋아요가 취소되었습니다");
+      queryClient.invalidateQueries({ queryKey: ["likes", contentId] });
     },
     onError: (error) => {
       console.error("뮤테이션 에러: 좋아요 취소실패", error);
@@ -84,11 +83,11 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
     mutationFn: async () => {
       // 나중에 모달로 띄우고 로그인 페이지로 라우터 쓰거나..기타 활용해볼것.
       if (!userId) {
-        alert("로그인 후 이용해 주세요.");
+        alert("로그인 후 좋아요를 누를 수 있습니다.");
         throw new Error("세션 정보가 없습니다.");
       }
 
-      const { error } = await supabase.from("Likes").insert([
+      const response = await supabase.from("Likes").insert([
         {
           user_id: userId,
           content_id: contentId,
@@ -99,16 +98,10 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
           tel: tel,
         },
       ]);
-
-      if (error) {
-        console.error("좋아요 추가 실패", error);
-        throw error;
-      } else {
-        console.log("좋아요가 성공적으로 등록되었습니다.");
-      }
     },
     onSuccess: () => {
-      setLikeCount((prev) => prev + 1);
+      alert("좋아요 등록이 성공했습니다.");
+      queryClient.invalidateQueries({ queryKey: ["likes", contentId] });
     },
     onError: (error) => {
       console.error("뮤테이션 에러: 좋아요 등록 실패", error);
@@ -119,16 +112,15 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
     if (data) {
       const result = data.find((item) => item.user_id === userId);
       setLiked(!!result);
-      setLikeCount(data.length);
     }
   }, [data, userId]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (isPending) {
+    return <div>불러오는중...</div>;
   }
 
   if (isError) {
-    return <div>Error occurred...</div>;
+    return <div>에러가 감지되었습니다....</div>;
   }
 
   const handleLikeBtn = async () => {
@@ -144,7 +136,10 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
     }
   };
 
-  const likeImage = liked ? "/assets/images/successLikeIcon.png" : "/assets/images/defaultLikeIcon.png";
+  const likeImage =
+    data && data.find((item) => item.user_id === userId)
+      ? "/assets/images/successLikeIcon.png"
+      : "/assets/images/defaultLikeIcon.png";
 
   return (
     <button onClick={handleLikeBtn} disabled={!userId}>

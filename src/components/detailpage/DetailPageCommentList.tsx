@@ -4,7 +4,7 @@ import { Comments } from "@/types/Comments.types";
 import { fetchSessionData } from "@/utils/fetchSession";
 
 import { supabase } from "@/utils/supabase/clientSsr";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
 import DetailPagePagination from "./DetailPagePagination";
@@ -12,13 +12,14 @@ import DetailPagePagination from "./DetailPagePagination";
 interface DetailPageCommentListProps {
   contentId: string;
 }
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 4;
 
 const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId }) => {
   const queryClient = useQueryClient();
   const [editCommentId, setEditCommentId] = useState<string | null>(null);
   const [newComment, setNewComment] = useState<string>("");
   const [page, setPage] = useState<number>(1);
+  const QueryClient = useQueryClient();
 
   const {
     data: sessionData,
@@ -31,7 +32,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
 
   const {
     data: commentData,
-    isLoading: pendingComments,
+    isPending: pendingComments,
     error: commentError,
   } = useQuery({
     queryKey: ["comments", contentId, page],
@@ -40,34 +41,53 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
         .from("Comments")
         .select("*", { count: "exact" })
         .eq("content_id", contentId)
+        .order("created_at", { ascending: false })
         .range((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE - 1);
 
       if (error) throw new Error(error.message);
       return { comments: data, totalCount: count };
     },
+    placeholderData: (previousData, previousQuery) => previousData,
+  });
+
+  const uadateCommentMutation = useMutation({
+    mutationFn: async (commentId: string) => {
+      await supabase.from("Comments").update({ comment: newComment }).eq("comment_id", commentId).single();
+    },
+    onSuccess: () => {
+      setEditCommentId(null);
+      setNewComment("");
+      queryClient.invalidateQueries({ queryKey: ["comments", contentId] });
+      alert("댓글 작성이 성공했습니다.");
+    },
+    onError: (error: Error) => {
+      console.error("댓글 작성 실패:", error.message);
+      alert(`댓글 작성 실패: ${error.message}`);
+    },
+  });
+
+  const deleteCommentMutation = useMutation({
+    mutationFn: async (commentId: string) => {
+      await supabase.from("Comments").delete().eq("comment_id", commentId).single();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments", contentId] });
+    },
   });
 
   const handleUpdate = async (commentId: string) => {
-    const { error } = await supabase
-      .from("Comments")
-      .update({ comment: newComment })
-      .eq("comment_id", commentId)
-      .single();
-
-    if (error) {
-      console.error("Error updating comment:", error.message);
-    } else {
-      setEditCommentId(null);
-      setNewComment("");
-    }
+    uadateCommentMutation.mutate(commentId);
   };
 
   const handleDelete = async (commentId: string) => {
-    console.log("Deleting comment with ID:", commentId);
-    const { error } = await supabase.from("Comments").delete().eq("comment_id", commentId).single();
-
-    if (error) {
-      console.error("Error deleting comment:", error.message);
+    if (confirm("정말 삭제하시겠습니까?")) {
+      deleteCommentMutation.mutate(commentId, {
+        onSuccess: () => {
+          alert("삭제가 완료되었습니다.");
+        },
+      });
+    } else {
+      alert("삭제가 취소되었습니다.");
     }
   };
 
@@ -81,11 +101,11 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
   }
 
   if (sessionError) {
-    return <h1>에러가 발생했습니다: {sessionError.message}</h1>;
+    return <h1>사용자 정보에서 에러가 발생했습니다: {sessionError.message}</h1>;
   }
 
   if (commentError) {
-    return <h1>에러가 발생했습니다: {commentError.message}</h1>;
+    return <h1>댓글 목록에서 에러가 발생했습니다: {commentError.message}</h1>;
   }
 
   const totalPages = Math.ceil((commentData?.totalCount || 0) / ITEMS_PER_PAGE);
@@ -95,41 +115,63 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
       {commentData?.comments &&
         commentData.comments.map((comment: Comments, index) => (
           <div
-            className="p-4 border border-gray-300 rounded-lg flex flex-col items-start mx-auto mb-4"
+            className="p-4 border border-gray-300 rounded-lg flex flex-col items-start mx-auto mb-4 w-full"
             key={comment.comment_id ? comment.comment_id : `comment-${index}`}
           >
-            <div className="flex items-center w-full">
-              <Image
-                src="/assets/images/profile_ex.png"
-                alt="유저 프로필 사진"
-                width={45}
-                height={45}
-                className="mr-4"
-              />
-              <div>
-                <h1 className="font-bold py-2">작성자: {comment.user_email} 님</h1>
-                <h2 className="py-2">{comment.created_at}</h2>
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center">
+                <Image
+                  src="/assets/images/profile_ex.png"
+                  alt="유저 프로필 사진"
+                  width={45}
+                  height={45}
+                  className="mr-4"
+                />
+                <div>
+                  <h1 className="font-bold py-2">작성자: {comment.user_email} 님</h1>
+                  <h2 className="py-2">{comment.created_at}</h2>
+                </div>
               </div>
+              {sessionData && sessionData.user.id === comment.user_id && (
+                <div className="flex space-x-2 justify-end">
+                  <button onClick={() => handleEdit(comment)} className="px-4 py-2 bg-blue-500 text-white rounded">
+                    수정
+                  </button>
+                  <button
+                    onClick={() => handleDelete(comment.comment_id)}
+                    className="px-4 py-2 bg-white text-red-600 border border-orange-300 rounded"
+                  >
+                    삭제
+                  </button>
+                </div>
+              )}
             </div>
-            <div className="ml-12 mt-2 w-full">
+            <div className="mt-2 w-full">
               {editCommentId === comment.comment_id ? (
                 <div>
                   <textarea
                     value={newComment}
                     onChange={(event) => setNewComment(event.target.value)}
-                    className="w-full p-2 border rounded"
+                    className="w-full p-2 border rounded break-all"
+                    style={{ wordBreak: "break-all" }}
                   />
-                  <button onClick={() => handleUpdate(comment.comment_id)}>저장</button>
-                  <button onClick={() => setEditCommentId(null)}>취소</button>
+                  <div className="flex justify-end space-x-2 mt-2">
+                    <button
+                      onClick={() => handleUpdate(comment.comment_id)}
+                      className="px-4 py-2 bg-blue-500 text-white rounded"
+                    >
+                      저장
+                    </button>
+                    <button
+                      onClick={() => setEditCommentId(null)}
+                      className="px-4 py-2 bg-white text-red-600  border border-orange-300 rounded"
+                    >
+                      취소
+                    </button>
+                  </div>
                 </div>
               ) : (
-                <p className="py-2">{comment.comment}</p>
-              )}
-              {sessionData && sessionData.user.id === comment.user_id && (
-                <div>
-                  <button onClick={() => handleEdit(comment)}>수정</button>
-                  <button onClick={() => handleDelete(comment.comment_id)}>삭제</button>
-                </div>
+                <p className="py-2 break-all whitespace-pre-wrap">{comment.comment}</p>
               )}
             </div>
           </div>
