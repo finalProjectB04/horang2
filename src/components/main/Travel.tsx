@@ -24,7 +24,7 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
     queryKey: ["travel"],
     queryFn: FetchTravel,
   });
-  console.log(travel);
+
   const sortedAndFilteredTravel = useMemo(() => {
     if (!travel) return [];
 
@@ -44,23 +44,23 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
       })
       .slice(0, displayCount);
   }, [travel, displayCount, searchTerm]);
-
+  console.log(2);
   if (isPending) {
-    return (
-      <div>
-        <Loading></Loading>
-      </div>
-    );
+    return <div>로딩중</div>;
   }
 
   if (error) {
-    return <div>Error</div>;
+    return <div>에러</div>;
   }
-
+  console.log(1);
   return (
-    <div className="container mx-auto px-4 py-8 ">
-      <MainListTitle TitleName={`지금뜨는 핫플레이스`} onClick={() => router.push("/travel")} />
-      <MainTravelSlider travel={sortedAndFilteredTravel} />
-    </div>
+    <>
+      <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">
+        <MainListTitle TitleName={`추천 여행지 `} onClick={() => router.push("/travel")} />
+      </div>
+      <div className=" mx-auto  max-w-[1440px] h-[346px] flex flex-col gap-10">
+        <MainTravelSlider travel={sortedAndFilteredTravel} isPending={isPending} error={error} />
+      </div>
+    </>
   );
 };

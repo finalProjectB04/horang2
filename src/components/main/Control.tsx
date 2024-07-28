@@ -4,48 +4,28 @@ import React from "react";
 
 const Control = () => {
   const router = useRouter();
+
+  const buttons = [
+    { path: "/travel", imageSrc: "/assets/images/controlImages/travel.png", alt: "Travel" },
+    { path: "/hotel", imageSrc: "/assets/images/controlImages/hotel.png", alt: "Hotel" },
+    { path: "/leport", imageSrc: "/assets/images/controlImages/leports.png", alt: "Leport" },
+    { path: "/restaurant", imageSrc: "/assets/images/controlImages/restaurants.png", alt: "Restaurant" },
+    { path: "/festival", imageSrc: "/assets/images/controlImages/festival.png", alt: "Festival" },
+  ];
+
   return (
-    <div className="flex justify-center items-center space-x-4 p-4   ">
-      <Image
-        src={"/assets/images/hotel.png"}
-        alt="호텔"
-        width={150}
-        height={150}
-        onClick={() => router.push("/hotel")}
-        className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
-      />
-      <Image
-        src={"/assets/images/travelCourse.png"}
-        alt="여행코스"
-        width={150}
-        height={150}
-        onClick={() => router.push("/travelCourse")}
-        className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
-      />
-      <Image
-        src={"/assets/images/restaurants.png"}
-        alt="레스토랑"
-        width={150}
-        height={150}
-        onClick={() => router.push("/restaurant")}
-        className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
-      />
-      <Image
-        src={"/assets/images/festival.png"}
-        alt="축제"
-        width={150}
-        height={150}
-        onClick={() => router.push("/festival")}
-        className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
-      />
-      <Image
-        src={"/assets/images/culturalFacilities.png"}
-        alt="문화시설"
-        width={150}
-        height={150}
-        onClick={() => router.push("/culturalFacilities")}
-        className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
-      />
+    <div className="flex  items-center justify-center p-11 gap-[10px] flex-shrink-0  ">
+      {buttons.map((button, index) => (
+        <Image
+          key={index}
+          src={button.imageSrc}
+          alt={button.alt}
+          width={164}
+          height={215}
+          onClick={() => router.push(button.path)}
+          className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
+        />
+      ))}
     </div>
   );
 };
