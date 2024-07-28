@@ -1,14 +1,9 @@
+import { splitText } from "@/utils/detailpage/StringUtils";
 import { useState } from "react";
 
 interface ContentOverviewProps {
   overview: string;
 }
-
-const splitText = (text: string, chunkSize: number) => {
-  const regex = new RegExp(`(.{1,${chunkSize}})`, "g");
-  const matched = text.match(regex);
-  return matched ? matched.join("\n") : "";
-};
 
 const ContentOverview: React.FC<ContentOverviewProps> = ({ overview }) => {
   const [showMore, setShowMore] = useState(false);

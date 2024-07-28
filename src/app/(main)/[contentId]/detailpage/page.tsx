@@ -14,13 +14,7 @@ import { fetchSessionData } from "@/utils/fetchSession";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 
-const parseHTMLString = (htmlString: string): string | null => {
-  // 홈페이지 링크 때문에 추가된 파트
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlString, "text/html");
-  const anchor = doc.querySelector("a");
-  return anchor ? anchor.href : null;
-};
+import { parseHTMLString } from "./../../../../utils/detailpage/StringUtils";
 
 const DetailPage = () => {
   const params = useParams();
