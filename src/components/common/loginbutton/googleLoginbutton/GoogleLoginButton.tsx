@@ -22,12 +22,7 @@ const GoogleLoginButton: React.FC = () => {
       onClick={googleLogin}
       className="flex items-center justify-center bg-white border border-gray-300 rounded-lg shadow-md hover:bg-gray-100 cursor-pointer p-2"
     >
-      <Image
-        src="/assets/images/login_logo/google_logo.png" // 이미지 경로가 정확한지 확인하세요
-        alt="Google Logo"
-        width={24} // 이미지 너비
-        height={24} // 이미지 높이
-      />
+      <Image src="/assets/images/login_logo/google_logo.png" alt="Google Logo" width={24} height={24} />
       <span className="font-semibold text-gray-800 ml-2">구글 로그인</span>
     </button>
   );

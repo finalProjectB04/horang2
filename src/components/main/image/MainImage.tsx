@@ -16,7 +16,7 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
               type="text"
               placeholder="검색어를 입력하세요"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(event) => setSearchTerm(event.target.value)}
               className="w-full p-3 md:p-4 text-base md:text-lg bg-black bg-opacity-70 text-white placeholder-gray-400 border-2 border-gray-600 rounded-full shadow-lg focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out"
             />
           </div>

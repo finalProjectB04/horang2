@@ -39,7 +39,6 @@ const SignUpPage = () => {
     }
   };
 
-  // 회원가입 처리 함수
   const handleSignUp = async () => {
     if (!nickname) return setError("닉네임을 입력해 주세요.");
     if (!email) return setError("이메일을 입력해 주세요.");
