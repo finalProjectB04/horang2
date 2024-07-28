@@ -23,7 +23,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
 
   const {
     data: sessionData,
-    isLoading: pendingSessionData,
+    isPending: pendingSessionData,
     error: sessionError,
   } = useQuery({
     queryKey: ["session"],
