@@ -6,15 +6,19 @@ import { ApiInformation } from "@/types/Main";
 import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
-import { FetchTravel } from "@/app/api/main/Tour/AllFetch/travel/route";
-import { Loading } from "../common/Loading";
 
 interface TravelProps {
   searchTerm: string;
 }
-
+const FetchTravel = async (): Promise<ApiInformation[]> => {
+  const response = await fetch("/api/main/tourism/travel");
+  if (!response.ok) {
+    throw new Error("error");
+  }
+  return response.json();
+};
 export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
-  const [displayCount, setDisplayCount] = useState(25);
+  const [displayCount, setDisplayCount] = useState(20);
   const router = useRouter();
   const {
     data: travel,

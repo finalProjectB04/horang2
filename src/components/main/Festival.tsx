@@ -12,14 +12,14 @@ interface FestivalProps {
 }
 
 const fetchFestival = async (): Promise<ApiInformation[]> => {
-  const response = await fetch("/api/main/Tour/festival");
+  const response = await fetch("/api/main/tourism/festival");
   if (!response.ok) {
     throw new Error("error");
   }
   return response.json();
 };
 export const Festival = ({ searchTerm }: FestivalProps) => {
-  const [displayCount, setDisplayCount] = useState(25);
+  const [displayCount, setDisplayCount] = useState(20);
   const router = useRouter();
   const {
     data: festival,

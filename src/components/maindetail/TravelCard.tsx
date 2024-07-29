@@ -1,28 +1,18 @@
 import Image from "next/image";
 import { ApiInformation } from "@/types/Main";
+import { useRouter } from "next/navigation";
 
 interface TravelCardProps {
   item: ApiInformation;
-  category: string; // 카테고리 prop 추가
 }
 
-export const TravelCard: React.FC<TravelCardProps> = ({ item, category }) => {
-  // 카테고리에 따른 아이콘 선택 (예시)
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case "restaurant":
-        return "🍽️";
-      case "attraction":
-        return "🏛️";
-      case "accommodation":
-        return "🏨";
-      default:
-        return "📍";
-    }
-  };
-
+export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
+  const router = useRouter();
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div
+      className="bg-white rounded-lg shadow-md overflow-hidden"
+      onClick={() => router.push(`/${item.contentid}/detailpage`)}
+    >
       {item.firstimage ? (
         <Image src={item.firstimage} alt={item.title} width={300} height={300} className="w-full h-48 object-cover" />
       ) : (
@@ -31,14 +21,8 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item, category }) => {
         </div>
       )}
       <div className="p-4">
-        <div className="flex justify-between items-center mb-2">
-          <h2 className="text-xl font-semibold text-gray-800">{item.title}</h2>
-          <span className="text-2xl" title={category}>
-            {getCategoryIcon(category)}
-          </span>
-        </div>
-        <p className="text-gray-600 text-sm">{item.addr1 || "Address not available"}</p>
-        <p className="text-gray-500 text-xs mt-2 capitalize">{category}</p>
+        <h2 className="text-xl font-semibold mb-2 text-gray-800">{item.title}</h2>
+        <p className="text-gray-600 text-sm">{item.addr1 || null}</p>
       </div>
     </div>
   );

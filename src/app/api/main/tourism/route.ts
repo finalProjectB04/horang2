@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const response = await axios.get(baseUrl, {
       params: {
         serviceKey: apiKey,
-        numOfRows: 10,
+        numOfRows: 1000,
         pageNo: 1,
         MobileOS: "ETC",
         MobileApp: "TestApp",

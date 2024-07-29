@@ -1,5 +1,5 @@
 "use client";
-import { FetchLeports } from "@/app/api/main/Tour/AllFetch/leports/route";
+
 import { ApiInformation } from "@/types/Main";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -12,9 +12,15 @@ import { useRouter } from "next/navigation";
 interface TravelProps {
   searchTerm: string;
 }
-
+const FetchLeports = async (): Promise<ApiInformation[]> => {
+  const response = await fetch("/api/main/tourism/leports");
+  if (!response.ok) {
+    throw new Error("error");
+  }
+  return response.json();
+};
 export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
-  const [displayCount, setDisplayCount] = useState<number>(25);
+  const [displayCount, setDisplayCount] = useState<number>(20);
   const router = useRouter();
 
   const {
@@ -69,7 +75,10 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
         >
           {sortedLeports.map((item: ApiInformation) => (
             <SwiperSlide key={item.contentid} className="h-[346px]">
-              <div className="bg-gray-100 w-[330px] h-[346px] relative overflow-hidden cursor-pointer rounded-[9.11px] shadow-md transition-transform duration-300 hover:scale-105">
+              <div
+                className="bg-gray-100 w-[330px] h-[346px] relative overflow-hidden cursor-pointer rounded-[9.11px] shadow-md transition-transform duration-300 hover:scale-105"
+                onClick={() => router.push(`/${item.contentid}/detailpage`)}
+              >
                 <div className="h-[224px] relative">
                   {item.firstimage ? (
                     <Image
