@@ -31,27 +31,20 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
   const { id } = useUserStore();
   const router = useRouter();
 
-  let contentType: number | undefined;
+  const getCarouselType = (name: string): number | undefined => {
+    const contentTypeMap: { [key: string]: number | undefined } = {
+      전체: undefined,
+      여행지: 12,
+      숙소: 32,
+      놀거리: 28,
+      음식점: 39,
+      "축제 및 행사": 15,
+    };
 
-  switch (carouselName) {
-    case "전체":
-      contentType = undefined;
-      break;
-    case "여행지":
-      contentType = 12;
-      break;
-    case "액티비티":
-      contentType = 28;
-      break;
-    case "숙박":
-      contentType = 32;
-      break;
-    case "음식점":
-      contentType = 39;
-      break;
-    default:
-      contentType = undefined;
-  }
+    return contentTypeMap[name];
+  };
+
+  const contentType = getCarouselType(carouselName);
 
   const {
     data: likes = [],
@@ -101,14 +94,14 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
           dynamicBullets: true,
         }}
         modules={[Pagination]}
-        className="mySwiper h-full"
-        style={{ width: "100%", height: "100%" }}
+        className="my-page mySwiper"
+        style={{ width: "1920px", height: "830px" }}
       >
         {likes.map((like: Like) => (
           <SwiperSlide
             key={`${like.id}-${like.content_id}`}
             className="h-full relative cursor-pointer"
-            onClick={() => router.push(`[${like.content_id}]/detailpage`)}
+            onClick={() => router.push(`detailpage/${like.content_id}`)}
           >
             <Image
               src={like.image_url}
@@ -119,11 +112,12 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
             />
             <div className="absolute inset-y-0 left-0 w-[12%] bg-white opacity-70"></div>
             <div className="absolute inset-y-0 right-0 w-[12%] bg-white opacity-70"></div>
-            <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-black/10 to-transparent pb-6">
-              <p className="text-2xl font-bold text-white">{like.title}</p>
-              <p className="text-sm text-gray-400">{like.address}</p>
-              {like.tel && <p className="text-sm text-gray-300">{like.tel}</p>}
+            <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-black/30 to-transparent pb-24">
+              <p className="text-3xl font-bold text-yellow-300">{like.title}</p>
+              <p className="text-lg text-gray-200">{like.address}</p>
+              {like.tel && <p className="text-lg text-gray-200">{like.tel}</p>}
             </div>
+            <div className="absolute inset-x-0 bottom-0 h-[10%] bg-white" />
           </SwiperSlide>
         ))}
       </Swiper>

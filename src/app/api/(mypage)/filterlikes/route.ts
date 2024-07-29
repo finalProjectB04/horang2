@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
       .from("Likes")
       .select("*")
       .eq("user_id", id as string)
-      .eq("content_type_id", contentType);
+      .eq("content_type_id", contentType as string);
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
