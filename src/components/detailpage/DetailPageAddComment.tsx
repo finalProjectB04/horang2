@@ -72,25 +72,25 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ userId, con
       {isPending && <div>프로필 정보를 불러오는 중...</div>}
 
       {sessionData && (
-        <div className="flex items-center mb-4">
+        <div className="flex items-center mb-4bg-gray-50 py-3">
           <Image src="/assets/images/profile_ex.png" alt="유저 프로필 사진" width={25} height={25} />
-          <span className="ml-2">{sessionData.user.email} 님</span>
+          <span className="text-2xl font-bold ml-2">{sessionData.user.email} 님</span>
         </div>
       )}
-      <div className="p-4 border border-orange-300 rounded-lg flex items-center">
+      <div className="p-4 border border-orange-300 rounded-lg flex items-center bg-gray-100">
         <textarea
           value={comment}
           onChange={(event) => setComment(event.target.value)}
           placeholder={userId ? "댓글을 작성하세요" : "댓글 작성은 로그인한 유저만 가능합니다"}
-          className={`w-full p-2 rounded-l-lg resize-none ${
-            !userId ? "bg-gray-200 text-gray-500" : "bg-white text-black"
+          className={`w-full p-2 rounded-l-lg resize-none bg-gray-100 ${
+            !userId ? "text-gray-500" : "text-gray-900"
           } border-none flex-grow`}
           disabled={!userId}
           maxLength={1000}
         />
         <button
           onClick={handleAddComment}
-          className="ml-2 px-2 py-3 bg-orange-500 text-white rounded-lg border border-gray-300 hover:bg-orange-600"
+          className="ml-2 px-3 py-4 fold-bold bg-orange-300 text-red-800 rounded-lg border border-gray-300 hover:bg-orange-600"
           disabled={!userId}
           style={{ width: "90px" }}
         >
