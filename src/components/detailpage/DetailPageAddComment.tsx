@@ -1,7 +1,7 @@
 "use client";
 
 import { fetchSessionData } from "@/utils/fetchSession";
-import { supabase } from "@/utils/supabase/clientSsr";
+import { supabase } from "@/utils/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
