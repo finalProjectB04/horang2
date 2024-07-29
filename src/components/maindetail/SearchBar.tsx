@@ -13,7 +13,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
           src="/assets/images/newdetail.png"
           alt="background"
           width={1920}
-          height={1080}
+          height={900}
           className="w-full h-auto"
         />
         <div className="absolute bottom-10 left-0 w-full px-5 md:px-8 lg:px-10">
