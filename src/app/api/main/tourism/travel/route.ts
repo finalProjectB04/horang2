@@ -1,6 +1,5 @@
-import { ApiInformation } from "@/types/Main";
 import axios from "axios";
-
+import { ApiInformation } from "@/types/Main";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -18,8 +17,7 @@ export async function GET() {
         _type: "json",
         listYN: "Y",
         arrange: "A",
-        contentTypeId: "25",
-        areaCode: "1",
+        contentTypeId: "12",
       },
     });
 

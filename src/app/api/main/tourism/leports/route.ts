@@ -10,15 +10,14 @@ export async function GET() {
     const response = await axios.get(baseUrl, {
       params: {
         serviceKey: apiKey,
-        numOfRows: 10,
+        numOfRows: 1000,
         pageNo: 1,
         MobileOS: "ETC",
         MobileApp: "TestApp",
         _type: "json",
         listYN: "Y",
         arrange: "A",
-        contentTypeId: "14",
-        areaCode: "1",
+        contentTypeId: "28",
       },
     });
 

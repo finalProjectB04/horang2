@@ -10,18 +10,17 @@ export async function GET() {
     const response = await axios.get(baseUrl, {
       params: {
         serviceKey: apiKey,
-        numOfRows: 10,
+        numOfRows: 1000,
         pageNo: 1,
         MobileOS: "ETC",
         MobileApp: "TestApp",
         _type: "json",
         listYN: "Y",
         arrange: "A",
-        contentTypeId: "28",
-        areaCode: "1",
+        contentTypeId: "15",
       },
     });
-  
+
     if (response.data.response.body.items.item.length > 0) {
       return NextResponse.json(response.data.response.body.items.item as ApiInformation[]);
     } else {
