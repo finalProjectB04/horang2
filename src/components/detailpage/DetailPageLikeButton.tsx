@@ -40,7 +40,6 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
     const { data: user, error } = await supabase.from("Users").select("id").eq("id", userId).single();
 
     if (error && error.code === "PGRST116") {
-      // 사용자 id를 like 테이블에 추가
       const { error: insertError } = await supabase.from("Users").insert([{ id: userId }]);
 
       if (insertError) {

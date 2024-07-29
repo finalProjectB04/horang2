@@ -17,7 +17,6 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 
 const parseHTMLString = (htmlString: string): string | null => {
-  //홈페이지 링크 때문에 추가된 파트
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, "text/html");
   const anchor = doc.querySelector("a");

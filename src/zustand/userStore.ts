@@ -19,10 +19,13 @@ export const useUserStore = create<UserState>()(
         user_nickname: null,
         profile_url: null,
         setUser: (id, user_email, user_nickname, profile_url) => set({ id, user_email, user_nickname, profile_url }),
-        clearUser: () => set({ id: null, user_email: null, user_nickname: null, profile_url: null }),
+        clearUser: () => {
+          set({ id: null, user_email: null, user_nickname: null, profile_url: null });
+          localStorage.removeItem("supabaseSession");
+        },
       }),
       {
-        name: "user-storage", // key 이름
+        name: "user-storage",
       },
     ),
   ),
