@@ -32,7 +32,7 @@ export const SearchBarButton: React.FC<SearchBarProps> = ({ searchTerm, setSearc
               <input
                 type="text"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(event) => setSearchTerm(event.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="검색창"
                 className="w-full p-3 md:p-4 text-base md:text-lg bg-black bg-opacity-70 text-white placeholder-gray-400 border-2 border-gray-600 rounded-full shadow-lg focus:outline-none focus:border-blue-950 transition duration-300 ease-in-out"

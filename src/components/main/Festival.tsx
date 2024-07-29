@@ -19,7 +19,7 @@ const fetchFestival = async (): Promise<ApiInformation[]> => {
   return response.json();
 };
 export const Festival = ({ searchTerm }: FestivalProps) => {
-  const [displayCount, setDisplayCount] = useState(20);
+  const [displayCount, setDisplayCount] = useState<number>(20);
   const router = useRouter();
   const {
     data: festival,
@@ -30,12 +30,14 @@ export const Festival = ({ searchTerm }: FestivalProps) => {
     queryFn: fetchFestival,
   });
 
-  const sortedFestival = useMemo(() => {
+  const sortedFestival: ApiInformation[] = useMemo(() => {
     if (!festival) return [];
 
-    const filterd = festival.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filterd: ApiInformation[] = festival.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
 
-    const shuffled = [...filterd];
+    const shuffled: ApiInformation[] = [...filterd];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];

@@ -6,6 +6,7 @@ import { ApiInformation } from "@/types/Main";
 import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
+import LoadingPage from "@/app/loading";
 
 interface TravelProps {
   searchTerm: string;
@@ -18,7 +19,7 @@ const FetchTravel = async (): Promise<ApiInformation[]> => {
   return response.json();
 };
 export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
-  const [displayCount, setDisplayCount] = useState(20);
+  const [displayCount, setDisplayCount] = useState<number>(20);
   const router = useRouter();
   const {
     data: travel,
@@ -29,12 +30,14 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
     queryFn: FetchTravel,
   });
 
-  const sortedAndFilteredTravel = useMemo(() => {
+  const sortedAndFilteredTravel: ApiInformation[] = useMemo(() => {
     if (!travel) return [];
 
-    const filtered = travel.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filtered: ApiInformation[] = travel.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
 
-    const shuffled = [...filtered];
+    const shuffled: ApiInformation[] = [...filtered];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -50,7 +53,7 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
   }, [travel, displayCount, searchTerm]);
 
   if (isPending) {
-    return <div>로딩중</div>;
+    return <LoadingPage />;
   }
 
   if (error) {

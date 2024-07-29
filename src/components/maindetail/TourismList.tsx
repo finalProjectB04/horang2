@@ -26,8 +26,8 @@ const fetchTourismData = async (contentTypeId: number): Promise<ApiInformation[]
 };
 
 export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }) => {
-  const [displayCount, setDisplayCount] = useState(12);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [displayCount, setDisplayCount] = useState<number>(12);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const { ref, inView } = useInView();
 
   // React Query를 사용하여 데이터 fetching
