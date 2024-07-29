@@ -42,11 +42,11 @@ export const useUserStore = create<UserState>((set) => {
     setUser: (id, user_email, user_nickname, profile_url) => {
       const newState = { id, user_email, user_nickname, profile_url };
       set(newState);
-      Cookies.set("user-storage", JSON.stringify(newState), { expires: 7 }); // 쿠키에 상태 저장
+      Cookies.set("user-storage", JSON.stringify(newState), { expires: 7 });
     },
     clearUser: () => {
       set({ id: null, user_email: null, user_nickname: null, profile_url: null });
-      Cookies.remove("user-storage"); // 쿠키에서 상태 삭제
+      Cookies.remove("user-storage");
     },
   };
 });
