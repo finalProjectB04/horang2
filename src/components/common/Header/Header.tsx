@@ -12,16 +12,10 @@ const Header = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { data: session, refetch } = useQuery<Session | null>({
+  const { data: session } = useQuery<Session | null>({
     queryKey: ["session"],
     queryFn: fetchSessionData,
-    initialData: () => {
-      if (typeof window !== "undefined") {
-        const session = localStorage.getItem("supabaseSession");
-        return session ? JSON.parse(session) : null;
-      }
-      return null;
-    },
+    initialData: () => null,
     refetchOnWindowFocus: true,
     refetchOnMount: true,
   });
@@ -30,8 +24,7 @@ const Header = () => {
     mutationFn: logoutUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["session"] });
-      localStorage.removeItem("supabaseSession");
-      router.push("/signin");
+      router.push("/");
     },
     onError: (error) => {
       console.error("Logout error:", error);

@@ -10,6 +10,7 @@ import SocialLoginButtons from "@/components/common/userspage/SocialLoginButtons
 import SignInLink from "@/components/common/userspage/signinpage/SignInLink";
 import { useUserStore } from "@/zustand/userStore";
 import { supabase } from "@/utils/supabase/client";
+import Cookies from "js-cookie";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +27,7 @@ const LoginPage = () => {
       const { data: sessionData, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
 
       if (sessionData?.session) {
-        localStorage.setItem("supabaseSession", JSON.stringify(sessionData.session));
+        Cookies.set("supabaseSession", JSON.stringify(sessionData.session), { expires: 7 }); // 쿠키 설정 (7일 만료)
 
         queryClient.invalidateQueries({ queryKey: ["session"], exact: true });
 
