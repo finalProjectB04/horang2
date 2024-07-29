@@ -6,7 +6,7 @@ import ContentOverview from "@/components/detailpage/ContentOverview";
 import DetailPageAddComment from "@/components/detailpage/DetailPageAddComment";
 import DetailPageCommentList from "@/components/detailpage/DetailPageCommentList";
 import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
-import DetailPageSwiper from "@/components/detailpage/DetailPageSwiper";
+import DetailPageImage from "@/components/detailpage/DetailPageSwiper";
 import KakaoMap from "@/components/detailpage/KakaoMap";
 import KakaoShareButton from "@/components/detailpage/KakaoShareButton";
 import LinkUrlButton from "@/components/detailpage/LinkUrlButton";
@@ -34,7 +34,7 @@ const DetailPage = () => {
 
   return (
     <main className="max-w-[1440px] mx-auto grid justify-items-center py-40">
-      <DetailPageSwiper contentItemData={contentItemData} />
+      <DetailPageImage contentItemData={contentItemData} />
       <section className="flex justify-between items-center w-full max-w-[1440px] mt-4 py-20">
         <div className="text-left">
           <div className="text-4xl font-bold">{contentItemData?.data?.title}</div>

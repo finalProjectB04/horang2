@@ -2,11 +2,13 @@
 
 import { Comments } from "@/types/Comments.types";
 import { fetchSessionData } from "@/utils/fetchSession";
-import { supabase } from "@/utils/supabase/clientSsr";
+
 import { Session } from "@supabase/supabase-js";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
+
+import { supabase } from "@/utils/supabase/client";
 import DetailPagePagination from "./DetailPagePagination";
 
 interface DetailPageCommentListProps {
@@ -20,11 +22,9 @@ interface CommentsResponse {
 const ITEMS_PER_PAGE = 4;
 
 const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId }) => {
-  const queryClient = useQueryClient();
   const [editCommentId, setEditCommentId] = useState<string | null>(null);
   const [newComment, setNewComment] = useState<string>("");
   const [page, setPage] = useState<number>(1);
-  const QueryClient = useQueryClient();
 
   const {
     data: sessionData,
@@ -55,14 +55,14 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
     placeholderData: (previousData, previousQuery) => previousData,
   });
 
-  const uadateCommentMutation = useMutation({
+  const updateCommentMutation = useMutation({
     mutationFn: async (commentId: string) => {
       await supabase.from("Comments").update({ comment: newComment }).eq("comment_id", commentId).single();
     },
     onSuccess: () => {
       setEditCommentId(null);
       setNewComment("");
-      queryClient.invalidateQueries({ queryKey: ["comments", contentId] });
+      // Remove queryClient.invalidateQueries to prevent duplication
       alert("댓글 작성이 성공했습니다.");
     },
     onError: (error: Error) => {
@@ -76,12 +76,12 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
       await supabase.from("Comments").delete().eq("comment_id", commentId).single();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", contentId] });
+      // Remove queryClient.invalidateQueries to prevent duplication
     },
   });
 
   const handleUpdate = async (commentId: string) => {
-    uadateCommentMutation.mutate(commentId);
+    updateCommentMutation.mutate(commentId);
   };
 
   const handleDelete = async (commentId: string) => {
@@ -133,7 +133,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                   className="mr-4"
                 />
                 <div>
-                  <h1 className="text-2xl font-bold py-2">작성자: {comment.user_email} 님</h1>
+                  <h1 className="text-2xl font-bold py-2">{comment.user_email} 님</h1>
                   <h2 className="py-2">{comment.created_at}</h2>
                 </div>
               </div>
