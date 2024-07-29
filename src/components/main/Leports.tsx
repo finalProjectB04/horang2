@@ -71,7 +71,7 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
             fill: "row",
           }}
           autoplay={{ delay: 5000, disableOnInteraction: false }}
-          className="rounded-[9.11px] h-full w-[700px]"
+          className="rounded-[9.11px] h-full w-[708px]"
         >
           {sortedLeports.map((item: ApiInformation) => (
             <SwiperSlide key={item.contentid} className="h-[346px]">
@@ -102,12 +102,24 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="flex flex-col gap-10 w-[700px] h-full">
-          <div className="h-[584px] relative rounded-[9.11px] overflow-hidden">
-            <Image src="/assets/images/ex4.png" alt="profile" fill className="object-cover" />
+        <div className="flex flex-col gap-6 w-[708px] h-full">
+          <div className="h-[590px] relative rounded-[9.11px] overflow-hidden">
+            <Image
+              src="/assets/images/ex4.png"
+              alt="profile"
+              layout="fill"
+              objectFit="cover"
+              className="object-cover"
+            />
           </div>
-          <div className="h-[118px] relative rounded-[9.11px] overflow-hidden">
-            <Image src="/assets/images/ex5.png" alt="profile" fill className="object-cover" />
+          <div className="h-[94px] relative rounded-[9.11px] overflow-hidden">
+            <Image
+              src="/assets/images/ex5.png"
+              alt="profile"
+              layout="fill"
+              objectFit="cover"
+              className="object-cover"
+            />
           </div>
         </div>
       </div>

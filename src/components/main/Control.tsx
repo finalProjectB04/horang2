@@ -8,7 +8,7 @@ const Control = () => {
   const buttons = [
     { path: "/travel", imageSrc: "/assets/images/controlImages/travel.png", alt: "Travel" },
     { path: "/hotel", imageSrc: "/assets/images/controlImages/hotel.png", alt: "Hotel" },
-    { path: "/leport", imageSrc: "/assets/images/controlImages/leports.png", alt: "Leport" },
+    { path: "/leports", imageSrc: "/assets/images/controlImages/leports.png", alt: "Leports" },
     { path: "/restaurant", imageSrc: "/assets/images/controlImages/restaurants.png", alt: "Restaurant" },
     { path: "/festival", imageSrc: "/assets/images/controlImages/festival.png", alt: "Festival" },
   ];
