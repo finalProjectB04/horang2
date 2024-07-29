@@ -8,7 +8,7 @@ import ProfileManagement from "./ProfileManagement";
 import { useUserStore } from "@/zustand/userStore";
 import { useRouter } from "next/navigation";
 import ProfileCarousel from "./ProfileCarousel";
-import useModalStore from "@/zustand/modalStatusStore";
+import useModalStore from "@/zustand/modalStore";
 
 const Profile: React.FC = () => {
   const { toggleModal } = useModalStore();
