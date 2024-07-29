@@ -120,7 +120,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
       {commentsData?.comments &&
         commentsData.comments.map((comment: Comments, index) => (
           <div
-            className="p-4 border border-gray-300 rounded-lg flex flex-col items-start mx-auto mb-4 w-full"
+            className="p-4 border border-grey-100 rounded-xl flex flex-col items-start mx-auto mb-4 w-full"
             key={comment.comment_id ? comment.comment_id : `comment-${index}`}
           >
             <div className="flex items-center justify-between w-full">
@@ -133,18 +133,21 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                   className="mr-4"
                 />
                 <div>
-                  <h1 className="text-2xl font-bold py-2">{comment.user_email} 님</h1>
-                  <h2 className="py-2">{comment.created_at}</h2>
+                  <h1 className="text-2xl text-grey-700 font-bold py-2">{comment.user_email} 님</h1>
+                  <h2 className="py-2 text-grey-700">{comment.created_at}</h2>
                 </div>
               </div>
               {sessionData && sessionData.user.id === comment.user_id && (
                 <div className="flex space-x-2 justify-end">
-                  <button onClick={() => handleEdit(comment)} className="px-4 py-2  bg-orange-500 text-white rounded">
+                  <button
+                    onClick={() => handleEdit(comment)}
+                    className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded"
+                  >
                     수정
                   </button>
                   <button
                     onClick={() => handleDelete(comment.comment_id)}
-                    className="px-4 py-2 bg-white text-red-600 border border-orange-300 rounded"
+                    className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
                   >
                     삭제
                   </button>
@@ -163,20 +166,20 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                   <div className="flex justify-end space-x-2 mt-2">
                     <button
                       onClick={() => handleUpdate(comment.comment_id)}
-                      className="px-4 py-2  bg-orange-500 text-white rounded"
+                      className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded"
                     >
                       저장
                     </button>
                     <button
                       onClick={() => setEditCommentId(null)}
-                      className="px-4 py-2 bg-white text-red-600  border border-orange-300 rounded"
+                      className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
                     >
                       취소
                     </button>
                   </div>
                 </div>
               ) : (
-                <p className="py-2 break-all whitespace-pre-wrap pl-14">{comment.comment}</p>
+                <p className="py-2 break-all whitespace-pre-wrap pl-14 text-grey-700">{comment.comment}</p>
               )}
             </div>
           </div>

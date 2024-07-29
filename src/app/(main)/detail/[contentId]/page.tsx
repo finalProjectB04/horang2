@@ -35,7 +35,7 @@ const DetailPage = () => {
   return (
     <main className="max-w-[1440px] mx-auto grid justify-items-center py-40">
       <DetailPageImage contentItemData={contentItemData} />
-      <section className="flex justify-between items-center w-full max-w-[1440px] mt-4 py-20">
+      <section className="flex justify-between items-center w-full max-w-[1440px] mt-12 py-20">
         <div className="text-left">
           <div className="text-4xl font-bold">{contentItemData?.data?.title}</div>
         </div>
@@ -61,7 +61,7 @@ const DetailPage = () => {
         />
       </section>
       {contentItemData?.data?.overview && <ContentOverview overview={contentItemData.data.overview} />}
-      <section className="w-full [1440px] flex justify-center mb-20">
+      <section className="w-full [1440px] flex justify-center mb-15">
         <KakaoMap
           mapx={parseFloat(contentItemData?.data?.mapx || "0")}
           mapy={parseFloat(contentItemData?.data?.mapy || "0")}
