@@ -94,14 +94,14 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
           dynamicBullets: true,
         }}
         modules={[Pagination]}
-        className="mySwiper"
-        style={{ width: "1920px", height: "100%" }} // 전체 너비를 1920px로 설정
+        className="my-page mySwiper"
+        style={{ width: "1920px", height: "830px" }}
       >
         {likes.map((like: Like) => (
           <SwiperSlide
             key={`${like.id}-${like.content_id}`}
             className="h-full relative cursor-pointer"
-            onClick={() => router.push(`[${like.content_id}]/detailpage`)}
+            onClick={() => router.push(`detailpage/${like.content_id}`)}
           >
             <Image
               src={like.image_url}
@@ -112,11 +112,12 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
             />
             <div className="absolute inset-y-0 left-0 w-[12%] bg-white opacity-70"></div>
             <div className="absolute inset-y-0 right-0 w-[12%] bg-white opacity-70"></div>
-            <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-black/10 to-transparent pb-6">
-              <p className="text-2xl font-bold text-white">{like.title}</p>
-              <p className="text-sm text-gray-400">{like.address}</p>
-              {like.tel && <p className="text-sm text-gray-300">{like.tel}</p>}
+            <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-black/30 to-transparent pb-24">
+              <p className="text-3xl font-bold text-yellow-300">{like.title}</p>
+              <p className="text-lg text-gray-200">{like.address}</p>
+              {like.tel && <p className="text-lg text-gray-200">{like.tel}</p>}
             </div>
+            <div className="absolute inset-x-0 bottom-0 h-[10%] bg-white" />
           </SwiperSlide>
         ))}
       </Swiper>

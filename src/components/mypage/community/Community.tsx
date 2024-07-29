@@ -5,7 +5,7 @@ import Advertisement from "@/components/common/Advertisement";
 
 const Community: React.FC = () => {
   return (
-    <section className="w-[1440px]">
+    <section className="w-[1440px] mt-[260px]">
       <MyPost />
       <LikePost />
     </section>

@@ -3,12 +3,12 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
 import Button from "../../common/button";
-import useModalStore from "@/zustand/ModalStore";
 import Modal from "../../common/Modal";
 import ProfileManagement from "./ProfileManagement";
 import { useUserStore } from "@/zustand/userStore";
 import { useRouter } from "next/navigation";
 import ProfileCarousel from "./ProfileCarousel";
+import useModalStore from "@/zustand/modalStatusStore";
 
 const Profile: React.FC = () => {
   const { toggleModal } = useModalStore();
