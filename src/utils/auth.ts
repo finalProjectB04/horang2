@@ -1,7 +1,18 @@
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "./supabase/client";
+import Cookies from "js-cookie";
 
 export const fetchSessionData = async (): Promise<Session | null> => {
+  const sessionCookie = Cookies.get("supabaseSession");
+  if (sessionCookie) {
+    try {
+      return JSON.parse(sessionCookie) as Session;
+    } catch (error) {
+      console.error("Failed to parse session from cookie:", error);
+      return null;
+    }
+  }
+
   const { data, error } = await supabase.auth.getSession();
   if (error) {
     console.error("Failed to fetch session:", error);
@@ -16,5 +27,5 @@ export const logoutUser = async () => {
     console.error("Failed to sign out:", error);
     throw new Error("Failed to sign out");
   }
-  localStorage.removeItem("supabaseSession");
+  Cookies.remove("supabaseSession"); // 쿠키에서 세션 데이터 삭제
 };
