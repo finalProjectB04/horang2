@@ -44,7 +44,7 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
       })
       .slice(0, displayCount);
   }, [travel, displayCount, searchTerm]);
-  console.log(2);
+
   if (isPending) {
     return <div>로딩중</div>;
   }
@@ -52,7 +52,7 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
   if (error) {
     return <div>에러</div>;
   }
-  console.log(1);
+
   return (
     <>
       <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">

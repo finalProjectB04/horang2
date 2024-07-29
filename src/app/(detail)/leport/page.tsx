@@ -1,6 +1,5 @@
 "use client";
 
-import { FetchLeports } from "@/app/api/main/Tour/AllFetch/leports/route";
 import { Loading } from "@/components/common/Loading";
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
@@ -10,6 +9,14 @@ import { ApiInformation } from "@/types/Main";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useMemo, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+
+export const FetchLeports = async (): Promise<ApiInformation[]> => {
+  const res = await fetch("/api/main/Tour/leports");
+  if (!res.ok) {
+    throw new Error("error");
+  }
+  return res.json();
+};
 
 const Leports = () => {
   const [displayCount, setDisplayCount] = useState(10);
