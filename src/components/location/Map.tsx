@@ -147,13 +147,13 @@ const MapComponent: React.FC = () => {
 
       // 선택된 스팟의 인포윈도우 생성
       const infoWindowContent = `
-      <div class="info-window" style="padding: 10px; border-radius: 5px; background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; overflow: visible;">
-        <a href="/detail/${selectedSpot.contentid}" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
-          <div style="font-size: 20px; font-weight: bold; margin-right: 5px;">${selectedSpot.title}</div>
-          <img src="/assets/images/arrow.svg" alt="화살표" style="width: 20px; height: 20px; object-fit: cover;" />
-        </a>
-      </div>
-    `;
+  <div class="info-window" style="padding: 10px; border-radius: 5px; background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; overflow: hidden;">
+    <a href="/detail/${selectedSpot.contentid}" style="display: flex; align-items: center; text-decoration: none; color: inherit; width: 100%;">
+      <div style="font-size: 20px; font-weight: bold; margin-right: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${selectedSpot.title}</div>
+      <img src="/assets/images/arrow.svg" alt="화살표" style="width: 20px; height: 20px; flex-shrink: 0;" />
+    </a>
+  </div>
+`;
 
       const infoWindow = new window.kakao.maps.CustomOverlay({
         position: position,
