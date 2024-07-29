@@ -2,7 +2,6 @@ import { Session } from "@supabase/supabase-js";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/zustand/userStore";
-import { supabase } from "@/utils/supabase/client";
 
 interface AuthButtonsProps {
   session: Session | null;
@@ -21,8 +20,6 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ session, handleLogout }) => {
     try {
       await handleLogout();
       clearUser();
-      localStorage.removeItem("supabaseSession");
-      localStorage.removeItem("user-storage");
     } catch (error) {
       console.error("로그아웃 중 오류가 발생했습니다.", error);
     }
