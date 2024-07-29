@@ -6,25 +6,34 @@ const Control = () => {
   const router = useRouter();
 
   const buttons = [
-    { path: "/travel", imageSrc: "/assets/images/controlImages/travel.png", alt: "Travel" },
-    { path: "/hotel", imageSrc: "/assets/images/controlImages/hotel.png", alt: "Hotel" },
-    { path: "/leports", imageSrc: "/assets/images/controlImages/leports.png", alt: "Leports" },
-    { path: "/restaurant", imageSrc: "/assets/images/controlImages/restaurants.png", alt: "Restaurant" },
-    { path: "/festival", imageSrc: "/assets/images/controlImages/festival.png", alt: "Festival" },
+    {
+      path: "/travel",
+      imageSrc: "/assets/images/controlImages/travel.png",
+      alt: "Travel",
+      name: "추천 여행지",
+    },
+    { path: "/hotel", imageSrc: "/assets/images/controlImages/hotel.png", alt: "Hotel", name: "숙소" },
+    { path: "/leports", imageSrc: "/assets/images/controlImages/leports.png", alt: "Leports", name: "레포츠" },
+    {
+      path: "/restaurant",
+      imageSrc: "/assets/images/controlImages/restaurants.png",
+      alt: "Restaurant",
+      name: "음식점",
+    },
+    { path: "/festival", imageSrc: "/assets/images/controlImages/festival.png", alt: "Festival", name: "축제 및 행사" },
   ];
 
   return (
-    <div className="flex  items-center justify-center p-11 gap-[10px] flex-shrink-0  ">
+    <div className="flex items-center justify-between w-[900px] h-[215px] mx-auto">
       {buttons.map((button, index) => (
-        <Image
+        <div
           key={index}
-          src={button.imageSrc}
-          alt={button.alt}
-          width={164}
-          height={215}
+          className="w-[164px] h-[215px] flex flex-col items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
           onClick={() => router.push(button.path)}
-          className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
-        />
+        >
+          <Image src={button.imageSrc} alt={button.alt} width={84} height={84} className="mb-4" />
+          <p className="text-center text-sm">{button.name}</p>
+        </div>
       ))}
     </div>
   );
