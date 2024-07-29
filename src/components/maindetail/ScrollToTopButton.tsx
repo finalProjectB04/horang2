@@ -8,7 +8,7 @@ export const ScrollToTopButton: React.FC = () => {
   const { data: scrollPosition } = useQuery({
     queryKey: ["scrollPosition"],
     queryFn: getScrollPosition,
-    refetchInterval: 100, // 100ms마다 스크롤 위치 업데이트
+    refetchInterval: 100,
   });
 
   const scrollToTop = () => {
