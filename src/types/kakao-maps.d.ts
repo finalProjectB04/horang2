@@ -4,6 +4,7 @@ declare namespace kakao.maps {
     relayout(): void;
     setCenter(latlng: LatLng): void;
     setLevel(level: number): void;
+    getCenter(): LatLng;
     getLevel(): number;
     setBounds(bounds: LatLngBounds): void;
   };
