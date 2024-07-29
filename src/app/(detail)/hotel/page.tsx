@@ -1,13 +1,13 @@
 "use client";
 
-import { Loding } from "@/components/common/Loding";
+import { Loading } from "@/components/common/Loading";
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 import { SearchBar } from "@/components/maindetail/SearchBar";
 import { TravelCard } from "@/components/maindetail/TravelCard";
 import { ApiInformation } from "@/types/Main";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 const fetchHotel = async (): Promise<ApiInformation[]> => {
@@ -53,7 +53,7 @@ const Hotel = () => {
     }
   }, [inView]);
 
-  if (isLoading) return <Loding />;
+  if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
