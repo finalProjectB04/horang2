@@ -7,13 +7,13 @@ import React from "react";
 const myPage: React.FC = () => {
   return (
     <main className="flex justify-center">
-      <div className="w-full max-w-[1920px] flex justify-center items-center text-center">
-        <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 gap-4">
+      <div className="w-[1920px] flex flex-col justify-center items-center text-center">
+        <div className="w-[1440px] mx-auto grid grid-cols-1 gap-4">
           <Profile />
-          <WishList />
-          <Community />
-          <Advertisement />
         </div>
+        <WishList />
+        <Community />
+        <Advertisement />
       </div>
     </main>
   );

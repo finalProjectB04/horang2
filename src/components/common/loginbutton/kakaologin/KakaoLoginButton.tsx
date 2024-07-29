@@ -1,6 +1,6 @@
 "use client";
 
-import { supabase } from "../../contexts/supabase.context";
+import { supabase } from "@/utils/supabase/client";
 import Image from "next/image"; // Next.js Image 컴포넌트 사용
 
 const KakaoLoginButton = () => {

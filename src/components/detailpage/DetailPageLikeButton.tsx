@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { supabase } from "../common/contexts/supabase.context";
+import { supabase } from "@/utils/supabase/client";
 
 interface LikeBtnProps {
   contentId: string;

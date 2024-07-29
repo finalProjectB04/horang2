@@ -1,4 +1,4 @@
-import { supabase } from "@/components/common/contexts/supabase.context";
+import { supabase } from "@/utils/supabase/client";
 
 export interface User {
   id: string;

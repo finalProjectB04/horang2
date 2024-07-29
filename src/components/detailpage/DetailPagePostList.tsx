@@ -3,11 +3,11 @@
 import { Comments } from "@/types/Comments.types";
 import { fetchSessionData } from "@/utils/fetchSession";
 
-import { supabase } from "@/utils/supabase/clientSsr";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
 import DetailPagePagination from "./DetailPagePagination";
+import { supabase } from "@/utils/supabase/client";
 
 interface DetailPagePostListProps {
   contentId: string;

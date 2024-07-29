@@ -94,8 +94,8 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
           dynamicBullets: true,
         }}
         modules={[Pagination]}
-        className="mySwiper h-full"
-        style={{ width: "100%", height: "100%" }}
+        className="mySwiper"
+        style={{ width: "1920px", height: "100%" }} // 전체 너비를 1920px로 설정
       >
         {likes.map((like: Like) => (
           <SwiperSlide

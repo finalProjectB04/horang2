@@ -1,6 +1,6 @@
 "use client";
 
-import { supabase } from "../contexts/supabase.context";
+import { supabase } from "@/utils/supabase/client";
 
 const KakaoLoginButton = () => {
   const kakaoLogin = async () => {
