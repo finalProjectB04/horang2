@@ -4,48 +4,37 @@ import React from "react";
 
 const Control = () => {
   const router = useRouter();
+
+  const buttons = [
+    {
+      path: "/travel",
+      imageSrc: "/assets/images/controlImages/travel.png",
+      alt: "Travel",
+      name: "추천 여행지",
+    },
+    { path: "/hotel", imageSrc: "/assets/images/controlImages/hotel.png", alt: "Hotel", name: "숙소" },
+    { path: "/leports", imageSrc: "/assets/images/controlImages/leports.png", alt: "Leports", name: "레포츠" },
+    {
+      path: "/restaurant",
+      imageSrc: "/assets/images/controlImages/restaurants.png",
+      alt: "Restaurant",
+      name: "음식점",
+    },
+    { path: "/festival", imageSrc: "/assets/images/controlImages/festival.png", alt: "Festival", name: "축제 및 행사" },
+  ];
+
   return (
-    <div className="flex justify-center items-center space-x-4 p-4   ">
-      <Image
-        src={"/assets/images/hotel.png"}
-        alt="호텔"
-        width={150}
-        height={150}
-        onClick={() => router.push("/hotel")}
-        className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
-      />
-      <Image
-        src={"/assets/images/travelCourse.png"}
-        alt="여행코스"
-        width={150}
-        height={150}
-        onClick={() => router.push("/travelCourse")}
-        className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
-      />
-      <Image
-        src={"/assets/images/restaurants.png"}
-        alt="레스토랑"
-        width={150}
-        height={150}
-        onClick={() => router.push("/restaurant")}
-        className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
-      />
-      <Image
-        src={"/assets/images/festival.png"}
-        alt="축제"
-        width={150}
-        height={150}
-        onClick={() => router.push("/festival")}
-        className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
-      />
-      <Image
-        src={"/assets/images/culturalFacilities.png"}
-        alt="문화시설"
-        width={150}
-        height={150}
-        onClick={() => router.push("/culturalFacilities")}
-        className="cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
-      />
+    <div className="flex items-center justify-between w-[900px] h-[215px] mx-auto">
+      {buttons.map((button, index) => (
+        <div
+          key={index}
+          className="w-[164px] h-[215px] flex flex-col items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-300 ease-in-out"
+          onClick={() => router.push(button.path)}
+        >
+          <Image src={button.imageSrc} alt={button.alt} width={84} height={84} className="mb-4" />
+          <p className="text-center text-sm">{button.name}</p>
+        </div>
+      ))}
     </div>
   );
 };
