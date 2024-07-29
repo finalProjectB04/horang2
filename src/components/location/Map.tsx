@@ -148,11 +148,13 @@ const MapComponent: React.FC = () => {
 
       // 선택된 스팟의 인포윈도우 생성
       const infoWindowContent = `
-        <div class="info-window" style="padding: 10px; border-radius: 5px; background: white; border: 1px solid #ddd;">
-          <div style="font-weight: bold; margin-bottom: 5px;">${selectedSpot.title}</div>
-          <a href="/${selectedSpot.contentid}/detailPage" style="color: blue; text-decoration: underline;">더보기</a>
-        </div>
-      `;
+      <div class="info-window" style="padding: 10px; border-radius: 5px; background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; overflow: visible;">
+        <a href="/detail/${selectedSpot.contentid}" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+          <div style="font-size: 20px; font-weight: bold; margin-right: 5px;">${selectedSpot.title}</div>
+          <img src="/assets/images/arrow.svg" alt="화살표" style="width: 20px; height: 20px; object-fit: cover;" />
+        </a>
+      </div>
+    `;
 
       const infoWindow = new window.kakao.maps.CustomOverlay({
         position: position,
@@ -203,12 +205,30 @@ const MapComponent: React.FC = () => {
       >
         <img src="/assets/images/my_location.svg" alt="내 위치" className="w-4 h-4" />
       </button>
-      <div className="mx-10 my-4 z-10 rounded-lg">
+      <div className="mx-10 my-2 rounded-lg md:mx-10 md:my-2">
         {selectedSpot ? (
-          <div className="flex flex-col md:flex-row">
-            <div className="flex-1 mt-4">
-              <p className="text-[28px] font-bold">{selectedSpot.title}</p>
-              <p className="text-secondary-700 text-[18px]">
+          <div className="flex flex-col md:flex-row items-start my-4">
+            <div>
+              {selectedSpot.firstimage ? (
+                <img
+                  src={selectedSpot.firstimage}
+                  alt={selectedSpot.title}
+                  className="w-[400px] h-[280px] object-cover rounded my-4"
+                />
+              ) : (
+                <img
+                  src="/assets/images/null_image.svg"
+                  alt="No Image"
+                  className="w-[400px] h-[280px] object-cover rounded my-4"
+                />
+              )}
+            </div>
+            <div className="md:ml-10 mt-8">
+              <a href={`/detail/${selectedSpot.contentid}`} className="flex items-center">
+                <span className="text-[30px] font-bold mr-4">{selectedSpot.title}</span>
+                <span className="border-b-2 border-primary-300 text-primary-300 text-[18px]">더보기</span>
+              </a>
+              <p className="text-secondary-700 text-[18px] mt-2">
                 {getDistance(latitude!, longitude!, selectedSpot.mapy, selectedSpot.mapx).toFixed(2)} km
               </p>
               <p className="text-grey-800 mt-2 text-[18px]">{selectedSpot.address}</p>
@@ -229,21 +249,6 @@ const MapComponent: React.FC = () => {
               <button onClick={handleBackToList} className="mt-4 px-4 py-2 bg-primary-300 text-white rounded">
                 목록으로 돌아가기
               </button>
-            </div>
-            <div className="hidden md:block md:flex-1">
-              {selectedSpot.firstimage ? (
-                <img
-                  src={selectedSpot.firstimage}
-                  alt={selectedSpot.title}
-                  className="w-[400px] h-[280px] object-cover rounded my-4"
-                />
-              ) : (
-                <img
-                  src="/assets/images/null_image.svg"
-                  alt="No Image"
-                  className="w-[400px] h-[280px] object-cover rounded my-4"
-                />
-              )}
             </div>
           </div>
         ) : visibleSpots.length > 0 ? (
@@ -282,7 +287,7 @@ const MapComponent: React.FC = () => {
             })}
           </ul>
         ) : (
-          <p className="text-center text-grey-300 mt-10 text-[24px]">지도를 옮겨주세요</p>
+          <p className="text-center text-grey-300 mt-10 text-[24px] font-bold">지도를 옮겨주세요</p>
         )}
       </div>
     </div>
