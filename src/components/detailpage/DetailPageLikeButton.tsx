@@ -20,7 +20,7 @@ interface ContextType {
 }
 
 const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, contentTypeId, title, addr1, tel }) => {
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState<Boolean>(false);
   const [userId, setUserId] = useState<string | null>(null);
   const queryClient = useQueryClient();
 

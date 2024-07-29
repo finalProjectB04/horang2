@@ -2,6 +2,7 @@
 
 import { fetchSessionData } from "@/utils/fetchSession";
 import { supabase } from "@/utils/supabase/clientSsr";
+import { Session } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
@@ -14,14 +15,14 @@ interface DetailPageAddCommentProps {
 }
 
 const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ userId, contentId, contenTypeId, userEmail }) => {
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState<string>("");
   const queryClient = useQueryClient();
 
   const {
     data: sessionData,
     isPending,
     error,
-  } = useQuery({
+  } = useQuery<Session | null, Error, Session | null>({
     queryKey: ["session"],
     queryFn: fetchSessionData,
   });
