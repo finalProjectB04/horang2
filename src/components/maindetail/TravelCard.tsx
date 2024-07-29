@@ -11,7 +11,7 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
   return (
     <div
       className="bg-gray-100 w-[330px] h-[346px] relative overflow-hidden cursor-pointer rounded-[9.11px] shadow-md transition-transform duration-300 hover:scale-105"
-      onClick={() => router.push(`/${item.contentid}/detailpage`)}
+      onClick={() => router.push(`/detail/${item.contentid}`)}
     >
       {item.firstimage ? (
         <Image
