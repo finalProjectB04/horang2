@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import Cookies from "js-cookie";
 
 type UserState = {
   id: string | null;
@@ -10,23 +10,43 @@ type UserState = {
   clearUser: () => void;
 };
 
-export const useUserStore = create<UserState>()(
-  devtools(
-    persist(
-      (set) => ({
+// 쿠키에서 상태를 초기화하는 함수
+const getInitialState = (): Omit<UserState, "setUser" | "clearUser"> => {
+  const cookie = Cookies.get("user-storage");
+  if (cookie) {
+    try {
+      return JSON.parse(cookie);
+    } catch {
+      // JSON 파싱 실패 시 기본 상태 반환
+      return {
         id: null,
         user_email: null,
         user_nickname: null,
         profile_url: null,
-        setUser: (id, user_email, user_nickname, profile_url) => set({ id, user_email, user_nickname, profile_url }),
-        clearUser: () => {
-          set({ id: null, user_email: null, user_nickname: null, profile_url: null });
-          localStorage.removeItem("supabaseSession"); // 로컬 스토리지에서 세션 데이터 삭제
-        },
-      }),
-      {
-        name: "user-storage", // 저장될 key 이름
-      },
-    ),
-  ),
-);
+      };
+    }
+  }
+  return {
+    id: null,
+    user_email: null,
+    user_nickname: null,
+    profile_url: null,
+  };
+};
+
+export const useUserStore = create<UserState>((set) => {
+  const initialState = getInitialState();
+
+  return {
+    ...initialState,
+    setUser: (id, user_email, user_nickname, profile_url) => {
+      const newState = { id, user_email, user_nickname, profile_url };
+      set(newState);
+      Cookies.set("user-storage", JSON.stringify(newState), { expires: 7 }); // 쿠키에 상태 저장
+    },
+    clearUser: () => {
+      set({ id: null, user_email: null, user_nickname: null, profile_url: null });
+      Cookies.remove("user-storage"); // 쿠키에서 상태 삭제
+    },
+  };
+});
