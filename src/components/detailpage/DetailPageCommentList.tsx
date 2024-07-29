@@ -2,8 +2,8 @@
 
 import { Comments } from "@/types/Comments.types";
 import { fetchSessionData } from "@/utils/fetchSession";
-
 import { supabase } from "@/utils/supabase/clientSsr";
+import { Session } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
@@ -11,6 +11,11 @@ import DetailPagePagination from "./DetailPagePagination";
 
 interface DetailPageCommentListProps {
   contentId: string;
+}
+
+interface CommentsResponse {
+  comments: Comments[];
+  totalCount: number | null;
 }
 const ITEMS_PER_PAGE = 4;
 
@@ -25,16 +30,16 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
     data: sessionData,
     isPending: pendingSessionData,
     error: sessionError,
-  } = useQuery({
+  } = useQuery<Session | null, Error, Session | null>({
     queryKey: ["session"],
     queryFn: fetchSessionData,
   });
 
   const {
-    data: commentData,
+    data: commentsData,
     isPending: pendingComments,
     error: commentError,
-  } = useQuery({
+  } = useQuery<CommentsResponse, Error, CommentsResponse>({
     queryKey: ["comments", contentId, page],
     queryFn: async () => {
       const { data, error, count } = await supabase
@@ -108,12 +113,12 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
     return <h1>댓글 목록에서 에러가 발생했습니다: {commentError.message}</h1>;
   }
 
-  const totalPages = Math.ceil((commentData?.totalCount || 0) / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil((commentsData?.totalCount || 0) / ITEMS_PER_PAGE);
 
   return (
     <div className="mt-4 max-w-[1440px] mx-auto">
-      {commentData?.comments &&
-        commentData.comments.map((comment: Comments, index) => (
+      {commentsData?.comments &&
+        commentsData.comments.map((comment: Comments, index) => (
           <div
             className="p-4 border border-gray-300 rounded-lg flex flex-col items-start mx-auto mb-4 w-full"
             key={comment.comment_id ? comment.comment_id : `comment-${index}`}
@@ -128,13 +133,13 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                   className="mr-4"
                 />
                 <div>
-                  <h1 className="font-bold py-2">작성자: {comment.user_email} 님</h1>
+                  <h1 className="text-2xl font-bold py-2">작성자: {comment.user_email} 님</h1>
                   <h2 className="py-2">{comment.created_at}</h2>
                 </div>
               </div>
               {sessionData && sessionData.user.id === comment.user_id && (
                 <div className="flex space-x-2 justify-end">
-                  <button onClick={() => handleEdit(comment)} className="px-4 py-2 bg-blue-500 text-white rounded">
+                  <button onClick={() => handleEdit(comment)} className="px-4 py-2  bg-orange-500 text-white rounded">
                     수정
                   </button>
                   <button
@@ -158,7 +163,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                   <div className="flex justify-end space-x-2 mt-2">
                     <button
                       onClick={() => handleUpdate(comment.comment_id)}
-                      className="px-4 py-2 bg-blue-500 text-white rounded"
+                      className="px-4 py-2  bg-orange-500 text-white rounded"
                     >
                       저장
                     </button>
@@ -171,7 +176,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                   </div>
                 </div>
               ) : (
-                <p className="py-2 break-all whitespace-pre-wrap">{comment.comment}</p>
+                <p className="py-2 break-all whitespace-pre-wrap pl-14">{comment.comment}</p>
               )}
             </div>
           </div>

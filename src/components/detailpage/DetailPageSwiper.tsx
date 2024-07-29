@@ -16,7 +16,7 @@ const DetailPageSwiper: React.FC<{ contentItemData: ContentItem }> = ({ contentI
         spaceBetween={50}
         slidesPerView={1}
         navigation
-        pagination={{ clickable: true }}
+        pagination={{ clickable: true, el: ".swiper-pagination-custom" }}
         scrollbar={{ draggable: true }}
       >
         {contentItemData.data.firstimage && (
@@ -30,6 +30,7 @@ const DetailPageSwiper: React.FC<{ contentItemData: ContentItem }> = ({ contentI
           </SwiperSlide>
         )}
       </Swiper>
+      <div className="swiper-pagination-custom"></div>
     </section>
   );
 };
