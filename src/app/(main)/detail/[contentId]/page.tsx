@@ -1,5 +1,6 @@
 "use client";
 
+import { Loading } from "@/components/common/Loading";
 import ContentDetail from "@/components/detailpage/ContentDetail";
 import ContentOverview from "@/components/detailpage/ContentOverview";
 import DetailPageAddComment from "@/components/detailpage/DetailPageAddComment";
@@ -9,66 +10,24 @@ import DetailPageSwiper from "@/components/detailpage/DetailPageSwiper";
 import KakaoMap from "@/components/detailpage/KakaoMap";
 import KakaoShareButton from "@/components/detailpage/KakaoShareButton";
 import LinkUrlButton from "@/components/detailpage/LinkUrlButton";
-import { ContentItem } from "@/types/ContentItem.type";
-import { fetchSessionData } from "@/utils/fetchSession";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-
-import { parseHTMLString } from "./../../../../utils/detailpage/StringUtils";
+import { useContentId } from "@/hooks/detailpage/useContentId";
+import { useContentItem } from "@/hooks/detailpage/useContentItem";
+import { useSessionData } from "@/hooks/detailpage/useSessionData";
+import { parseHTMLString } from "../../../../utils/detailpage/StringUtils";
 
 const DetailPage = () => {
-  const params = useParams();
-  let contentId = params.contentId;
+  const contentId = useContentId();
 
-  if (Array.isArray(contentId)) {
-    contentId = contentId[0];
-  }
+  const { data: session } = useSessionData();
 
-  // URL 디코딩 및 대괄호 제거 --> 안해주면 특수문자뜸.
-  if (contentId) {
-    contentId = decodeURIComponent(contentId);
-    contentId = contentId.replace(/^\[|\]$/g, "");
-  }
-
-  const splitText = (text: string, chunkSize: number) => {
-    const regex = new RegExp(`(.{1,${chunkSize}})`, "g");
-    const matched = text.match(regex);
-    return matched ? matched.join("\n") : "";
-  };
-
-  const {
-    data: session,
-    isPending: sessionLoading,
-    error: sessionError,
-  } = useQuery({
-    queryKey: ["session"],
-    queryFn: fetchSessionData,
-  });
-
-  const {
-    data: contentItemData,
-    isPending: pendingContentItem,
-    error,
-  } = useQuery<ContentItem, Error>({
-    queryKey: ["contentItem", contentId],
-    queryFn: async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/detailpage/${contentId}`);
-      if (!response.ok) {
-        throw new Error("데이터를 불러올 수 없습니다");
-      }
-      const data = await response.json();
-
-      return data as ContentItem;
-    },
-    enabled: !!contentId,
-  });
+  const { data: contentItemData, isPending: pendingContentItem, error: contentItemError } = useContentItem(contentId);
 
   if (pendingContentItem) {
-    return <div>불러오는중...</div>;
+    return <Loading />;
   }
 
-  if (error) {
-    return <h1>에러가 발생했습니다: {error.message}</h1>;
+  if (contentItemError) {
+    return <h1>에러가 발생했습니다: {contentItemError.message}</h1>;
   }
 
   const homepageLink = contentItemData?.data?.homepage ? parseHTMLString(contentItemData.data.homepage) : null;

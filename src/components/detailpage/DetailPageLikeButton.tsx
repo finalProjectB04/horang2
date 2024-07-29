@@ -139,7 +139,7 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
   }, [data, userId]);
 
   if (isPending) {
-    return <div>불러오는중...</div>;
+    return <Image src="/assets/images/defaultLikeIcon.png" alt={"Unlike"} width={70} height={70} />;
   }
 
   if (isError) {
