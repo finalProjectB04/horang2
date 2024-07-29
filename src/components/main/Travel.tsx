@@ -6,10 +6,20 @@ import { ApiInformation } from "@/types/Main";
 import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
-import { FetchTravel } from "@/app/api/main/Tour/AllFetch/travel/route";
+import LoadingPage from "@/app/loading";
 
-export const Travel = () => {
-  const [displayCount, setDisplayCount] = useState(25);
+interface TravelProps {
+  searchTerm: string;
+}
+const FetchTravel = async (): Promise<ApiInformation[]> => {
+  const response = await fetch("/api/main/tourism/travel");
+  if (!response.ok) {
+    throw new Error("error");
+  }
+  return response.json();
+};
+export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
+  const [displayCount, setDisplayCount] = useState<number>(20);
   const router = useRouter();
   const {
     data: travel,
@@ -20,10 +30,14 @@ export const Travel = () => {
     queryFn: FetchTravel,
   });
 
-  const sortedTravel = useMemo(() => {
+  const sortedAndFilteredTravel: ApiInformation[] = useMemo(() => {
     if (!travel) return [];
 
-    const shuffled = [...travel];
+    const filtered: ApiInformation[] = travel.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    const shuffled: ApiInformation[] = [...filtered];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -36,25 +50,24 @@ export const Travel = () => {
         return 0;
       })
       .slice(0, displayCount);
-  }, [travel, displayCount]);
+  }, [travel, displayCount, searchTerm]);
 
   if (isPending) {
-    return (
-      <div className="flex flex-col justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-orange-500"></div>
-        <p className="text-xl font-semibold mt-4 text-gray-700">불러오는 중입니다...</p>
-      </div>
-    );
+    return <LoadingPage />;
   }
 
   if (error) {
-    return <div>Error</div>;
+    return <div>에러</div>;
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 ">
-      <MainListTitle TitleName={`지금뜨는 핫플레이스`} onClick={() => router.push("/travel")} />
-      <MainTravelSlider travel={sortedTravel} />
-    </div>
+    <>
+      <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">
+        <MainListTitle TitleName={`추천 여행지 `} onClick={() => router.push("/travel")} />
+      </div>
+      <div className=" mx-auto  max-w-[1440px] h-[346px] flex flex-col gap-10">
+        <MainTravelSlider travel={sortedAndFilteredTravel} isPending={isPending} error={error} />
+      </div>
+    </>
   );
 };

@@ -2,18 +2,23 @@
 import { Travel } from "@/components/main/Travel";
 import Control from "@/components/main/Control";
 import { MainImage } from "@/components/main/image/MainImage";
-import { TravelCourse } from "@/components/main/TravelCourse";
 import { Leports } from "@/components/main/Leports";
-//MainImage 검색오류입니다 신경 안쓰셔도괜찮습니다
+import { useState } from "react";
+import { Festival } from "@/components/main/Festival";
+
 const Home = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
-    <div>
-      <MainImage />
-      <Control />
-      <Travel />
-      <Leports />
-      <TravelCourse />
-    </div>
+    <main>
+      <div className="flex flex-col justify-center items-center">
+        <MainImage searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <Control />
+      </div>
+      <Travel searchTerm={searchTerm} />
+      <Leports searchTerm={searchTerm} />
+      <Festival searchTerm={searchTerm} />
+    </main>
   );
 };
 

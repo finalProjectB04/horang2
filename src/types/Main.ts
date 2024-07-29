@@ -1,7 +1,6 @@
 export type ApiInformation = {
-  addr1?: string;
+  addr1: string;
   addr2?: string;
-  areacode?: string;
   booktour?: string;
   cat1?: string;
   cat2?: string;
@@ -11,7 +10,7 @@ export type ApiInformation = {
   cpyrhtDivCd?: string;
   createdtime: string;
   firstimage: string;
-  firstimage2?: string;
+  firstimage2: string;
   homepage?: string;
   mapx: string;
   mapy: string;

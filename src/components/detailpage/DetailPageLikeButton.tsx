@@ -1,12 +1,12 @@
 "use client";
 
+import { Likes } from "@/types/Likes.types";
+import { supabase } from "@/utils/supabase/client";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import { supabase } from "../common/contexts/supabase.context";
-
-interface LikeBtnProps {
+interface LikeButtonProps {
   contentId: string;
   imageUrl: string;
   contentTypeId: string;
@@ -15,10 +15,14 @@ interface LikeBtnProps {
   tel: string;
 }
 
-const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, contentTypeId, title, addr1, tel }) => {
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState<number>(0);
+interface ContextType {
+  previousLikes: Likes[] | undefined;
+}
+
+const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, contentTypeId, title, addr1, tel }) => {
+  const [liked, setLiked] = useState<Boolean>(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -38,11 +42,8 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
 
   const ensureUserExists = async (userId: string) => {
     const { data: user, error } = await supabase.from("Users").select("id").eq("id", userId).single();
-
     if (error && error.code === "PGRST116") {
-      // 사용자 id를 like 테이블에 추가
       const { error: insertError } = await supabase.from("Users").insert([{ id: userId }]);
-
       if (insertError) {
         console.error("유저정보(소셜로그인 사용자 데이터 like 테이블 입력) 입력실패:", insertError);
       }
@@ -51,66 +52,82 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
     }
   };
 
-  const { isLoading, isError, data } = useQuery({
+  const { isPending, isError, data } = useQuery<Likes[]>({
     queryKey: ["likes", contentId],
     queryFn: async () => {
-      const { data: likes, error } = await supabase.from("Likes").select("user_id").eq("content_id", contentId);
-
+      const { data: likes, error } = await supabase.from("Likes").select("*").eq("content_id", contentId);
       if (error) {
         throw error;
       }
       return likes;
     },
+    enabled: !!userId,
   });
 
   const deleteMutation = useMutation({
     mutationFn: async (userId: string) => {
       const { error } = await supabase.from("Likes").delete().match({ user_id: userId, content_id: contentId });
-
       if (error) {
-        throw error;
+        throw new Error(error.message);
       }
     },
     onSuccess: () => {
-      setLikeCount((prev) => prev - 1);
+      alert("좋아요가 취소되었습니다");
+      queryClient.invalidateQueries({ queryKey: ["likes", contentId] });
     },
     onError: (error) => {
       console.error("뮤테이션 에러: 좋아요 취소실패", error);
     },
   });
 
-  const addMutation = useMutation({
-    mutationFn: async () => {
-      // 나중에 모달로 띄우고 로그인 페이지로 라우터 쓰거나..기타 활용해볼것.
+  const addMutation = useMutation<Likes, Error, Partial<Likes>, ContextType>({
+    mutationFn: async (variables) => {
       if (!userId) {
-        alert("로그인 후 이용해 주세요.");
+        alert("로그인 후 좋아요를 누를 수 있습니다.");
         throw new Error("세션 정보가 없습니다.");
       }
 
-      const { error } = await supabase.from("Likes").insert([
-        {
-          user_id: userId,
-          content_id: contentId,
-          image_url: imageUrl,
-          content_type_id: contentTypeId,
-          title: title,
-          address: addr1,
-          tel: tel,
-        },
-      ]);
+      const { data, error } = await supabase
+        .from("Likes")
+        .insert([
+          {
+            user_id: userId,
+            content_id: contentId,
+            image_url: imageUrl,
+            content_type_id: contentTypeId,
+            title: title,
+            address: addr1,
+            tel: tel,
+          },
+        ])
+        .single();
 
       if (error) {
-        console.error("좋아요 추가 실패", error);
-        throw error;
-      } else {
-        console.log("좋아요가 성공적으로 등록되었습니다.");
+        throw new Error(error.message);
       }
+
+      if (!data) {
+        throw new Error("좋아요 추가에 실패했습니다.");
+      }
+
+      return data as Likes;
     },
-    onSuccess: () => {
-      setLikeCount((prev) => prev + 1);
+    onMutate: async (variables) => {
+      await queryClient.cancelQueries({ queryKey: ["likes", contentId] });
+      const previousLikes = queryClient.getQueryData<Likes[]>(["likes", contentId]);
+
+      if (previousLikes) {
+        queryClient.setQueryData<Likes[]>(["likes", contentId], [...previousLikes, variables as Likes]);
+      } else {
+        queryClient.setQueryData<Likes[]>(["likes", contentId], [variables as Likes]);
+      }
+
+      return { previousLikes };
     },
-    onError: (error) => {
-      console.error("뮤테이션 에러: 좋아요 등록 실패", error);
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["likes", contentId] });
+      alert("좋아요 등록이 성공했습니다.");
     },
   });
 
@@ -118,24 +135,31 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
     if (data) {
       const result = data.find((item) => item.user_id === userId);
       setLiked(!!result);
-      setLikeCount(data.length);
     }
   }, [data, userId]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (isPending) {
+    return <Image src="/assets/images/defaultLikeIcon.png" alt={"Unlike"} width={70} height={70} />;
   }
 
   if (isError) {
-    return <div>Error occurred...</div>;
+    return <div>에러가 감지되었습니다....</div>;
   }
 
-  const handleLikeBtn = async () => {
+  const handleLikeButton = async () => {
     try {
       if (liked) {
         deleteMutation.mutate(userId!);
       } else {
-        addMutation.mutate();
+        addMutation.mutate({
+          user_id: userId,
+          content_id: contentId,
+          image_url: imageUrl,
+          content_type_id: contentTypeId,
+          title: title,
+          address: addr1,
+          tel: tel,
+        });
       }
       setLiked((prevLiked) => !prevLiked);
     } catch (error) {
@@ -143,12 +167,16 @@ const DetailPageLikeButton: React.FC<LikeBtnProps> = ({ contentId, imageUrl, con
     }
   };
 
-  const likeImage = liked ? "/assets/images/successLikeIcon.png" : "/assets/images/defaultLikeIcon.png";
+  const likeImage =
+    data && data.find((item) => item.user_id === userId)
+      ? "/assets/images/successLikeIcon.png"
+      : "/assets/images/defaultLikeIcon.png";
 
   return (
-    <button onClick={handleLikeBtn} disabled={!userId}>
+    <button onClick={handleLikeButton} disabled={!userId}>
       <Image src={likeImage} alt={liked ? "Unlike" : "Like"} width={70} height={70} />
     </button>
   );
 };
+
 export default DetailPageLikeButton;

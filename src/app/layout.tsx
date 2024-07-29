@@ -2,6 +2,7 @@ import Header from "@/components/common/Header";
 import QueryProvider from "@/provider/QueryProvider";
 import type { Metadata } from "next";
 import Script from "next/script";
+import "swiper/swiper-bundle.css";
 import "./globals.css";
 import "swiper/swiper-bundle.css";
 import Head from "next/head";

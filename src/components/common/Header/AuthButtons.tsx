@@ -1,6 +1,7 @@
 import { Session } from "@supabase/supabase-js";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useUserStore } from "@/zustand/userStore";
 
 interface AuthButtonsProps {
   session: Session | null;
@@ -9,14 +10,22 @@ interface AuthButtonsProps {
 
 const AuthButtons: React.FC<AuthButtonsProps> = ({ session, handleLogout }) => {
   const [mounted, setMounted] = useState(false);
+  const clearUser = useUserStore((state) => state.clearUser);
 
   useEffect(() => {
-    // Set the mounted state to true when the component is mounted
     setMounted(true);
   }, []);
 
+  const onLogoutClick = async () => {
+    try {
+      await handleLogout();
+      clearUser();
+    } catch (error) {
+      console.error("로그아웃 중 오류가 발생했습니다.", error);
+    }
+  };
+
   if (!mounted) {
-    // Render nothing or a loading state while the component is mounting
     return null;
   }
 
@@ -37,7 +46,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ session, handleLogout }) => {
         </>
       ) : (
         <span
-          onClick={() => handleLogout()}
+          onClick={onLogoutClick}
           className="bg-[#222222] text-[#FF912B] border border-[#FF912B] px-4 py-2 rounded hover:bg-[#333333] cursor-pointer"
         >
           로그아웃
