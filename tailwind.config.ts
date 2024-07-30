@@ -18,6 +18,9 @@ const config: Config = {
       height: {
         "1080": "1080px",
       },
+      fontFamily: {
+        sans: ["Pretendard", "ui-sans-serif", "system-ui"],
+      },
       colors: {
         primary: {
           50: "#FFDECC",

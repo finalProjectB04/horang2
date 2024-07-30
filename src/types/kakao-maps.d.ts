@@ -4,7 +4,9 @@ declare namespace kakao.maps {
     relayout(): void;
     setCenter(latlng: LatLng): void;
     setLevel(level: number): void;
+    getCenter(): LatLng;
     getLevel(): number;
+    setBounds(bounds: LatLngBounds): void;
   };
 
   type LatLngBounds = {
@@ -45,10 +47,22 @@ declare namespace kakao.maps {
     clear(): void;
   };
 
+  type CustomOverlay = {
+    setMap(map: Map | null): void;
+    setPosition(position: LatLng): void;
+    setContent(content: string): void;
+  };
+
+  type CustomOverlayOptions = {
+    position: LatLng;
+    content: string;
+  };
+
   function load(callback: () => void): void;
   function LatLng(lat: number, lng: number): LatLng;
   function Marker(options: MarkerOptions): Marker;
   function InfoWindow(options: InfoWindowOptions): InfoWindow;
   function Map(container: HTMLElement, options: MapOptions): Map;
   function MarkerClusterer(options: { map: Map; averageCenter: boolean; minClusterSize: number }): MarkerClusterer;
+  function CustomOverlay(options: CustomOverlayOptions): CustomOverlay;
 }
