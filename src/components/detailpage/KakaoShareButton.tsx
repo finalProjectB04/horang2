@@ -14,9 +14,9 @@ const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
   const [isKakaoLoaded, setIsKakaoLoaded] = useState(false);
   useEffect(() => {
     const initializeKakao = () => {
-      if (window.kakao) {
-        if (!window.kakao.isInitialized()) {
-          window.kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
+      if (window.Kakao) {
+        if (!window.Kakao.isInitialized()) {
+          window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
         }
         setIsKakaoLoaded(true);
       }

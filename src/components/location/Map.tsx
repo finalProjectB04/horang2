@@ -1,6 +1,7 @@
 import { TouristSpot, useTouristSpots } from "@/hooks/useTouristSpots";
 import { useLocationStore } from "@/zustand/locationStore";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const KAKAO_MAP_API = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
 
@@ -46,7 +47,6 @@ const MapComponent: React.FC = () => {
           const mapInstance = new kakao.maps.Map(mapContainer.current, mapOptions);
           setMap(mapInstance);
 
-          // 내 위치 오버레이 설정
           const myLocationCustomMarker = `
             <div class="bg-red-200 w-5 h-5 rounded-full flex items-center justify-center">
               <div class="bg-red-500 w-3 h-3 border border-white rounded-full"></div>
@@ -74,7 +74,6 @@ const MapComponent: React.FC = () => {
               });
 
               kakao.maps.event.addListener(newMarker, "click", () => {
-                // 선택된 마커의 이전 지도 상태를 저장
                 if (mapInstance) {
                   setPreviousCenter(mapInstance.getCenter());
                   setPreviousLevel(mapInstance.getLevel());
@@ -109,21 +108,24 @@ const MapComponent: React.FC = () => {
             setVisibleSpots(visibleSpots);
           };
 
-          kakao.maps.event.addListener(mapInstance, "idle", () => {
-            updateMarkers();
-            updateVisibleSpots();
-          });
+          const handleMapEvents = () => {
+            kakao.maps.event.addListener(mapInstance, "idle", () => {
+              updateMarkers();
+              updateVisibleSpots();
+            });
 
-          kakao.maps.event.addListener(mapInstance, "zoom_changed", () => {
-            updateMarkers();
-            updateVisibleSpots();
+            kakao.maps.event.addListener(mapInstance, "zoom_changed", () => {
+              updateMarkers();
+              updateVisibleSpots();
 
-            const currentZoomLevel = mapInstance.getLevel();
-            if (currentZoomLevel > 8) {
-              mapInstance.setLevel(8);
-            }
-          });
+              const currentZoomLevel = mapInstance.getLevel();
+              if (currentZoomLevel > 8) {
+                mapInstance.setLevel(8);
+              }
+            });
+          };
 
+          handleMapEvents();
           updateMarkers();
           updateVisibleSpots();
         });
@@ -136,6 +138,11 @@ const MapComponent: React.FC = () => {
       if (document.head.contains(script)) {
         document.head.removeChild(script);
       }
+      // Clean up map events and markers if necessary
+      if (map) {
+        markers.forEach((marker) => marker.setMap(null));
+        setMarkers([]);
+      }
     };
   }, [latitude, longitude, spots]);
 
@@ -147,13 +154,13 @@ const MapComponent: React.FC = () => {
 
       // 선택된 스팟의 인포윈도우 생성
       const infoWindowContent = `
-  <div class="info-window" style="padding: 10px; border-radius: 5px; background: white; border: 1px solid #ddd; display: flex; align-items: center; justify-content: space-between; overflow: hidden;">
-    <a href="/detail/${selectedSpot.contentid}" style="display: flex; align-items: center; text-decoration: none; color: inherit; width: 100%;">
-      <div style="font-size: 20px; font-weight: bold; margin-right: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${selectedSpot.title}</div>
-      <img src="/assets/images/arrow.svg" alt="화살표" style="width: 20px; height: 20px; flex-shrink: 0;" />
-    </a>
-  </div>
-`;
+      <a href="/detail/${selectedSpot.contentid}" class="info-window" style="padding: 10px; border-radius: 5px; background: white; border: 1px solid #ddd; display: flex; align-items: center; text-decoration: none;">
+        <p style="font-size: 18px; font-weight: bold; margin-right: 5px; flex-grow: 1;">
+          ${selectedSpot.title}
+        </p>
+        <img src="/assets/images/arrow.svg" alt="화살표" style="width: 20px; height: 20px; flex-shrink: 1;" />
+      </a>
+    `;
 
       const infoWindow = new window.kakao.maps.CustomOverlay({
         position: position,
@@ -202,22 +209,26 @@ const MapComponent: React.FC = () => {
         onClick={moveToCurrentLocation}
         className="absolute top-2 left-2 z-10 bg-white text-white p-3 rounded-full flex items-center shadow-xl"
       >
-        <img src="/assets/images/my_location.svg" alt="내 위치" className="w-4 h-4" />
+        <Image src="/assets/images/my_location.svg" alt="내 위치" width={16} height={16} />
       </button>
       <div className="mx-10 my-2 rounded-lg md:mx-10 md:my-2">
         {selectedSpot ? (
           <div className="flex flex-col md:flex-row items-start my-4">
             <div>
               {selectedSpot.firstimage ? (
-                <img
+                <Image
                   src={selectedSpot.firstimage}
                   alt={selectedSpot.title}
+                  width={400}
+                  height={280}
                   className="w-[400px] h-[280px] object-cover rounded my-4"
                 />
               ) : (
-                <img
+                <Image
                   src="/assets/images/null_image.svg"
                   alt="No Image"
+                  width={400}
+                  height={280}
                   className="w-[400px] h-[280px] object-cover rounded my-4"
                 />
               )}
@@ -233,15 +244,19 @@ const MapComponent: React.FC = () => {
               <p className="text-grey-800 mt-2 text-[18px]">{selectedSpot.address}</p>
               <p className="text-grey-800 mt-2 text-[18px]">{selectedSpot.tel}</p>
               {selectedSpot.firstimage ? (
-                <img
+                <Image
                   src={selectedSpot.firstimage}
                   alt={selectedSpot.title}
+                  width={360}
+                  height={270}
                   className="w-[360px] h-[270px] md:hidden rounded"
                 />
               ) : (
-                <img
+                <Image
                   src="/assets/images/null_image.svg"
                   alt="No Image"
+                  width={360}
+                  height={270}
                   className="w-[360px] h-[270px] md:hidden rounded"
                 />
               )}
@@ -262,16 +277,24 @@ const MapComponent: React.FC = () => {
                   onClick={() => setSelectedSpot(spot)}
                 >
                   {spot.firstimage ? (
-                    <img src={spot.firstimage} alt={spot.title} className="w-48 h-32 object-cover mr-8 rounded" />
+                    <Image
+                      src={spot.firstimage}
+                      alt={spot.title}
+                      width={192}
+                      height={128}
+                      className="w-48 h-32 object-cover mr-8 rounded"
+                    />
                   ) : (
-                    <img
+                    <Image
                       src="/assets/images/null_image.svg"
                       alt={spot.title}
+                      width={192}
+                      height={128}
                       className="w-48 h-32 object-cover mr-8 rounded"
                     />
                   )}
                   <div className="flex items-center">
-                    <img src="/assets/images/marker.svg" alt="Marker" className="h-10 mr-6" />
+                    <Image src="/assets/images/marker.svg" alt="Marker" width={40} height={40} className="h-10 mr-6" />
                     <div>
                       <p className="text-secondary-800 text-[26px] mb-2 font-bold">{spot.title}</p>
                       <div className="flex items-center">
