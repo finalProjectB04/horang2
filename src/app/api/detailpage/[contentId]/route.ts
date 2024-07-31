@@ -8,7 +8,7 @@ export const GET = async (request: NextRequest, { params }: { params: { contentI
 
   console.log("contentId:", contentId); // 디버깅을 위해 콘솔 로그 추가
   try {
-    const response = await axios.get("http://apis.data.go.kr/B551011/KorService1/detailCommon1", {
+    const response = await axios.get("https://apis.data.go.kr/B551011/KorService1/detailCommon1", {
       params: {
         serviceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
         numOfRows: 1,
