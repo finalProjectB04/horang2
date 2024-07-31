@@ -99,6 +99,7 @@ export type Database = {
       }
       Post: {
         Row: {
+          category: string | null
           content: string | null
           created_at: string | null
           file: string | null
@@ -107,6 +108,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          category?: string | null
           content?: string | null
           created_at?: string | null
           file?: string | null
@@ -115,6 +117,7 @@ export type Database = {
           user_id?: string
         }
         Update: {
+          category?: string | null
           content?: string | null
           created_at?: string | null
           file?: string | null
@@ -134,27 +137,24 @@ export type Database = {
       }
       Post_comments: {
         Row: {
-          content: string | null
+          comments: string | null
           created_at: string
           post_comment_id: string
           post_id: string | null
-          title: string | null
           user_id: string | null
         }
         Insert: {
-          content?: string | null
+          comments?: string | null
           created_at?: string
           post_comment_id?: string
           post_id?: string | null
-          title?: string | null
           user_id?: string | null
         }
         Update: {
-          content?: string | null
+          comments?: string | null
           created_at?: string
           post_comment_id?: string
           post_id?: string | null
-          title?: string | null
           user_id?: string | null
         }
         Relationships: [

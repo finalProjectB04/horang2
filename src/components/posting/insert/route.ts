@@ -1,42 +1,50 @@
 import { supabase } from "@/utils/supabase/client";
 
-interface InsertData {
+export async function insertCommunityData({
+  title,
+  content,
+  files,
+  category,
+  userId,
+}: {
   title: string;
   content: string;
-  file: File | null;
+  files: File[];
+  category: string;
   userId: string;
+}) {
+  try {
+    // 파일 업로드
+    const fileUrls = await Promise.all(
+      files.map(async (file) => {
+        const fileName = `${userId}/${Date.now()}-${file.name}`;
+        const { data, error } = await supabase.storage.from("community-files").upload(fileName, file);
+
+        if (error) throw error;
+
+        const { data: urlData } = supabase.storage.from("community-files").getPublicUrl(fileName);
+
+        return urlData.publicUrl;
+      }),
+    );
+
+    // 데이터 삽입
+    const { data, error } = await supabase
+      .from("Post")
+      .insert({
+        title,
+        content,
+        category,
+        user_id: userId,
+        image_urls: fileUrls,
+      })
+      .select();
+
+    if (error) throw error;
+
+    return data;
+  } catch (error) {
+    console.error("Error inserting community data:", error);
+    throw error;
+  }
 }
-
-export const insertCommunityData = async ({ title, content, file, userId }: InsertData) => {
-  let fileUrl = "";
-
-  if (file) {
-    const fileExt = file.name.split(".").pop();
-    const fileName = `${Math.random()}.${fileExt}`;
-    const { data, error } = await supabase.storage.from("community-files").upload(fileName, file);
-
-    if (error) {
-      console.error("파일 업로드를 못했어요:", error);
-      throw new Error(`파일 업로드를 못했어요: ${error.message}`);
-    }
-
-    const {
-      data: { publicUrl },
-    } = supabase.storage.from("community-files").getPublicUrl(fileName);
-    fileUrl = publicUrl;
-  }
-
-  const { data, error } = await supabase.from("Post").insert({
-    title,
-    content,
-    file: fileUrl,
-    user_id: userId,
-  });
-
-  if (error) {
-    console.error("데이터 넣기 실패:", error);
-    throw new Error(`데이터 넣기 실패: ${error.message}`);
-  }
-
-  return data;
-};

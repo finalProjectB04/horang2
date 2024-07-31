@@ -13,23 +13,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 interface FormData {
   title: string;
   content: string;
-  file: File | null;
+  files: File[];
+  category: string;
 }
-interface UpdateType {
-  id: string;
-  content?: string | null;
-  title?: string | null;
-  file?: string | null;
-}
+
+const categories = ["여행", "음식점", "축제", "레포츠", "숙소"];
 
 const Writing: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     title: "",
     content: "",
-    file: null,
+    files: [],
+    category: "",
   });
   const [errors, setErrors] = useState<Partial<FormData>>({});
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -50,8 +48,8 @@ const Writing: React.FC = () => {
       return insertCommunityData({ ...data, userId: sessionData.user.id });
     },
     onSuccess: () => {
-      setFormData({ title: "", content: "", file: null });
-      setPreviewUrl(null);
+      setFormData({ title: "", content: "", files: [], category: "" });
+      setPreviewUrls([]);
       alert("글작성 성공!");
       router.push("/community");
       queryClient.invalidateQueries({ queryKey: ["posts"] });
@@ -63,16 +61,15 @@ const Writing: React.FC = () => {
 
   useEffect(() => {
     return () => {
-      if (previewUrl) {
-        URL.revokeObjectURL(previewUrl);
-      }
+      previewUrls.forEach((url) => URL.revokeObjectURL(url));
     };
-  }, [previewUrl]);
+  }, [previewUrls]);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
     if (!formData.title.trim()) newErrors.title = "제목을 작성해주세요";
     if (!formData.content.trim()) newErrors.content = "내용을 적어주세요";
+    if (!formData.category) newErrors.category = "카테고리를 선택해주세요";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -84,19 +81,28 @@ const Writing: React.FC = () => {
     }
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      setFormData((prev) => ({ ...prev, file }));
+    if (event.target.files) {
+      const newFiles = Array.from(event.target.files);
+      setFormData((prev) => ({ ...prev, files: [...prev.files, ...newFiles] }));
 
-      const newPreviewUrl = URL.createObjectURL(file);
-      setPreviewUrl(newPreviewUrl);
+      const newPreviewUrls = newFiles.map((file) => URL.createObjectURL(file));
+      setPreviewUrls((prev) => [...prev, ...newPreviewUrls]);
     }
+  };
+
+  const removeFile = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      files: prev.files.filter((_, i) => i !== index),
+    }));
+    URL.revokeObjectURL(previewUrls[index]);
+    setPreviewUrls((prev) => prev.filter((_, i) => i !== index));
   };
 
   if (isPending) {
@@ -115,6 +121,30 @@ const Writing: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+            Category:
+          </label>
+          <select
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          >
+            <option value="">카테고리 선택</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+          {errors.category && (
+            <span role="alert" className="text-red-600 text-sm">
+              {errors.category}
+            </span>
+          )}
+        </div>
         <div>
           <label htmlFor="title" className="block text-sm font-medium text-gray-700">
             Title:
@@ -154,15 +184,16 @@ const Writing: React.FC = () => {
           )}
         </div>
         <div>
-          <label htmlFor="file" className="block text-sm font-medium text-gray-700">
-            File:
+          <label htmlFor="files" className="block text-sm font-medium text-gray-700">
+            Files:
           </label>
           <input
-            id="file"
-            name="file"
+            id="files"
+            name="files"
             type="file"
             onChange={handleFileChange}
             accept="image/*"
+            multiple
             className="mt-1 block w-full text-sm text-gray-500
             file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0
@@ -171,13 +202,24 @@ const Writing: React.FC = () => {
             hover:file:bg-indigo-100"
           />
         </div>
-        {previewUrl && (
+        {previewUrls.length > 0 && (
           <div>
-            <h4 className="text-lg font-semibold text-gray-700">Image Preview:</h4>
+            <h4 className="text-lg font-semibold text-gray-700">Image Previews:</h4>
             <Swiper modules={[Pagination]} spaceBetween={5} slidesPerView={1} pagination={{}} className="mt-2">
-              <SwiperSlide>
-                <Image src={previewUrl} alt="Preview" width={300} height={300} className="rounded-lg" />
-              </SwiperSlide>
+              {previewUrls.map((url, index) => (
+                <SwiperSlide key={index}>
+                  <div className="relative">
+                    <Image src={url} alt={`Preview ${index + 1}`} width={300} height={300} className="rounded-lg" />
+                    <button
+                      type="button"
+                      onClick={() => removeFile(index)}
+                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+                    >
+                      X
+                    </button>
+                  </div>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </div>
         )}

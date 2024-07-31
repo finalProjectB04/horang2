@@ -7,9 +7,6 @@ import { useParams, useRouter } from "next/navigation";
 import { selectPostById } from "@/components/posting/select/route";
 import { updatePost } from "@/components/posting/update/route";
 import { deletePost } from "@/components/posting/delete/route";
-import CommentSection from "@/components/posting/comment/CommentSection";
-
-// import CommentSection from "@/components/CommentSection";
 
 interface Post {
   content: string | null;
@@ -26,7 +23,8 @@ const PostDetail: React.FC = () => {
   const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState("");
-
+  const [editedTitle, setEditedTitle] = useState("");
+  const [editedFile, setEditedFile] = useState<string | null>(null);
   const {
     data: post,
     isPending,
@@ -62,11 +60,18 @@ const PostDetail: React.FC = () => {
 
   const handleEdit = () => {
     setEditedContent(post.content || "");
+    setEditedTitle(post.title || "");
+    setEditedFile(post.file);
     setIsEditing(true);
   };
 
   const handleSave = () => {
-    updateMutation.mutate({ id: post.id, content: editedContent });
+    updateMutation.mutate({
+      id: post.id,
+      content: editedContent,
+      title: editedTitle,
+      file: editedFile,
+    });
   };
 
   const handleDelete = () => {
@@ -94,11 +99,24 @@ const PostDetail: React.FC = () => {
       )}
       {isEditing ? (
         <div>
+          <input
+            type="text"
+            value={editedTitle}
+            onChange={(e) => setEditedTitle(e.target.value)}
+            className="w-full p-2 border rounded mb-2"
+          />
           <textarea
             value={editedContent}
             onChange={(e) => setEditedContent(e.target.value)}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded mb-2"
             rows={10}
+          />
+          <input
+            type="text"
+            value={editedFile || ""}
+            onChange={(e) => setEditedFile(e.target.value)}
+            className="w-full p-2 border rounded mb-2"
+            placeholder="파일 URL"
           />
           <button onClick={handleSave} className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
             저장
