@@ -1,22 +1,26 @@
-import { Session } from "@supabase/supabase-js";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/zustand/userStore";
+import Link from "next/link";
 
 interface AuthButtonsProps {
-  session: Session | null;
+  userId: string | null;
   handleLogout: () => void;
 }
 
-const AuthButtons: React.FC<AuthButtonsProps> = ({ session, handleLogout }) => {
+const AuthButtons: React.FC<AuthButtonsProps> = ({ handleLogout }) => {
   const [mounted, setMounted] = useState(false);
-  const clearUser = useUserStore((state) => state.clearUser);
+  const { id: userId, clearUser } = useUserStore((state) => ({
+    id: state.id,
+    clearUser: state.clearUser,
+  }));
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   const onLogoutClick = async () => {
+    if (!userId) return;
+
     try {
       await handleLogout();
       clearUser();
@@ -31,7 +35,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ session, handleLogout }) => {
 
   return (
     <div className="flex-shrink-0 flex space-x-4 ml-4">
-      {!session ? (
+      {!userId ? (
         <>
           <Link href="/signin">
             <span className="bg-[#222222] text-[#FF912B] border border-[#FF912B] px-4 py-2 rounded hover:bg-[#333333] cursor-pointer">
