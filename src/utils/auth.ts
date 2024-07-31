@@ -1,5 +1,5 @@
 import { Session } from "@supabase/supabase-js";
-import {} from "./supabase/client";
+import { supabase } from "./supabase/client";
 import Cookies from "js-cookie";
 
 export const fetchSessionData = async (): Promise<Session | null> => {
