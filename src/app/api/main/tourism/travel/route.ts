@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(): Promise<Response> {
   const apiKey = process.env.NEXT_PUBLIC_TOURIST_API_KEY;
-  const baseUrl = "http://apis.data.go.kr/B551011/KorService1/areaBasedList1";
+  const baseUrl = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1";
 
   try {
     const response = await axios.get(baseUrl, {
