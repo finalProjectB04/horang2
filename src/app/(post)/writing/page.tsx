@@ -1,6 +1,6 @@
 "use client";
 
-import { insertCommunityData } from "@/components/posting/insert/InsertCommunityData";
+import { insertCommunityData } from "@/components/posting/insert/route";
 import { fetchSessionData } from "@/utils/fetchSession";
 import { Session } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -14,6 +14,12 @@ interface FormData {
   title: string;
   content: string;
   file: File | null;
+}
+interface UpdateType {
+  id: string;
+  content?: string | null;
+  title?: string | null;
+  file?: string | null;
 }
 
 const Writing: React.FC = () => {
