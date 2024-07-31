@@ -8,13 +8,15 @@ interface UpdateType {
   content?: string | null;
   title?: string | null;
   file?: string | null;
+  category?: string | null;
 }
 
-export const updatePost = async ({ id, content, title, file }: UpdateType) => {
+export const updatePost = async ({ id, content, title, file, category }: UpdateType) => {
   const updateData: { [key: string]: any } = {};
   if (content !== undefined) updateData.content = content;
   if (title !== undefined) updateData.title = title;
   if (file !== undefined) updateData.file = file;
+  if (category !== undefined) updateData.category = category;
 
   const { data, error } = await supabase.from("Post").update(updateData).eq("id", id).select();
 

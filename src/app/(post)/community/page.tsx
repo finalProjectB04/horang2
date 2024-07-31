@@ -10,10 +10,11 @@ import { selectCommunityData } from "@/components/posting/select/route";
 interface Post {
   content: string | null;
   created_at: string | null;
-  file: string | null;
+  files: string | null;
   id: string;
   title: string | null;
   user_id: string;
+  category: string | null;
 }
 
 const Community: React.FC = () => {
@@ -44,13 +45,14 @@ const Community: React.FC = () => {
         {data &&
           data.map((post: Post) => (
             <div key={post.id} className="border rounded-lg p-4 shadow-md">
-              {post.file && <Image src={post.file} alt="파일이미지" width={300} height={300} />}
+              {post.files && <Image src={post.files} alt="파일이미지" width={300} height={300} />}
               <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
               <p className="text-gray-600 mb-2">{post.content.substring(0, 10)}...</p>
               <div className="flex justify-between items-center text-sm text-gray-500">
                 <span>작성자: {post.user_id}</span>
                 <span>{new Date(post.created_at).toLocaleDateString()}</span>
               </div>
+              <p>#{post.category}</p>
               <Link href={`/postDetail/${post.id}`} className="mt-2 text-blue-500 hover:underline block">
                 자세히 보기
               </Link>

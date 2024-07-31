@@ -3,7 +3,7 @@
 import { insertCommunityData } from "@/components/posting/insert/route";
 import { fetchSessionData } from "@/utils/fetchSession";
 import { Session } from "@supabase/supabase-js";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
@@ -17,7 +17,7 @@ interface FormData {
   category: string;
 }
 
-const categories = ["여행", "음식점", "축제", "레포츠", "숙소"];
+const categories = ["여행", "음식", "축제", "레포츠", "숙소"];
 
 const Writing: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -28,24 +28,36 @@ const Writing: React.FC = () => {
   });
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const [sessionData, setSessionData] = useState<Session | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const {
-    data: sessionData,
-    isPending,
-    error,
-  } = useQuery<Session | null, Error, Session | null>({
-    queryKey: ["session"],
-    queryFn: fetchSessionData,
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const session = await fetchSessionData();
+        setSessionData(session);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const mutation = useMutation({
     mutationFn: (data: FormData) => {
       if (!sessionData?.user?.id) {
         throw new Error("로그인 후 글을 작성할 수 있습니다.");
       }
-      return insertCommunityData({ ...data, userId: sessionData.user.id });
+      return insertCommunityData({
+        ...data,
+        userId: sessionData.user.id,
+        files: data.files.length > 0 ? data.files[0] : null,
+      });
     },
     onSuccess: () => {
       setFormData({ title: "", content: "", files: [], category: "" });
@@ -105,7 +117,7 @@ const Writing: React.FC = () => {
     setPreviewUrls((prev) => prev.filter((_, i) => i !== index));
   };
 
-  if (isPending) {
+  if (isLoading) {
     return <div>불러오는중...</div>;
   }
 

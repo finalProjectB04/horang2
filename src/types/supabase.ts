@@ -102,7 +102,7 @@ export type Database = {
           category: string | null
           content: string | null
           created_at: string | null
-          file: string | null
+          files: string | null
           id: string
           title: string | null
           user_id: string
@@ -111,7 +111,7 @@ export type Database = {
           category?: string | null
           content?: string | null
           created_at?: string | null
-          file?: string | null
+          files?: string | null
           id?: string
           title?: string | null
           user_id?: string
@@ -120,7 +120,7 @@ export type Database = {
           category?: string | null
           content?: string | null
           created_at?: string | null
-          file?: string | null
+          files?: string | null
           id?: string
           title?: string | null
           user_id?: string

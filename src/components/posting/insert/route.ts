@@ -1,50 +1,44 @@
 import { supabase } from "@/utils/supabase/client";
 
-export async function insertCommunityData({
-  title,
-  content,
-  files,
-  category,
-  userId,
-}: {
+interface InsertData {
   title: string;
   content: string;
-  files: File[];
-  category: string;
+  files: File | null;
   userId: string;
-}) {
-  try {
-    // 파일 업로드
-    const fileUrls = await Promise.all(
-      files.map(async (file) => {
-        const fileName = `${userId}/${Date.now()}-${file.name}`;
-        const { data, error } = await supabase.storage.from("community-files").upload(fileName, file);
-
-        if (error) throw error;
-
-        const { data: urlData } = supabase.storage.from("community-files").getPublicUrl(fileName);
-
-        return urlData.publicUrl;
-      }),
-    );
-
-    // 데이터 삽입
-    const { data, error } = await supabase
-      .from("Post")
-      .insert({
-        title,
-        content,
-        category,
-        user_id: userId,
-        image_urls: fileUrls,
-      })
-      .select();
-
-    if (error) throw error;
-
-    return data;
-  } catch (error) {
-    console.error("Error inserting community data:", error);
-    throw error;
-  }
+  category: string; // 카테고리 필드 추가
 }
+
+export const insertCommunityData = async ({ title, content, files, userId, category }: InsertData) => {
+  let fileUrl = "";
+
+  if (files) {
+    const fileExt = files.name.split(".").pop();
+    const fileName = `${Math.random()}.${fileExt}`;
+    const { data, error } = await supabase.storage.from("community-files").upload(fileName, files);
+
+    if (error) {
+      console.error("파일 업로드를 못했어요:", error);
+      throw new Error(`파일 업로드를 못했어요: ${error.message}`);
+    }
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("community-files").getPublicUrl(fileName);
+    fileUrl = publicUrl;
+  }
+
+  const { data, error } = await supabase.from("Post").insert({
+    title,
+    content,
+    files: fileUrl,
+    user_id: userId,
+    category,
+  });
+
+  if (error) {
+    console.error("데이터 넣기 실패:", error);
+    throw new Error(`데이터 넣기 실패: ${error.message}`);
+  }
+
+  return data;
+};

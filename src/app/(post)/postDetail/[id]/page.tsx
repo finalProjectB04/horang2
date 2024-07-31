@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useState, useEffect } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { selectPostById } from "@/components/posting/select/route";
@@ -11,7 +11,7 @@ import { deletePost } from "@/components/posting/delete/route";
 interface Post {
   content: string | null;
   created_at: string | null;
-  file: string | null;
+  files: string | null;
   id: string;
   title: string | null;
   user_id: string;
@@ -21,19 +21,27 @@ const PostDetail: React.FC = () => {
   const router = useRouter();
   const { id } = useParams();
   const queryClient = useQueryClient();
+  const [post, setPost] = useState<Post | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState("");
   const [editedTitle, setEditedTitle] = useState("");
   const [editedFile, setEditedFile] = useState<string | null>(null);
-  const {
-    data: post,
-    isPending,
-    isError,
-  } = useQuery<Post | null, Error>({
-    queryKey: ["post", id],
-    queryFn: () => selectPostById(id as string),
-    enabled: !!id,
-  });
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const fetchedPost = await selectPostById(id as string);
+        setPost(fetchedPost);
+      } catch (error) {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    if (id) fetchPost();
+  }, [id]);
 
   const updateMutation = useMutation({
     mutationFn: updatePost,
@@ -50,7 +58,7 @@ const PostDetail: React.FC = () => {
     },
   });
 
-  if (isPending) {
+  if (isLoading) {
     return <div className="text-center py-10">로딩중...</div>;
   }
 
@@ -61,7 +69,7 @@ const PostDetail: React.FC = () => {
   const handleEdit = () => {
     setEditedContent(post.content || "");
     setEditedTitle(post.title || "");
-    setEditedFile(post.file);
+    setEditedFile(post.files);
     setIsEditing(true);
   };
 
@@ -70,7 +78,7 @@ const PostDetail: React.FC = () => {
       id: post.id,
       content: editedContent,
       title: editedTitle,
-      file: editedFile,
+      files: editedFile,
     });
   };
 
@@ -92,9 +100,9 @@ const PostDetail: React.FC = () => {
           작성일: {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Unknown"}
         </span>
       </div>
-      {post.file && (
+      {post.files && (
         <div className="mb-4">
-          <Image src={post.file} alt="게시물 이미지" width={600} height={400} layout="responsive" />
+          <Image src={post.files} alt="게시물 이미지" width={600} height={400} layout="responsive" />
         </div>
       )}
       {isEditing ? (
