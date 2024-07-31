@@ -10,13 +10,15 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
-    <div>
-      <MainImage searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <Control />
+    <main>
+      <div className="flex flex-col justify-center items-center">
+        <MainImage searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <Control />
+      </div>
       <Travel searchTerm={searchTerm} />
       <Leports searchTerm={searchTerm} />
       <Festival searchTerm={searchTerm} />
-    </div>
+    </main>
   );
 };
 

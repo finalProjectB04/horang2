@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import useAuth from "@/hooks/useAuth";
+import Image from "next/image";
 
 interface ProfileManagementProps {
   onClick: () => void;

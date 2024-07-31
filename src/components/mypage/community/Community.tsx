@@ -1,10 +1,11 @@
 import React from "react";
 import LikePost from "./LikePost";
 import MyPost from "./MyPost";
+import Advertisement from "@/components/common/Advertisement";
 
 const Community: React.FC = () => {
   return (
-    <section>
+    <section className="w-[1440px] mt-[260px]">
       <MyPost />
       <LikePost />
     </section>

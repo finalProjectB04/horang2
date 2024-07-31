@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import "@/app/globals.css";
 
 import { Pagination, Autoplay } from "swiper/modules";
 import Image from "next/image";
@@ -12,9 +13,6 @@ const ProfileCarousel: React.FC = () => {
 
   return (
     <Swiper
-      pagination={{
-        dynamicBullets: true,
-      }}
       modules={[Pagination, Autoplay]}
       className="mySwiper h-full rounded-xl"
       style={{ width: "100%", height: "100%" }}
@@ -28,7 +26,7 @@ const ProfileCarousel: React.FC = () => {
           src="/assets/images/korea/korea1.png"
           alt="Korea Travel Destination"
           className="w-full h-full"
-          width={600}
+          width={700}
           height={200}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
@@ -39,7 +37,7 @@ const ProfileCarousel: React.FC = () => {
             src={`/assets/images/korea/korea${image}.jpg`}
             alt="Korea Travel Destination"
             className="w-full h-full"
-            width={600}
+            width={700}
             height={200}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
