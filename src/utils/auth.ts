@@ -27,5 +27,5 @@ export const logoutUser = async () => {
     console.error("Failed to sign out:", error);
     throw new Error("Failed to sign out");
   }
-  Cookies.remove("supabaseSession"); // 쿠키에서 세션 데이터 삭제
+  Cookies.remove("supabaseSession");
 };
