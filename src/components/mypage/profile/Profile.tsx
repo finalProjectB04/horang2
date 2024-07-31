@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Button from "../../common/button";
 import useModalStore from "@/zustand/ModalStore";
 import Modal from "../../common/Modal";
@@ -9,14 +9,24 @@ import ProfileManagement from "./ProfileManagement";
 import { useUserStore } from "@/zustand/userStore";
 import { useRouter } from "next/navigation";
 import ProfileCarousel from "./ProfileCarousel";
+import LoadingPage from "@/app/loading";
 
 const Profile: React.FC = () => {
   const { toggleModal } = useModalStore();
   const { user_nickname, profile_url, setUser } = useUserStore();
+  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
 
-  useEffect(() => {}, [setUser]);
+  useEffect(() => {
+    if (user_nickname !== null && profile_url !== null) {
+      setIsLoading(false);
+    }
+  }, [user_nickname, profile_url]);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <section className="border-b-2 flex justify-center items-center p-5 mb-5">

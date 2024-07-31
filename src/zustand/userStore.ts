@@ -10,14 +10,12 @@ type UserState = {
   clearUser: () => void;
 };
 
-// 쿠키에서 상태를 초기화하는 함수
 const getInitialState = (): Omit<UserState, "setUser" | "clearUser"> => {
   const cookie = Cookies.get("user-storage");
   if (cookie) {
     try {
       return JSON.parse(cookie);
     } catch {
-      // JSON 파싱 실패 시 기본 상태 반환
       return {
         id: null,
         user_email: null,
