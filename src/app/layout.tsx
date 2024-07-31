@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "swiper/swiper-bundle.css";
 import "./globals.css";
-import "swiper/swiper-bundle.css";
 import Head from "next/head";
 
 export const metadata: Metadata = {
@@ -21,17 +20,17 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         <link rel="stylesheet" href="assets/fonts/pretendard.css" />
-        <Script
-          src="https://developers.kakao.com/sdk/js/kakao.min.js"
-          integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
-          strategy="beforeInteractive"
-        />
       </Head>
       <body className="font-sans">
         <QueryProvider>
           <Header />
           {children}
         </QueryProvider>
+        <Script
+          src="https://developers.kakao.com/sdk/js/kakao.min.js"
+          integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
+          strategy="beforeInteractive"
+        />
       </body>
     </html>
   );
