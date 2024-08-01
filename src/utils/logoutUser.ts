@@ -1,4 +1,3 @@
-// utils/logoutUser.ts
 import Cookies from "js-cookie";
 
 export const logoutUser = async () => {
