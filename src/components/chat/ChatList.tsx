@@ -8,10 +8,15 @@ import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { getAllUsers } from "@/actions/chatActions";
 import Tab from "../common/Tab";
+import { User } from "@/types/User.types";
 
-const ChatList = ({ loggedInUser }) => {
-  const [selectedUserId, setSeletedUserId] = useRecoilState(selectedUserIdState);
-  const [selectedUserIndex, setSeletedUserIndex] = useRecoilState(selectedUserIndexState);
+interface loggedInUserProps {
+  loggedInUser: User;
+}
+
+const ChatList = ({ loggedInUser }: loggedInUserProps) => {
+  const [selectedUserId, setSelectedUserId] = useRecoilState(selectedUserIdState);
+  const [selectedUserIndex, setSelectedUserIndex] = useRecoilState(selectedUserIndexState);
   const [presensce, setPresence] = useRecoilState(presenceState);
   const [activeTab, setActiveTab] = useState<string>("전체");
   const tabs = ["전체", "숙소", "놀거리", "음식점"];
@@ -44,6 +49,8 @@ const ChatList = ({ loggedInUser }) => {
         const newState = channel.presenceState();
         const newStateObj = JSON.parse(JSON.stringify(newState));
         setPresence(newStateObj);
+        console.log(newState);
+        console.log(newStateObj?.[loggedInUser.id]);
       },
     );
 
@@ -90,13 +97,13 @@ const ChatList = ({ loggedInUser }) => {
               <Person
                 key={user.id}
                 onClick={() => {
-                  setSeletedUserId(user.id);
-                  setSeletedUserIndex(index);
+                  setSelectedUserId(user.id);
+                  setSelectedUserIndex(index);
                 }}
                 index={index}
                 isActive={selectedUserId === user.id}
-                name={user.user_nickname}
-                url={user.profile_url}
+                name={user.user_nickname!}
+                url={user.profile_url!}
                 onChatScreen={false}
                 onlineAt={presensce?.[user.id]?.[0]?.onlineAt}
                 userId={user.id}

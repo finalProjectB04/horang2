@@ -6,16 +6,32 @@ export const searchState = atom({
 });
 
 export const selectedUserIdState = atom({
-  key: "seletedUserIdState",
-  default: null,
+  key: "selectedUserIdState",
+  default: "",
 });
 
 export const selectedUserIndexState = atom({
   key: "selectedUserIndex",
-  default: null,
+  default: 0,
 });
 
-export const presenceState = atom({
+export const presenceState = atom<Test>({
   key: "presenceState",
-  default: null,
+  default: {
+    "": [
+      {
+        onlineAt: "",
+        presence_ref: "",
+      },
+    ],
+  },
 });
+
+type Test = {
+  [key: string]: PreArr[];
+};
+
+type PreArr = {
+  onlineAt: string;
+  presence_ref: string;
+};

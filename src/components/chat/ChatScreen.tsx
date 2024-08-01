@@ -7,7 +7,6 @@ import Message from "./Message";
 import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAllMessage, getUserById, sendMessage } from "@/actions/chatActions";
-import Person from "./Person";
 import send from "../../../public/assets/images/send.png";
 import Image from "next/image";
 

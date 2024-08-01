@@ -21,17 +21,17 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         <link rel="stylesheet" href="assets/fonts/pretendard.css" />
-        <Script
-          src="https://developers.kakao.com/sdk/js/kakao.min.js"
-          integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
-          strategy="beforeInteractive"
-        />
       </Head>
       <RecoilProvider>
         <QueryProvider>
           <body className="font-sans">
             <Header />
             {children}
+            <Script
+              src="https://developers.kakao.com/sdk/js/kakao.min.js"
+              integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
+              strategy="beforeInteractive"
+            />
           </body>
         </QueryProvider>
       </RecoilProvider>

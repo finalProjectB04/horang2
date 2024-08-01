@@ -1,57 +1,42 @@
 "use server";
 
+import { User } from "@/types/User.types";
 import { createServerSupabaseAdminClient, createServerSupabaseClient } from "@/utils/supabase/serverAdmin";
 
-export async function getAllUsers() {
-  // const supabase = await createServerSupabaseAdminClient();
-
-  // const { data, error } = await supabase.auth.admin.listUsers();
-
+export async function getAllUsers(): Promise<User[]> {
   const supabase = await createServerSupabaseClient();
-
   const { data, error } = await supabase.from("Users").select("*");
 
   if (error) {
     return [];
   }
 
-  // return data.users;
   return data;
 }
 
-export async function getUserById(userId) {
-  // const supabase = await createServerSupabaseAdminClient();
-
-  // const { data, error } = await supabase.auth.admin.getUserById(userId);
-
+export async function getUserById(userId: string): Promise<User[]> {
   const supabase = await createServerSupabaseClient();
-
   const { data, error } = await supabase.from("Users").select("*").eq("id", userId);
 
   if (error) {
     return [];
   }
 
-  // return data.user;
   return data;
 }
 
-export async function sendMessage({ message, chatUserId }) {
+export async function sendMessage({ message, chatUserId }: { message: string; chatUserId: string }): Promise<void> {
   const supabase = await createServerSupabaseClient();
+  const { data, error } = await supabase.auth.getSession();
 
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.getSession();
-
-  if (error || !session.user) {
-    throw new Error("User is not authentcated");
+  if (error || !data?.session?.user) {
+    throw new Error("User is not authenticated");
   }
 
-  const { data, error: sendMessageError } = await supabase.from("message").insert({
+  const { data: sendMessageData, error: sendMessageError } = await supabase.from("message").insert({
     message,
     receiver: chatUserId,
-    sender: session.user.id,
+    sender: data.session.user.id,
   });
 
   if (sendMessageError) {
@@ -59,22 +44,23 @@ export async function sendMessage({ message, chatUserId }) {
   }
 }
 
-export async function getAllMessage({ chatUserId }) {
+export async function getAllMessage({ chatUserId }: { chatUserId: string }): Promise<any[]> {
   const supabase = await createServerSupabaseClient();
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.getSession();
+  const { data, error } = await supabase.auth.getSession();
 
-  const { data, error: getMessageError } = await supabase
+  if (error || !data?.session?.user) {
+    return [];
+  }
+
+  const { data: messages, error: getMessageError } = await supabase
     .from("message")
     .select("*")
-    .or(`receiver.eq.${chatUserId}, receiver.eq.${session.user.id}`)
-    .or(`sender.eq.${chatUserId}, sender.eq.${session.user.id}`)
+    .or(`receiver.eq.${chatUserId}, receiver.eq.${data.session.user.id}`)
+    .or(`sender.eq.${chatUserId}, sender.eq.${data.session.user.id}`)
     .order("created_at", { ascending: true });
 
   if (getMessageError) {
     return [];
   }
-  return data;
+  return messages;
 }
