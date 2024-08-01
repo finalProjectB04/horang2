@@ -18,8 +18,6 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
   const [selectedUserId, setSelectedUserId] = useRecoilState(selectedUserIdState);
   const [selectedUserIndex, setSelectedUserIndex] = useRecoilState(selectedUserIndexState);
   const [presensce, setPresence] = useRecoilState(presenceState);
-  const [activeTab, setActiveTab] = useState<string>("전체");
-  const tabs = ["전체", "숙소", "놀거리", "음식점"];
 
   const supabase = createClient();
 
@@ -72,9 +70,7 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
     <div className="h-screen flex-1 flex flex-col justify-center items-center pl-[240px] pr-[40px]">
       <div className="w-full min-w-[300px] mt-[200px] flex flex-col overflow-y-auto">
         <div className="flex">
-          {tabs.map((tab) => (
-            <Tab key={tab} TapName={tab} isActive={activeTab === tab} onClick={() => setActiveTab(tab)} />
-          ))}
+          <div className="text-black font-extrabold text-4xl">호랑이 목록</div>
         </div>
         <div className="w-full flex flex-col overflow-y-auto hidden-scroll">
           {getAllUsersQuery.isPending ? (
