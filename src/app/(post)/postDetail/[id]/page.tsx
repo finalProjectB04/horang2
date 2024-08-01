@@ -8,7 +8,12 @@ import { selectPostById } from "@/components/posting/select/route";
 import { updatePost } from "@/components/posting/update/route";
 import { deletePost } from "@/components/posting/delete/route";
 import { fetchSessionData } from "@/utils/auth";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+// Swiper 스타일 import
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 interface Post {
   content: string | null;
   created_at: string | null;
@@ -99,6 +104,9 @@ const PostDetail: React.FC = () => {
       deleteMutation.mutate(post.id);
     }
   };
+  const getImageUrls = (files: string | null): string[] => {
+    return files ? files.split(",").filter((url) => url.trim() !== "") : [];
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -114,7 +122,22 @@ const PostDetail: React.FC = () => {
       </div>
       {post.files && (
         <div className="mb-4">
-          <Image src={post.files} alt="게시물 이미지" width={600} height={400} layout="responsive" />
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={50}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            className="w-full h-[400px]"
+          >
+            {getImageUrls(post.files).map((url, index) => (
+              <SwiperSlide key={index}>
+                <div className="relative w-full h-full">
+                  <Image src={url} alt={`게시물 이미지 ${index + 1}`} layout="fill" objectFit="cover" />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       )}
       {isEditing ? (
@@ -136,7 +159,7 @@ const PostDetail: React.FC = () => {
             value={editedFile || ""}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditedFile(e.target.value)}
             className="w-full p-2 border rounded mb-2"
-            placeholder="파일 URL"
+            placeholder="파일 URL (쉼표로 구분하여 여러 URL 입력 가능)"
           />
           <button onClick={handleSave} className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
             저장

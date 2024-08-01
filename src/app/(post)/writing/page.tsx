@@ -3,10 +3,10 @@
 import { insertCommunityData } from "@/components/posting/insert/route";
 import { fetchSessionData } from "@/utils/auth";
 import { Session } from "@supabase/supabase-js";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -17,6 +17,8 @@ interface FormData {
   category: string;
 }
 
+interface FormErrors extends Partial<FormData> {}
+
 const categories = ["여행", "음식", "축제", "레포츠", "숙소"];
 
 const Writing: React.FC = () => {
@@ -26,27 +28,19 @@ const Writing: React.FC = () => {
     files: [],
     category: "",
   });
-  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
-  const [sessionData, setSessionData] = useState<Session | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const session = await fetchSessionData();
-        setSessionData(session);
-      } catch (err) {
-        setError(err as Error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  const {
+    data: sessionData,
+    isLoading,
+    error,
+  } = useQuery<Session | null, Error>({
+    queryKey: ["session"],
+    queryFn: fetchSessionData,
+  });
 
   const mutation = useMutation({
     mutationFn: (data: FormData) => {
@@ -56,7 +50,7 @@ const Writing: React.FC = () => {
       return insertCommunityData({
         ...data,
         userId: sessionData.user.id,
-        files: data.files.length > 0 ? data.files[0] : null,
+        files: data.files,
       });
     },
     onSuccess: () => {
@@ -67,18 +61,19 @@ const Writing: React.FC = () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
     onError: (error: Error) => {
+      console.error("글작성 실패:", error);
       alert(`글작성 실패: ${error.message}`);
     },
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => {
       previewUrls.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [previewUrls]);
 
   const validateForm = (): boolean => {
-    const newErrors: Partial<FormData> = {};
+    const newErrors: FormErrors = {};
     if (!formData.title.trim()) newErrors.title = "제목을 작성해주세요";
     if (!formData.content.trim()) newErrors.content = "내용을 적어주세요";
     if (!formData.category) newErrors.category = "카테고리를 선택해주세요";
