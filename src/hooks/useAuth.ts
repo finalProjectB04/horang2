@@ -1,6 +1,8 @@
-import { supabase } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
 import { useState } from "react";
+
+const supabase = createClient();
 
 const useAuth = () => {
   const { id, user_email, setUser, profile_url } = useUserStore();

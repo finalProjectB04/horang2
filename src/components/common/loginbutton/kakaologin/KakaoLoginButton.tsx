@@ -1,14 +1,16 @@
 "use client";
 
-import { supabase } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
+
+const supabase = createClient();
 
 const KakaoLoginButton = () => {
   const kakaoLogin = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_API_URL}/auth/callback`,
+        redirectTo: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
       },
     });
   };

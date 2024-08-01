@@ -3,7 +3,7 @@
 import { useState, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
 import ProfileImage from "@/components/common/userspage/signuppage/ProfileImage";
 import SignUpForm from "@/components/common/userspage/signuppage/SignUpForm";
@@ -11,6 +11,8 @@ import SignUpLinks from "@/components/common/userspage/signuppage/SignInLink";
 import SocialLoginButtons from "@/components/common/userspage/SocialLoginButtons";
 
 const DEFAULT_PROFILE_IMAGE_URL = "/assets/images/profile_ex.png";
+
+const supabase = createClient();
 
 const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
