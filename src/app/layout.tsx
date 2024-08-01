@@ -21,7 +21,7 @@ export default function RootLayout({
       <Head>
         <link rel="stylesheet" href="assets/fonts/pretendard.css" />
       </Head>
-      <body className="font-sans">
+      <body className="font-sans mt-[84px]">
         <QueryProvider>
           <Header />
           {children}
