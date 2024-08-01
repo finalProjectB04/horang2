@@ -1,7 +1,7 @@
 "use client";
 
 import { insertCommunityData } from "@/components/posting/insert/route";
-import { fetchSessionData } from "@/utils/fetchSession";
+import { fetchSessionData } from "@/utils/auth";
 import { Session } from "@supabase/supabase-js";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";

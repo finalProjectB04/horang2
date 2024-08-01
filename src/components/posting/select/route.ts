@@ -1,5 +1,5 @@
-import { supabase } from "@/utils/supabase/client";
-
+import { createClient } from "@/utils/supabase/client";
+const supabase = createClient();
 export const selectCommunityData = async () => {
   const { data, error } = await supabase.from("Post").select("*");
   if (error) {
@@ -9,11 +9,7 @@ export const selectCommunityData = async () => {
   }
 };
 export const selectPostById = async (id: string) => {
-  const { data, error } = await supabase
-    .from("Post") //
-    .select("*")
-    .eq("id", id)
-    .single();
+  const { data, error } = await supabase.from("Post").select("*").eq("id", id).single();
 
   if (error) {
     console.error("Error fetching post:", error);

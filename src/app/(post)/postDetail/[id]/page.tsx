@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { selectPostById } from "@/components/posting/select/route";
 import { updatePost } from "@/components/posting/update/route";
 import { deletePost } from "@/components/posting/delete/route";
+import { fetchSessionData } from "@/utils/auth";
 
 interface Post {
   content: string | null;
@@ -17,37 +18,48 @@ interface Post {
   user_id: string;
 }
 
+interface Session {
+  user: {
+    id: string;
+  };
+}
+
 const PostDetail: React.FC = () => {
   const router = useRouter();
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
   const queryClient = useQueryClient();
-  const [post, setPost] = useState<Post | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedContent, setEditedContent] = useState("");
-  const [editedTitle, setEditedTitle] = useState("");
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editedContent, setEditedContent] = useState<string>("");
+  const [editedTitle, setEditedTitle] = useState<string>("");
   const [editedFile, setEditedFile] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const fetchedPost = await selectPostById(id as string);
-        setPost(fetchedPost);
-      } catch (error) {
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    if (id) fetchPost();
-  }, [id]);
+  const {
+    data: sessionData,
+    isLoading: isPendingSession,
+    error: sessionError,
+  } = useQuery<Session, Error>({
+    queryKey: ["sessionData"],
+    queryFn: fetchSessionData,
+  });
+
+  const {
+    data: post,
+    isLoading: isPendingPost,
+    isError: isPostError,
+  } = useQuery<Post | null, Error>({
+    queryKey: ["post", id],
+    queryFn: () => selectPostById(id),
+  });
 
   const updateMutation = useMutation({
     mutationFn: updatePost,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["post", id as string] });
+      queryClient.invalidateQueries({ queryKey: ["post", id] });
       setIsEditing(false);
+    },
+    onError: (error: Error) => {
+      console.error("Update failed:", error);
+      alert("수정에 실패했습니다. 다시 시도해주세요.");
     },
   });
 
@@ -58,11 +70,11 @@ const PostDetail: React.FC = () => {
     },
   });
 
-  if (isLoading) {
+  if (isPendingPost || isPendingSession) {
     return <div className="text-center py-10">로딩중...</div>;
   }
 
-  if (isError || !post) {
+  if (isPostError || !post || sessionError) {
     return <div className="text-center py-10 text-red-500">게시물을 불러오는 중 오류가 발생했습니다.</div>;
   }
 
@@ -78,7 +90,7 @@ const PostDetail: React.FC = () => {
       id: post.id,
       content: editedContent,
       title: editedTitle,
-      files: editedFile,
+      file: editedFile,
     });
   };
 
@@ -110,19 +122,19 @@ const PostDetail: React.FC = () => {
           <input
             type="text"
             value={editedTitle}
-            onChange={(e) => setEditedTitle(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditedTitle(e.target.value)}
             className="w-full p-2 border rounded mb-2"
           />
           <textarea
             value={editedContent}
-            onChange={(e) => setEditedContent(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setEditedContent(e.target.value)}
             className="w-full p-2 border rounded mb-2"
             rows={10}
           />
           <input
             type="text"
             value={editedFile || ""}
-            onChange={(e) => setEditedFile(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditedFile(e.target.value)}
             className="w-full p-2 border rounded mb-2"
             placeholder="파일 URL"
           />
@@ -136,12 +148,19 @@ const PostDetail: React.FC = () => {
       ) : (
         <div>
           <div className="prose max-w-none mb-4">{post.content}</div>
-          <button onClick={handleEdit} className="bg-yellow-500 text-white px-4 py-2 rounded mr-2">
-            수정
-          </button>
-          <button onClick={handleDelete} className="bg-red-500 text-white px-4 py-2 rounded">
-            삭제
-          </button>
+          {sessionData && sessionData.user.id === post.user_id && (
+            <div className="flex space-x-2 justify-end">
+              <button onClick={handleEdit} className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded">
+                수정
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
+              >
+                삭제
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

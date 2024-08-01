@@ -22,7 +22,7 @@ type ApiTouristSpot = {
 };
 
 const fetchTouristSpots = async (latitude: number, longitude: number): Promise<TouristSpot[]> => {
-  const response = await axios.get("http://apis.data.go.kr/B551011/KorService1/locationBasedList1", {
+  const response = await axios.get("https://apis.data.go.kr/B551011/KorService1/locationBasedList1", {
     params: {
       ServiceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
       contentTypeId: 12,

@@ -1,11 +1,11 @@
-import { supabase } from "@/utils/supabase/client";
-
+import { createClient } from "@/utils/supabase/client";
+const supabase = createClient();
 interface InsertData {
   title: string;
   content: string;
   files: File | null;
   userId: string;
-  category: string; // 카테고리 필드 추가
+  category: string;
 }
 
 export const insertCommunityData = async ({ title, content, files, userId, category }: InsertData) => {

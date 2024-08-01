@@ -1,13 +1,19 @@
+// pages/api/login.ts
 import { NextResponse } from "next/server";
-import { supabase } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 
 export async function POST(request: Request) {
-  const { email, password } = await request.json();
-
   try {
-    const { data: sessionData, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+    const { email, password } = await request.json();
+    const supabase = createClient();
+
+    const { data: sessionData, error: loginError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
     if (loginError) {
+      console.error("Login error:", loginError.message);
       return NextResponse.json({ error: loginError.message }, { status: 401 });
     }
 
@@ -21,6 +27,7 @@ export async function POST(request: Request) {
         .maybeSingle();
 
       if (fetchError) {
+        console.error("Fetch error:", fetchError.message);
         return NextResponse.json({ error: fetchError.message }, { status: 500 });
       }
 
@@ -36,6 +43,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   } catch (error) {
+    console.error("Server error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
