@@ -1,7 +1,7 @@
 "use client";
 
 import { Comments } from "@/types/Comments.types";
-import { fetchSessionData } from "@/utils/fetchSession";
+import { fetchSessionData } from "@/utils/auth";
 import { Session } from "@supabase/supabase-js";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";

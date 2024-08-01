@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchSessionData } from "@/utils/fetchSession";
+import { fetchSessionData } from "@/utils/auth";
 import { createClient } from "@/utils/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
