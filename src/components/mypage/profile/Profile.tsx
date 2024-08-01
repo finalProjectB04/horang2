@@ -27,12 +27,12 @@ const Profile: React.FC = () => {
   return (
     <section className="border-b-2 flex justify-between items-center pb-16 mb-16 mt-[220px]">
       <div className="mr-8">
-        <Image src={profile_url ?? "/assets/images/profile_ex.png"} alt="profile" width={200} height={200} />
+        <Image src={profile_url || "/assets/images/profile_ex.png"} alt="profile" width={200} height={200} />
       </div>
       <div className="w-[420px] mr-8">
-        <p className="mb-6 text-start text-black font-normal text-[24px] leading-[1.5] tracking[-0.75px]">
+        <div className="mb-6 text-start text-black font-normal text-[24px] leading-[1.5] tracking[-0.75px]">
           <strong>{user_nickname}</strong>님 행복한 국내 여행하세요
-        </p>
+        </div>
         <div className="grid grid-cols-2 gap-x-4 gap-y-2">
           {buttons.map((button, index) => (
             <React.Fragment key={index}>

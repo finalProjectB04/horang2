@@ -1,3 +1,5 @@
+"use client";
+
 import Advertisement from "@/components/common/Advertisement";
 import Community from "@/components/mypage/community/Community";
 import Profile from "@/components/mypage/profile/Profile";
