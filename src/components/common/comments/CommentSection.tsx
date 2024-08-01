@@ -1,5 +1,3 @@
-// src/components/CommentSection.tsx
-
 "use client";
 
 import React, { useState } from "react";
@@ -15,6 +13,7 @@ interface Comment {
   post_id: string;
   user_id: string;
   comments: string;
+  user_nickname?: string;
 }
 
 interface CommentSectionProps {
@@ -30,16 +29,21 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
 
   const queryKey = ["comments", postId];
 
-  const {
-    data: comments = [],
-    isError,
-    isLoading,
-  } = useQuery<Comment[], Error>({
+  const { data: comments = [], isError } = useQuery({
     queryKey,
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("Post_comments") // Verify table name is correct
-        .select("*")
+        .from("Post_comments")
+        .select(
+          `
+          post_comment_id,
+          created_at,
+          post_id,
+          user_id,
+          comments,
+          Users:user_id (user_nickname) 
+        `,
+        )
         .eq("post_id", postId)
         .order("created_at", { ascending: true });
 
@@ -47,7 +51,15 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
         console.error("Error fetching comments:", error.message);
         throw new Error(error.message);
       }
-      return data as Comment[];
+
+      return data.map((item: any) => ({
+        post_comment_id: item.post_comment_id,
+        created_at: item.created_at,
+        post_id: item.post_id,
+        user_id: item.user_id,
+        comments: item.comments,
+        user_nickname: item.Users?.user_nickname || "",
+      })) as Comment[];
     },
   });
 
@@ -56,7 +68,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
       if (!userId) throw new Error("User not logged in");
 
       const { data, error } = await supabase
-        .from("Post_comments") // Verify table name is correct
+        .from("Post_comments")
         .insert([{ post_id: postId, user_id: userId, comments: comment }]);
 
       if (error) {
@@ -81,22 +93,15 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
         .update({ comments: newContent })
         .eq("post_comment_id", commentId)
         .select("*");
-      console.log(commentId);
+
       if (error) {
         console.error("Error updating comment:", error.message);
         throw new Error(error.message);
       }
 
-      console.log("Update response data:", data);
-
-      if (!data || data.length === 0) {
-        console.warn("No data returned from update operation.");
-      }
-
       return data;
     },
     onSuccess: (data) => {
-      console.log("Comment successfully updated:", data);
       queryClient.invalidateQueries({ queryKey });
       setEditingCommentId(null);
       setEditingContent("");
@@ -150,8 +155,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
     }
   };
 
-  if (isLoading) return <div className="text-center py-10">로딩중...</div>;
-
   if (isError) return <div className="text-center py-10 text-red-500">댓글을 불러오는 중 오류가 발생했습니다.</div>;
 
   return (
@@ -186,7 +189,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
                 ) : (
                   <div>
                     <p>{comment.comments}</p>
-                    <p className="text-sm text-gray-500">작성자: {comment.user_id}</p>
+                    <p className="text-sm text-gray-500">작성자: {comment.user_nickname}</p>
                     {comment.user_id === userId && (
                       <div className="mt-2">
                         <button
