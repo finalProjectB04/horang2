@@ -81,7 +81,7 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
 
   if (likes.length === 0) {
     return (
-      <div className="h-full flex items-center justify-center text-center font-semibold text-3xl">
+      <div className="w-[1440px] h-full flex items-center justify-center text-center font-semibold text-3xl">
         좋아요한 장소가 없습니다.
       </div>
     );
@@ -101,7 +101,7 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
           <SwiperSlide
             key={`${like.id}-${like.content_id}`}
             className="h-full relative cursor-pointer"
-            onClick={() => router.push(`detailpage/${like.content_id}`)}
+            onClick={() => router.push(`detail/${like.content_id}`)}
           >
             <Image
               src={like.image_url}
