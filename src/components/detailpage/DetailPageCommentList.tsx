@@ -62,7 +62,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
     onSuccess: () => {
       setEditCommentId(null);
       setNewComment("");
-      // Remove queryClient.invalidateQueries to prevent duplication
+
       alert("댓글 작성이 성공했습니다.");
     },
     onError: (error: Error) => {
@@ -75,9 +75,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
     mutationFn: async (commentId: string) => {
       await supabase.from("Comments").delete().eq("comment_id", commentId).single();
     },
-    onSuccess: () => {
-      // Remove queryClient.invalidateQueries to prevent duplication
-    },
+    onSuccess: () => {},
   });
 
   const handleUpdate = async (commentId: string) => {

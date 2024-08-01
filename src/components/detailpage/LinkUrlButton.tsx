@@ -8,11 +8,11 @@ const LinkUrlButton = () => {
 
   const copyToClipboard = async (text: string) => {
     await navigator.clipboard.writeText(text);
-    alert(`${process.env.NEXT_PUBLIC_BASE_URL}/${params.contentId}/detailpage : 클립보드에 복사되었습니다.`);
+    alert(`${process.env.NEXT_PUBLIC_BASE_URL}/detail/${params.contentId} : 클립보드에 복사되었습니다.`);
   };
 
   const handleCopyClick = () => {
-    const textToCopy = `${process.env.NEXT_PUBLIC_BASE_URL}/${params.contentId}/detailpage`;
+    const textToCopy = `${process.env.NEXT_PUBLIC_BASE_URL}/detail/${params.contentId}`;
     copyToClipboard(textToCopy);
   };
   return (
