@@ -1,21 +1,32 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../common/button";
 import Modal from "../../common/Modal";
 import ProfileManagement from "./ProfileManagement";
 import { useUserStore } from "@/zustand/userStore";
 import { useRouter } from "next/navigation";
 import ProfileCarousel from "./ProfileCarousel";
+import LoadingPage from "@/app/loading";
 import useModalStore from "@/zustand/modalStore";
 
 const Profile: React.FC = () => {
   const { toggleModal } = useModalStore();
   const { user_nickname, profile_url, setUser } = useUserStore();
+  const [isLoading, setIsLoading] = useState(true);
+
   const router = useRouter();
 
-  useEffect(() => {}, [setUser]);
+  useEffect(() => {
+    if (user_nickname !== null && profile_url !== null) {
+      setIsLoading(false);
+    }
+  }, [user_nickname, profile_url]);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   const buttons = [
     { name: "내 정보 관리", onClick: () => toggleModal("profile") },

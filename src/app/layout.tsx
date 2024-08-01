@@ -1,12 +1,10 @@
 import Header from "@/components/common/Header";
 import QueryProvider from "@/provider/QueryProvider";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Script from "next/script";
 import "swiper/swiper-bundle.css";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "horang",
@@ -20,18 +18,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
+      <Head>
+        <link rel="stylesheet" href="assets/fonts/pretendard.css" />
+      </Head>
+      <body className="font-sans">
+        <QueryProvider>
+          <Header />
+          {children}
+        </QueryProvider>
         <Script
           src="https://developers.kakao.com/sdk/js/kakao.min.js"
           integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
           strategy="beforeInteractive"
         />
-      </head>
-      <body className={inter.className}>
-        <QueryProvider>
-          <Header />
-          {children}
-        </QueryProvider>
       </body>
     </html>
   );

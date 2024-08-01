@@ -9,8 +9,6 @@ import LoginButton from "@/components/common/userspage/signinpage/LoginButton";
 import SocialLoginButtons from "@/components/common/userspage/SocialLoginButtons";
 import SignInLink from "@/components/common/userspage/signinpage/SignInLink";
 import { useUserStore } from "@/zustand/userStore";
-import { supabase } from "@/utils/supabase/client";
-import Cookies from "js-cookie";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -24,31 +22,22 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const { data: sessionData, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-      if (sessionData?.session) {
-        Cookies.set("supabaseSession", JSON.stringify(sessionData.session), { expires: 7 }); // 쿠키 설정 (7일 만료)
+      const data = await response.json();
 
-        queryClient.invalidateQueries({ queryKey: ["session"], exact: true });
-
-        const userId = sessionData.user.id;
-        const { data: userData, error: fetchError } = await supabase
-          .from("Users")
-          .select("id, user_email, user_nickname, profile_url, user_address")
-          .eq("id", userId)
-          .maybeSingle();
-
-        if (fetchError) {
-          setError(`사용자 데이터 가져오기 실패: ${fetchError.message}`);
-          return;
-        }
-
-        if (userData) {
-          setUser(userData.id, userData.user_email, userData.user_nickname, userData.profile_url);
-          router.push("/");
-        } else {
-          setError("사용자 데이터를 찾을 수 없습니다.");
-        }
+      if (response.ok) {
+        const { id, user_email, user_nickname, profile_url } = data;
+        setUser(id, user_email, user_nickname, profile_url);
+        router.push("/");
+      } else {
+        setError(`로그인 오류: ${data.error}`);
       }
     } catch (error) {
       setError("로그인 중 오류가 발생했습니다.");

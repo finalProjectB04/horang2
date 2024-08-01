@@ -2,12 +2,10 @@
 
 import { Comments } from "@/types/Comments.types";
 import { fetchSessionData } from "@/utils/fetchSession";
-
 import { Session } from "@supabase/supabase-js";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
-
 import { supabase } from "@/utils/supabase/client";
 import DetailPagePagination from "./DetailPagePagination";
 

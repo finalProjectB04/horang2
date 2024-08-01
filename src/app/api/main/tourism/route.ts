@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const contentTypeId = searchParams.get("contentTypeId");
   const apiKey = process.env.NEXT_PUBLIC_TOURIST_API_KEY;
-  const baseUrl = "http://apis.data.go.kr/B551011/KorService1/areaBasedList1";
+  const baseUrl = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1";
 
   try {
     const response = await axios.get(baseUrl, {
