@@ -11,7 +11,7 @@ const ChatPage = async () => {
   } = await supabase.auth.getSession();
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="w-full h-[screen-84px] flex justify-center items-center">
       <ChatList loggedInUser={session?.user} />
       <ChatScreen />
     </div>

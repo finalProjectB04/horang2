@@ -1,6 +1,7 @@
 import TimeAgo from "javascript-time-ago";
 import ko from "javascript-time-ago/locale/ko";
 import { getRandomImage } from "@/utils/random";
+import Image from "next/image";
 
 TimeAgo.addDefaultLocale(ko);
 
@@ -10,6 +11,7 @@ interface PersonProps {
   index: number;
   name: string;
   userId: string;
+  url: string;
   onlineAt?: string;
   isActive?: boolean;
   onChatScreen?: boolean;
@@ -20,21 +22,28 @@ export default function Person({
   index,
   name,
   userId,
+  url,
   onlineAt,
   isActive = false,
   onChatScreen = false,
-  onClick = null,
+  onClick,
 }: PersonProps) {
   return (
     <div
-      className={`w-full min-w-60 flex gap-4 items-center p-4 ${onClick && "cursor-pointer"} ${
-        onChatScreen && "bg-gray-50"
-      } ${!onChatScreen && isActive && "bg-light-blue-50"} ${!onChatScreen && !isActive && "bg-gray-50"}`}
+      className={`w-full flex border-b border-gray-200 items-center p-4 ${onClick && "cursor-pointer"} ${
+        onChatScreen && "bg-orange-500"
+      } ${!onChatScreen && isActive && "bg-orange-500"} ${!onChatScreen && !isActive && "bg-white"}`}
       onClick={onClick}
     >
-      <img src={getRandomImage(index)} alt={name} className="w-10 h-10 rounded-full" />
+      <Image
+        width={64}
+        height={64}
+        src={url || "/assets/images/profile_ex.png"}
+        alt={name}
+        className="rounded-full mr-6 my-9"
+      />
       <div>
-        <p className="text-black font-bold text-lg">{name}</p>
+        <p className="text-secondary-800 text-xl font-bold">{name}</p>
         <p className="text-gray-500 text-sm">{onlineAt && timeAgo.format(Date.parse(onlineAt))}</p>
       </div>
     </div>

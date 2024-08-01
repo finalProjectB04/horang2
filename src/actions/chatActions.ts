@@ -3,27 +3,37 @@
 import { createServerSupabaseAdminClient, createServerSupabaseClient } from "@/utils/supabase/serverAdmin";
 
 export async function getAllUsers() {
-  const supabase = await createServerSupabaseAdminClient();
+  // const supabase = await createServerSupabaseAdminClient();
 
-  const { data, error } = await supabase.auth.admin.listUsers();
+  // const { data, error } = await supabase.auth.admin.listUsers();
+
+  const supabase = await createServerSupabaseClient();
+
+  const { data, error } = await supabase.from("Users").select("*");
 
   if (error) {
     return [];
   }
 
-  return data.users;
+  // return data.users;
+  return data;
 }
 
 export async function getUserById(userId) {
-  const supabase = await createServerSupabaseAdminClient();
+  // const supabase = await createServerSupabaseAdminClient();
 
-  const { data, error } = await supabase.auth.admin.getUserById(userId);
+  // const { data, error } = await supabase.auth.admin.getUserById(userId);
+
+  const supabase = await createServerSupabaseClient();
+
+  const { data, error } = await supabase.from("Users").select("*").eq("id", userId);
 
   if (error) {
-    return null;
+    return [];
   }
 
-  return data.user;
+  // return data.user;
+  return data;
 }
 
 export async function sendMessage({ message, chatUserId }) {

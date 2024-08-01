@@ -30,7 +30,7 @@ const Profile: React.FC = () => {
 
   const buttons = [
     { name: "내 정보 관리", onClick: () => toggleModal("profile") },
-    { name: "대화 하기", onClick: () => console.log("대화 하기 버튼 클릭") },
+    { name: "대화 하기", onClick: () => router.push("/chat") },
     { name: "나만의 여행", onClick: () => console.log("나만의 여행 버튼 클릭") },
     { name: "호랑이 모임", onClick: () => console.log("호랑이 모임 버튼 클릭") },
   ];

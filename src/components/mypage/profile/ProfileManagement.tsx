@@ -2,6 +2,7 @@
 
 import useAuth from "@/hooks/useAuth";
 import Image from "next/image";
+import { useState } from "react";
 
 interface ProfileManagementProps {
   onClick: () => void;
@@ -22,18 +23,25 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
     setConfirmPassword,
   } = useAuth();
 
+  const [showPasswordFields, setShowPasswordFields] = useState(false);
+
   const handleSubmit = async () => {
     try {
-      if (password.length < 6 && confirmPassword.length < 6) {
-        return alert("비밀번호는 6글자 이상이어야 합니다.");
+      if (!nickname) {
+        return alert("닉네임을 입력해주세요.");
       }
-      if (password !== confirmPassword) {
-        return alert("입력하신 비밀번호가 다릅니다.");
+      if (showPasswordFields) {
+        if (password.length < 6 || confirmPassword.length < 6) {
+          return alert("비밀번호는 6글자 이상이어야 합니다.");
+        }
+        if (password !== confirmPassword) {
+          return alert("입력하신 비밀번호가 다릅니다.");
+        }
+        await handleUpadatePassword();
       }
       if (!confirm("정말 변경하시겠습니까?")) {
         return;
       }
-      await handleUpadatePassword();
       await handleUpdateUser();
       onClick();
     } catch (error) {
@@ -68,28 +76,41 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             required
           />
-          <label htmlFor="nickname" className="block text-sm text-start mt-4 font-medium text-gray-700">
-            새로운 비밀번호
-          </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            required
-          />
-          <label htmlFor="nickname" className="block text-sm text-start mt-4 font-medium text-gray-700">
-            비밀번호 확인
-          </label>
-          <input
-            id="confirmPassword"
-            type="password"
-            value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            required
-          />
+
+          <button
+            type="button"
+            className="mt-4 text-sm text-indigo-600 hover:underline"
+            onClick={() => setShowPasswordFields((prev) => !prev)}
+          >
+            {showPasswordFields ? "비밀번호 변경 숨기기" : "비밀번호 변경하기"}
+          </button>
+
+          {showPasswordFields && (
+            <>
+              <label htmlFor="password" className="block text-sm text-start mt-4 font-medium text-gray-700">
+                새로운 비밀번호
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                required
+              />
+              <label htmlFor="confirmPassword" className="block text-sm text-start mt-4 font-medium text-gray-700">
+                비밀번호 확인
+              </label>
+              <input
+                id="confirmPassword"
+                type="password"
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                required
+              />
+            </>
+          )}
         </form>
         <div className="flex justify-end mt-4">
           <button
