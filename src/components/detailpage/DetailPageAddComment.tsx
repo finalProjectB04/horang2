@@ -1,11 +1,13 @@
 "use client";
 
 import { fetchSessionData } from "@/utils/fetchSession";
-import { supabase } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
+
+const supabase = createClient();
 
 interface DetailPageAddCommentProps {
   userId: string | null;

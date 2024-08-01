@@ -1,10 +1,12 @@
 "use client";
 
 import { Likes } from "@/types/Likes.types";
-import { supabase } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+
+const supabase = createClient();
 
 interface LikeButtonProps {
   contentId: string;

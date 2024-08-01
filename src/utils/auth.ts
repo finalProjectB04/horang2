@@ -1,6 +1,8 @@
 import { Session } from "@supabase/supabase-js";
-import { supabase } from "./supabase/client";
 import Cookies from "js-cookie";
+import { createClient } from "./supabase/client";
+
+const supabase = createClient();
 
 export const fetchSessionData = async (): Promise<Session | null> => {
   const sessionCookie = Cookies.get("supabaseSession");

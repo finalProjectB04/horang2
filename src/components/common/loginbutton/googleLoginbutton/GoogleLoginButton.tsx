@@ -1,7 +1,9 @@
 "use client";
 
-import { supabase } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
+
+const supabase = createClient();
 
 const GoogleLoginButton: React.FC = () => {
   const googleLogin = async (): Promise<void> => {
@@ -9,7 +11,7 @@ const GoogleLoginButton: React.FC = () => {
       await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${process.env.NEXT_PUBLIC_API_URL}/auth/callback`,
+          redirectTo: process.env.NEXT_PUBLIC_CALLBACK_URL_FOR_GOOGLE,
         },
       });
     } catch (error) {

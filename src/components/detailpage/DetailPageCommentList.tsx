@@ -6,8 +6,10 @@ import { Session } from "@supabase/supabase-js";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
-import { supabase } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/client";
 import DetailPagePagination from "./DetailPagePagination";
+
+const supabase = createClient();
 
 interface DetailPageCommentListProps {
   contentId: string;
