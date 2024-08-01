@@ -10,7 +10,7 @@ interface KakaoShareButtonProps {
   id: string;
 }
 const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
-  const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/${id}/detailpage`;
+  const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/detail/${id}`;
   const [isKakaoLoaded, setIsKakaoLoaded] = useState(false);
   useEffect(() => {
     const initializeKakao = () => {
