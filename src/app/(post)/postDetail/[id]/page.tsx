@@ -35,7 +35,7 @@ const PostDetail: React.FC = () => {
 
   const {
     data: sessionData,
-    isLoading: isPendingSession,
+    isPending: isPendingSession,
     error: sessionError,
   } = useQuery({
     queryKey: ["sessionData"],
@@ -44,7 +44,7 @@ const PostDetail: React.FC = () => {
 
   const {
     data: post,
-    isLoading: isPendingPost,
+    isPending: isPendingPost,
     isError: isPostError,
   } = useQuery<Post | null, Error>({
     queryKey: ["post", id],
