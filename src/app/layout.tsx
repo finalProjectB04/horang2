@@ -24,7 +24,7 @@ export default function RootLayout({
       </Head>
       <RecoilProvider>
         <QueryProvider>
-          <body className="font-sans">
+          <body className="font-sans mt-[84px]">
             <Header />
             {children}
             <Script

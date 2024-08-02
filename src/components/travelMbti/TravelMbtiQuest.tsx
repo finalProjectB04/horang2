@@ -22,19 +22,19 @@ const TravelMbtiQuest: React.FC<TravelMbtiQuestProps> = ({
 }) => {
   return (
     <div>
-      <h2 className="text-xl mb-4">{question}</h2>
+      <p className="text-center text-grey-500">{`${currentQuestion + 1} / ${totalQuestions}`}</p>
+      <h2 className="text-[24px] mb-4 font-bold mt-10">{question}</h2>
       <div className="flex flex-col">
         {options.map((option, index) => (
           <button
             key={index}
             onClick={() => onAnswer(option.type)}
-            className="bg-primary-300 text-white p-2 my-2 rounded shadow-sm hover:bg-primary-500"
+            className="bg-primary-300 text-white text-[16px] p-4 my-2 rounded-[8px] shadow-sm hover:bg-primary-500"
           >
             {option.answer}
           </button>
         ))}
       </div>
-      <p className="mt-4 text-center">{`${currentQuestion + 1} / ${totalQuestions}`}</p>
     </div>
   );
 };

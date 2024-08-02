@@ -35,7 +35,7 @@ const Header = () => {
   });
 
   return (
-    <header className="bg-gray-800 text-white h-[84px] bg-[url('/assets/images/header/header.png')] bg-cover bg-center">
+    <header className="fixed top-0 w-full left-0 z-50 bg-gray-800 text-white h-[84px] bg-[url('/assets/images/header/header.png')] bg-cover bg-center">
       <div className="container mx-auto max-w-[1440px] flex items-center h-full px-4">
         <Logo />
         <Nav />

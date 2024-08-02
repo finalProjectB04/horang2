@@ -79,28 +79,29 @@ const ChatScreen = () => {
             ))}
           </div>
         </div>
-        <div className="flex mt-4 border border-primary-100 rounded">
+        <form
+          className="flex mt-4 border border-primary-100 rounded"
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (message.trim()) {
+              sendMessageMutation.mutate();
+            }
+          }}
+        >
           <input
             className="p-4 w-full"
             placeholder="메시지를 입력하세요"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(event) => setMessage(event.target.value)}
           />
-          <button
-            className="min-w-20 p-3 bg-light-blue-600 text-black flex justify-center items-center"
-            onClick={() => {
-              if (message.trim()) {
-                sendMessageMutation.mutate();
-              }
-            }}
-          >
+          <button type="submit" className="min-w-20 p-3 bg-light-blue-600 text-black flex justify-center items-center">
             {sendMessageMutation.isPending ? (
               <span>전송 중</span>
             ) : (
               <Image width={20} height={20} sizes="100%" src={send} alt="전송" />
             )}
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );

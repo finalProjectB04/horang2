@@ -2,6 +2,8 @@ import { TouristSpot, useTouristSpots } from "@/hooks/useTouristSpots";
 import { useLocationStore } from "@/zustand/locationStore";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { Loading } from "../common/Loading";
+import LoadingPage from "@/app/loading";
 
 const KAKAO_MAP_API = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
 
@@ -187,8 +189,8 @@ const MapComponent: React.FC = () => {
 
   const handleBackToList = () => {
     if (map && previousCenter && previousLevel !== null) {
-      map.setCenter(previousCenter); // 이전 중심 위치로 이동
-      map.setLevel(previousLevel); // 이전 확대 수준으로 변경
+      map.setCenter(previousCenter);
+      map.setLevel(previousLevel);
     }
     setSelectedSpot(null);
 
@@ -199,7 +201,7 @@ const MapComponent: React.FC = () => {
     }
   };
 
-  if (isPending) return <div>Loading...</div>;
+  if (isPending) return <LoadingPage />;
   if (error) return <div>{error.message}</div>;
 
   return (
@@ -207,9 +209,9 @@ const MapComponent: React.FC = () => {
       <div ref={mapContainer} className="w-full md:h-[60vh]" />
       <button
         onClick={moveToCurrentLocation}
-        className="absolute top-2 left-2 z-10 bg-white text-white p-3 rounded-full flex items-center shadow-xl"
+        className="absolute top-4 left-4 z-10 bg-white text-white p-3 rounded-full flex items-center shadow-xl"
       >
-        <Image src="/assets/images/my_location.svg" alt="내 위치" width={16} height={16} />
+        <Image src="/assets/images/my_location.svg" alt="내 위치" width={20} height={20} />
       </button>
       <div className="mx-10 my-2 rounded-lg md:mx-10 md:my-2">
         {selectedSpot ? (
