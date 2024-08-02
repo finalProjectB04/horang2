@@ -1,22 +1,38 @@
-import React, { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createClient } from "@/utils/supabase/client";
-import { useUserStore } from "@/zustand/userStore";
-import ReplySection from "./ReplySection";
+import AddReply from "./AddReply";
+import ReplyItem from "./ReplyItem";
 
 const supabase = createClient();
 
-interface CommentItemProps {
-  comment: Comment;
-  postId: string;
+interface Comment {
+  post_comment_id: string;
+  created_at: string;
+  post_id: string;
+  user_id: string;
+  comments: string;
+  user_nickname?: string;
 }
 
-const CommentItem: React.FC<CommentItemProps> = ({ comment, postId }) => {
+interface Reply {
+  parent_comment_id: string;
+  created_at: string;
+  post_id: string;
+  user_id: string;
+  content: string;
+  user_nickname?: string;
+}
+
+const CommentItem: React.FC<{
+  comment: Comment;
+  userId: string | null;
+  queryKey: string[];
+}> = ({ comment, userId, queryKey }) => {
   const queryClient = useQueryClient();
-  const [editingContent, setEditingContent] = useState("");
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
-  const [newReply, setNewReply] = useState("");
-  const { id: userId } = useUserStore((state) => state);
+  const [editingContent, setEditingContent] = useState("");
+  const [showReplies, setShowReplies] = useState(false);
 
   const updateCommentMutation = useMutation({
     mutationFn: async ({ commentId, newContent }: { commentId: string; newContent: string }) => {
@@ -34,7 +50,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, postId }) => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+      queryClient.invalidateQueries({ queryKey });
       setEditingCommentId(null);
       setEditingContent("");
     },
@@ -53,33 +69,10 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, postId }) => {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", postId] });
+      queryClient.invalidateQueries({ queryKey });
     },
     onError: (error) => {
       console.error("Failed to delete comment:", error.message);
-    },
-  });
-
-  const addReplyMutation = useMutation({
-    mutationFn: async (reply: string, parentCommentId: string) => {
-      if (!userId) throw new Error("User not logged in");
-
-      const { data, error } = await supabase
-        .from("Post_commentreplies")
-        .insert([{ parent_comment_id: parentCommentId, post_id: postId, user_id: userId, content: reply }]);
-
-      if (error) {
-        console.error("Error adding reply:", error.message);
-        throw new Error(error.message);
-      }
-      return data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments", postId] });
-      setNewReply("");
-    },
-    onError: (error) => {
-      console.error("Failed to add reply:", error.message);
     },
   });
 
@@ -102,16 +95,42 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, postId }) => {
     }
   };
 
-  const handleAddReply = (parentCommentId: string) => {
-    if (newReply.trim() === "") {
-      alert("답글 내용을 입력하세요.");
-      return;
-    }
-    addReplyMutation.mutate(newReply, parentCommentId);
-  };
+  const { data: replies = [], isError: isRepliesError } = useQuery({
+    queryKey: ["replies", comment.post_comment_id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("Post_commentreplies")
+        .select(
+          `
+          parent_comment_id,
+          created_at,
+          post_id,
+          user_id,
+          content,
+          Users:user_id (user_nickname) 
+        `,
+        )
+        .eq("parent_comment_id", comment.post_comment_id)
+        .order("created_at", { ascending: true });
+
+      if (error) {
+        console.error("Error fetching replies:", error.message);
+        throw new Error(error.message);
+      }
+
+      return data.map((item: any) => ({
+        parent_comment_id: item.parent_comment_id,
+        created_at: item.created_at,
+        post_id: item.post_id,
+        user_id: item.user_id,
+        content: item.content,
+        user_nickname: item.Users?.user_nickname || "",
+      })) as Reply[];
+    },
+  });
 
   return (
-    <li key={comment.post_comment_id} className="border-b py-2">
+    <li className="border-b py-2">
       {editingCommentId === comment.post_comment_id ? (
         <div>
           <textarea
@@ -150,12 +169,37 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, postId }) => {
               </button>
             </div>
           )}
-          <ReplySection
-            replies={comment.replies}
-            handleAddReply={(content) => handleAddReply(comment.post_comment_id)}
-            newReply={newReply}
-            setNewReply={setNewReply}
-          />
+          <button
+            onClick={() => setShowReplies(!showReplies)}
+            className="bg-green-500 text-white px-4 py-2 rounded mt-2"
+          >
+            {showReplies ? "대댓글 숨기기" : "대댓글 보기"}
+          </button>
+          {showReplies && (
+            <div className="ml-4 mt-2">
+              {isRepliesError ? (
+                <p>대댓글을 불러오는 중 오류가 발생했습니다.</p>
+              ) : (
+                <ul>
+                  {replies.map((reply) => (
+                    <ReplyItem
+                      key={reply.parent_comment_id}
+                      reply={reply}
+                      userId={userId}
+                      queryKey={["replies", comment.post_comment_id]}
+                    />
+                  ))}
+                </ul>
+              )}
+              {userId && (
+                <AddReply
+                  parentCommentId={comment.post_comment_id}
+                  postId={comment.post_id}
+                  queryKey={["replies", comment.post_comment_id]}
+                />
+              )}
+            </div>
+          )}
         </div>
       )}
     </li>
