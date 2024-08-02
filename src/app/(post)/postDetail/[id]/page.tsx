@@ -14,6 +14,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import CommentSection from "@/components/common/comments/CommentSection";
 interface Post {
   content: string | null;
   created_at: string | null;
@@ -21,12 +22,6 @@ interface Post {
   id: string;
   title: string | null;
   user_id: string;
-}
-
-interface Session {
-  user: {
-    id: string;
-  };
 }
 
 const PostDetail: React.FC = () => {
@@ -42,7 +37,7 @@ const PostDetail: React.FC = () => {
     data: sessionData,
     isLoading: isPendingSession,
     error: sessionError,
-  } = useQuery<Session, Error>({
+  } = useQuery({
     queryKey: ["sessionData"],
     queryFn: fetchSessionData,
   });
@@ -186,6 +181,7 @@ const PostDetail: React.FC = () => {
           )}
         </div>
       )}
+      <CommentSection postId={post.id} />
     </div>
   );
 };
