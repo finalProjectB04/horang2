@@ -29,7 +29,7 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
 
           const map = new window.kakao.maps.Map(mapContainer, mapOption);
 
-          const imageSrc = "/assets/images/detailpageMarker.png";
+          const imageSrc = "/assets/images/marker.svg";
           const imageSize = new window.kakao.maps.Size(64, 69);
           const imageOption = { offset: new window.kakao.maps.Point(27, 69) };
 
