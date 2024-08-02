@@ -35,7 +35,7 @@ const Writing: React.FC = () => {
 
   const {
     data: sessionData,
-    isLoading,
+    isPending,
     error,
   } = useQuery<Session | null, Error>({
     queryKey: ["session"],
@@ -111,8 +111,7 @@ const Writing: React.FC = () => {
     URL.revokeObjectURL(previewUrls[index]);
     setPreviewUrls((prev) => prev.filter((_, i) => i !== index));
   };
-
-  if (isLoading) {
+  if (isPending) {
     return <div>불러오는중...</div>;
   }
 
@@ -126,97 +125,28 @@ const Writing: React.FC = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-            Category:
-          </label>
-          <select
-            id="category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          >
-            <option value="">카테고리 선택</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-          {errors.category && (
-            <span role="alert" className="text-red-600 text-sm">
-              {errors.category}
-            </span>
-          )}
-        </div>
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-            Title:
-          </label>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            value={formData.title}
-            onChange={handleChange}
-            aria-invalid={!!errors.title}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-          {errors.title && (
-            <span role="alert" className="text-red-600 text-sm">
-              {errors.title}
-            </span>
-          )}
-        </div>
-        <div>
-          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
-            Content:
-          </label>
-          <textarea
-            id="content"
-            name="content"
-            value={formData.content}
-            onChange={handleChange}
-            aria-invalid={!!errors.content}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            rows={4}
-          />
-          {errors.content && (
-            <span role="alert" className="text-red-600 text-sm">
-              {errors.content}
-            </span>
-          )}
-        </div>
-        <div>
-          <label htmlFor="files" className="block text-sm font-medium text-gray-700">
-            Files:
-          </label>
-          <input
-            id="files"
-            name="files"
-            type="file"
-            onChange={handleFileChange}
-            accept="image/*"
-            multiple
-            className="mt-1 block w-full text-sm text-gray-500
-            file:mr-4 file:py-2 file:px-4
-            file:rounded-full file:border-0
-            file:text-sm file:font-semibold
-            file:bg-indigo-50 file:text-indigo-700
-            hover:file:bg-indigo-100"
-          />
-        </div>
+    <div className="w-[1440px] mx-auto  ">
+      <form onSubmit={handleSubmit} className="space-y-8">
         {previewUrls.length > 0 && (
           <div>
             <h4 className="text-lg font-semibold text-gray-700">Image Previews:</h4>
-            <Swiper modules={[Pagination]} spaceBetween={5} slidesPerView={1} pagination={{}} className="mt-2">
+            <Swiper
+              modules={[Pagination]}
+              spaceBetween={5}
+              slidesPerView={1}
+              pagination={{ clickable: true }}
+              className="w-full h-[800px]"
+            >
               {previewUrls.map((url, index) => (
                 <SwiperSlide key={index}>
                   <div className="relative">
-                    <Image src={url} alt={`Preview ${index + 1}`} width={300} height={300} className="rounded-lg" />
+                    <Image
+                      src={url}
+                      alt={`Preview ${index + 1}`}
+                      width={1440}
+                      height={800}
+                      className="w-[1440px] h-[800px] object-contain rounded-t-[9.11px]"
+                    />
                     <button
                       type="button"
                       onClick={() => removeFile(index)}
@@ -230,19 +160,100 @@ const Writing: React.FC = () => {
             </Swiper>
           </div>
         )}
-        <button
-          type="submit"
-          disabled={mutation.isPending}
-          className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {mutation.isPending ? "Submitting..." : "Submit"}
-        </button>
-      </form>
-      {mutation.isError && (
-        <div role="alert" className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-          Error: {mutation.error.message}
+        <div className="grid grid-cols-3 gap-6 my-6">
+          <div className="col-span-2">
+            <label
+              htmlFor="title"
+              className="block mb-1 text-black font-sans text-[28px] font-bold leading-[42px] tracking-tight"
+            >
+              제목
+            </label>
+
+            <input
+              id="title"
+              name="title"
+              type="text"
+              value={formData.title}
+              onChange={handleChange}
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              placeholder="제목을 입력해주세요"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="title"
+              className="block mb-1 text-black font-sans text-[28px] font-bold leading-[42px] tracking-tight"
+            >
+              카테고리
+            </label>
+            <select
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            >
+              <option value="">카테고리 선택</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-      )}
+
+        <div>
+          <label
+            htmlFor="title"
+            className="block mb-1 text-black font-sans text-[28px] font-bold leading-[42px] tracking-tight"
+          >
+            내용
+          </label>
+          <textarea
+            id="content"
+            name="content"
+            value={formData.content}
+            onChange={handleChange}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            rows={12}
+            placeholder="내용을 입력해주세요"
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor="title"
+            className="block mb-1 text-black font-sans text-[28px] font-bold leading-[42px] tracking-tight"
+          >
+            사진
+          </label>
+          <input
+            id="files"
+            name="files"
+            type="file"
+            onChange={handleFileChange}
+            accept="image/*"
+            multiple
+            className="block w-full text-sm text-gray-500
+        file:mr-4 file:py-2 file:px-4
+        file:rounded-full file:border-0
+        file:text-sm file:font-semibold
+        file:bg-gray-100 file:text-gray-700
+        hover:file:bg-gray-200"
+          />
+        </div>
+
+        <div className="flex justify-center mt-8">
+          <button
+            type="submit"
+            disabled={mutation.isPending}
+            className="py-3 px-8 border border-transparent rounded-full text-sm font-medium text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            글 작성하기
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
