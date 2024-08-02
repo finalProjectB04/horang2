@@ -29,7 +29,7 @@ const TravelMbtiQuest: React.FC<TravelMbtiQuestProps> = ({
           <button
             key={index}
             onClick={() => onAnswer(option.type)}
-            className="bg-primary-300 text-white text-[18px] p-4 my-2 rounded-[8px] shadow-sm hover:bg-primary-500"
+            className="bg-primary-300 text-white text-[16px] p-4 my-2 rounded-[8px] shadow-sm hover:bg-primary-500"
           >
             {option.answer}
           </button>

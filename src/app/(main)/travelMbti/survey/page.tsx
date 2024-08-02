@@ -53,9 +53,9 @@ const SurveyPage = () => {
 
           <main className="flex flex-col items-center justify-center flex-1 p-4 overflow-auto">
             {/* 프로그래스바 */}
-            <div className="w-full bg-grey-200 rounded-full mb-4">
+            <div className="w-full bg-grey-200 rounded-full mb-2">
               <div
-                className="bg-primary-300 text-xs font-medium text-center text-white p-1 leading-none rounded-full"
+                className="bg-primary-300 text-[12px] font-medium text-center text-white p-1 leading-none rounded-full"
                 style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
               >
                 {/* {`${currentQuestion + 1} / ${questions.length}`} */}
