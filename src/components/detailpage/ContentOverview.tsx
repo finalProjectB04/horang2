@@ -11,7 +11,7 @@ const ContentOverview: React.FC<ContentOverviewProps> = ({ overview }) => {
     setShowMore(!showMore);
   };
 
-  const formattedOverview = splitText(overview, 50);
+  const formattedOverview = splitText(overview, 70);
 
   return (
     <section className="w-full max-w-[1440px] mt-4 text-left py-12">

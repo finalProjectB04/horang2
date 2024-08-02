@@ -2,12 +2,11 @@
 
 import { Comments } from "@/types/Comments.types";
 import { fetchSessionData } from "@/utils/auth";
-import { Session } from "@supabase/supabase-js";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
-import DetailPagePagination from "./DetailPagePagination";
+import { Session } from "@supabase/supabase-js";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
+import CommentList from "./commentlist/CommentList";
 
 const supabase = createClient();
 
@@ -19,12 +18,14 @@ interface CommentsResponse {
   comments: Comments[];
   totalCount: number | null;
 }
+
 const ITEMS_PER_PAGE = 4;
 
 const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId }) => {
   const [editCommentId, setEditCommentId] = useState<string | null>(null);
   const [newComment, setNewComment] = useState<string>("");
   const [page, setPage] = useState<number>(1);
+  const queryClient = useQueryClient();
 
   const {
     data: sessionData,
@@ -62,8 +63,8 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
     onSuccess: () => {
       setEditCommentId(null);
       setNewComment("");
-      // Remove queryClient.invalidateQueries to prevent duplication
       alert("댓글 작성이 성공했습니다.");
+      queryClient.invalidateQueries({ queryKey: ["comments", contentId] });
     },
     onError: (error: Error) => {
       console.error("댓글 작성 실패:", error.message);
@@ -76,7 +77,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
       await supabase.from("Comments").delete().eq("comment_id", commentId).single();
     },
     onSuccess: () => {
-      // Remove queryClient.invalidateQueries to prevent duplication
+      queryClient.invalidateQueries({ queryKey: ["comments", contentId] });
     },
   });
 
@@ -116,76 +117,20 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
   const totalPages = Math.ceil((commentsData?.totalCount || 0) / ITEMS_PER_PAGE);
 
   return (
-    <div className="mt-4 max-w-[1440px] mx-auto">
-      {commentsData?.comments &&
-        commentsData.comments.map((comment: Comments, index) => (
-          <div
-            className="p-4 border border-grey-100 rounded-xl flex flex-col items-start mx-auto mb-4 w-full"
-            key={comment.comment_id ? comment.comment_id : `comment-${index}`}
-          >
-            <div className="flex items-center justify-between w-full">
-              <div className="flex items-center">
-                <Image
-                  src="/assets/images/profile_ex.png"
-                  alt="유저 프로필 사진"
-                  width={45}
-                  height={45}
-                  className="mr-4"
-                />
-                <div>
-                  <h1 className="text-2xl text-grey-700 font-bold py-2">{comment.user_email} 님</h1>
-                  <h2 className="py-2 text-grey-700">{comment.created_at}</h2>
-                </div>
-              </div>
-              {sessionData && sessionData.user.id === comment.user_id && (
-                <div className="flex space-x-2 justify-end">
-                  <button
-                    onClick={() => handleEdit(comment)}
-                    className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded"
-                  >
-                    수정
-                  </button>
-                  <button
-                    onClick={() => handleDelete(comment.comment_id)}
-                    className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
-                  >
-                    삭제
-                  </button>
-                </div>
-              )}
-            </div>
-            <div className="mt-2 w-full">
-              {editCommentId === comment.comment_id ? (
-                <div>
-                  <textarea
-                    value={newComment}
-                    onChange={(event) => setNewComment(event.target.value)}
-                    className="w-full p-2 border rounded break-all"
-                    style={{ wordBreak: "break-all" }}
-                  />
-                  <div className="flex justify-end space-x-2 mt-2">
-                    <button
-                      onClick={() => handleUpdate(comment.comment_id)}
-                      className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded"
-                    >
-                      저장
-                    </button>
-                    <button
-                      onClick={() => setEditCommentId(null)}
-                      className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
-                    >
-                      취소
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <p className="py-2 break-all whitespace-pre-wrap pl-14 text-grey-700">{comment.comment}</p>
-              )}
-            </div>
-          </div>
-        ))}
-      <DetailPagePagination totalPages={totalPages} page={page} setPage={setPage} />
-    </div>
+    <CommentList
+      comments={commentsData?.comments || []}
+      totalPages={totalPages}
+      currentPage={page}
+      userId={sessionData?.user?.id || null}
+      editCommentId={editCommentId}
+      newComment={newComment}
+      onEdit={handleEdit}
+      onDelete={handleDelete}
+      onUpdate={handleUpdate}
+      onCancel={() => setEditCommentId(null)}
+      onChange={(event) => setNewComment(event.target.value)}
+      setPage={setPage}
+    />
   );
 };
 
