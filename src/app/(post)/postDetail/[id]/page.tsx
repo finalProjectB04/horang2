@@ -10,11 +10,11 @@ import { deletePost } from "@/components/posting/delete/route";
 import { fetchSessionData } from "@/utils/auth";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-// Swiper 스타일 import
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import CommentSection from "@/components/common/comments/CommentSection";
+
 interface Post {
   content: string | null;
   created_at: string | null;
@@ -99,6 +99,7 @@ const PostDetail: React.FC = () => {
       deleteMutation.mutate(post.id);
     }
   };
+
   const getImageUrls = (files: string | null): string[] => {
     return files ? files.split(",").filter((url) => url.trim() !== "") : [];
   };
@@ -123,12 +124,18 @@ const PostDetail: React.FC = () => {
             slidesPerView={1}
             navigation
             pagination={{ clickable: true }}
-            className="w-full h-[400px]"
+            className="w-full h-[400px] overflow-hidden"
           >
             {getImageUrls(post.files).map((url, index) => (
               <SwiperSlide key={index}>
                 <div className="relative w-full h-full">
-                  <Image src={url} alt={`게시물 이미지 ${index + 1}`} layout="fill" objectFit="cover" />
+                  <Image
+                    src={url}
+                    alt={`게시물 이미지 ${index + 1}`}
+                    layout="fill"
+                    objectFit="contain"
+                    className="object-center"
+                  />
                 </div>
               </SwiperSlide>
             ))}
@@ -156,10 +163,13 @@ const PostDetail: React.FC = () => {
             className="w-full p-2 border rounded mb-2"
             placeholder="파일 URL (쉼표로 구분하여 여러 URL 입력 가능)"
           />
-          <button onClick={handleSave} className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+          <button onClick={handleSave} className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600">
             저장
           </button>
-          <button onClick={() => setIsEditing(false)} className="bg-gray-500 text-white px-4 py-2 rounded">
+          <button
+            onClick={() => setIsEditing(false)}
+            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+          >
             취소
           </button>
         </div>
@@ -168,12 +178,15 @@ const PostDetail: React.FC = () => {
           <div className="prose max-w-none mb-4">{post.content}</div>
           {sessionData && sessionData.user.id === post.user_id && (
             <div className="flex space-x-2 justify-end">
-              <button onClick={handleEdit} className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded">
+              <button
+                onClick={handleEdit}
+                className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded hover:bg-primary-200"
+              >
                 수정
               </button>
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
+                className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black hover:bg-gray-100"
               >
                 삭제
               </button>

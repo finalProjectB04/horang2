@@ -86,7 +86,7 @@ const ReplyItem: React.FC<{
 
   return (
     <li className="border-b py-2">
-      {editingReplyId === reply.id ? ( // 수정 기준을 id로 설정
+      {editingReplyId === reply.id ? (
         <div>
           <textarea
             value={editingContent}
@@ -94,10 +94,7 @@ const ReplyItem: React.FC<{
             className="w-full p-2 border rounded mb-2"
             rows={4}
           />
-          <button
-            onClick={() => handleSaveEdit(reply.id)} // 수정 기준을 id로 설정
-            className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-          >
+          <button onClick={() => handleSaveEdit(reply.id)} className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
             저장
           </button>
           <button onClick={() => setEditingReplyId(null)} className="bg-gray-500 text-white px-4 py-2 rounded">
@@ -111,15 +108,12 @@ const ReplyItem: React.FC<{
           {reply.user_id === userId && (
             <div className="mt-2">
               <button
-                onClick={() => handleEditReply(reply.id, reply.content)} // 수정 기준을 id로 설정
+                onClick={() => handleEditReply(reply.id, reply.content)}
                 className="bg-yellow-500 text-white px-4 py-2 rounded mr-2"
               >
                 수정
               </button>
-              <button
-                onClick={() => handleDeleteReply(reply.id)} // 삭제 기준을 id로 설정
-                className="bg-red-500 text-white px-4 py-2 rounded"
-              >
+              <button onClick={() => handleDeleteReply(reply.id)} className="bg-red-500 text-white px-4 py-2 rounded">
                 삭제
               </button>
             </div>

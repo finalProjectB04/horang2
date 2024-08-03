@@ -3,12 +3,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createClient } from "@/utils/supabase/client";
 import AddReply from "./AddReply";
 import ReplyItem from "./ReplyItem";
+import Image from "next/image";
 
 const supabase = createClient();
 
 interface Comment {
   post_comment_id: string;
-  created_at: string;
+  created_at: string | null;
   post_id: string;
   user_id: string;
   comments: string;
@@ -16,7 +17,7 @@ interface Comment {
 }
 
 interface Reply {
-  id: string; // 이 필드가 삭제의 기준입니다.
+  id: string;
   parent_comment_id: string;
   created_at: string;
   post_id: string;
@@ -32,10 +33,9 @@ const CommentItem: React.FC<{
 }> = ({ comment, userId, queryKey }) => {
   const queryClient = useQueryClient();
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
-  const [editingContent, setEditingContent] = useState("");
-  const [showReplies, setShowReplies] = useState(false);
+  const [editingContent, setEditingContent] = useState<string>("");
+  const [showReplies, setShowReplies] = useState<boolean>(false);
 
-  // 댓글 삭제 전에 대댓글을 삭제하는 함수
   const deleteReplies = async (commentId: string) => {
     const { error: deleteRepliesError } = await supabase
       .from("Post_commentreplies")
@@ -50,10 +50,8 @@ const CommentItem: React.FC<{
 
   const deleteCommentMutation = useMutation({
     mutationFn: async (commentId: string) => {
-      // 대댓글 삭제
       await deleteReplies(commentId);
 
-      // 댓글 삭제
       const { error } = await supabase.from("Post_comments").delete().eq("post_comment_id", commentId);
 
       if (error) {
@@ -138,7 +136,7 @@ const CommentItem: React.FC<{
       }
 
       return data.map((item: any) => ({
-        id: item.id, // 추가된 id
+        id: item.id,
         parent_comment_id: item.parent_comment_id,
         created_at: item.created_at,
         post_id: item.post_id,
@@ -150,9 +148,9 @@ const CommentItem: React.FC<{
   });
 
   return (
-    <li className="border-b py-2">
+    <li className="border-b py-4 bg-gray-50">
       {editingCommentId === comment.post_comment_id ? (
-        <div>
+        <div className="bg-white p-4 rounded shadow">
           <textarea
             value={editingContent}
             onChange={(e) => setEditingContent(e.target.value)}
@@ -161,65 +159,79 @@ const CommentItem: React.FC<{
           />
           <button
             onClick={() => handleSaveEdit(comment.post_comment_id)}
-            className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+            className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600"
           >
             저장
           </button>
-          <button onClick={() => setEditingCommentId(null)} className="bg-gray-500 text-white px-4 py-2 rounded">
+          <button
+            onClick={() => setEditingCommentId(null)}
+            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+          >
             취소
           </button>
         </div>
       ) : (
-        <div>
-          <p>{comment.comments}</p>
-          <p className="text-sm text-gray-500">작성자: {comment.user_nickname}</p>
-          {comment.user_id === userId && (
-            <div className="mt-2">
-              <button
-                onClick={() => handleEditComment(comment.post_comment_id, comment.comments)}
-                className="bg-yellow-500 text-white px-4 py-2 rounded mr-2"
-              >
-                수정
-              </button>
-              <button
-                onClick={() => handleDeleteComment(comment.post_comment_id)}
-                className="bg-red-500 text-white px-4 py-2 rounded"
-              >
-                삭제
-              </button>
-            </div>
-          )}
-          <button
-            onClick={() => setShowReplies(!showReplies)}
-            className="bg-green-500 text-white px-4 py-2 rounded mt-2"
-          >
-            {showReplies ? "대댓글 숨기기" : "대댓글 보기"}
-          </button>
-          {showReplies && (
-            <div className="ml-4 mt-2">
-              {isRepliesError ? (
-                <p>대댓글을 불러오는 중 오류가 발생했습니다.</p>
-              ) : (
-                <ul>
-                  {replies.map((reply) => (
-                    <ReplyItem
-                      key={reply.id}
-                      reply={reply}
-                      userId={userId}
-                      queryKey={["replies", comment.post_comment_id]}
-                    />
-                  ))}
-                </ul>
-              )}
-              {userId && (
-                <AddReply
-                  parentCommentId={comment.post_comment_id}
-                  postId={comment.post_id}
-                  queryKey={["replies", comment.post_comment_id]}
-                />
+        <div className="flex items-start space-x-4">
+          <Image
+            src="/assets/images/profile_ex.png"
+            alt="유저 프로필 사진"
+            width={40}
+            height={40}
+            className="rounded-full"
+          />
+          <div className="flex-1">
+            <div className="flex items-center justify-between">
+              <p className="font-semibold">{comment.user_nickname}</p>
+              {comment.user_id === userId && (
+                <div className="flex space-x-2 justify-end">
+                  <button
+                    onClick={() => handleEditComment(comment.post_comment_id, comment.comments)}
+                    className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded"
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={() => handleDeleteComment(comment.post_comment_id)}
+                    className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
+                  >
+                    삭제
+                  </button>
+                </div>
               )}
             </div>
-          )}
+            <p className="mt-2 text-gray-800">{comment.comments}</p>
+            <button
+              onClick={() => setShowReplies(!showReplies)}
+              className="bg-green-500 text-white px-4 py-2 rounded mt-2 hover:bg-green-600"
+            >
+              {showReplies ? "대댓글 숨기기" : "대댓글 보기"}
+            </button>
+            {showReplies && (
+              <div className="ml-4 mt-2">
+                {isRepliesError ? (
+                  <p className="text-red-500">대댓글을 불러오는 중 오류가 발생했습니다.</p>
+                ) : (
+                  <ul>
+                    {replies.map((reply) => (
+                      <ReplyItem
+                        key={reply.id}
+                        reply={reply}
+                        userId={userId}
+                        queryKey={["replies", comment.post_comment_id]}
+                      />
+                    ))}
+                  </ul>
+                )}
+                {userId && (
+                  <AddReply
+                    parentCommentId={comment.post_comment_id}
+                    postId={comment.post_id}
+                    queryKey={["replies", comment.post_comment_id]}
+                  />
+                )}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </li>
