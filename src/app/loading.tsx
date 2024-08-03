@@ -1,15 +1,15 @@
 import Image from "next/image";
 import loading from "../../public/assets/images/loading.png";
-import bottomDeco from "../../public/assets/images/bottom_deco.png";
+import bottomDeco from "../../public/assets/images/bottom_deco.svg";
 
 const LoadingPage = () => {
   return (
     <div className="fixed inset-0 flex flex-col justify-center items-center gap-2 text-3xl font-semibold bg-secondary-500 z-50">
       <div className="flex gap-5">
         <Image
-          width={240}
-          height={240}
-          className="object-cover animate-spin"
+          width={160}
+          height={160}
+          className="object-cover animate-spin-slow"
           sizes="100%"
           src={loading}
           alt="로딩_중"
