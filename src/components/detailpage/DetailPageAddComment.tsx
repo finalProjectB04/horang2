@@ -62,15 +62,15 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
           {profileUrl && (
             <Image src={profileUrl || "/assets/images/profile_ex.png"} alt="유저 프로필 사진" width={25} height={25} />
           )}
-          <span className="text-2xl font-bold ml-2 text-grey-700">{userNickname} 님</span>
+          <span className="text-2xl font-bold ml-2 text-grey-800">{userNickname} 님</span>
         </div>
       )}
-      <div className="p-4 border border-primary-100 rounded-xl flex items-center bg-grey-50 py-12">
+      <div className="p-4 border border-primary-100 rounded-xl flex items-center bg-grey-50 h-[226px] place-items-center">
         <textarea
           value={comment}
           onChange={(event) => setComment(event.target.value)}
           placeholder={userId ? "댓글을 작성하세요" : "댓글 작성은 로그인한 유저만 가능합니다"}
-          className={`w-full p-2 rounded-l-lg resize-none bg-grey-50 text-grey-700 ${
+          className={`max-w-[1200px] p-6 py-15 rounded-l-lg resize-none bg-grey-50 h-[150px] flex flex-col text-[28px] leading-[40px] overflow-hidden text-grey-600 ${
             !userId ? "text-grey-500" : "text-grey-900"
           } border-none flex-grow min-h-[80px] max-h-[500px]`}
           disabled={!userId}
@@ -78,9 +78,8 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
         />
         <button
           onClick={handleAddComment}
-          className="mr-5 ml-2 px-4 py-4 text-xl font-black bg-primary-100 text-primary-700 rounded-xl border border-primary-200 hover:bg-primary-400"
+          className={`ml-8 flex w-[150px] h-[80px] flex-col justify-center items-center gap-[10px] text-[30px] font-black bg-primary-100 text-primary-700 rounded-[20px] border-2 border-primary-200 hover:bg-primary-400`}
           disabled={!userId}
-          style={{ width: "100px" }}
         >
           등록
         </button>
