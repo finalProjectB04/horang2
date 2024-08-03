@@ -5,6 +5,7 @@ import { createClient } from "@/utils/supabase/client";
 const supabase = createClient();
 
 interface Reply {
+  id: string; // 대댓글의 고유 ID
   parent_comment_id: string;
   created_at: string;
   post_id: string;
@@ -27,7 +28,7 @@ const ReplyItem: React.FC<{
       const { data, error } = await supabase
         .from("Post_commentreplies")
         .update({ content: newContent })
-        .eq("parent_comment_id", replyId)
+        .eq("id", replyId)
         .select("*");
 
       if (error) {
@@ -49,7 +50,7 @@ const ReplyItem: React.FC<{
 
   const deleteReplyMutation = useMutation({
     mutationFn: async (replyId: string) => {
-      const { error } = await supabase.from("Post_commentreplies").delete().eq("parent_comment_id", replyId);
+      const { error } = await supabase.from("Post_commentreplies").delete().eq("id", replyId); // 고유 ID로 대댓글 삭제
 
       if (error) {
         console.error("Error deleting reply:", error.message);
@@ -85,7 +86,7 @@ const ReplyItem: React.FC<{
 
   return (
     <li className="border-b py-2">
-      {editingReplyId === reply.parent_comment_id ? (
+      {editingReplyId === reply.id ? ( // 수정 기준을 id로 설정
         <div>
           <textarea
             value={editingContent}
@@ -94,7 +95,7 @@ const ReplyItem: React.FC<{
             rows={4}
           />
           <button
-            onClick={() => handleSaveEdit(reply.parent_comment_id)}
+            onClick={() => handleSaveEdit(reply.id)} // 수정 기준을 id로 설정
             className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
           >
             저장
@@ -110,13 +111,13 @@ const ReplyItem: React.FC<{
           {reply.user_id === userId && (
             <div className="mt-2">
               <button
-                onClick={() => handleEditReply(reply.parent_comment_id, reply.content)}
+                onClick={() => handleEditReply(reply.id, reply.content)} // 수정 기준을 id로 설정
                 className="bg-yellow-500 text-white px-4 py-2 rounded mr-2"
               >
                 수정
               </button>
               <button
-                onClick={() => handleDeleteReply(reply.parent_comment_id)}
+                onClick={() => handleDeleteReply(reply.id)} // 삭제 기준을 id로 설정
                 className="bg-red-500 text-white px-4 py-2 rounded"
               >
                 삭제

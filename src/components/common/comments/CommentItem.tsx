@@ -16,6 +16,7 @@ interface Comment {
 }
 
 interface Reply {
+  id: string; // 이 필드가 삭제의 기준입니다.
   parent_comment_id: string;
   created_at: string;
   post_id: string;
@@ -33,6 +34,40 @@ const CommentItem: React.FC<{
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState("");
   const [showReplies, setShowReplies] = useState(false);
+
+  // 댓글 삭제 전에 대댓글을 삭제하는 함수
+  const deleteReplies = async (commentId: string) => {
+    const { error: deleteRepliesError } = await supabase
+      .from("Post_commentreplies")
+      .delete()
+      .eq("parent_comment_id", commentId);
+
+    if (deleteRepliesError) {
+      console.error("Error deleting replies:", deleteRepliesError.message);
+      throw new Error(deleteRepliesError.message);
+    }
+  };
+
+  const deleteCommentMutation = useMutation({
+    mutationFn: async (commentId: string) => {
+      // 대댓글 삭제
+      await deleteReplies(commentId);
+
+      // 댓글 삭제
+      const { error } = await supabase.from("Post_comments").delete().eq("post_comment_id", commentId);
+
+      if (error) {
+        console.error("Error deleting comment:", error.message);
+        throw new Error(error.message);
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey });
+    },
+    onError: (error) => {
+      console.error("Failed to delete comment:", error.message);
+    },
+  });
 
   const updateCommentMutation = useMutation({
     mutationFn: async ({ commentId, newContent }: { commentId: string; newContent: string }) => {
@@ -56,23 +91,6 @@ const CommentItem: React.FC<{
     },
     onError: (error) => {
       console.error("Failed to update comment:", error.message);
-    },
-  });
-
-  const deleteCommentMutation = useMutation({
-    mutationFn: async (commentId: string) => {
-      const { error } = await supabase.from("Post_comments").delete().eq("post_comment_id", commentId);
-
-      if (error) {
-        console.error("Error deleting comment:", error.message);
-        throw new Error(error.message);
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey });
-    },
-    onError: (error) => {
-      console.error("Failed to delete comment:", error.message);
     },
   });
 
@@ -102,6 +120,7 @@ const CommentItem: React.FC<{
         .from("Post_commentreplies")
         .select(
           `
+          id,
           parent_comment_id,
           created_at,
           post_id,
@@ -119,6 +138,7 @@ const CommentItem: React.FC<{
       }
 
       return data.map((item: any) => ({
+        id: item.id, // 추가된 id
         parent_comment_id: item.parent_comment_id,
         created_at: item.created_at,
         post_id: item.post_id,
@@ -183,7 +203,7 @@ const CommentItem: React.FC<{
                 <ul>
                   {replies.map((reply) => (
                     <ReplyItem
-                      key={reply.parent_comment_id}
+                      key={reply.id}
                       reply={reply}
                       userId={userId}
                       queryKey={["replies", comment.post_comment_id]}
