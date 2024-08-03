@@ -31,12 +31,12 @@ const Profile: React.FC = () => {
   const buttons = [
     { name: "내 정보 관리", onClick: () => toggleModal("profile") },
     { name: "대화 하기", onClick: () => router.push("/chat") },
-    { name: "나만의 여행", onClick: () => console.log("나만의 여행 버튼 클릭") },
-    { name: "호랑이 모임", onClick: () => console.log("호랑이 모임 버튼 클릭") },
+    { name: "나만의 여행", onClick: () => router.push("/travelMbti") },
+    { name: "호랑이 모임", onClick: () => router.push("/community") },
   ];
 
   return (
-    <section className="border-b-2 flex justify-between items-center pb-16 mb-16 mt-[220px]">
+    <section className="border-b-2 flex justify-between items-center pb-16 mb-16 mt-[60px]">
       <div className="mr-8">
         <Image src={profile_url || "/assets/images/profile_ex.png"} alt="profile" width={200} height={200} />
       </div>

@@ -12,29 +12,19 @@ const ProfileCarousel: React.FC = () => {
   const images = [2, 3, 4, 5, 6, 7, 8];
 
   return (
-    <Swiper
-      modules={[Pagination, Autoplay]}
-      className="mySwiper h-full rounded-xl"
-      style={{ width: "100%", height: "100%" }}
-      autoplay={{
-        delay: 2000,
-        disableOnInteraction: false,
-      }}
-    >
-      <SwiperSlide className="h-full">
-        <Image
-          src="/assets/images/korea/korea1.png"
-          alt="Korea Travel Destination"
-          className="w-full h-full"
-          width={700}
-          height={200}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-      </SwiperSlide>
-      {images.map((image, index) => (
-        <SwiperSlide key={index} className="h-full">
+    <div className="relative h-full rounded-xl overflow-hidden">
+      <Swiper
+        modules={[Pagination, Autoplay]}
+        className="mySwiper h-full"
+        style={{ width: "100%", height: "100%" }}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: false,
+        }}
+      >
+        <SwiperSlide className="h-full">
           <Image
-            src={`/assets/images/korea/korea${image}.jpg`}
+            src="/assets/images/korea/korea1.png"
             alt="Korea Travel Destination"
             className="w-full h-full"
             width={700}
@@ -42,8 +32,22 @@ const ProfileCarousel: React.FC = () => {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </SwiperSlide>
-      ))}
-    </Swiper>
+        {images.map((image, index) => (
+          <SwiperSlide key={index} className="h-full">
+            <Image
+              src={`/assets/images/korea/korea${image}.jpg`}
+              alt="Korea Travel Destination"
+              className="w-full h-full"
+              width={700}
+              height={200}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      <div className="absolute inset-0 bg-black opacity-30 z-10 rounded-xl"></div>
+    </div>
   );
 };
 

@@ -71,7 +71,7 @@ const Nav = () => {
       </Link>
       <Link href="/community">
         <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleNavigation("/community")}>
-          커뮤니티
+          호랑이 모임
         </span>
       </Link>
     </nav>
