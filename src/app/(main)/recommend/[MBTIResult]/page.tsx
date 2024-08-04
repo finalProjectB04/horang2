@@ -32,7 +32,7 @@ const RecommendPage: React.FC<RecommendPageProps> = ({ params }) => {
       let secondApiUrl = "";
       let thirdApiUrl = "";
       let fourthApiUrl = "";
-      let fifthApitUrl = "";
+      let fifthApiUrl = "";
 
       if (MBTIResult === "1") {
         firstApiUrl =
@@ -43,7 +43,7 @@ const RecommendPage: React.FC<RecommendPageProps> = ({ params }) => {
           "http://apis.data.go.kr/B551011/KorService1/areaBasedList1?&contentTypeId=28&areaCode=&sigunguCode=&cat1=A03&cat2=A0302&cat3=A03021100"; //승마?
         fourthApiUrl =
           "http://apis.data.go.kr/B551011/KorService1/areaBasedList1?&listYN=Y&arrange=A&contentTypeId=38&areaCode=&sigunguCode=&cat1=A04&cat2=A0401&cat3=A04010300"; //백화점?
-        fifthApitUrl =
+        fifthApiUrl =
           "http://apis.data.go.kr/B551011/KorService1/areaBasedList1?&contentTypeId=32&areaCode=39&sigunguCode=&cat1=B02&cat2=B0201&cat3=B02010100"; //제주 호텔
       } else {
         setError("Invalid MBTI Result");
@@ -52,7 +52,7 @@ const RecommendPage: React.FC<RecommendPageProps> = ({ params }) => {
       }
 
       try {
-        const [firstResponse, secondResponse, thirdReponse, fourthResponse, fifthResponse] = await axios.all([
+        const [firstResponse, secondResponse, thirdResponse, fourthResponse, fifthResponse] = await axios.all([
           axios.get<APIResponse>(firstApiUrl, {
             params: {
               serviceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
@@ -93,7 +93,7 @@ const RecommendPage: React.FC<RecommendPageProps> = ({ params }) => {
               MobileApp: "AppTest",
             },
           }),
-          axios.get<APIResponse>(fifthApitUrl, {
+          axios.get<APIResponse>(fifthApiUrl, {
             params: {
               serviceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
               _type: "json",
@@ -107,16 +107,21 @@ const RecommendPage: React.FC<RecommendPageProps> = ({ params }) => {
 
         const firstData = firstResponse.data.response.body.items.item || [];
         const secondData = secondResponse.data.response.body.items.item || [];
-        const thirdData = thirdReponse.data.response.body.items.item || [];
+        const thirdData = thirdResponse.data.response.body.items.item || [];
         const fourthData = fourthResponse.data.response.body.items.item || [];
         const fifthData = fifthResponse.data.response.body.items.item || [];
 
-        const combinedData: Item[] = [...firstData, ...secondData, ...thirdData, ...fourthData, ...fifthData];
+        const randomFirstData = shuffleArray(firstData).slice(0, 1);
+
+        const remainingData = [...secondData, ...thirdData, ...fourthData, ...fifthData];
+        const randomRemainingData = shuffleArray(remainingData)
+          .filter((item) => !randomFirstData.some((selected) => selected.contentid === item.contentid))
+          .slice(0, 2);
+
+        const combinedData: Item[] = [...randomFirstData, ...randomRemainingData];
         console.log("🚀 ~ fetchData ~ combinedData:", combinedData);
 
-        const randomThreeItems = shuffleArray(combinedData).slice(0, 3);
-
-        setData(randomThreeItems);
+        setData(combinedData);
       } catch (error) {
         console.error("Error fetching data:", error);
         setError("Error fetching data");
