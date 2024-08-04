@@ -143,7 +143,9 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                   <h1 className="text-[28px] text-grey-700 font-bold py-2 ps-3">
                     {comment.user_nickname || comment.user_email} 님
                   </h1>
-                  <h2 className="py-1 text-grey-600 text-[18px] ps-3">{formatDate(comment.created_at)}</h2>
+                  <h2 className="py-1 text-grey-600 text-[18px] ps-3">
+                    {comment.created_at ? formatDate(comment.created_at) : "날짜 정보 없음"}
+                  </h2>
                 </div>
               </div>
               {userId === comment.user_id && editCommentId !== comment.comment_id && (
