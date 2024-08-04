@@ -16,11 +16,11 @@ interface ButtonProps {
 const Button = ({ buttonName, bgColor, textColor, paddingY, marginY, opacity, hover, onClick }: ButtonProps) => {
   return (
     <button
-      className={`rounded-[10px] border border-solid border-[#ffBe99]
-        font-bold ${bgColor ? bgColor : "bg-white"} ${textColor ? textColor : "text-[#993700]"} ${
+      className={`rounded-[10px] border border-solid border-primary-100
+        font-bold ${bgColor ? bgColor : "bg-white"} ${textColor ? textColor : "text-primary-600"} ${
         marginY ? marginY : ""
-      } ${paddingY ? paddingY : "py-1"} [&+&]:mx-1 px-4 ${opacity} ${
-        hover ? "hover:bg-[#ffBe99] hover:text-[#020e36]" : ""
+      } ${paddingY ? paddingY : "py-1"} [&+&]: px-4 ${opacity} ${
+        hover ? "hover:bg-primary-100 hover:text-secondary-800" : ""
       } w-[206px] h-[60px] flex items-center justify-center`}
       onClick={onClick}
     >

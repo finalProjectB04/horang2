@@ -54,19 +54,11 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
     queryKey: ["likes", id, contentType, carouselName],
     queryFn: async () => {
       const url = contentType ? `/api/filterlikes?id=${id}&contentType=${contentType}` : `/api/likes?id=${id}`;
-
-      const cacheKey = `likes-${id}-${contentType || ""}`;
-      const cachedData = localStorage.getItem(cacheKey);
-      if (cachedData) {
-        return JSON.parse(cachedData);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-
-      const response = await axios.get(url, {
-        headers: { "Cache-Control": "max-age=3600" },
-      });
-
-      localStorage.setItem(cacheKey, JSON.stringify(response.data));
-      return response.data;
+      return response.json();
     },
     enabled: !!id,
   });
@@ -76,8 +68,10 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
   }
 
   if (error) {
-    return <ErrorPage />;
+    return <div>Error fetching likes: {error.message}</div>;
   }
+
+  console.log(likes);
 
   if (likes.length === 0) {
     return (

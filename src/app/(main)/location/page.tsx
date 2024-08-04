@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import Modal from "@/components/location/LocationModal";
 import MapComponent from "@/components/location/Map";
 import { useLocationStore } from "@/zustand/locationStore";
+import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 
 const LocationPage = () => {
   const { setLocation } = useLocationStore();
