@@ -1,29 +1,29 @@
 "use client";
 
-import { Loading } from "@/components/common/Loading";
+import LoadingPage from "@/app/loading";
 import ContentDetail from "@/components/detailpage/ContentDetail";
 import ContentOverview from "@/components/detailpage/ContentOverview";
 import DetailPageAddComment from "@/components/detailpage/DetailPageAddComment";
 import DetailPageCommentList from "@/components/detailpage/DetailPageCommentList";
 import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
 import DetailPageImage from "@/components/detailpage/DetailPageSwiper";
+import FloatingButton from "@/components/detailpage/FloatingButton";
 import KakaoMap from "@/components/detailpage/KakaoMap";
-import KakaoShareButton from "@/components/detailpage/KakaoShareButton";
-import LinkUrlButton from "@/components/detailpage/LinkUrlButton";
+import ShareModal from "@/components/detailpage/ShareModal";
 import { useContentId } from "@/hooks/detailpage/useContentId";
 import { useContentItem } from "@/hooks/detailpage/useContentItem";
-import { useSessionData } from "@/hooks/detailpage/useSessionData";
+import Image from "next/image";
+import { useState } from "react";
 import { parseHTMLString } from "../../../../utils/detailpage/StringUtils";
 
 const DetailPage = () => {
   const contentId = useContentId();
-
-  const { data: session } = useSessionData();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: contentItemData, isPending: pendingContentItem, error: contentItemError } = useContentItem(contentId);
 
   if (pendingContentItem) {
-    return <Loading />;
+    return <LoadingPage />;
   }
 
   if (contentItemError) {
@@ -33,15 +33,13 @@ const DetailPage = () => {
   const homepageLink = contentItemData?.data?.homepage ? parseHTMLString(contentItemData.data.homepage) : null;
 
   return (
-    <main className="max-w-[1440px] mx-auto grid justify-items-center py-40">
+    <main className="max-w-[1440px] mx-auto grid justify-items-center">
       <DetailPageImage contentItemData={contentItemData} />
       <section className="flex justify-between items-center w-full max-w-[1440px] mt-12 py-20">
         <div className="text-left">
           <div className="text-4xl font-bold">{contentItemData?.data?.title}</div>
         </div>
-        <div className="flex space-x-2">
-          <LinkUrlButton />
-          <KakaoShareButton id={contentId} />
+        <div className="flex justify-center space-x-2">
           <DetailPageLikeButton
             contentId={contentId}
             imageUrl={contentItemData?.data?.firstimage || ""}
@@ -50,6 +48,10 @@ const DetailPage = () => {
             addr1={contentItemData?.data?.addr1 || ""}
             tel={contentItemData?.data?.tel || ""}
           />
+          <button onClick={() => setIsModalOpen(true)}>
+            <Image src="/assets/images/shareModal.svg" alt="Custom Button Image" width={48} height={48} />
+          </button>
+          <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
       </section>
       <section className="w-full max-w-[1440px] mt-4">
@@ -68,14 +70,10 @@ const DetailPage = () => {
         />
       </section>
       <section className="w-full max-w-[1440px] mt-20 pt-20">
-        <DetailPageAddComment
-          userId={session?.user?.id || null}
-          contentId={contentId}
-          contenTypeId={contentItemData?.data?.contenttypeid}
-          userEmail={session?.user?.email || ""}
-        />
+        <DetailPageAddComment contentId={contentId} contenTypeId={contentItemData?.data?.contenttypeid} />
         <DetailPageCommentList contentId={contentId} />
       </section>
+      <FloatingButton />
     </main>
   );
 };

@@ -7,7 +7,6 @@ interface KakaoMapProps {
 }
 
 const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
-  //맵 x,y를 구조분해할당으로 longtitude, latitude로 대입.
   const longitude = mapx;
   const latitude = mapy;
 
@@ -42,12 +41,22 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
           });
 
           marker.setMap(map);
+
+          window.kakao.maps.event.addListener(map, "zoom_changed", () => {
+            const currentZoomLevel = map.getLevel();
+            if (currentZoomLevel > 8) {
+              map.setLevel(8);
+            }
+          });
         } else {
+          console.error("Map container not found");
         }
       });
     };
 
-    script.onerror = () => {};
+    script.onerror = () => {
+      console.error("Failed to load Kakao Maps script");
+    };
 
     return () => {
       if (script.parentNode) {
@@ -57,12 +66,10 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
   }, [longitude, latitude]);
 
   return (
-    <>
-      <div style={{ width: "100%", height: "500px", position: "relative" }}>
-        <h1 className="item-start py-7 font-extrabold text-2xl">위치</h1>
-        <div id="map" style={{ width: "100%", height: "100%" }}></div>
-      </div>
-    </>
+    <div style={{ width: "100%", height: "500px", position: "relative" }}>
+      <h1 className="item-start py-7 font-extrabold text-2xl">위치</h1>
+      <div id="map" style={{ width: "100%", height: "100%" }}></div>
+    </div>
   );
 };
 

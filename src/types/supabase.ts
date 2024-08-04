@@ -14,6 +14,7 @@ export type Database = {
           user_email: string | null;
           user_id: string | null;
           user_profile_url: string | null;
+          user_nickname: string | null;
         };
         Insert: {
           avartar_url?: string | null;
@@ -25,6 +26,7 @@ export type Database = {
           user_email?: string | null;
           user_id?: string | null;
           user_profile_url?: string | null;
+          user_nickname: string | null;
         };
         Update: {
           avartar_url?: string | null;

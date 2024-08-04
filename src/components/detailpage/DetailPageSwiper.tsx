@@ -6,7 +6,13 @@ const DetailPageImage: React.FC<{ contentItemData: ContentItem }> = ({ contentIt
   return (
     <section className="w-full max-w-[1440px] mx-auto">
       {contentItemData.data.firstimage && (
-        <Image src={contentItemData.data.firstimage} alt="First Image" width={1440} height={350} priority />
+        <Image
+          src={contentItemData.data.firstimage || "/assets/images/null_image.svg"}
+          alt="First Image"
+          width={1440}
+          height={350}
+          priority
+        />
       )}
 
       <div className="swiper-pagination-custom"></div>
