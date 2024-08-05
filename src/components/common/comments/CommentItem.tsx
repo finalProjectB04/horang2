@@ -111,6 +111,13 @@ const CommentItem: React.FC<{
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSaveEdit(comment.post_comment_id);
+    }
+  };
+
   const { data: replies = [], isError: isRepliesError } = useQuery({
     queryKey: ["replies", comment.post_comment_id],
     queryFn: async () => {
@@ -148,12 +155,13 @@ const CommentItem: React.FC<{
   });
 
   return (
-    <li className="border-b py-4 bg-gray-50">
+    <li className="border-b py-4 bg-white shadow rounded-lg">
       {editingCommentId === comment.post_comment_id ? (
-        <div className="bg-white p-4 rounded shadow">
+        <div className="bg-white p-4 rounded-lg shadow">
           <textarea
             value={editingContent}
             onChange={(e) => setEditingContent(e.target.value)}
+            onKeyDown={handleKeyDown}
             className="w-full p-2 border rounded mb-2"
             rows={4}
           />
@@ -200,10 +208,7 @@ const CommentItem: React.FC<{
               )}
             </div>
             <p className="mt-2 text-gray-800">{comment.comments}</p>
-            <button
-              onClick={() => setShowReplies(!showReplies)}
-              className="bg-green-500 text-white px-4 py-2 rounded mt-2 hover:bg-green-600"
-            >
+            <button onClick={() => setShowReplies(!showReplies)} className="text-blue-500 hover:text-blue-700 mt-2">
               {showReplies ? "대댓글 숨기기" : "대댓글 보기"}
             </button>
             {showReplies && (
@@ -211,7 +216,7 @@ const CommentItem: React.FC<{
                 {isRepliesError ? (
                   <p className="text-red-500">대댓글을 불러오는 중 오류가 발생했습니다.</p>
                 ) : (
-                  <ul>
+                  <ul className="space-y-2">
                     {replies.map((reply) => (
                       <ReplyItem
                         key={reply.id}

@@ -14,7 +14,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import CommentSection from "@/components/common/comments/CommentSection";
-
+import { useUserStore } from "@/zustand/userStore";
 interface Post {
   content: string | null;
   created_at: string | null;
@@ -32,6 +32,7 @@ const PostDetail: React.FC = () => {
   const [editedContent, setEditedContent] = useState<string>("");
   const [editedTitle, setEditedTitle] = useState<string>("");
   const [editedFile, setEditedFile] = useState<string | null>(null);
+  const { user_nickname, profile_url, setUser } = useUserStore();
 
   const {
     data: sessionData,
@@ -111,7 +112,7 @@ const PostDetail: React.FC = () => {
       </button>
       <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
       <div className="mb-4 text-sm text-gray-500">
-        <span>작성자: {post.user_id}</span>
+        <span>작성자: {user_nickname}</span>
         <span className="ml-4">
           작성일: {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Unknown"}
         </span>

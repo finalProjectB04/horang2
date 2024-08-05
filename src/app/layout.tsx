@@ -11,6 +11,9 @@ import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 export const metadata: Metadata = {
   title: "horang",
   description: "나만의 국내 여행 추천 서비스",
+  icons: {
+    icon: "/assets/images/favicon.png",
+  },
 };
 
 export default function RootLayout({
