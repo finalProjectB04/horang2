@@ -11,7 +11,9 @@ const Nav = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleNavigation = (href: string) => (event: React.MouseEvent) => {
-    if (!userId) {
+    if (href === "/community") {
+      router.push(href);
+    } else if (!userId) {
       event.preventDefault();
       router.push("/signin");
     } else {
@@ -37,11 +39,9 @@ const Nav = () => {
             <Link href="/travel" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
               추천 여행지
             </Link>
-
             <Link href="/hotel" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
               숙소
             </Link>
-
             <Link href="/leports" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
               레포츠
             </Link>
