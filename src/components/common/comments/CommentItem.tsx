@@ -39,8 +39,9 @@ const CommentItem: React.FC<{
   const [showReplies, setShowReplies] = useState<boolean>(false);
   const [replyPage, setReplyPage] = useState<number>(1);
   const replyFormRef = useRef<HTMLDivElement>(null);
+  const [scrollToReplyForm, setScrollToReplyForm] = useState<boolean>(false);
 
-  const scrollToReplyForm = () => {
+  const scrollToReplyFormHandler = () => {
     if (replyFormRef.current) {
       replyFormRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
     }
@@ -171,20 +172,23 @@ const CommentItem: React.FC<{
   const handleNextReplyPage = () => {
     if (replyPage < totalReplyPages) {
       setReplyPage((prevPage) => prevPage + 1);
-      scrollToReplyForm();
+      setScrollToReplyForm(true);
     }
   };
 
   const handlePreviousReplyPage = () => {
     if (replyPage > 1) {
       setReplyPage((prevPage) => prevPage - 1);
-      scrollToReplyForm();
+      setScrollToReplyForm(true);
     }
   };
 
   useEffect(() => {
-    scrollToReplyForm();
-  }, [replyPage]);
+    if (scrollToReplyForm) {
+      scrollToReplyFormHandler();
+      setScrollToReplyForm(false); // 스크롤이 이동한 후에는 플래그를 리셋
+    }
+  }, [replyPage, scrollToReplyForm]);
 
   return (
     <li className="border-b py-4 bg-white shadow rounded-lg">
@@ -240,7 +244,13 @@ const CommentItem: React.FC<{
               )}
             </div>
             <p className="mt-2 text-gray-800">{comment.comments}</p>
-            <button onClick={() => setShowReplies(!showReplies)} className="text-blue-500 hover:text-blue-700 mt-2">
+            <button
+              onClick={() => {
+                setShowReplies((prev) => !prev);
+                setScrollToReplyForm(true); // 대댓글 보기 버튼 클릭 시 스크롤을 이동하도록 설정
+              }}
+              className="text-blue-500 hover:text-blue-700 mt-2"
+            >
               {showReplies ? "대댓글 숨기기" : "대댓글 보기"}
             </button>
             {showReplies && (

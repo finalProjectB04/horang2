@@ -18,21 +18,37 @@ const CommentList: React.FC<{
   queryKey: string[];
 }> = ({ comments, userId, queryKey }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const paginationRef = useRef<HTMLDivElement>(null);
+  const [initialLoad, setInitialLoad] = useState(true); // 페이지 최초 로드 여부를 추적하는 상태
+  const hasScrolled = useRef(false); // 페이지가 스크롤된 여부를 추적하는 참조
 
   const totalPages = Math.ceil(comments.length / COMMENTS_PER_PAGE);
   const startIndex = (currentPage - 1) * COMMENTS_PER_PAGE;
   const currentComments = comments.slice(startIndex, startIndex + COMMENTS_PER_PAGE);
 
-  const scrollToPagination = () => {
-    if (paginationRef.current) {
-      paginationRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
-    }
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
   };
+
+  useEffect(() => {
+    // 페이지가 최초 로드될 때는 스크롤하지 않도록 설정
+    if (initialLoad) {
+      setInitialLoad(false);
+      return;
+    }
+
+    // 페이지가 변경된 경우 스크롤을 이동
+    if (hasScrolled.current) {
+      scrollToBottom();
+    } else {
+      hasScrolled.current = true;
+    }
+  }, [currentPage]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
-    scrollToPagination();
   };
 
   const handleNextPage = () => {
@@ -49,10 +65,6 @@ const CommentList: React.FC<{
     }
   };
 
-  useEffect(() => {
-    scrollToPagination();
-  }, [currentPage]);
-
   return (
     <div>
       <div className="mb-4 mt-4 rounded-lg">
@@ -68,7 +80,7 @@ const CommentList: React.FC<{
       </div>
 
       {totalPages > 1 && (
-        <div ref={paginationRef} className="flex justify-center items-center mt-4 space-x-4">
+        <div className="flex justify-center items-center mt-4 space-x-4">
           <button
             onClick={handlePreviousPage}
             className="px-4 py-2 bg-gray-200 rounded-lg"
