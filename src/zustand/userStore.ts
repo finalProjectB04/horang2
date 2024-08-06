@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import Cookies from "js-cookie";
 
 type UserState = {
   id: string | null;
@@ -10,20 +10,41 @@ type UserState = {
   clearUser: () => void;
 };
 
-export const useUserStore = create<UserState>()(
-  devtools(
-    persist(
-      (set) => ({
+const getInitialState = (): Omit<UserState, "setUser" | "clearUser"> => {
+  const cookie = Cookies.get("user-storage");
+  if (cookie) {
+    try {
+      return JSON.parse(cookie);
+    } catch {
+      return {
         id: null,
         user_email: null,
         user_nickname: null,
         profile_url: null,
-        setUser: (id, user_email, user_nickname, profile_url) => set({ id, user_email, user_nickname, profile_url }),
-        clearUser: () => set({ id: null, user_email: null, user_nickname: null, profile_url: null }),
-      }),
-      {
-        name: "user-storage", // key 이름
-      },
-    ),
-  ),
-);
+      };
+    }
+  }
+  return {
+    id: null,
+    user_email: null,
+    user_nickname: null,
+    profile_url: null,
+  };
+};
+
+export const useUserStore = create<UserState>((set) => {
+  const initialState = getInitialState();
+
+  return {
+    ...initialState,
+    setUser: (id, user_email, user_nickname, profile_url) => {
+      const newState = { id, user_email, user_nickname, profile_url };
+      set(newState);
+      Cookies.set("user-storage", JSON.stringify(newState), { expires: 7 });
+    },
+    clearUser: () => {
+      set({ id: null, user_email: null, user_nickname: null, profile_url: null });
+      Cookies.remove("user-storage");
+    },
+  };
+});
