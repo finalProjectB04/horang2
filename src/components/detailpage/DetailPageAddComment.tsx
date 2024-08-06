@@ -1,34 +1,22 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
-import { Session } from "@supabase/supabase-js";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useUserStore } from "@/zustand/userStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
-import { fetchSessionData } from "./../../utils/auth";
-import CommentForm from "./addcomment/CommentForm";
 
 const supabase = createClient();
 
 interface DetailPageAddCommentProps {
-  userId: string | null;
   contentId: string;
   contenTypeId: string;
-  userEmail: string | undefined;
 }
 
-const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ userId, contentId, contenTypeId, userEmail }) => {
+const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, contenTypeId }) => {
   const [comment, setComment] = useState<string>("");
   const queryClient = useQueryClient();
-
-  const {
-    data: sessionData,
-    isPending,
-    error,
-  } = useQuery<Session | null, Error, Session | null>({
-    queryKey: ["session"],
-    queryFn: fetchSessionData,
-  });
+  const { id: userId, user_email: userEmail, user_nickname: userNickname, profile_url: profileUrl } = useUserStore();
 
   const addCommentMutation = useMutation({
     mutationFn: async () => {
@@ -44,8 +32,14 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ userId, con
           comment,
           content_type_id: contenTypeId,
           user_email: userEmail,
+          user_nickname: userNickname,
+          user_profile_url: profileUrl,
         },
       ]);
+
+      if (response.error) {
+        throw response.error;
+      }
     },
     onSuccess: () => {
       setComment("");
@@ -60,35 +54,36 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ userId, con
   const handleAddComment = () => {
     addCommentMutation.mutate();
   };
-  const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(event.target.value);
-  };
-
-  if (isPending) {
-    return <div>불러오는중...</div>;
-  }
-
-  if (error) {
-    console.log(`Error occurred: ${error.message}`);
-    return <h1>에러가 발생했습니다: {error.message}</h1>;
-  }
 
   return (
     <main className="mt-4 max-w-[1440px] mx-auto">
-      {isPending && <div>프로필 정보를 불러오는 중...</div>}
-
-      {sessionData && (
-        <div className="flex items-center mb-4bg-gray-50 py-3">
-          <Image src="/assets/images/profile_ex.png" alt="유저 프로필 사진" width={25} height={25} />
-          <span className="text-2xl font-bold ml-2 text-grey-700">{sessionData.user.email} 님</span>
+      {userId && (
+        <div className="flex items-center mb-4 py-3">
+          {profileUrl && (
+            <Image src={profileUrl || "/assets/images/profile_ex.png"} alt="유저 프로필 사진" width={25} height={25} />
+          )}
+          <span className="text-2xl font-bold ml-2 text-grey-800">{userNickname} 님</span>
         </div>
       )}
-      <CommentForm
-        comment={comment}
-        userId={userId}
-        onCommentChange={handleCommentChange}
-        onAddComment={handleAddComment}
-      />
+      <div className="p-4 border border-primary-100 rounded-xl flex items-center bg-grey-50 h-[226px] place-items-center">
+        <textarea
+          value={comment}
+          onChange={(event) => setComment(event.target.value)}
+          placeholder={userId ? "댓글을 작성하세요" : "댓글 작성은 로그인한 유저만 가능합니다"}
+          className={`max-w-[1200px] p-6 py-15 rounded-l-lg resize-none bg-grey-50 h-[150px] flex flex-col text-[28px] leading-[40px] overflow-hidden text-grey-600 ${
+            !userId ? "text-grey-500" : "text-grey-900"
+          } border-none flex-grow min-h-[80px] max-h-[500px]`}
+          disabled={!userId}
+          maxLength={2000}
+        />
+        <button
+          onClick={handleAddComment}
+          className={`ml-8 flex w-[150px] h-[80px] flex-col justify-center items-center gap-[10px] text-[30px] font-black bg-primary-100 text-primary-700 rounded-[20px] border-2 border-primary-200 hover:bg-primary-400`}
+          disabled={!userId}
+        >
+          등록
+        </button>
+      </div>
     </main>
   );
 };

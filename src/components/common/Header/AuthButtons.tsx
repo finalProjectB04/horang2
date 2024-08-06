@@ -1,18 +1,10 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/zustand/userStore";
-import Link from "next/link";
 
-interface AuthButtonsProps {
-  userId: string | null;
-  handleLogout: () => void;
-}
-
-const AuthButtons: React.FC<AuthButtonsProps> = ({ handleLogout }) => {
+const AuthButtons = ({ userId, handleLogout }) => {
   const [mounted, setMounted] = useState(false);
-  const { id: userId, clearUser } = useUserStore((state) => ({
-    id: state.id,
-    clearUser: state.clearUser,
-  }));
+  const { clearUser } = useUserStore((state) => state);
 
   useEffect(() => {
     setMounted(true);

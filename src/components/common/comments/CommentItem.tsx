@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createClient } from "@/utils/supabase/client";
 import AddReply from "./AddReply";
@@ -26,6 +26,8 @@ interface Reply {
   user_nickname?: string;
 }
 
+const REPLIES_PER_PAGE = 5;
+
 const CommentItem: React.FC<{
   comment: Comment;
   userId: string | null;
@@ -35,6 +37,14 @@ const CommentItem: React.FC<{
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState<string>("");
   const [showReplies, setShowReplies] = useState<boolean>(false);
+  const [replyPage, setReplyPage] = useState<number>(1);
+  const replyFormRef = useRef<HTMLDivElement>(null);
+
+  const scrollToReplyForm = () => {
+    if (replyFormRef.current) {
+      replyFormRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  };
 
   const deleteReplies = async (commentId: string) => {
     const { error: deleteRepliesError } = await supabase
@@ -154,6 +164,28 @@ const CommentItem: React.FC<{
     },
   });
 
+  const totalReplyPages = Math.ceil(replies.length / REPLIES_PER_PAGE);
+  const startIndex = (replyPage - 1) * REPLIES_PER_PAGE;
+  const currentReplies = replies.slice(startIndex, startIndex + REPLIES_PER_PAGE);
+
+  const handleNextReplyPage = () => {
+    if (replyPage < totalReplyPages) {
+      setReplyPage((prevPage) => prevPage + 1);
+      scrollToReplyForm();
+    }
+  };
+
+  const handlePreviousReplyPage = () => {
+    if (replyPage > 1) {
+      setReplyPage((prevPage) => prevPage - 1);
+      scrollToReplyForm();
+    }
+  };
+
+  useEffect(() => {
+    scrollToReplyForm();
+  }, [replyPage]);
+
   return (
     <li className="border-b py-4 bg-white shadow rounded-lg">
       {editingCommentId === comment.post_comment_id ? (
@@ -216,23 +248,48 @@ const CommentItem: React.FC<{
                 {isRepliesError ? (
                   <p className="text-red-500">대댓글을 불러오는 중 오류가 발생했습니다.</p>
                 ) : (
-                  <ul className="space-y-2">
-                    {replies.map((reply) => (
-                      <ReplyItem
-                        key={reply.id}
-                        reply={reply}
-                        userId={userId}
-                        queryKey={["replies", comment.post_comment_id]}
-                      />
-                    ))}
-                  </ul>
+                  <>
+                    <ul className="space-y-2">
+                      {currentReplies.map((reply) => (
+                        <ReplyItem
+                          key={reply.id}
+                          reply={reply}
+                          userId={userId}
+                          queryKey={["replies", comment.post_comment_id]}
+                        />
+                      ))}
+                    </ul>
+                    {totalReplyPages > 1 && (
+                      <div ref={replyFormRef} className="flex justify-center mt-4 space-x-4">
+                        <button
+                          onClick={handlePreviousReplyPage}
+                          style={{ visibility: replyPage === 1 ? "hidden" : "visible" }}
+                          className="px-4 py-2 bg-gray-200 rounded-lg"
+                        >
+                          이전
+                        </button>
+                        <span className="text-lg">
+                          {replyPage} / {totalReplyPages}
+                        </span>
+                        <button
+                          onClick={handleNextReplyPage}
+                          style={{ visibility: replyPage === totalReplyPages ? "hidden" : "visible" }}
+                          className="px-4 py-2 bg-gray-200 rounded-lg"
+                        >
+                          다음
+                        </button>
+                      </div>
+                    )}
+                  </>
                 )}
                 {userId && (
-                  <AddReply
-                    parentCommentId={comment.post_comment_id}
-                    postId={comment.post_id}
-                    queryKey={["replies", comment.post_comment_id]}
-                  />
+                  <div ref={replyFormRef}>
+                    <AddReply
+                      parentCommentId={comment.post_comment_id}
+                      postId={comment.post_id}
+                      queryKey={["replies", comment.post_comment_id]}
+                    />
+                  </div>
                 )}
               </div>
             )}

@@ -8,6 +8,7 @@ declare global {
 }
 interface KakaoShareButtonProps {
   id: string;
+  className?: string;
 }
 const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
   const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/detail/${id}`;
@@ -48,7 +49,13 @@ const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
   };
   return (
     <div onClick={handleShare} className="px-4 py-2  text-gray-950 rounded cursor-pointer bg-white">
-      <Image src="/assets/images/kakaoShare.png" alt="이미지가 없습니다" width={55} height={55} />
+      <Image
+        src="/assets/images/kakaoShare.png"
+        alt="이미지가 없습니다"
+        width={55}
+        height={55}
+        className="hover:cursor-pointer"
+      />
     </div>
   );
 };
