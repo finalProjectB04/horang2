@@ -1,19 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { presenceState, selectedUserIdState, selectedUserIndexState } from "@/atoms";
 import Message from "./Message";
 import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAllMessage, getUserById, sendMessage } from "@/actions/chatActions";
 import send from "../../../public/assets/images/send.png";
 import Image from "next/image";
+import useChatStore from "@/zustand/chatStore";
 
 const ChatScreen = () => {
-  const selectedUserId = useRecoilValue(selectedUserIdState);
-  const selectedUserIndex = useRecoilValue(selectedUserIndexState);
-  const presence = useRecoilValue(presenceState);
+  const { selectedUserId } = useChatStore();
+
   const [message, setMessage] = useState("");
 
   const supabase = createClient();

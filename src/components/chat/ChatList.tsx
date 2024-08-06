@@ -1,23 +1,20 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Person from "./Person";
-import { useRecoilState } from "recoil";
-import { presenceState, selectedUserIdState, selectedUserIndexState } from "@/atoms";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { getAllUsers } from "@/actions/chatActions";
-import Tab from "../common/Tab";
 import { User } from "@/types/User.types";
+import useChatStore from "@/zustand/chatStore";
 
 interface loggedInUserProps {
   loggedInUser: User;
 }
 
 const ChatList = ({ loggedInUser }: loggedInUserProps) => {
-  const [selectedUserId, setSelectedUserId] = useRecoilState(selectedUserIdState);
-  const [selectedUserIndex, setSelectedUserIndex] = useRecoilState(selectedUserIndexState);
-  const [presensce, setPresence] = useRecoilState(presenceState);
+  const { selectedUserId, setSelectedUserId, selectedUserIndex, setSelectedUserIndex, presence, setPresence } =
+    useChatStore();
 
   const supabase = createClient();
 
@@ -101,7 +98,7 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
                 name={user.user_nickname!}
                 url={user.profile_url!}
                 onChatScreen={false}
-                onlineAt={presensce?.[user.id]?.[0]?.onlineAt}
+                onlineAt={presence?.[user.id]?.[0]?.onlineAt}
                 userId={user.id}
               />
             ))
