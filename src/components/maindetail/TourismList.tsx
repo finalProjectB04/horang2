@@ -2,7 +2,7 @@
 
 import LoadingPage from "@/app/loading";
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
-import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
+
 import { SearchBar } from "@/components/maindetail/SearchBar";
 import { TravelCard } from "@/components/maindetail/TravelCard";
 import { ApiInformation } from "@/types/Main";
@@ -86,7 +86,6 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
             Loading more...
           </div>
         )}
-        <ScrollToTopButton />
       </div>
     </>
   );

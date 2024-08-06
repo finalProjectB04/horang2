@@ -85,7 +85,7 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
             {sortedLeports.map((item: ApiInformation) => (
               <SwiperSlide key={item.contentid} className="h-[346px]">
                 <div
-                  className="bg-gray-100 w-[330px] h-[346px] relative overflow-hidden cursor-pointer rounded-[9.11px] shadow-md transition-transform duration-300 hover:scale-105"
+                  className="bg-gray-100 w-[330px] h-[346px] relative overflow-hidden cursor-pointer rounded-[9.11px]  transition-transform duration-300 hover:scale-105"
                   onClick={() => router.push(`/detail/${item.contentid}`)}
                 >
                   <div className="h-[224px] relative">
