@@ -1,4 +1,3 @@
-import { splitText } from "@/utils/detailpage/StringUtils";
 import { useState } from "react";
 
 interface ContentOverviewProps {
@@ -11,16 +10,14 @@ const ContentOverview: React.FC<ContentOverviewProps> = ({ overview }) => {
     setShowMore(!showMore);
   };
 
-  const formattedOverview = splitText(overview, 70);
-
   return (
     <section className="w-full max-w-[1440px] mt-4 text-left py-12">
       <div className="text-start">
         <h1 className="text-3xl font-bold py-12">overview</h1>
         <div className="text-grey-700" style={{ whiteSpace: "pre-wrap" }}>
-          {showMore ? <p>{formattedOverview}</p> : <p>{formattedOverview.substring(0, 400)}...</p>}
+          {showMore ? <p>{overview}</p> : <p>{overview.substring(0, 500)}...</p>}
         </div>
-        {overview.length > 200 && (
+        {overview.length > 500 && (
           <div className="flex justify-center mt-2">
             <button
               onClick={handleShowMore}

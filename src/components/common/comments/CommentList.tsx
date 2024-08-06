@@ -15,15 +15,15 @@ const CommentList: React.FC<{
   queryKey: string[];
 }> = ({ comments, userId, queryKey }) => {
   return (
-    <div className="mb-4">
+    <div className="mb-4 bg-gray-50 mt-4 rounded-lg shadow">
       {comments.length > 0 ? (
-        <ul>
+        <ul className="space-y-4">
           {comments.map((comment) => (
             <CommentItem key={comment.post_comment_id} comment={comment} userId={userId} queryKey={queryKey} />
           ))}
         </ul>
       ) : (
-        <p>댓글이 없습니다.</p>
+        <p className="text-gray-600">댓글이 없습니다.</p>
       )}
     </div>
   );
