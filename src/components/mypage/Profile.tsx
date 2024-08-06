@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React, { useEffect, useReducer } from "react";
 import Button from "../common/button";
-import useModalStore from "@/zustand/ModalStore";
+import useModalStore from "@/zustand/modalStore";
 import Modal from "../common/Modal";
 import ProfileManagement from "./ProfileManagement";
 import { useUserStore } from "@/zustand/userStore";

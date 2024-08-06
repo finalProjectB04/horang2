@@ -1,5 +1,5 @@
 import React from "react";
-import useModalStore from "@/zustand/ModalStore";
+import useModalStore from "@/zustand/modalStore";
 
 interface ModalProps {
   id: string;
