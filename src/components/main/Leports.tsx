@@ -59,7 +59,7 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
   return (
     <div className="container mx-auto max-w-[1440px]">
       <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">
-        <MainListTitle TitleName={`레포츠 추천`} onClick={() => router.push("/leport")} />
+        <MainListTitle TitleName={`레포츠 추천`} onClick={() => router.push("/leports")} />
       </div>
       <div className="flex gap-10 h-[712px]">
         {sortedLeports.length > 0 && (

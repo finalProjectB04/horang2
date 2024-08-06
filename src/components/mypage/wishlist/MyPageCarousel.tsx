@@ -1,17 +1,14 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { Pagination } from "swiper/modules";
-import { useUserStore } from "@/zustand/userStore";
-import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import LoadingPage from "@/app/loading";
 import ErrorPage from "@/app/error";
-import axios from "axios";
+import { useUserStore } from "@/zustand/userStore";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { Pagination } from "swiper/modules";
 
 type Like = {
   id: string;
@@ -54,25 +51,19 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
     queryKey: ["likes", id, contentType, carouselName],
     queryFn: async () => {
       const url = contentType ? `/api/filterlikes?id=${id}&contentType=${contentType}` : `/api/likes?id=${id}`;
-
-      const cacheKey = `likes-${id}-${contentType || ""}`;
-      const cachedData = localStorage.getItem(cacheKey);
-      if (cachedData) {
-        return JSON.parse(cachedData);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-
-      const response = await axios.get(url, {
-        headers: { "Cache-Control": "max-age=3600" },
-      });
-
-      localStorage.setItem(cacheKey, JSON.stringify(response.data));
-      return response.data;
+      return response.json();
     },
     enabled: !!id,
   });
 
   if (isPending) {
-    return <LoadingPage />;
+    return (
+      <div className="w-[1440px] h-full flex items-center justify-center text-center font-semibold text-3xl"></div>
+    );
   }
 
   if (error) {
