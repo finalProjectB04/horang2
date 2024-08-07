@@ -205,114 +205,122 @@ const MapComponent: React.FC = () => {
   if (error) return <div>{error.message}</div>;
 
   return (
-    <div className="relative">
-      <div ref={mapContainer} className="w-full md:h-[60vh]" />
-      <button
-        onClick={moveToCurrentLocation}
-        className="absolute top-4 left-4 z-10 bg-white text-white p-3 rounded-full flex items-center shadow-xl"
-      >
-        <Image src="/assets/images/my_location.svg" alt="내 위치" width={20} height={20} />
-      </button>
-      <div className="mx-10 my-2 rounded-lg md:mx-10 md:my-2">
-        {selectedSpot ? (
-          <div className="flex flex-col md:flex-row items-start my-4">
-            <div>
-              {selectedSpot.firstimage ? (
-                <Image
-                  src={selectedSpot.firstimage}
-                  alt={selectedSpot.title}
-                  width={400}
-                  height={280}
-                  className="w-[400px] h-[280px] object-cover rounded my-4"
-                />
-              ) : (
-                <Image
-                  src="/assets/images/null_image.svg"
-                  alt="No Image"
-                  width={400}
-                  height={280}
-                  className="w-[400px] h-[280px] object-cover rounded my-4"
-                />
-              )}
+    <div className="relative flex flex-col tablet:flex-row">
+      <div className="relative flex-1">
+        <div ref={mapContainer} className="w-full h-[60vh] md:h-[60vh] lg:h-[80vh]" />
+        <button
+          onClick={moveToCurrentLocation}
+          className="absolute top-4 left-4 z-10 bg-white text-white p-3 rounded-full flex items-center shadow-xl"
+        >
+          <Image src="/assets/images/my_location.svg" alt="내 위치" width={20} height={20} />
+        </button>
+        <div className="mx-10 my-2 rounded-lg md:mx-10 md:my-2">
+          {selectedSpot ? (
+            <div className="flex flex-col md:flex-row items-start my-4">
+              <div>
+                {selectedSpot.firstimage ? (
+                  <Image
+                    src={selectedSpot.firstimage}
+                    alt={selectedSpot.title}
+                    width={400}
+                    height={280}
+                    className="w-[400px] h-[280px] object-cover rounded my-4"
+                  />
+                ) : (
+                  <Image
+                    src="/assets/images/null_image.svg"
+                    alt="No Image"
+                    width={400}
+                    height={280}
+                    className="w-[400px] h-[280px] object-cover rounded my-4"
+                  />
+                )}
+              </div>
+              <div className="md:ml-10 mt-8">
+                <a href={`/detail/${selectedSpot.contentid}`} className="flex items-center">
+                  <span className="text-[30px] font-bold mr-4">{selectedSpot.title}</span>
+                  <span className="border-b-2 border-primary-300 text-primary-300 text-[18px]">더보기</span>
+                </a>
+                <p className="text-secondary-700 text-[18px] mt-2">
+                  {getDistance(latitude!, longitude!, selectedSpot.mapy, selectedSpot.mapx).toFixed(2)} km
+                </p>
+                <p className="text-grey-800 mt-2 text-[18px]">{selectedSpot.address}</p>
+                <p className="text-grey-800 mt-2 text-[18px]">{selectedSpot.tel}</p>
+                {selectedSpot.firstimage ? (
+                  <Image
+                    src={selectedSpot.firstimage}
+                    alt={selectedSpot.title}
+                    width={360}
+                    height={270}
+                    className="w-[360px] h-[270px] md:hidden rounded"
+                  />
+                ) : (
+                  <Image
+                    src="/assets/images/null_image.svg"
+                    alt="No Image"
+                    width={360}
+                    height={270}
+                    className="w-[360px] h-[270px] md:hidden rounded"
+                  />
+                )}
+                <button onClick={handleBackToList} className="mt-4 px-4 py-2 bg-primary-300 text-white rounded">
+                  목록으로 돌아가기
+                </button>
+              </div>
             </div>
-            <div className="md:ml-10 mt-8">
-              <a href={`/detail/${selectedSpot.contentid}`} className="flex items-center">
-                <span className="text-[30px] font-bold mr-4">{selectedSpot.title}</span>
-                <span className="border-b-2 border-primary-300 text-primary-300 text-[18px]">더보기</span>
-              </a>
-              <p className="text-secondary-700 text-[18px] mt-2">
-                {getDistance(latitude!, longitude!, selectedSpot.mapy, selectedSpot.mapx).toFixed(2)} km
-              </p>
-              <p className="text-grey-800 mt-2 text-[18px]">{selectedSpot.address}</p>
-              <p className="text-grey-800 mt-2 text-[18px]">{selectedSpot.tel}</p>
-              {selectedSpot.firstimage ? (
-                <Image
-                  src={selectedSpot.firstimage}
-                  alt={selectedSpot.title}
-                  width={360}
-                  height={270}
-                  className="w-[360px] h-[270px] md:hidden rounded"
-                />
-              ) : (
-                <Image
-                  src="/assets/images/null_image.svg"
-                  alt="No Image"
-                  width={360}
-                  height={270}
-                  className="w-[360px] h-[270px] md:hidden rounded"
-                />
-              )}
-              <button onClick={handleBackToList} className="mt-4 px-4 py-2 bg-primary-300 text-white rounded">
-                목록으로 돌아가기
-              </button>
-            </div>
-          </div>
-        ) : visibleSpots.length > 0 ? (
-          <ul>
-            {visibleSpots.map((spot, index) => {
-              const distance = getDistance(latitude!, longitude!, spot.mapy, spot.mapx);
-              return (
-                <li
-                  key={index}
-                  data-title={spot.title}
-                  className="flex items-center py-6 border-b border-grey-200 cursor-pointer"
-                  onClick={() => setSelectedSpot(spot)}
-                >
-                  {spot.firstimage ? (
-                    <Image
-                      src={spot.firstimage}
-                      alt={spot.title}
-                      width={192}
-                      height={128}
-                      className="w-48 h-32 object-cover mr-8 rounded"
-                    />
-                  ) : (
-                    <Image
-                      src="/assets/images/null_image.svg"
-                      alt={spot.title}
-                      width={192}
-                      height={128}
-                      className="w-48 h-32 object-cover mr-8 rounded"
-                    />
-                  )}
-                  <div className="flex items-center">
-                    <Image src="/assets/images/marker.svg" alt="Marker" width={40} height={40} className="h-10 mr-6" />
-                    <div>
-                      <p className="text-secondary-800 text-[26px] mb-2 font-bold">{spot.title}</p>
-                      <div className="flex items-center">
-                        <p className="text-secondary-700 text-[18px]">{distance.toFixed(2)} km</p>
-                        <span className="border-l border-gray-300 h-6 mx-5"></span>
-                        <span className="text-grey-800 text-[20px]">{spot.address}</span>
+          ) : visibleSpots.length > 0 ? (
+            <ul>
+              {visibleSpots.map((spot, index) => {
+                const distance = getDistance(latitude!, longitude!, spot.mapy, spot.mapx);
+                return (
+                  <li
+                    key={index}
+                    data-title={spot.title}
+                    className="flex items-center py-6 border-b border-grey-200 cursor-pointer"
+                    onClick={() => setSelectedSpot(spot)}
+                  >
+                    {spot.firstimage ? (
+                      <Image
+                        src={spot.firstimage}
+                        alt={spot.title}
+                        width={192}
+                        height={128}
+                        className="w-48 h-32 object-cover mr-8 rounded"
+                      />
+                    ) : (
+                      <Image
+                        src="/assets/images/null_image.svg"
+                        alt={spot.title}
+                        width={192}
+                        height={128}
+                        className="w-48 h-32 object-cover mr-8 rounded"
+                      />
+                    )}
+                    <div className="flex items-center">
+                      <Image
+                        src="/assets/images/marker.svg"
+                        alt="Marker"
+                        width={40}
+                        height={40}
+                        className="h-10 mr-6"
+                      />
+                      <div>
+                        <p className="text-secondary-800 text-[26px] mb-2 font-bold">{spot.title}</p>
+                        <div className="flex items-center">
+                          <p className="text-secondary-700 text-[18px]">{distance.toFixed(2)} km</p>
+                          <span className="border-l border-gray-300 h-6 mx-5"></span>
+                          <span className="text-grey-800 text-[20px]">{spot.address}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p className="text-center text-grey-300 mt-10 text-[24px] font-bold">지도를 옮겨주세요</p>
-        )}
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className="text-center text-grey-300 mt-10 text-[24px] font-bold">지도를 옮겨주세요</p>
+          )}
+        </div>
       </div>
     </div>
   );
