@@ -1,5 +1,5 @@
-import axios from "axios";
 import { ApiInformation } from "@/types/Main";
+import axios from "axios";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -15,7 +15,7 @@ export async function GET(request: Request) {
         numOfRows: 1000,
         pageNo: 1,
         MobileOS: "ETC",
-        MobileApp: "TestApp",
+        MobileApp: "horang",
         _type: "json",
         listYN: "Y",
         arrange: "A",
