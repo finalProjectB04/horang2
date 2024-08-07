@@ -3,14 +3,14 @@ import { useUserStore } from "@/zustand/userStore";
 import Link from "next/link";
 
 interface AuthButtonsProps {
-  userId: string | null;
-  handleLogout: () => void;
+  userId: string | null; // Props에서 userId를 받습니다.
+  handleLogout: () => void; // Props에서 handleLogout을 받습니다.
 }
 
-const AuthButtons: React.FC<AuthButtonsProps> = ({ handleLogout }) => {
+const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
+  // Props를 사용합니다.
   const [mounted, setMounted] = useState(false);
-  const { id: userId, clearUser } = useUserStore((state) => ({
-    id: state.id,
+  const { clearUser } = useUserStore((state) => ({
     clearUser: state.clearUser,
   }));
 

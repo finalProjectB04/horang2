@@ -6,7 +6,7 @@ import Image from "next/image";
 const supabase = createClient();
 
 interface Reply {
-  id: string; // 대댓글의 고유 ID
+  id: string;
   parent_comment_id: string;
   created_at: string;
   post_id: string;

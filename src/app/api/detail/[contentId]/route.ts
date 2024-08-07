@@ -14,7 +14,7 @@ export const GET = async (request: NextRequest, { params }: { params: { contentI
         numOfRows: 1,
         pageNo: 1,
         MobileOS: "ETC",
-        MobileApp: "AppTest",
+        MobileApp: "horang",
         contentId: contentId,
         firstImageYN: "Y",
         areacodeYN: "Y",

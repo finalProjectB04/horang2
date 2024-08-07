@@ -29,7 +29,7 @@ const fetchTouristSpots = async (latitude: number, longitude: number): Promise<T
       numOfRows: 1000,
       pageNo: 1,
       MobileOS: "ETC",
-      MobileApp: "AppTest",
+      MobileApp: "horang",
       _type: "json",
       mapX: longitude,
       mapY: latitude,
