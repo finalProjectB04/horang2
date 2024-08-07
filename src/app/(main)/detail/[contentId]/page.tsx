@@ -74,7 +74,7 @@ const DetailPage = () => {
       <section className="tablet:w-full tablet:max-w-[1024px] tablet:mt-4 desktop:w-full desktop:max-w-[1440px] desktop:mt-4">
         <ContentDetail title={title || ""} addr1={addr1 || ""} tel={tel || ""} homepageLink={homepageLink} />
       </section>
-      {contentItemData?.data?.overview && <ContentOverview overview={overview || ""} />}
+      {contentItemData.data.overview && <ContentOverview overview={overview || ""} />}
       <section className="tablet:w-full tablet:flex tablet:justify-center tablet:mb-12 desktop:w-full desktop:flex desktop:justify-center desktop:mb-15">
         <KakaoMap mapx={parseFloat(mapx || "0")} mapy={parseFloat(mapy || "0")} />
       </section>
