@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Autoplay } from "swiper/modules";
 import { ApiInformation } from "@/types/Main";
 import type { Swiper as SwiperType } from "swiper";
-import { Loading } from "@/components/common/Loading";
 import { MainTravelCard } from "./MainTravelCard";
 import "swiper/swiper-bundle.css";
 
@@ -24,7 +23,7 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel, isPe
     setIsClient(true);
   }, [swiperInstance, isPending, error, travel]);
 
-  if (isPending) return <Loading />;
+  if (isPending) return <div>Loading</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (!isClient) return null;
 

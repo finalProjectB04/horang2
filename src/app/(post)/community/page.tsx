@@ -74,7 +74,7 @@ const Community: React.FC = () => {
       </div>
 
       <div className="container w-[1440px] mx-auto ">
-        <div className="flex justify-center items-center gap-5 mb-14">
+        <div className="flex justify-center items-center gap-5 mb-14 ">
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
@@ -103,7 +103,7 @@ const Community: React.FC = () => {
           </button>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 cursor-pointe">
           {sortedAndFilteredPosts.map((post: Post) => (
             <div
               key={post.id}

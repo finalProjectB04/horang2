@@ -6,6 +6,7 @@ import { ApiInformation } from "@/types/Main";
 import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
+import { Mobilemode } from "./mobile/Mobilemode";
 
 interface FestivalProps {
   searchTerm: string;
@@ -62,11 +63,19 @@ export const Festival = ({ searchTerm }: FestivalProps) => {
 
   return (
     <>
-      <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">
-        <MainListTitle TitleName={`축제 및 행사`} onClick={() => router.push("/festival")} />
+      <div className="hidden lg:block">
+        <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">
+          <MainListTitle TitleName={`축제 및 행사`} onClick={() => router.push("/festival")} />
+        </div>
+        <div className=" mx-auto  max-w-[1440px] h-[346px] flex flex-col gap-10">
+          <MainTravelSlider travel={sortedFestival} isPending={isPending} error={error} />
+        </div>
       </div>
-      <div className=" mx-auto  max-w-[1440px] h-[346px] flex flex-col gap-10">
-        <MainTravelSlider travel={sortedFestival} isPending={isPending} error={error} />
+      <div className=" mx-auto block sm:hidden lg:hidden">
+        <div className="mx-auto py-8 max-w-[327px] flex flex-col gap-10">
+          <MainListTitle TitleName={`축제 및 행사`} onClick={() => router.push("/festival")} />
+        </div>
+        <Mobilemode slider={sortedFestival} searchTerm={searchTerm} />
       </div>
     </>
   );

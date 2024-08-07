@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
 import LoadingPage from "@/app/loading";
+import { Mobilemode } from "./mobile/Mobilemode";
 
 interface TravelProps {
   searchTerm: string;
@@ -62,11 +63,20 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
 
   return (
     <>
-      <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">
-        <MainListTitle TitleName={`추천 여행지 `} onClick={() => router.push("/travel")} />
+      <div className="hidden lg:block">
+        <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">
+          <MainListTitle TitleName={`추천 여행지 `} onClick={() => router.push("/travel")} />
+
+          <div className=" mx-auto  max-w-[1440px] h-[346px] flex flex-col gap-10">
+            <MainTravelSlider travel={sortedAndFilteredTravel} isPending={isPending} error={error} />
+          </div>
+        </div>
       </div>
-      <div className=" mx-auto  max-w-[1440px] h-[346px] flex flex-col gap-10">
-        <MainTravelSlider travel={sortedAndFilteredTravel} isPending={isPending} error={error} />
+      <div className=" mx-auto block sm:hidden lg:hidden">
+        <div className="mx-auto py-8 max-w-[327px] flex flex-col gap-10">
+          <MainListTitle TitleName={`추천 여행지`} onClick={() => router.push("/travel")} />
+        </div>
+        <Mobilemode slider={sortedAndFilteredTravel} searchTerm={searchTerm} />
       </div>
     </>
   );

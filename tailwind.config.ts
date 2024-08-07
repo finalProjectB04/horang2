@@ -77,6 +77,12 @@ const config: Config = {
       },
     },
   },
+  screens: {
+    sm: { max: "640px" }, // 모바일
+    md: { min: "641px", max: "1024px" }, // 태블릿
+    lg: { min: "1025px" }, // 데스크탑
+  },
+
   plugins: [],
 };
 export default config;
