@@ -1,30 +1,24 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchSessionData, logoutUser } from "@/utils/auth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { logoutUser } from "@/utils/auth";
 import Logo from "./Logo";
 import Nav from "./Nav";
 import AuthButtons from "./AuthButtons";
 import { useUserStore } from "@/zustand/userStore";
-import { Session } from "@supabase/supabase-js";
 
 const Header = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const userId = useUserStore((state) => state.id);
-
-  const { data: session } = useQuery<Session | null>({
-    queryKey: ["session"],
-    queryFn: fetchSessionData,
-    initialData: () => null,
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
-  });
+  const { id: userId, clearUser } = useUserStore();
 
   const { mutate: handleLogout } = useMutation({
-    mutationFn: logoutUser,
+    mutationFn: async () => {
+      await logoutUser();
+      clearUser();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["session"] });
       router.push("/");
