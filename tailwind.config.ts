@@ -8,6 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        mobile: { max: "640px" },
+        tablet: { min: "641px", max: "1024px" },
+        desktop: { min: "1025px" },
+      },
       animation: {
         "spin-slow": "spin 2s linear infinite",
       },

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const DetailPageImage: React.FC<{ contentItemData: ContentItem }> = ({ contentItemData }) => {
   return (
-    <section className="w-full max-w-[1440px] mx-auto">
+    <section className="desktop:w-full desktop:max-w-[1440px] desktop:mx-auto">
       {contentItemData.data.firstimage && (
         <Image
           src={contentItemData.data.firstimage || "/assets/images/null_image.svg"}
@@ -14,8 +14,6 @@ const DetailPageImage: React.FC<{ contentItemData: ContentItem }> = ({ contentIt
           priority
         />
       )}
-
-      <div className="swiper-pagination-custom"></div>
     </section>
   );
 };

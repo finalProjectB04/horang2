@@ -44,13 +44,13 @@ const DetailPage = () => {
   }
 
   return (
-    <main className="max-w-[1440px] mx-auto grid justify-items-center">
+    <main className="desktop:max-w-[1440px] desktop:mx-auto desktop:grid desktop:justify-items-center">
       <DetailPageImage contentItemData={contentItemData} />
-      <section className="flex justify-between items-center w-full max-w-[1440px] mt-12 py-20">
-        <div className="text-left">
-          <div className="text-4xl font-bold">{title}</div>
+      <section className="desktop:flex desktop:justify-between desktop:items-center desktop:w-full desktop:max-w-[1440px] desktop:mt-12 desktop:py-20">
+        <div className="desktop:text-left">
+          <div className="desktop:text-4xl desktop:font-bold">{title}</div>
         </div>
-        <div className="flex justify-center space-x-2">
+        <div className="desktop:flex desktop:justify-center desktop:space-x-2">
           <DetailPageLikeButton
             contentId={contentId}
             imageUrl={imageUrl || ""}
@@ -65,14 +65,14 @@ const DetailPage = () => {
           <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
       </section>
-      <section className="w-full max-w-[1440px] mt-4">
+      <section className="desktop:w-full desktop:max-w-[1440px] desktop:mt-4">
         <ContentDetail title={title || ""} addr1={addr1 || ""} tel={tel || ""} homepageLink={homepageLink} />
       </section>
       {contentItemData?.data?.overview && <ContentOverview overview={overview || ""} />}
-      <section className="w-full [1440px] flex justify-center mb-15">
+      <section className="desktop:w-full desktop:[1440px] desktop:flex desktop:justify-center desktop:mb-15">
         <KakaoMap mapx={parseFloat(mapx || "0")} mapy={parseFloat(mapy || "0")} />
       </section>
-      <section className="w-full max-w-[1440px] mt-20 pt-20">
+      <section className="desktop:w-full desktop:max-w-[1440px] desktop:mt-20 desktop:pt-20">
         <DetailPageAddComment contentId={contentId} contenTypeId={contentTypeId || ""} />
         <DetailPageCommentList contentId={contentId} />
       </section>

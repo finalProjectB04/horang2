@@ -67,7 +67,7 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
 
   return (
     <div style={{ width: "100%", height: "500px", position: "relative" }}>
-      <h1 className="item-start py-7 font-extrabold text-2xl">위치</h1>
+      <h1 className="desktop:item-start desktop:py-7 desktop:font-extrabold desktop:text-2xl">위치</h1>
       <div id="map" style={{ width: "100%", height: "100%" }}></div>
     </div>
   );

@@ -123,74 +123,74 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
   const totalPages = Math.ceil((commentsData?.totalCount || 0) / ITEMS_PER_PAGE);
 
   return (
-    <div className="mt-4 max-w-[1440px] mx-auto">
+    <div className="desktop:mt-4 desktop:max-w-[1440px] desktop:mx-auto">
       {commentsData?.comments &&
         commentsData.comments.map((comment: Comments, index) => (
           <div
-            className="p-4 border border-grey-100 rounded-xl flex flex-col items-start mx-auto mb-4 w-full"
+            className="desktop:p-4 desktop:border desktop:border-grey-100 desktop:rounded-xl desktop:flex desktop:flex-col desktop:items-start desktop:mx-auto desktop:mb-4 desktop:w-full"
             key={comment.comment_id ? comment.comment_id : `comment-${index}`}
           >
-            <div className="flex items-center justify-between w-full py-5">
-              <div className="flex items-center ps-10">
+            <div className="desktop:flex desktop:items-center desktop:justify-between desktop:w-full desktop:py-5">
+              <div className="desktop:flex desktop:items-center desktop:ps-10">
                 <Image
                   src={comment.user_profile_url || "/assets/images/profile_ex.png"}
                   alt="유저 프로필 사진"
                   width={64}
                   height={64}
-                  className="mr-4"
+                  className="desktop:mr-4"
                 />
                 <div>
-                  <h1 className="text-[28px] text-grey-700 font-bold py-2 ps-3">
+                  <h1 className="desktop:text-[28px] desktop:text-grey-700 desktop:font-bold desktop:py-2 desktop:ps-3">
                     {comment.user_nickname || comment.user_email} 님
                   </h1>
-                  <h2 className="py-1 text-grey-600 text-[18px] ps-3">
+                  <h2 className="desktop:py-1 desktop:text-grey-600 desktop:text-[18px] desktop:ps-3">
                     {comment.created_at ? formatDate(comment.created_at) : "날짜 정보 없음"}
                   </h2>
                 </div>
               </div>
               {userId === comment.user_id && editCommentId !== comment.comment_id && (
-                <div className="flex space-x-2 justify-end pr-[95px]">
+                <div className="desktop:flex desktop:space-x-2 desktop:justify-end desktop:pr-[95px]">
                   <button
                     onClick={() => handleEdit(comment)}
-                    className="flex justify-center items-center h-[36px] py-0 px-[26px] text-[18px] text-grey-600 font-normal rounded"
+                    className="desktop:flex desktop:justify-center desktop:items-center desktop:h-[36px] desktop:py-0 desktop:px-[26px] desktop:text-[18px] desktop:text-grey-600 desktop:font-normal desktop:rounded"
                   >
                     수정
                   </button>
                   <button
                     onClick={() => handleDelete(comment.comment_id)}
-                    className="flex justify-center items-center h-[36px] py-0 px-[26px] rounded text-[18px] text-grey-600 font-normal"
+                    className="desktop:flex desktop:justify-center desktop:items-center desktop:h-[36px] desktop:py-0 desktop:px-[26px] desktop:rounded desktop:text-[18px] desktop:text-grey-600 desktop:font-normal"
                   >
                     삭제
                   </button>
                 </div>
               )}
             </div>
-            <div className="mt-2 w-full">
+            <div className="desktop:mt-2 desktop:w-full">
               {editCommentId === comment.comment_id ? (
-                <div className="ps-[129px]">
+                <div className="desktop:ps-[129px]">
                   <textarea
                     value={newComment}
                     onChange={(event) => setNewComment(event.target.value)}
-                    className="w-full p-2 border rounded break-all text-[28px] max-w-[1200px] text-grey-700"
+                    className="desktop:w-full desktop:p-2 desktop:border desktop:rounded desktop:break-all desktop:text-[28px] desktop:max-w-[1200px] desktop:text-grey-700"
                     style={{ wordBreak: "break-all" }}
                   />
-                  <div className="flex justify-end space-x-2 mt-2 pr-[95px]">
+                  <div className="desktop:flex desktop:justify-end desktop:space-x-2 desktop:mt-2 desktop:pr-[95px]">
                     <button
                       onClick={() => handleUpdate(comment.comment_id)}
-                      className="flex justify-center items-center h-[36px] py-0 px-[26px] text-[18px] text-grey-600 font-normal rounded"
+                      className="desktop:flex desktop:justify-center desktop:items-center desktop:h-[36px] desktop:py-0 desktop:px-[26px] desktop:text-[18px] desktop:text-grey-600 desktop:font-normal desktop:rounded"
                     >
                       저장
                     </button>
                     <button
                       onClick={handleCancelEdit}
-                      className="flex justify-center items-center h-[36px] py-0 px-[26px] text-[18px] text-grey-600 font-normal rounded"
+                      className="desktop:flex desktop:justify-center desktop:items-center desktop:h-[36px] desktop:py-0 desktop:px-[26px] desktop:text-[18px] desktop:text-grey-600 desktop:font-normal desktop:rounded"
                     >
                       취소
                     </button>
                   </div>
                 </div>
               ) : (
-                <p className="ps-[129px] mb-8 pb-5 break-all whitespace-pre-wrap pr-[95px] text-grey-700 text-[28px]">
+                <p className="desktop:ps-[129px] desktop:mb-8 desktop:pb-5 desktop:break-all desktop:whitespace-pre-wrap desktop:pr-[95px] desktop:text-grey-700 desktop:text-[28px]">
                   {comment.comment}
                 </p>
               )}

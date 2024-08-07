@@ -56,29 +56,31 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
   };
 
   return (
-    <main className="mt-4 max-w-[1440px] mx-auto">
+    <main className="desktop:mt-4 desktop:max-w-[1440px] desktop:mx-auto">
       {userId && (
-        <div className="flex items-center mb-4 py-3">
+        <div className="desktop:flex desktop:items-center desktop:mb-4 desktop:py-3">
           {profileUrl && (
             <Image src={profileUrl || "/assets/images/profile_ex.png"} alt="유저 프로필 사진" width={25} height={25} />
           )}
-          <span className="text-2xl font-bold ml-2 text-grey-800">{userNickname} 님</span>
+          <span className="desktop:text-2xl desktop:font-bold desktop:ml-2 desktop:text-grey-800">
+            {userNickname} 님
+          </span>
         </div>
       )}
-      <div className="p-4 border border-primary-100 rounded-xl flex items-center bg-grey-50 h-[226px] place-items-center">
+      <div className="desktop:p-4 desktop:border desktop:border-primary-100 desktop:rounded-xl desktop:flex desktop:items-center desktop:bg-grey-50 desktop:h-[226px] desktop:place-items-center">
         <textarea
           value={comment}
           onChange={(event) => setComment(event.target.value)}
           placeholder={userId ? "댓글을 작성하세요" : "댓글 작성은 로그인한 유저만 가능합니다"}
-          className={`max-w-[1200px] p-6 py-15 rounded-l-lg resize-none bg-grey-50 h-[150px] flex flex-col text-[28px] leading-[40px] overflow-hidden text-grey-600 ${
+          className={`desktop:max-w-[1200px] desktop:p-6 desktop:py-15 desktop:rounded-l-lg desktop:resize-none desktop:bg-grey-50 desktop:h-[150px] desktop:flex desktop:flex-col desktop:text-[28px] desktop:leading-[40px] desktop:overflow-hidden desktop:text-grey-600 ${
             !userId ? "text-grey-500" : "text-grey-900"
-          } border-none flex-grow min-h-[80px] max-h-[500px]`}
+          } desktop:border-none desktop:flex-grow desktop:min-h-[80px] desktop:max-h-[500px]`}
           disabled={!userId}
           maxLength={2000}
         />
         <button
           onClick={handleAddComment}
-          className={`ml-8 flex w-[150px] h-[80px] flex-col justify-center items-center gap-[10px] text-[30px] font-black bg-primary-100 text-primary-700 rounded-[20px] border-2 border-primary-200 hover:bg-primary-400`}
+          className={`desktop:ml-8 desktop:flex w-[150px] desktop:h-[80px] desktop:flex-col desktop:justify-center desktop:items-center desktop:gap-[10px] desktop:text-[30px] desktop:font-black desktop:bg-primary-100 desktop:text-primary-700 desktop:rounded-[20px] desktop:border-2 desktop:border-primary-200 desktop:hover:bg-primary-400`}
           disabled={!userId}
         >
           등록
