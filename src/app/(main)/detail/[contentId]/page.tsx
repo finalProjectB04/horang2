@@ -44,13 +44,13 @@ const DetailPage = () => {
   }
 
   return (
-    <main className="desktop:max-w-[1440px] desktop:mx-auto desktop:grid desktop:justify-items-center">
+    <main className="tablet:max-w-[1024px] tablet:mx-auto tablet:grid tablet:justify-items-center desktop:max-w-[1440px] desktop:mx-auto desktop:grid desktop:justify-items-center">
       <DetailPageImage contentItemData={contentItemData} />
-      <section className="desktop:flex desktop:justify-between desktop:items-center desktop:w-full desktop:max-w-[1440px] desktop:mt-12 desktop:py-20">
-        <div className="desktop:text-left">
-          <div className="desktop:text-4xl desktop:font-bold">{title}</div>
+      <section className="flex justify-between items-center w-full max-w-[1440px] mt-12 py-20 tablet:flex tablet:items-center tablet:justify-between tablet:w-full tablet:max-w-[1024px] tablet:mt-8 tablet:py-10">
+        <div className="text-left tablet:flex-grow">
+          <div className="text-4xl font-bold tablet:text-3xl">{title}</div>
         </div>
-        <div className="desktop:flex desktop:justify-center desktop:space-x-2">
+        <div className="flex justify-center space-x-2 tablet:mt-0">
           <DetailPageLikeButton
             contentId={contentId}
             imageUrl={imageUrl || ""}
@@ -60,21 +60,31 @@ const DetailPage = () => {
             tel={tel || ""}
           />
           <button onClick={() => setIsModalOpen(true)}>
-            <Image src="/assets/images/shareModal.svg" alt="Custom Button Image" width={48} height={48} />
+            <Image
+              src="/assets/images/shareModal.svg"
+              alt="Custom Button Image"
+              width={48}
+              height={48}
+              className="tablet:w-12 tablet:h-12"
+            />
           </button>
           <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
       </section>
-      <section className="desktop:w-full desktop:max-w-[1440px] desktop:mt-4">
+      <section className="tablet:w-full tablet:max-w-[1024px] tablet:mt-4 desktop:w-full desktop:max-w-[1440px] desktop:mt-4">
         <ContentDetail title={title || ""} addr1={addr1 || ""} tel={tel || ""} homepageLink={homepageLink} />
       </section>
       {contentItemData?.data?.overview && <ContentOverview overview={overview || ""} />}
-      <section className="desktop:w-full desktop:[1440px] desktop:flex desktop:justify-center desktop:mb-15">
+      <section className="tablet:w-full tablet:flex tablet:justify-center tablet:mb-12 desktop:w-full desktop:flex desktop:justify-center desktop:mb-15">
         <KakaoMap mapx={parseFloat(mapx || "0")} mapy={parseFloat(mapy || "0")} />
       </section>
-      <section className="desktop:w-full desktop:max-w-[1440px] desktop:mt-20 desktop:pt-20">
-        <DetailPageAddComment contentId={contentId} contenTypeId={contentTypeId || ""} />
-        <DetailPageCommentList contentId={contentId} />
+      <section className="tablet:w-full tablet:max-w-[1024px] tablet:mt-12 tablet:pt-12 desktop:w-full desktop:max-w-[1440px] desktop:mt-20 desktop:pt-[181px]">
+        <div className="desktop:pt-[33px] tablet:pt-[33px]">
+          <DetailPageAddComment contentId={contentId} contenTypeId={contentTypeId || ""} />
+        </div>
+        <div className="desktop:pt-[33px] tablet:pt-[33px]">
+          <DetailPageCommentList contentId={contentId} />
+        </div>
       </section>
       <FloatingButton />
     </main>

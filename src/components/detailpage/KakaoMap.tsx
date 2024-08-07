@@ -66,9 +66,11 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
   }, [longitude, latitude]);
 
   return (
-    <div style={{ width: "100%", height: "500px", position: "relative" }}>
-      <h1 className="desktop:item-start desktop:py-7 desktop:font-extrabold desktop:text-2xl">위치</h1>
-      <div id="map" style={{ width: "100%", height: "100%" }}></div>
+    <div className="w-full h-[500px] relative tablet:w-full tablet:h-[400px] desktop:w-full desktop:h-[500px]">
+      <h1 className="text-start py-[65px] font-extrabold text-2xl tablet:text-start tablet:py-[45px] tablet:font-bold tablet:text-xl desktop:text-start desktop:py-[65px] desktop:font-extrabold desktop:text-2xl">
+        위치
+      </h1>
+      <div id="map" className="w-full h-full"></div>
     </div>
   );
 };
