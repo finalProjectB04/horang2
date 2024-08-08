@@ -1,5 +1,6 @@
 import { Item } from "@/types/APIResponse.type";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 interface RecommendProps {
@@ -8,6 +9,7 @@ interface RecommendProps {
 }
 
 const Recommend: React.FC<RecommendProps> = ({ data, MBTIResult }) => {
+  const router = useRouter();
   return (
     <div className="flex justify-center">
       {data.length > 0 ? (
@@ -15,17 +17,19 @@ const Recommend: React.FC<RecommendProps> = ({ data, MBTIResult }) => {
           {data.map((item, index) => (
             <li key={index} className="flex flex-col items-center space-y-2">
               <h2 className="text-center">{item.title}</h2>
-              {item.firstimage ? (
-                <Image src={item.firstimage} alt={item.title} width={100} height={100} className="object-contain" />
-              ) : (
-                <Image
-                  src="/assets/images/null_image.svg"
-                  alt="No image available"
-                  width={100}
-                  height={100}
-                  className="object-contain"
-                />
-              )}
+              <button onClick={() => router.push(`/detail/${item.contentid}`)}>
+                {item.firstimage ? (
+                  <Image src={item.firstimage} alt={item.title} width={100} height={100} className="object-contain" />
+                ) : (
+                  <Image
+                    src="/assets/images/null_image.svg"
+                    alt="No image available"
+                    width={100}
+                    height={100}
+                    className="object-contain"
+                  />
+                )}
+              </button>
             </li>
           ))}
         </ul>
