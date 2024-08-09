@@ -15,10 +15,10 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
       slidesPerView={4}
       slidesPerGroup={4}
       autoplay={{ delay: 5000, disableOnInteraction: false }}
-      className=" w-full h-[346px]"
+      className=" lg:w-full lg:h-[346px]"
     >
       {travel.map((item) => (
-        <SwiperSlide key={item.contentid} className="w-[330px] h-[346px]">
+        <SwiperSlide key={item.contentid} className=" lg:w-[330px] lg:h-[346px]">
           <MainTravelCard item={item} />
         </SwiperSlide>
       ))}

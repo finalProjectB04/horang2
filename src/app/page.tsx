@@ -17,8 +17,8 @@ const Home = () => {
         <Control />
       </div>
 
-      {/* <Travel searchTerm={searchTerm} /> */}
-      <Leports searchTerm={searchTerm} />
+      <Travel searchTerm={searchTerm} />
+      {/* <Leports searchTerm={searchTerm} /> */}
       {/* <Festival searchTerm={searchTerm} /> */}
     </main>
   );
