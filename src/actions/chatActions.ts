@@ -1,5 +1,6 @@
 "use server";
 
+import { Message } from "@/types/message.types";
 import { User } from "@/types/User.types";
 import { createServerSupabaseAdminClient, createServerSupabaseClient } from "@/utils/supabase/serverAdmin";
 
@@ -52,7 +53,7 @@ export async function sendMessage({
   }
 }
 
-export async function getAllMessage({ chatUserId }: { chatUserId: string }): Promise<any[]> {
+export async function getAllMessage({ chatUserId }: { chatUserId: string }): Promise<Message[]> {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.auth.getSession();
 
@@ -73,7 +74,7 @@ export async function getAllMessage({ chatUserId }: { chatUserId: string }): Pro
   return messages;
 }
 
-export async function showLastMessage({ userId, myId }: { userId: string; myId: string }): Promise<any[]> {
+export async function showLastMessage({ userId, myId }: { userId: string; myId: string }): Promise<Message[]> {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.auth.getSession();
 

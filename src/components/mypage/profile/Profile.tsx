@@ -37,7 +37,10 @@ const Profile: React.FC = () => {
 
   return (
     <section className="md:border-b-2 lg:border-b-2 sm:flex-col flex sm:justify-center md:justify-between lg:justify-between sm:mt-[20px] md:mt-[60px] md:pb-16 md:mb-16 lg:mt-[60px] lg:pb-16 lg:mb-16">
-      <button className="w-fit flex items-center justify-start pl-6 my-3" onClick={() => router.back()}>
+      <button
+        className="sm:block md:hidden lg:hidden w-fit flex items-center justify-start pl-6 my-3"
+        onClick={() => router.back()}
+      >
         <Image src="/assets/images/back.png" width={10} height={17} alt="뒤로가기" />
       </button>
       <div className="px-6 py-5">

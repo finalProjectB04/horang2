@@ -25,11 +25,13 @@ const ListTitle = ({ TitleName, onClick }: ListTitleProps) => {
           height={32}
           className="sm:hidden"
         />
-        <h2 className="text-start font-extrabold text-secondary-800 sm:text-sm text-3xl">{TitleName}</h2>
+        <h2 className="text-start font-extrabold text-secondary-800 sm:text-sm text-3xl sm:ml-1 md:ml-6 lg:ml-10">
+          {TitleName}
+        </h2>
       </div>
-      <button className="sm:text-xs" onClick={onClick}>
+      {/* <button className="sm:text-xs" onClick={onClick}>
         더보기 <span>&gt;</span>
-      </button>
+      </button> */}
     </div>
   );
 };
