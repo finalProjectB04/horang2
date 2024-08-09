@@ -44,7 +44,7 @@ const DetailPage = () => {
   }
 
   return (
-    <main className="mobile:max-w-[375px] tablet:max-w-[1024px] tablet:mx-auto tablet:grid tablet:justify-items-center desktop:max-w-[1440px] desktop:mx-auto desktop:grid desktop:justify-items-center">
+    <main className="mobile:max-w-[640px] tablet:max-w-[1024px] tablet:mx-auto tablet:grid tablet:justify-items-center desktop:max-w-[1440px] desktop:mx-auto desktop:grid desktop:justify-items-center">
       <DetailPageImage contentItemData={contentItemData} />
       <section
         className="flex justify-between items-center w-full max-w-[1440px] desktop:pt-[140px] tablet:flex tablet:items-center tablet:justify-between tablet:w-full tablet:max-w-[1024px] tablet:mt-8
@@ -76,14 +76,14 @@ const DetailPage = () => {
           <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
       </section>
-      <section className="tablet:w-full tablet:max-w-[1024px] tablet:mt-4 desktop:w-full desktop:max-w-[1440px] desktop:mt-4 desktop:pb-[88px] mobile:w-[375px] mobile:px-[24px] mobile:">
+      <section className="tablet:w-full tablet:max-w-[1024px] tablet:mt-4 desktop:w-full desktop:max-w-[1440px] desktop:mt-4 desktop:pb-[88px] mobile:w-[640px] mobile:px-[24px] mobile:">
         <ContentDetail title={title || ""} addr1={addr1 || ""} tel={tel || ""} homepageLink={homepageLink} />
       </section>
       {contentItemData.data.overview && <ContentOverview overview={overview || ""} />}
-      <section className="tablet:w-full tablet:flex tablet:justify-center tablet:mb-12 desktop:w-full desktop:flex desktop:justify-center desktop:mb-15 mobile:w-[375px]">
+      <section className="tablet:w-full tablet:flex tablet:justify-center tablet:mb-12 desktop:w-full desktop:flex desktop:justify-center desktop:mb-15 mobile:max-w-[640px] mobile-max-h-[290px]">
         <KakaoMap mapx={parseFloat(mapx || "0")} mapy={parseFloat(mapy || "0")} />
       </section>
-      <section className="tablet:w-full tablet:max-w-[1024px] tablet:mt-12 tablet:pt-12 desktop:w-full desktop:max-w-[1440px] desktop:mt-20 desktop:pt-[200px] mobile:w-[375px]">
+      <section className="tablet:w-full tablet:max-w-[1024px] tablet:mt-12 tablet:pt-12 desktop:w-full desktop:max-w-[1440px] desktop:mt-20 desktop:pt-[200px] mobile:max-w-[640px]">
         <div className="desktop:pt-[33px] tablet:pt-[33px]">
           <DetailPageAddComment contentId={contentId} contenTypeId={contentTypeId || ""} />
         </div>

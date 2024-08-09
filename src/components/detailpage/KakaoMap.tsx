@@ -69,7 +69,7 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
     <div className="w-full h-[500px] relative tablet:w-full tablet:h-[400px] desktop:w-full desktop:h-[500px]">
       <h1
         className="text-start py-[65px] font-extrabold tablet:text-start tablet:py-[45px] tablet:font-semibold tablet:text-[30px] desktop:text-start desktop:py-[65px] desktop:font-bold desktop:text-[38px] mobile:px-[24px]
-      mobile:text-[14px] mobile:font-bold mobile:mb-[-32px]"
+      mobile:text-[14px] mobile:font-bold mobile:mb-[-40px] mobile:leading-[24px]"
       >
         위치
       </h1>
