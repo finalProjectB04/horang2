@@ -72,3 +72,24 @@ export async function getAllMessage({ chatUserId }: { chatUserId: string }): Pro
   }
   return messages;
 }
+
+export async function showLastMessage({ userId, myId }: { userId: string; myId: string }): Promise<any[]> {
+  const supabase = await createServerSupabaseClient();
+  const { data, error } = await supabase.auth.getSession();
+
+  if (error || !data?.session?.user) {
+    return [];
+  }
+
+  const { data: messages, error: getMessageError } = await supabase
+    .from("message")
+    .select("*")
+    .eq("sender", userId)
+    .eq("receiver", myId)
+    .order("created_at", { ascending: false });
+
+  if (getMessageError) {
+    return [];
+  }
+  return messages;
+}

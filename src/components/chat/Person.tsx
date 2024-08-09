@@ -1,3 +1,7 @@
+"use client";
+
+import { showLastMessage } from "@/actions/chatActions";
+import { useQuery } from "@tanstack/react-query";
 import TimeAgo from "javascript-time-ago";
 import ko from "javascript-time-ago/locale/ko";
 import Image from "next/image";
@@ -15,6 +19,7 @@ interface PersonProps {
   isActive?: boolean;
   onChatScreen?: boolean;
   onClick?: () => void;
+  myId: string;
 }
 
 export default function Person({
@@ -26,7 +31,18 @@ export default function Person({
   isActive = false,
   onChatScreen = false,
   onClick,
+  myId,
 }: PersonProps) {
+  const { data: lastMessages, isPending } = useQuery({
+    queryKey: ["lastMessage", userId],
+    queryFn: () => showLastMessage({ userId, myId }),
+    enabled: !!userId,
+  });
+
+  console.log(lastMessages);
+
+  const lastMessage = lastMessages?.[0]?.message || "서로 대화를 해보세요!";
+
   return (
     <div
       className={`w-full flex border-b border-gray-200 items-center p-4 ${onClick && "cursor-pointer"} ${
@@ -48,11 +64,14 @@ export default function Person({
         alt={name}
         className="sm:block md:hidden lg:hidden rounded-full mr-3 my-2"
       />
-      <div className="flex gap-4 items-center">
-        <p className="text-secondary-800 sm:text-xs md:text-base lg:text-xl font-bold">{name}</p>
-        <p className="text-gray-500 sm:text-[10px] md:text-sm lg:text-sm">
-          {onlineAt && timeAgo.format(Date.parse(onlineAt))}
-        </p>
+      <div className="flex flex-col">
+        <div className="flex gap-4 items-center mb-1">
+          <p className="text-secondary-800 sm:text-xs md:text-base lg:text-xl font-bold">{name}</p>
+          <p className="text-gray-500 sm:text-[10px] md:text-sm lg:text-sm">
+            {onlineAt && timeAgo.format(Date.parse(onlineAt))}
+          </p>
+        </div>
+        <p className="text-gray-500 sm:text-[10px] md:text-sm lg:text-sm">{lastMessage}</p>
       </div>
     </div>
   );

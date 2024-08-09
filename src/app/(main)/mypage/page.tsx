@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Profile from "@/components/mypage/profile/Profile";
 import Community from "@/components/mypage/community/Community";
