@@ -36,7 +36,7 @@ const ModalChatScreen = ({ id }: ModalChatScreenProps) => {
 
   const sendMessageMutation = useMutation({
     mutationFn: async () => {
-      return sendMessage({ message, chatUserId: selectedUserId });
+      return sendMessage({ message, chatUserId: selectedUserId, created_at: new Date().toISOString() });
     },
     onSuccess: () => {
       setMessage("");

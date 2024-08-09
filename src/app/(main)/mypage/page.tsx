@@ -1,10 +1,10 @@
 "use client";
 
-import Advertisement from "@/components/common/Advertisement";
-import Community from "@/components/mypage/community/Community";
-import Profile from "@/components/mypage/profile/Profile";
-import WishList from "@/components/mypage/wishlist/WishList";
 import React from "react";
+import Profile from "@/components/mypage/profile/Profile";
+import Community from "@/components/mypage/community/Community";
+import WishList from "@/components/mypage/wishlist/WishList";
+import Advertisement from "@/components/common/Advertisement";
 
 const myPage: React.FC = () => {
   return (
