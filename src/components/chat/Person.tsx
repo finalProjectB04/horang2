@@ -1,6 +1,5 @@
 import TimeAgo from "javascript-time-ago";
 import ko from "javascript-time-ago/locale/ko";
-import { getRandomImage } from "@/utils/random";
 import Image from "next/image";
 
 TimeAgo.addDefaultLocale(ko);
@@ -40,11 +39,20 @@ export default function Person({
         height={64}
         src={url || "/assets/images/profile_ex.png"}
         alt={name}
-        className="rounded-full mr-6 my-9"
+        className="sm:hidden rounded-full mr-6 my-9"
       />
-      <div>
-        <p className="text-secondary-800 text-xl font-bold">{name}</p>
-        <p className="text-gray-500 text-sm">{onlineAt && timeAgo.format(Date.parse(onlineAt))}</p>
+      <Image
+        width={32}
+        height={32}
+        src={url || "/assets/images/profile_ex.png"}
+        alt={name}
+        className="sm:block md:hidden lg:hidden rounded-full mr-3 my-2"
+      />
+      <div className="flex gap-4 items-center">
+        <p className="text-secondary-800 sm:text-xs md:text-base lg:text-xl font-bold">{name}</p>
+        <p className="text-gray-500 sm:text-[10px] md:text-sm lg:text-sm">
+          {onlineAt && timeAgo.format(Date.parse(onlineAt))}
+        </p>
       </div>
     </div>
   );

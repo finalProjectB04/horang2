@@ -25,7 +25,15 @@ export async function getUserById(userId: string): Promise<User[]> {
   return data;
 }
 
-export async function sendMessage({ message, chatUserId }: { message: string; chatUserId: string }): Promise<void> {
+export async function sendMessage({
+  message,
+  chatUserId,
+  created_at,
+}: {
+  message: string;
+  chatUserId: string;
+  created_at: string;
+}): Promise<void> {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.auth.getSession();
 
