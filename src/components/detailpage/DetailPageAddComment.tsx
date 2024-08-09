@@ -58,7 +58,7 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
   return (
     <main className="mobile:mt-[140px] mobile:max-w-[375px] mobile:mx-auto tablet:mt-4 tablet:max-w-[1024px] tablet:mx-auto desktop:mt-4 desktop:max-w-[1440px] desktop:mx-auto">
       {userId && (
-        <div className="mobile:flex mobile:items-center mobile:mb-4 mobile:py-3 tablet:flex tablet:items-center tablet:mb-4 tablet:py-3 desktop:flex desktop:items-center desktop:mb-4 desktop:py-3">
+        <div className="mobile:pl-[22px] mobile:flex mobile:items-center mobile:py-3 tablet:flex tablet:items-center tablet:mb-4 tablet:py-3 desktop:flex desktop:items-center desktop:mb-4 desktop:py-3">
           {profileUrl && (
             <Image src={profileUrl || "/assets/images/profile_ex.png"} alt="유저 프로필 사진" width={20} height={20} />
           )}
@@ -67,16 +67,24 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
           </span>
         </div>
       )}
-      <div className="mobile:p-3 mobile:border mobile:border-primary-100 mobile:rounded-lg mobile:flex mobile:items-center mobile:bg-grey-50 mobile:h-[150px] mobile:place-items-center tablet:p-4 tablet:border tablet:border-primary-100 tablet:rounded-xl tablet:flex tablet:items-center tablet:bg-grey-50 tablet:h-[200px] tablet:place-items-center desktop:p-4 desktop:border desktop:border-primary-100 desktop:rounded-xl desktop:flex desktop:items-center desktop:bg-grey-50 desktop:h-[226px] desktop:place-items-center">
+      <div className="mobile:p-3 mobile:border-none mobile:h-[102px] mobile:border mobile:border-primary-100 mobile:rounded-lg mobile:flex mobile:items-center mobile:bg-grey-50 mobile:h-[150px] mobile:place-items-center tablet:p-4 tablet:border tablet:border-primary-100 tablet:rounded-xl tablet:flex tablet:items-center tablet:bg-grey-50 tablet:h-[200px] tablet:place-items-center desktop:p-4 desktop:border desktop:border-primary-100 desktop:rounded-xl desktop:flex desktop:items-center desktop:bg-grey-50 desktop:h-[226px] desktop:place-items-center">
         <textarea
           value={comment}
           onChange={(event) => setComment(event.target.value)}
-          placeholder={userId ? "댓글을 작성하세요" : "댓글 작성은 로그인한 유저만 가능합니다"}
-          className={`mobile:max-w-[280px] mobile:p-3 mobile:rounded-l-md mobile:resize-none mobile:bg-grey-50 mobile:h-[100px] mobile:flex mobile:flex-col mobile:text-base mobile:leading-5 mobile:overflow-hidden mobile:text-grey-600 ${
+          placeholder={
+            typeof window !== "undefined" && window.innerWidth <= 375
+              ? userId
+                ? "댓글달기"
+                : "로그인해주세요"
+              : userId
+              ? "댓글을 작성하세요"
+              : "댓글 작성은 로그인한 유저만 가능합니다"
+          }
+          className={`mobile:pt-[25px] mobile:mb-[70px] mobile:pb-[5px] mobile:w-[270px] mobile:p-4 mobile:flex-shrink-0 mobile:rounded-[20px] mobile:bg-grey-100 mobile:text-base mobile:leading-5 mobile:text-grey-600 mobile:pl-[24px] mobile:text-[12px] mobile:mt-[70px] mobile:ml-[12px] ${
             !userId ? "text-grey-500" : "text-grey-900"
-          } mobile:border-none mobile:flex-grow mobile:min-h-[60px] mobile:max-h-[300px] tablet:max-w-[800px] tablet:p-4 tablet:rounded-l-lg tablet:resize-none tablet:bg-grey-50 tablet:h-[150px] tablet:flex tablet:flex-col tablet:text-lg tablet:leading-6 tablet:overflow-hidden tablet:text-grey-600 ${
+          } mobile:border-none mobile:min-h-[24px] mobile:resize-y tablet:max-w-[800px] tablet:p-4 tablet:rounded-l-lg tablet:bg-grey-50 tablet:h-[150px] tablet:flex tablet:flex-col tablet:text-lg tablet:leading-6 tablet:text-grey-600 ${
             !userId ? "text-grey-500" : "text-grey-900"
-          } tablet:border-none tablet:flex-grow tablet:min-h-[80px] tablet:max-h-[400px] desktop:max-w-[1200px] desktop:p-6 desktop:py-15 desktop:rounded-l-lg desktop:resize-none desktop:bg-grey-50 desktop:h-[150px] desktop:flex desktop:flex-col desktop:text-[28px] desktop:leading-[40px] desktop:overflow-hidden desktop:text-grey-600 ${
+          } tablet:border-none tablet:flex-grow tablet:min-h-[80px] tablet:max-h-[400px] desktop:max-w-[1200px] desktop:p-6 desktop:py-15 desktop:rounded-l-lg desktop:bg-grey-50 desktop:h-[150px] desktop:flex desktop:flex-col desktop:text-[28px] desktop:leading-[40px] desktop:text-grey-600 ${
             !userId ? "text-grey-500" : "text-grey-900"
           } desktop:border-none desktop:flex-grow desktop:min-h-[80px] desktop:max-h-[500px]`}
           disabled={!userId}
@@ -84,7 +92,7 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
         />
         <button
           onClick={handleAddComment}
-          className={`mobile:ml-3 mobile:flex mobile:w-[80px] mobile:h-[50px] mobile:flex-col mobile:justify-center mobile:items-center mobile:gap-1 mobile:text-base mobile:font-black mobile:bg-primary-100 mobile:text-primary-700 mobile:rounded-md mobile:border-2 mobile:border-primary-200 mobile:hover:bg-primary-400 tablet:ml-4 tablet:flex tablet:w-[100px] tablet:h-[60px] tablet:flex-col tablet:justify-center tablet:items-center tablet:gap-2 tablet:text-lg tablet:font-black tablet:bg-primary-100 tablet:text-primary-700 tablet:rounded-xl tablet:border-2 tablet:border-primary-200 tablet:hover:bg-primary-400 desktop:ml-8 desktop:flex desktop:w-[150px] desktop:h-[80px] desktop:flex-col desktop:justify-center desktop:items-center desktop:gap-[10px] desktop:text-[30px] desktop:font-black desktop:bg-primary-100 desktop:text-primary-700 desktop:rounded-[20px] desktop:border-2 desktop:border-primary-200 desktop:hover:bg-primary-400`}
+          className={`mobile:ml-3 mobile:p-4 mobile-font-[12px] mobile:font-normal mobile:text-white mobile:p-3 mobile:flex mobile:w-auto mobile:h-[24px] mobile:flex-col mobile:justify-center mobile:items-center mobile:gap-[24px] mobile:text-base mobile:font-black mobile:bg-primary-400 mobile:text-primary-700 mobile:rounded-[20px] mobile:border-2 mobile:border-primary-400 mobile:hover:bg-primary-400 mobile:px-[10px] mobile:ml-[12px] tablet:ml-4 tablet:flex tablet:w-[100px] tablet:h-[60px] tablet:flex-col tablet:justify-center tablet:items-center tablet:gap-2 tablet:text-lg tablet:font-black tablet:bg-primary-100 tablet:text-primary-700 tablet:rounded-xl tablet:border-2 tablet:border-primary-200 tablet:hover:bg-primary-400 desktop:ml-8 desktop:flex desktop:w-[150px] desktop:h-[80px] desktop:flex-col desktop:justify-center desktop:items-center desktop:gap-[10px] desktop:text-[30px] desktop:font-black desktop:bg-primary-100 desktop:text-primary-700 desktop:rounded-[20px] desktop:border-2 desktop:border-primary-200 desktop:hover:bg-primary-400`}
           disabled={!userId}
         >
           등록

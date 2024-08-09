@@ -8,10 +8,15 @@ interface ContentDetailProps {
 }
 
 const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepageLink }) => {
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  };
+
   return (
     <div className="tablet:text-left tablet:text-grey-700 desktop:text-left desktop:text-grey-700 mobile:text-left">
       {title && (
-        <div className="tablet:flex tablet:items-center tablet:py-2 desktop:flex desktop:items-center desktop:py-3 mobile:flex">
+        <div className="tablet:flex tablet:items-center tablet:py-2 desktop:flex desktop:items-center desktop:py-3 mobile:flex mobile:mb-[10px]">
           <Image
             src="/assets/images/detailpage/marker_title.svg"
             alt="장소명"
@@ -29,7 +34,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepa
       )}
 
       {addr1 && (
-        <div className="tablet:flex tablet:items-center tablet:py-2 desktop:flex desktop:items-center desktop:py-3 mobile:flex">
+        <div className="tablet:flex tablet:items-center tablet:py-2 desktop:flex desktop:items-center desktop:py-3 mobile:flex mobile:mb-[10px]">
           <Image
             src="/assets/images/detailpage/marker_address.svg"
             alt="주소"
@@ -46,7 +51,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepa
         </div>
       )}
       {tel && (
-        <div className="tablet:flex tablet:items-center tablet:py-2 desktop:flex desktop:items-center desktop:py-3 mobile:flex">
+        <div className="tablet:flex tablet:items-center tablet:py-2 desktop:flex desktop:items-center desktop:py-3 mobile:flex mobile:mb-[10px]">
           <Image
             src="/assets/images/detailpage/marker_tel.svg"
             alt="tel"
@@ -63,7 +68,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepa
         </div>
       )}
       {homepageLink && (
-        <div className="tablet:flex tablet:items-center tablet:py-2 desktop:flex desktop:items-center desktop:py-3 mobile:flex">
+        <div className="tablet:flex tablet:items-center tablet:py-2 desktop:flex desktop:items-center desktop:py-3 mobile:flex mobile:mb-[10px]">
           <Image
             src="/assets/images/detailpage/marker_homepage.svg"
             alt="homepage"
@@ -74,16 +79,15 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepa
           {/* <strong className="tablet:font-bold tablet:text-[24px] tablet:ml-2 desktop:font-bold desktop:text-[28px] desktop:ml-2">
           homepage
         </strong> */}
-          {homepageLink && (
-            <a
-              href={homepageLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="tablet:text-blue-500 tablet:underline tablet:text-[20px] desktop:text-blue-500 desktop:underline tablet:ml-8 desktop:ml-12 desktop:text-[28px] mobile:text-[12px] mobile:text-grey-600 mobile:font-normal mobile:pl-2"
-            >
-              {homepageLink}
-            </a>
-          )}
+          <a
+            href={homepageLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="tablet:text-blue-500 tablet:underline tablet:text-[20px] desktop:text-blue-500 desktop:underline tablet:ml-8 desktop:ml-12 desktop:text-[28px] mobile:text-[12px] mobile:text-grey-600 mobile:font-normal mobile:pl-2"
+          >
+            <span className="mobile:hidden tablet:inline desktop:inline">{homepageLink}</span>
+            <span className="mobile:inline tablet:hidden desktop:hidden">{truncateText(homepageLink, 50)}</span>
+          </a>
         </div>
       )}
     </div>

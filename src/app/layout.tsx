@@ -1,12 +1,11 @@
 import Header from "@/components/common/Header";
 import QueryProvider from "@/provider/QueryProvider";
+import RecoilProvider from "@/provider/RecoilProvider";
 import type { Metadata } from "next";
+import Head from "next/head";
 import Script from "next/script";
 import "swiper/swiper-bundle.css";
 import "./globals.css";
-import Head from "next/head";
-import RecoilProvider from "@/provider/RecoilProvider";
-import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 
 export const metadata: Metadata = {
   title: "horang",
