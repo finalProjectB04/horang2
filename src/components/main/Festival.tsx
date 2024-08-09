@@ -6,7 +6,7 @@ import { ApiInformation } from "@/types/Main";
 import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
-import { Mobilemode } from "./mobile/Mobilemode";
+import { Mobilemode } from "./mainmobile/Mobilemode";
 
 interface FestivalProps {
   searchTerm: string;
@@ -68,7 +68,7 @@ export const Festival = ({ searchTerm }: FestivalProps) => {
           <MainListTitle TitleName={`축제 및 행사`} onClick={() => router.push("/festival")} />
         </div>
         <div className=" mx-auto  max-w-[1440px] h-[346px] flex flex-col gap-10">
-          <MainTravelSlider travel={sortedFestival} isPending={isPending} error={error} />
+          <MainTravelSlider travel={sortedFestival} />
         </div>
       </div>
       <div className=" mx-auto block sm:hidden lg:hidden">

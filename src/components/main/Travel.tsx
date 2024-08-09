@@ -7,12 +7,12 @@ import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
 import LoadingPage from "@/app/loading";
-import { Mobilemode } from "./mobile/Mobilemode";
+import { Mobilemode } from "./mainmobile/Mobilemode";
 
 interface TravelProps {
   searchTerm: string;
 }
-const FetchTravel = async (): Promise<ApiInformation[]> => {
+const fetchTravel = async (): Promise<ApiInformation[]> => {
   const response = await fetch("/api/main/tourism/travel");
   if (!response.ok) {
     throw new Error("error");
@@ -28,7 +28,7 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["travel"],
-    queryFn: FetchTravel,
+    queryFn: fetchTravel,
   });
 
   const sortedAndFilteredTravel: ApiInformation[] = useMemo(() => {
@@ -66,9 +66,8 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
       <div className="hidden lg:block">
         <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">
           <MainListTitle TitleName={`추천 여행지 `} onClick={() => router.push("/travel")} />
-
           <div className=" mx-auto  max-w-[1440px] h-[346px] flex flex-col gap-10">
-            <MainTravelSlider travel={sortedAndFilteredTravel} isPending={isPending} error={error} />
+            <MainTravelSlider travel={sortedAndFilteredTravel} />
           </div>
         </div>
       </div>

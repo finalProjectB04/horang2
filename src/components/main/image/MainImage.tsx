@@ -49,9 +49,16 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
           </div>
         </div>
       </div>
-
-      <div className=" block ms:hidden lg:hidden relative w-[375px] h-[295px]">
-        <Image src="/assets/images/ex6.png" alt="background" layout="fill" objectFit="cover" className="object-cover" />
+      <div className="block sm:hidden lg:hidden">
+        <div className="  relative w-[375px] h-[295px]">
+          <Image
+            src="/assets/images/ex6.png"
+            alt="background"
+            layout="fill"
+            objectFit="cover"
+            className="object-cover"
+          />
+        </div>
       </div>
     </>
   );

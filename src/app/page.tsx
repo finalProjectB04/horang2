@@ -5,6 +5,7 @@ import { MainImage } from "@/components/main/image/MainImage";
 import { Leports } from "@/components/main/Leports";
 import { useState } from "react";
 import { Festival } from "@/components/main/Festival";
+import { MobileLeports } from "@/components/main/mainmobile/MobileLeports";
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,9 +16,10 @@ const Home = () => {
         <MainImage searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <Control />
       </div>
-      <Travel searchTerm={searchTerm} />
+
+      {/* <Travel searchTerm={searchTerm} /> */}
       <Leports searchTerm={searchTerm} />
-      <Festival searchTerm={searchTerm} />
+      {/* <Festival searchTerm={searchTerm} /> */}
     </main>
   );
 };
