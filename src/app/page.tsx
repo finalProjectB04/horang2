@@ -18,8 +18,8 @@ const Home = () => {
       </div>
 
       <Travel searchTerm={searchTerm} />
-      {/* <Leports searchTerm={searchTerm} /> */}
-      {/* <Festival searchTerm={searchTerm} /> */}
+      <Leports searchTerm={searchTerm} />
+      <Festival searchTerm={searchTerm} />
     </main>
   );
 };

@@ -63,19 +63,11 @@ export const Festival = ({ searchTerm }: FestivalProps) => {
 
   return (
     <>
-      <div className="hidden lg:block">
-        <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">
-          <MainListTitle TitleName={`축제 및 행사`} onClick={() => router.push("/festival")} />
-        </div>
-        <div className=" mx-auto  max-w-[1440px] h-[346px] flex flex-col gap-10">
-          <MainTravelSlider travel={sortedFestival} />
-        </div>
+      <div className="mx-auto max-w-[327px] py-8 lg:max-w-[1440px] flex flex-col lg:gap-10">
+        <MainListTitle TitleName={`축제 및 행사`} onClick={() => router.push("/festival")} />
       </div>
-      <div className=" mx-auto block sm:hidden lg:hidden">
-        <div className="mx-auto py-8 max-w-[327px] flex flex-col gap-10">
-          <MainListTitle TitleName={`축제 및 행사`} onClick={() => router.push("/festival")} />
-        </div>
-        <Mobilemode slider={sortedFestival} searchTerm={searchTerm} />
+      <div className=" mx-auto  max-w-[327px] lg:max-w-[1440px] lg:h-[346px] flex flex-col lg:gap-10">
+        <MainTravelSlider travel={sortedFestival} />
       </div>
     </>
   );

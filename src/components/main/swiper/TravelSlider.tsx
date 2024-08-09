@@ -1,25 +1,97 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Autoplay } from "swiper/modules";
+import { A11y, Autoplay, Grid } from "swiper/modules";
 import { ApiInformation } from "@/types/Main";
-import { MainTravelCard } from "./MainTravelCard";
+import Image from "next/image";
+
+import { useMediaQuery } from "react-responsive";
+import { useRouter } from "next/navigation";
 
 interface MainTravelSliderProps {
   travel: ApiInformation[];
 }
 
 export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) => {
+  const isLgScreen = useMediaQuery({ minWidth: 1024 });
+  const router = useRouter();
+
   return (
     <Swiper
-      modules={[Autoplay, A11y]}
-      spaceBetween={40}
-      slidesPerView={4}
-      slidesPerGroup={4}
+      modules={isLgScreen ? [Autoplay, A11y] : [Grid, A11y, Autoplay]}
+      spaceBetween={isLgScreen ? 40 : 20}
+      slidesPerView={isLgScreen ? 4 : 3}
+      slidesPerGroup={isLgScreen ? 4 : undefined}
+      grid={
+        !isLgScreen
+          ? {
+              rows: 2,
+              fill: "row",
+            }
+          : undefined
+      }
       autoplay={{ delay: 5000, disableOnInteraction: false }}
-      className=" lg:w-full lg:h-[346px]"
+      className={`w-full ${
+        isLgScreen
+          ? "h-[346px]"
+          : "rounded-[8px] lg:h-full lg:w-[708px] h-[346px] flex flex-col items-start gap-3 self-stretch"
+      }`}
+      observer={!isLgScreen}
+      observeParents={!isLgScreen}
+      onInit={
+        !isLgScreen
+          ? (swiper) => {
+              setTimeout(() => {
+                swiper.update();
+              }, 0);
+            }
+          : undefined
+      }
     >
       {travel.map((item) => (
-        <SwiperSlide key={item.contentid} className=" lg:w-[330px] lg:h-[346px]">
-          <MainTravelCard item={item} />
+        <SwiperSlide key={item.contentid} className={isLgScreen ? "w-[330px] h-[346px]" : "h-[166px]"}>
+          <div
+            className={`${
+              isLgScreen ? "w-[330px] h-[346px]" : "lg:w-[330px] lg:h-[346px] w-[104px] h-[166px]"
+            } relative cursor-pointer rounded-[8px] transition-transform duration-300 hover:scale-105`}
+            onClick={() => router.push(`/detail/${item.contentid}`)}
+          >
+            <div
+              className={`${
+                isLgScreen ? "h-[224px]" : "lg:h-[224px] h-[110px]"
+              } relative rounded-t-[8px] overflow-hidden`}
+            >
+              {item.firstimage ? (
+                <Image
+                  src={item.firstimage}
+                  alt={item.title}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-t-[8px]"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-t-[8px]">
+                  <span className="text-gray-500">No Image Available</span>
+                </div>
+              )}
+            </div>
+            <div
+              className={`bg-white ${
+                isLgScreen
+                  ? "w-full h-[122px] px-[14px] py-[28px] gap-[10px]"
+                  : "lg:w-full lg:h-[122px] lg:px-[14px] lg:py-[28px] lg:gap-[10px] p-2 gap-1.5 h-[56px]"
+              } overflow-hidden rounded-b-[8px] flex flex-col absolute bottom-0 left-0 right-0 items-start`}
+            >
+              <h2
+                className={`${
+                  isLgScreen ? "text-xl" : "lg:text-xl text-sm"
+                } font-semibold text-gray-800 truncate w-full`}
+              >
+                {item.title}
+              </h2>
+              <p className={`text-gray-600 ${isLgScreen ? "text-sm" : "lg:text-sm text-xs"} truncate w-full`}>
+                {item.addr1 || "Address not available"}
+              </p>
+            </div>
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>

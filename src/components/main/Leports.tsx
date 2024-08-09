@@ -72,7 +72,6 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
                 1024: {
                   slidesPerView: 2,
                 },
-
                 0: {
                   slidesPerView: 3,
                 },
@@ -82,7 +81,7 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
                 fill: "row",
               }}
               autoplay={{ delay: 5000, disableOnInteraction: false }}
-              className="rounded-[8px] lg:h-full lg:w-[708px] h-[346px] w-full flex flex-col items-start gap-3 self-stretch"
+              className="rounded-[8px] lg:h-full lg:w-[708px] h-[346px] w-full flex flex-col items-start gap-3 self-stretch mb-5"
               observer={true}
               observeParents={true}
               onInit={(swiper) => {
@@ -92,29 +91,29 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
               }}
             >
               {sortedLeports.map((item: ApiInformation) => (
-                <SwiperSlide key={item.contentid} className="h-[346px]">
+                <SwiperSlide key={item.contentid} className="h-[166px] lg:h-[346px]">
                   <div
-                    className=" lg:w-[330px] lg:h-[346px]  flex-shrink-0 w-[104px] h-[166px] relative  cursor-pointer rounded-[8px]  transition-transform duration-300 hover:scale-105"
+                    className="lg:w-[330px] lg:h-[346px] w-[104px] h-[166px] relative cursor-pointer rounded-[8px] transition-transform duration-300 hover:scale-105"
                     onClick={() => router.push(`/detail/${item.contentid}`)}
                   >
-                    <div className="lg:h-[224px] h-full relative">
+                    <div className="h-[110px] lg:h-[224px] relative rounded-t-[8px] overflow-hidden">
                       {item.firstimage ? (
                         <Image
                           src={item.firstimage}
                           alt={item.title}
                           layout="fill"
                           objectFit="cover"
-                          className="lg:w-full lg:h-[224px] rounded-[8px]"
+                          className="rounded-t-[8px]"
                         />
                       ) : (
-                        <div className="lg:w-full lg:h-[224px] bg-gray-200 flex items-center justify-center rounded-t-[8px]">
-                          <span className="text-gray-500">No Image Available</span>
+                        <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-t-[8px]">
+                          <span className="text-gray-500 text-xs lg:text-sm">No Image</span>
                         </div>
                       )}
                     </div>
-                    <div className="bg-white lg:w-full lg:h-[122px] overflow-hidden rounded-b-[8px] lg:px-[14px] lg:py-[28px] flex flex-col lg:gap-[10px] absolute bottom-0 left-0 right-0  p-2  items-start gap-1.5 self-stretch">
-                      <h2 className="lg:text-xl text-sm font-semibold text-gray-800 truncate w-full">{item.title}</h2>
-                      <p className="text-gray-600 lg:text-sm truncate text-xs w-full">
+                    <div className="bg-white w-full h-[56px] lg:h-[122px] overflow-hidden rounded-b-[8px] p-2 lg:px-[14px] lg:py-[28px] flex flex-col gap-1 lg:gap-[10px] absolute bottom-0 left-0 right-0 items-start">
+                      <h2 className="text-sm lg:text-xl font-semibold text-gray-800 truncate w-full">{item.title}</h2>
+                      <p className="text-gray-600 text-xs lg:text-sm truncate w-full">
                         {item.addr1 || "Address not available"}
                       </p>
                     </div>
