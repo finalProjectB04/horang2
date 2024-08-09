@@ -8,7 +8,7 @@ import DateSeperator from "./DateSeperator";
 interface MessageProps {
   message: string;
   createdAt: string;
-  previousCreatedAt?: number;
+  previousCreatedAt?: string;
   isFromMe: boolean;
   id?: string;
   userImage?: string;
