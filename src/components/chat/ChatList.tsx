@@ -101,24 +101,22 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
             </div>
           ) : (
             getAllUsersQuery.data?.map((user, index) => (
-              <div>
-                <Person
-                  key={user.id}
-                  onClick={() => {
-                    setSelectedUserId(user.id);
-                    setSelectedUserIndex(index);
-                    toggleModal(user.id);
-                  }}
-                  index={index}
-                  isActive={selectedUserId === user.id}
-                  name={user.user_nickname!}
-                  url={user.profile_url!}
-                  onChatScreen={false}
-                  onlineAt={presence?.[user.id]?.[0]?.onlineAt}
-                  userId={user.id}
-                  myId={loggedInUser.id}
-                />
-              </div>
+              <Person
+                key={user.id}
+                onClick={() => {
+                  setSelectedUserId(user.id);
+                  setSelectedUserIndex(index);
+                  toggleModal(user.id);
+                }}
+                index={index}
+                isActive={selectedUserId === user.id}
+                name={user.user_nickname!}
+                url={user.profile_url!}
+                onChatScreen={false}
+                onlineAt={presence?.[user.id]?.[0]?.onlineAt}
+                userId={user.id}
+                myId={loggedInUser.id}
+              />
             ))
           )}
         </div>
