@@ -17,7 +17,7 @@ const FloatingButton = () => {
   return (
     <button
       onClick={handleClick}
-      className="fixed text-white desktop:p-4 rounded-full text-gray-600 desktop:flex desktop:flex-col desktop:items-center z-50"
+      className="fixed text-white desktop:p-4 rounded-full text-gray-600 desktop:flex desktop:flex-col desktop:items-center z-50 mobile:hidden"
       style={{ right: "118px", bottom: "216px" }}
     >
       <Image src="/assets/images/profile_ex.png" alt="채팅하기" width={64} height={64} />
