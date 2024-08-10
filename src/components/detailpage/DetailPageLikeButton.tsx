@@ -156,7 +156,7 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
         alt={liked ? "Unlike" : "Like"}
         width={96}
         height={96}
-        className="desktop:pt-10 desktop:pr-4 desktop:py-2 tablet:w-24 tablet:h-24 tablet:pt-6 tablet:pr-2 mobile:w-[40px] mobile:h-[40px] mobile:pt-3"
+        className="lg:pt-10 lg:pr-4 lg:py-2 md:w-24 md:h-24 md:pt-6 md:pr-2 sm:w-[40px] sm:h-[40px] sm:pt-3"
       />
     </button>
   );

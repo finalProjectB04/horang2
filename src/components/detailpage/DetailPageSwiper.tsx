@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const DetailPageImage: React.FC<{ contentItemData: ContentItem }> = ({ contentItemData }) => {
   return (
-    <section className=" mobitle:max-w-[375px] tablet:w-full tablet:max-w-[1024px] tablet:mx-auto desktop:w-full desktop:max-w-[1440px] desktop:mx-auto">
+    <section className="sm:max-w-[375px] md:w-full md:max-w-[1024px] md:mx-auto lg:w-full lg:max-w-[1440px] lg:mx-auto">
       {contentItemData.data.firstimage && (
         <Image
           src={contentItemData.data.firstimage || "/assets/images/null_image.svg"}
@@ -12,7 +12,7 @@ const DetailPageImage: React.FC<{ contentItemData: ContentItem }> = ({ contentIt
           width={1440}
           height={350}
           priority
-          className="mobile:w-[375px] mobile:h-[528px] tablet:w-full tablet:h-auto desktop:w-full desktop:h-auto"
+          className="sm:w-[375px] sm:h-[528px] md:w-full md:h-auto lg:w-full lg:h-auto"
           sizes="(max-width: 640px) 375px, 1440px"
         />
       )}

@@ -56,18 +56,18 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
   };
 
   return (
-    <main className="mobile:mt-[140px] mobile:max-w-[375px] mobile:mx-auto tablet:mt-4 tablet:max-w-[1024px] tablet:mx-auto desktop:mt-4 desktop:max-w-[1440px] desktop:mx-auto">
+    <main className="sm:mt-[140px] sm:max-w-[375px] sm:mx-auto md:mt-4 md:max-w-[1024px] md:mx-auto lg:mt-4 lg:max-w-[1440px] lg:mx-auto">
       {userId && (
-        <div className="mobile:pl-[22px] mobile:flex mobile:items-center mobile:py-3 tablet:flex tablet:items-center tablet:mb-4 tablet:py-3 desktop:flex desktop:items-center desktop:mb-4 desktop:py-3">
+        <div className="sm:pl-[22px] sm:flex sm:items-center sm:py-3 md:flex md:items-center md:mb-4 md:py-3 lg:flex lg:items-center lg:mb-4 lg:py-3">
           {profileUrl && (
             <Image src={profileUrl || "/assets/images/profile_ex.png"} alt="유저 프로필 사진" width={20} height={20} />
           )}
-          <span className="mobile:text-base mobile:font-bold mobile:ml-2 mobile:text-grey-800 tablet:text-xl tablet:font-bold tablet:ml-2 tablet:text-grey-800 desktop:text-2xl desktop:font-bold desktop:ml-2 desktop:text-grey-800">
+          <span className="sm:text-base sm:font-bold sm:ml-2 sm:text-grey-800 md:text-xl md:font-bold md:ml-2 md:text-grey-800 lg:text-2xl lg:font-bold lg:ml-2 lg:text-grey-800">
             {userNickname} 님
           </span>
         </div>
       )}
-      <div className="mobile:p-3 mobile:border-none mobile:h-[102px] mobile:border mobile:border-primary-100 mobile:rounded-lg mobile:flex mobile:items-center mobile:bg-grey-50 mobile:h-[150px] mobile:place-items-center tablet:p-4 tablet:border tablet:border-primary-100 tablet:rounded-xl tablet:flex tablet:items-center tablet:bg-grey-50 tablet:h-[200px] tablet:place-items-center desktop:p-4 desktop:border desktop:border-primary-100 desktop:rounded-xl desktop:flex desktop:items-center desktop:bg-grey-50 desktop:h-[226px] desktop:place-items-center">
+      <div className="sm:p-3 sm:border-none sm:h-[102px] sm:border sm:border-primary-100 sm:rounded-lg sm:flex sm:items-center sm:bg-grey-50 sm:h-[150px] sm:place-items-center md:p-4 md:border md:border-primary-100 md:rounded-xl md:flex md:items-center md:bg-grey-50 md:h-[200px] md:place-items-center lg:p-4 lg:border lg:border-primary-100 lg:rounded-xl lg:flex lg:items-center lg:bg-grey-50 lg:h-[226px] lg:place-items-center">
         <textarea
           value={comment}
           onChange={(event) => setComment(event.target.value)}
@@ -80,19 +80,19 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
               ? "댓글을 작성하세요"
               : "댓글 작성은 로그인한 유저만 가능합니다"
           }
-          className={`mobile:pt-[25px] mobile:mb-[70px] mobile:pb-[5px] mobile:w-[270px] mobile:p-4 mobile:flex-shrink-0 mobile:rounded-[20px] mobile:bg-grey-100 mobile:text-base mobile:leading-5 mobile:text-grey-600 mobile:pl-[24px] mobile:text-[12px] mobile:mt-[70px] mobile:ml-[12px] ${
+          className={`sm:pt-[25px] sm:mb-[70px] sm:pb-[5px] sm:w-[270px] sm:p-4 sm:flex-shrink-0 sm:rounded-[20px] sm:bg-grey-100 sm:text-base sm:leading-5 sm:text-grey-600 sm:pl-[24px] sm:text-[12px] sm:mt-[70px] sm:ml-[12px] ${
             !userId ? "text-grey-500" : "text-grey-900"
-          } mobile:border-none mobile:min-h-[24px] mobile:resize-y tablet:max-w-[800px] tablet:p-4 tablet:rounded-l-lg tablet:bg-grey-50 tablet:h-[150px] tablet:flex tablet:flex-col tablet:text-lg tablet:leading-6 tablet:text-grey-600 ${
+          } sm:border-none sm:min-h-[24px] sm:resize-y md:max-w-[800px] md:p-4 md:rounded-l-lg md:bg-grey-50 md:h-[150px] md:flex md:flex-col md:text-lg md:leading-6 md:text-grey-600 ${
             !userId ? "text-grey-500" : "text-grey-900"
-          } tablet:border-none tablet:flex-grow tablet:min-h-[80px] tablet:max-h-[400px] desktop:max-w-[1200px] desktop:p-6 desktop:py-15 desktop:rounded-l-lg desktop:bg-grey-50 desktop:h-[150px] desktop:flex desktop:flex-col desktop:text-[28px] desktop:leading-[40px] desktop:text-grey-600 ${
+          } md:border-none md:flex-grow md:min-h-[80px] md:max-h-[400px] lg:max-w-[1200px] lg:p-6 lg:py-15 lg:rounded-l-lg lg:bg-grey-50 lg:h-[150px] lg:flex lg:flex-col lg:text-[28px] lg:leading-[40px] lg:text-grey-600 ${
             !userId ? "text-grey-500" : "text-grey-900"
-          } desktop:border-none desktop:flex-grow desktop:min-h-[80px] desktop:max-h-[500px]`}
+          } lg:border-none lg:flex-grow lg:min-h-[80px] lg:max-h-[500px]`}
           disabled={!userId}
           maxLength={2000}
         />
         <button
           onClick={handleAddComment}
-          className={`mobile:ml-3 mobile:p-4 mobile-font-[12px] mobile:font-normal mobile:text-white mobile:p-3 mobile:flex mobile:w-auto mobile:h-[24px] mobile:flex-col mobile:justify-center mobile:items-center mobile:gap-[24px] mobile:text-base mobile:font-black mobile:bg-primary-400 mobile:text-primary-700 mobile:rounded-[20px] mobile:border-2 mobile:border-primary-400 mobile:hover:bg-primary-400 mobile:px-[10px] mobile:ml-[12px] tablet:ml-4 tablet:flex tablet:w-[100px] tablet:h-[60px] tablet:flex-col tablet:justify-center tablet:items-center tablet:gap-2 tablet:text-lg tablet:font-black tablet:bg-primary-100 tablet:text-primary-700 tablet:rounded-xl tablet:border-2 tablet:border-primary-200 tablet:hover:bg-primary-400 desktop:ml-8 desktop:flex desktop:w-[150px] desktop:h-[80px] desktop:flex-col desktop:justify-center desktop:items-center desktop:gap-[10px] desktop:text-[30px] desktop:font-black desktop:bg-primary-100 desktop:text-primary-700 desktop:rounded-[20px] desktop:border-2 desktop:border-primary-200 desktop:hover:bg-primary-400`}
+          className={`sm:ml-3 sm:p-4 sm-font-[12px] sm:font-normal sm:text-white sm:p-3 sm:flex sm:w-auto sm:h-[24px] sm:flex-col sm:justify-center sm:items-center sm:gap-[24px] sm:text-base sm:font-black sm:bg-primary-400 sm:text-primary-700 sm:rounded-[20px] sm:border-2 sm:border-primary-400 sm:hover:bg-primary-400 sm:px-[10px] sm:ml-[12px] md:ml-4 md:flex md:w-[100px] md:h-[60px] md:flex-col md:justify-center md:items-center md:gap-2 md:text-lg md:font-black md:bg-primary-100 md:text-primary-700 md:rounded-xl md:border-2 md:border-primary-200 md:hover:bg-primary-400 lg:ml-8 lg:flex lg:w-[150px] lg:h-[80px] lg:flex-col lg:justify-center lg:items-center lg:gap-[10px] lg:text-[30px] lg:font-black lg:bg-primary-100 lg:text-primary-700 lg:rounded-[20px] lg:border-2 lg:border-primary-200 lg:hover:bg-primary-400`}
           disabled={!userId}
         >
           등록

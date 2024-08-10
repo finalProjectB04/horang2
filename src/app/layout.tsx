@@ -30,11 +30,7 @@ export default function RootLayout({
           <body className="font-sans sm:mt-0 md:mt-[84px] lg:mt-[84px]">
             <Header />
             {children}
-            <Script
-              src="https://developers.kakao.com/sdk/js/kakao.min.js"
-              integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
-              strategy="beforeInteractive"
-            />
+            <Script src="https://developers.kakao.com/sdk/js/kakao.min.js" />
           </body>
         </QueryProvider>
       </RecoilProvider>
