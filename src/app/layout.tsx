@@ -1,4 +1,3 @@
-import Header from "@/components/common/Header";
 import QueryProvider from "@/provider/QueryProvider";
 import type { Metadata } from "next";
 import Script from "next/script";

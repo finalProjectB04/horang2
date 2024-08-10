@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import SearchInput from "./SearchInput";
 import MenuList from "./MenuList";
+import HamburgerButton from "./HamburgerButton";
 
 interface MobileHeaderProps {
   searchTerm: string;
@@ -11,6 +12,8 @@ interface MobileHeaderProps {
   toggleMenu: () => void;
   isMenuOpen: boolean;
   closeMenuOnClickOutside: (event: React.MouseEvent) => void;
+  handleLogout: () => void;
+  userId: string | null;
 }
 
 const MobileHeader: React.FC<MobileHeaderProps> = ({
@@ -19,6 +22,8 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
   toggleMenu,
   isMenuOpen,
   closeMenuOnClickOutside,
+  handleLogout,
+  userId,
 }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -27,10 +32,8 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
   };
 
   return (
-    <div className="md:hidden flex justify-between w-full h-[60px]">
-      <button className="text-[#ffffff] focus:outline-none" onClick={toggleMenu}>
-        <span className="text-2xl">&#9776;</span>
-      </button>
+    <div className="flex justify-between w-full h-[60px] lg:hidden">
+      <HamburgerButton toggleMenu={toggleMenu} />
       <div className="relative flex items-center">
         <button className="text-[#FF7C33] focus:outline-none" onClick={toggleSearch}>
           <Image src="/assets/images/header/search.png" alt="Search" width={24} height={24} />
@@ -44,8 +47,8 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
       </div>
 
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 z-50" onClick={closeMenuOnClickOutside}>
-          <MenuList toggleMenu={toggleMenu} userId={"someUserId"} handleLogout={() => {}} />
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 lg:hidden" onClick={closeMenuOnClickOutside}>
+          <MenuList toggleMenu={toggleMenu} userId={userId} handleLogout={handleLogout} />
         </div>
       )}
     </div>

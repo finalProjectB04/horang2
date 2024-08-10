@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, setSearchTerm }) => {
   };
 
   return (
-    <header className="fixed top-0 w-full left-0 z-50 text-white h-[84px] bg-cover bg-center md:bg-[url('/assets/images/header/header.png')] md:bg-secondary-800 bg-[#0932C7]">
+    <header className="fixed top-0 w-full left-0 z-50 text-white h-[84px] bg-cover bg-center lg:bg-[url('/assets/images/header/header.png')] lg:bg-secondary-800 bg-[#0932C7]">
       <div className="container mx-auto max-w-[1440px] flex items-center h-full px-4">
         <MobileHeader
           searchTerm={searchTerm}
@@ -50,9 +50,11 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, setSearchTerm }) => {
           toggleMenu={toggleMenu}
           isMenuOpen={isMenuOpen}
           closeMenuOnClickOutside={closeMenuOnClickOutside}
+          handleLogout={handleLogout}
+          userId={userId}
         />
         {/* 로고 및 내비게이션 - PC 버전 */}
-        <div className="hidden md:flex items-center w-full">
+        <div className="hidden lg:flex items-center w-full">
           <Logo />
           <Nav />
           <AuthButtons userId={userId} handleLogout={handleLogout} />

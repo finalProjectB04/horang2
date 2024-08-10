@@ -8,13 +8,23 @@ import { getAllMessage, getUserById, sendMessage } from "@/actions/chatActions";
 import send from "../../../public/assets/images/send.png";
 import Image from "next/image";
 import useChatStore from "@/zustand/chatStore";
+import useModalStore from "@/zustand/modalStore";
 
-const ChatScreen = () => {
+interface ModalChatScreenProps {
+  id: string;
+}
+
+const ModalChatScreen = ({ id }: ModalChatScreenProps) => {
   const { selectedUserId } = useChatStore();
+  const { modals, toggleModal } = useModalStore();
+  const isOpen = modals[id];
 
   const [message, setMessage] = useState("");
-
   const supabase = createClient();
+
+  const stopBubble = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+  };
 
   const selectedUserQuery = useQuery({
     queryKey: ["user", selectedUserId],
@@ -62,29 +72,36 @@ const ChatScreen = () => {
     };
   }, []);
 
+  if (!isOpen) return null;
+
   return (
-    <div className="sm:hidden h-screen flex-1 flex flex-col justify-center items-center bg-primary-50">
-      <div className="h-3/4 w-3/4 min-w-[300px] overflow-y-auto bg-white rounded-2xl flex flex-col p-10 gap-3">
-        <div className="h-full overflow-y-auto hidden-scroll">
-          <div className="flex flex-col p-2 gap-5">
-            {getAllMessageQuery.data?.map((message, index) => {
-              const previousMessage = getAllMessageQuery.data?.[index - 1];
-              return (
-                <Message
-                  key={message.id}
-                  message={message.message}
-                  createdAt={message.created_at}
-                  id={selectedUserQuery.data?.[0].user_nickname!}
-                  isFromMe={message.receiver === selectedUserId}
-                  userImage={selectedUserQuery.data?.[0].profile_url || "/assets/images/profile_ex.png"}
-                  previousCreatedAt={previousMessage?.created_at}
-                />
-              );
-            })}
+    <div className="sm:flex md:hidden lg:hidden fixed top-0 left-0 w-full h-screen flex flex-col bg-primary-100 z-50">
+      <button className="w-fit flex items-center justify-start mx-6 my-8" onClick={() => toggleModal(id)}>
+        <Image src="/assets/images/back.png" width={10} height={17} alt="뒤로가기" />
+      </button>
+      <div className="h-screen flex items-center overflow-y-auto flex-col p-4 gap-3" onClick={stopBubble}>
+        <div className="h-full max-h-[80%] overflow-y-auto hidden-scroll">
+          <div className="flex justify-start">
+            <div className="w-[360px] flex flex-col p-2 gap-2">
+              {getAllMessageQuery.data?.map((message, index) => {
+                const previousMessage = getAllMessageQuery.data?.[index - 1];
+                return (
+                  <Message
+                    key={message.id}
+                    message={message.message}
+                    createdAt={message.created_at}
+                    id={selectedUserQuery.data?.[0].user_nickname!}
+                    isFromMe={message.receiver === selectedUserId}
+                    userImage={selectedUserQuery.data?.[0].profile_url || "/assets/images/profile_ex.png"}
+                    previousCreatedAt={previousMessage?.created_at}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
         <form
-          className="flex mt-4 border border-primary-100 rounded"
+          className="fixed bottom-10 w-[300px] flex mt-4 rounded-[20px] bg-white mx-auto"
           onSubmit={(event) => {
             event.preventDefault();
             if (message.trim()) {
@@ -120,4 +137,4 @@ const ChatScreen = () => {
   );
 };
 
-export default ChatScreen;
+export default ModalChatScreen;
