@@ -10,13 +10,13 @@ const WishList: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("전체");
 
   return (
-    <section className="flex flex-col justify-center items-center mb-[260px]">
+    <section className="flex flex-col justify-center items-center">
       <div className="flex justify-start mb-5 px-2 w-full max-w-[1440px]">
         {tabs.map((tab) => (
           <Tab key={tab} TapName={tab} isActive={activeTab === tab} onClick={() => setActiveTab(tab)} />
         ))}
       </div>
-      <div className="h-[600px] w-full max-w-[1920px]">
+      <div className="sm:h-[200px] lg:h-[600px] w-full max-w-[1920px]">
         {tabs.map((tab) => activeTab === tab && <MyPageCarousel key={tab} carouselName={tab} />)}
       </div>
     </section>
