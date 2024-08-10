@@ -1,4 +1,3 @@
-import Header from "@/components/common/Header";
 import QueryProvider from "@/provider/QueryProvider";
 import type { Metadata } from "next";
 import Script from "next/script";
@@ -7,6 +6,7 @@ import "./globals.css";
 import Head from "next/head";
 import RecoilProvider from "@/provider/RecoilProvider";
 import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
+import ClientHeader from "@/components/common/Header/ClientHeader";
 
 export const metadata: Metadata = {
   title: "horang",
@@ -26,10 +26,11 @@ export default function RootLayout({
       <Head>
         <link rel="stylesheet" href="assets/fonts/pretendard.css" />
       </Head>
+
       <RecoilProvider>
         <QueryProvider>
-          <body className="font-sans sm:mt-0 md:mt-[84px] lg:mt-[84px]">
-            <Header />
+          <body className="font-sans mt-[84px]">
+            <ClientHeader />
             {children}
             <Script
               src="https://developers.kakao.com/sdk/js/kakao.min.js"
