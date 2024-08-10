@@ -13,7 +13,7 @@ const Control = () => {
       name: "추천 여행지",
     },
     { path: "/hotel", imageSrc: "/assets/images/controlImages/hotel.png", alt: "Hotel", name: "숙소" },
-    { path: "/leports", imageSrc: "/assets/images/controlImages/leports.png", alt: "Leports", name: "레포츠" },
+    { path: "/leports", imageSrc: "/assets/images/controlImages/leports.png", alt: "Leports", name: "놀거리" },
     {
       path: "/restaurant",
       imageSrc: "/assets/images/controlImages/restaurants.png",

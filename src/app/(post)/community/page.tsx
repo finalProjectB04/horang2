@@ -1,6 +1,5 @@
 // Community.tsx
 "use client";
-
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -56,16 +55,18 @@ const Community: React.FC = () => {
       </div>
 
       <div className="container w-[1440px] mx-auto ">
-        <div className="flex justify-start gap-5 mb-14 ">
+        <div className="flex justify-between gap-5 mb-14 ">
           <CategorySelector selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
           <SortSelector sortOrder={sortOrder} onSortChange={setSortOrder} />
-          <button
-            onClick={() => router.push("/writing")}
-            className="px-8 py-3 rounded-full bg-orange-500 text-white text-base font-medium hover:bg-orange-600 transition duration-150 ease-in-out"
-          >
-            새 글 작성
-          </button>
         </div>
+        <button
+          onClick={() => router.push("/writing")}
+          className="p-[13px] fixed bottom-8 left-8  rounded-full bg-orange-500 text-white text-base font-medium hover:bg-orange-600 transition duration-150 ease-in-out"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M15 0H13V13H0V15H13V28H15V15H28V13H15V0Z" fill="#FFDECC" />
+          </svg>
+        </button>
         <PostGrid posts={data} selectedCategory={selectedCategory} sortOrder={sortOrder} />
       </div>
     </>

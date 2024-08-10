@@ -42,15 +42,12 @@ const SortSelector: React.FC<SortSelectorProps> = ({ sortOrder, onSortChange }) 
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <button onClick={() => setIsOpen(!isOpen)} className="flex items-center px-4 py-4 ">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 48 48"
-          fill="currentColor"
-          className="mr-2"
-        >
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-12 h-12;
+"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="31.826px" height="32" viewBox="0 0 48 48" fill="currentColor">
           <path d="M8.50133 11.22C12.5413 16.4 20.0013 26 20.0013 26V38C20.0013 39.1 20.9013 40 22.0013 40H26.0013C27.1013 40 28.0013 39.1 28.0013 38V26C28.0013 26 35.4413 16.4 39.4813 11.22C40.5013 9.9 39.5613 8 37.9013 8H10.0813C8.42133 8 7.48133 9.9 8.50133 11.22Z" />
         </svg>
         {sortOptions.find((option) => option.value === sortOrder)?.label}

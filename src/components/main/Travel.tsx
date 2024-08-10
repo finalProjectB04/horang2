@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
 import LoadingPage from "@/app/loading";
-import { Mobilemode } from "./mainmobile/Mobilemode";
 
 interface TravelProps {
   searchTerm: string;

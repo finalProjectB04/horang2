@@ -5,10 +5,10 @@ const Leports = () => {
   return (
     <>
       <div className=" hidden lg:block">
-        <TourismList contentTypeId={28} title="레포츠 추천" />;
+        <TourismList contentTypeId={28} title="놀거리 추천" />;
       </div>
       <div className="block lg:hidden sm:hidden">
-        <TourismListMobile contentTypeId={28} title="레포츠 추천" />
+        <TourismListMobile contentTypeId={28} title="놀거리 추천" />
       </div>
     </>
   );
