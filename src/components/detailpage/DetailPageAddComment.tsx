@@ -80,7 +80,7 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
               ? "댓글을 작성하세요"
               : "댓글 작성은 로그인한 유저만 가능합니다"
           }
-          className={`sm:pt-[25px] sm:mb-[70px] sm:pb-[5px] sm:w-[270px] sm:p-4 sm:flex-shrink-0 sm:rounded-[20px] sm:bg-grey-100 sm:text-base sm:leading-5 sm:text-grey-600 sm:pl-[24px] sm:text-[12px] sm:mt-[70px] sm:ml-[12px] ${
+          className={`resize-none sm:pt-[25px] sm:mb-[70px] sm:pb-[5px] sm:w-[270px] sm:p-4 sm:flex-shrink-0 sm:rounded-[20px] sm:bg-grey-100 sm:text-base sm:leading-5 sm:text-grey-600 sm:pl-[24px] sm:text-[12px] sm:mt-[70px] sm:ml-[12px] ${
             !userId ? "text-grey-500" : "text-grey-900"
           } sm:border-none sm:min-h-[24px] sm:resize-y md:max-w-[800px] md:p-4 md:rounded-l-lg md:bg-grey-50 md:h-[150px] md:flex md:flex-col md:text-lg md:leading-6 md:text-grey-600 ${
             !userId ? "text-grey-500" : "text-grey-900"

@@ -185,7 +185,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                   <textarea
                     value={newComment}
                     onChange={(event) => setNewComment(event.target.value)}
-                    className="sm:w-full sm:p-2 sm:border sm:rounded-[20px] sm:bg-grey-100 sm:break-all sm:text-[12px] sm:max-w-[280px] sm:text-grey-600 md:w-full md:p-2 md:border md:rounded md:break-all md:text-[24px] md:max-w-[800px] md:text-grey-700 lg:w-full lg:p-2 lg:border lg:rounded lg:break-all lg:text-[28px] lg:max-w-[1200px] lg:text-grey-700"
+                    className="resize-none sm:w-full sm:p-2 sm:border sm:rounded-[20px] sm:bg-grey-100 sm:break-all sm:text-[12px] sm:max-w-[280px] sm:text-grey-600 md:w-full md:ml-[-32px] md:p-2 md:border md:rounded md:break-all md:text-[24px] md:max-w-[800px] md:text-grey-700 lg:w-full lg:p-2 lg:border lg:rounded lg:break-all lg:text-[28px] lg:max-w-[1200px] lg:text-grey-700 lg:ml-[-32px]"
                     style={{ wordBreak: "break-all" }}
                   />
                   <div className="sm:flex sm:justify-end sm:space-x-2 sm:mt-2 sm:pr-[20px] md:flex md:justify-end md:space-x-2 md:mt-2 md:pr-[95px] lg:flex lg:justify-end lg:space-x-2 lg:mt-2 lg:pr-[95px]">
@@ -204,7 +204,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                   </div>
                 </div>
               ) : (
-                <p className="sm:ps-[48px] sm:pl-[65px] sm:mb-2 sm:pb-2 sm:break-all sm:whitespace-pre-wrap sm:pr-[20px] sm:text-grey-600 sm:text-[12px] md:ps-[105px] md:mb-8 md:pb-5 md:break-all md:whitespace-pre-wrap md:pr-[70px] md:text-grey-700 md:text-[24px] lg:ps-[105px] lg:mb-8 lg:pb-5 lg:break-all lg:whitespace-pre-wrap lg:pr-[95px] lg:text-grey-700 lg:text-[28px]">
+                <p className="sm:ps-[65px] sm:mb-2 sm:pb-2 sm:break-all sm:whitespace-pre-wrap sm:pr-[20px] sm:text-grey-600 sm:text-[12px] md:ps-[105px] md:mb-8 md:pb-5 md:break-all md:whitespace-pre-wrap md:pr-[70px] md:text-grey-700 md:text-[24px] lg:ps-[105px] lg:mb-8 lg:pb-5 lg:break-all lg:whitespace-pre-wrap lg:pr-[95px] lg:text-grey-700 lg:text-[28px]">
                   {comment.comment}
                 </p>
               )}
