@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 
-export type SortOrder = "likes" | "latest" | "oldest";
+export type SortOrder = "likes" | "latest" | "oldest" | "none";
 
 interface SortSelectorProps {
   sortOrder: SortOrder;
@@ -8,7 +8,7 @@ interface SortSelectorProps {
 }
 
 const SortSelector: React.FC<SortSelectorProps> = ({ sortOrder, onSortChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

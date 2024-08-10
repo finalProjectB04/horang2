@@ -20,22 +20,24 @@ export interface Post {
   category: string | null;
 }
 
-export type SortOrder = "latest" | "oldest" | "none";
+export type SortOrder = "likes" | "latest" | "oldest" | "none";
 
 const Community: React.FC = () => {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string>("전체");
   const [sortOrder, setSortOrder] = useState<SortOrder>("none");
 
-  const { data, isPending, isError } = useQuery<Post[], Error>({
+  const { data, isPending, isError } = useQuery({
     queryKey: ["community"],
     queryFn: selectCommunityData,
   });
 
   const toggleSortOrder = () => {
     setSortOrder((prev) => {
-      if (prev === "none" || prev === "oldest") return "latest";
-      return "oldest";
+      if (prev === "none") return "latest";
+      if (prev === "latest") return "oldest";
+      if (prev === "oldest") return "likes";
+      return "none";
     });
   };
 
@@ -56,7 +58,7 @@ const Community: React.FC = () => {
       <div className="container w-[1440px] mx-auto ">
         <div className="flex justify-start gap-5 mb-14 ">
           <CategorySelector selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
-          <SortSelector sortOrder={sortOrder} onSortChange={toggleSortOrder} />
+          <SortSelector sortOrder={sortOrder} onSortChange={setSortOrder} />
           <button
             onClick={() => router.push("/writing")}
             className="px-8 py-3 rounded-full bg-orange-500 text-white text-base font-medium hover:bg-orange-600 transition duration-150 ease-in-out"

@@ -42,7 +42,7 @@ const PostGrid: React.FC<PostGridProps> = ({ posts, selectedCategory, sortOrder 
           return dateA - dateB;
         });
       case "likes":
-        return filteredPosts.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+        return filteredPosts.sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
       default:
         return filteredPosts;
     }
