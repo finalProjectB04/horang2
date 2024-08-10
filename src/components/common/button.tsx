@@ -10,7 +10,7 @@ interface ButtonProps {
   marginY?: string;
   opacity?: string;
   hover?: boolean;
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
   className?: string;
 }
 

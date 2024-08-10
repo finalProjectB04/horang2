@@ -4,7 +4,7 @@ import { MouseEvent } from "react";
 
 interface ListTitleProps {
   TitleName: string;
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const ListTitle = ({ TitleName, onClick }: ListTitleProps) => {
