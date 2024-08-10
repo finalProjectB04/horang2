@@ -3,7 +3,7 @@ import React, { MouseEvent } from "react";
 interface TapProps {
   TapName: string;
   isActive: boolean;
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Tab = ({ TapName, isActive, onClick }: TapProps) => {
