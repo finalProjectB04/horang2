@@ -11,6 +11,7 @@ interface ButtonProps {
   opacity?: string;
   hover?: boolean;
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  className?: string;
 }
 
 const Button = ({ buttonName, bgColor, textColor, paddingY, marginY, opacity, hover, onClick }: ButtonProps) => {
