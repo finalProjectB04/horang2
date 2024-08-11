@@ -24,7 +24,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
   handleSignUp,
 }) => {
   return (
-    <div className="space-y-4 w-[401px] mx-auto overflow-auto">
+    <div className="space-y-4 w-full max-w-[401px] mx-auto sm:max-w-[280px] overflow-auto">
       <div>
         <label htmlFor="nickname" className="block text-sm font-medium text-gray-700">
           닉네임

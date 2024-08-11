@@ -13,6 +13,17 @@
   margin: 0 5px !important;
 }
 
+.sm .swiper-pagination {
+  bottom: 5px !important;
+}
+
+.sm .swiper-pagination-bullet {
+  width: 5px !important;
+  height: 5px !important;
+  background: orange !important;
+  margin: 0 5px !important;
+}
+
 .hidden-scroll {
   scrollbar-width: none;
 }

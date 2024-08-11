@@ -22,7 +22,7 @@ const Modal = ({ id, children }: ModalProps) => {
       onClick={() => toggleModal(id)}
     >
       <div
-        className="bg-white p-5 rounded-lg relative shadow-lg w-1/4 max-w-3xl max-h-[90%] overflow-y-auto z-50"
+        className="bg-white p-5 rounded-lg relative shadow-lg sm:w-2/3 md:w-1/3 lg:w-1/4 max-w-3xl max-h-[90%] overflow-y-auto z-50"
         onClick={stopBubble}
       >
         <button
