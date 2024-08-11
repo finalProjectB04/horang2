@@ -7,6 +7,7 @@ import "swiper/swiper-bundle.css";
 import "./globals.css";
 
 import ClientHeader from "@/components/common/Header/ClientHeader";
+import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 
 export const metadata: Metadata = {
   title: "horang",
