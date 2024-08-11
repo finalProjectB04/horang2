@@ -12,7 +12,7 @@ const ProfileCarousel: React.FC = () => {
   const images = [2, 3, 4, 5, 6, 7, 8];
 
   return (
-    <div className="relative h-full rounded-xl overflow-hidden">
+    <div className="relative h-full md:rounded-xl lg:rounded-xl overflow-hidden">
       <Swiper
         modules={[Pagination, Autoplay]}
         className="mySwiper h-full"
@@ -46,7 +46,7 @@ const ProfileCarousel: React.FC = () => {
         ))}
       </Swiper>
 
-      <div className="absolute inset-0 bg-black opacity-30 z-10 rounded-xl"></div>
+      <div className="absolute inset-0 bg-black opacity-30 z-10 md:rounded-xl lg:rounded-xl"></div>
     </div>
   );
 };

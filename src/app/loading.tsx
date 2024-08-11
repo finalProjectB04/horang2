@@ -9,13 +9,21 @@ const LoadingPage = () => {
         <Image
           width={160}
           height={160}
-          className="object-cover animate-spin-slow"
+          className="sm:hidden md:block lg:block object-cover animate-spin-slow"
+          sizes="100%"
+          src={loading}
+          alt="로딩_중"
+        />
+        <Image
+          width={60}
+          height={60}
+          className="sm:block md:hidden lg:hidden object-cover animate-spin-slow"
           sizes="100%"
           src={loading}
           alt="로딩_중"
         />
       </div>
-      <p className="animate mt-5 text-white">잠시만 기다려주세요...</p>
+      <p className="animate mt-5 text-white sm:text-xs">잠시만 기다려주세요...</p>
       <div className="absolute bottom-0 w-full">
         <Image className="w-full" sizes="100%" src={bottomDeco} alt="바닥_꾸밈" />
       </div>

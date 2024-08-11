@@ -7,10 +7,9 @@ interface AuthButtonsProps {
   handleLogout: () => void;
 }
 
-const AuthButtons: React.FC<AuthButtonsProps> = ({ handleLogout }) => {
+const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
   const [mounted, setMounted] = useState(false);
-  const { id: userId, clearUser } = useUserStore((state) => ({
-    id: state.id,
+  const { clearUser } = useUserStore((state) => ({
     clearUser: state.clearUser,
   }));
 
