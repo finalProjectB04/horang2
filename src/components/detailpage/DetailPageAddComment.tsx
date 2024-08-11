@@ -72,7 +72,10 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
   };
 
   return (
-    <main className="sm:mt-[140px] sm:max-w-[375px] sm:mx-auto md:mt-4 md:max-w-[1024px] md:mx-auto lg:mt-4 lg:max-w-[1440px] lg:mx-auto">
+    <main
+      className="sm:mt-[140px] sm:max-w-[375px] sm:mx-auto md:mt-4 md:max-w-[1024px] md:mx-auto lg:mt-4
+     lg:max-w-[1440px] lg:mx-auto"
+    >
       {userId && (
         <div className="sm:pl-[22px] sm:flex sm:items-center sm:py-3 md:flex md:items-center md:mb-4 md:py-3 lg:flex lg:items-center lg:mb-4 lg:py-3">
           {profileUrl && (
