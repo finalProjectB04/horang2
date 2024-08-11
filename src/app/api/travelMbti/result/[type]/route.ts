@@ -138,7 +138,7 @@ export const GET = async (request: NextRequest, { params }: { params: { type: st
     const params = {
       serviceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
       _type: "json",
-      numOfRows: 200,
+      numOfRows: 50,
       pageNo: 1,
       MobileOS: "ETC",
       MobileApp: "AppTest",
