@@ -23,7 +23,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
 
   const handleLikesChange = useCallback((postId: string, likes: number) => {
     setPostLikes((prev) => {
-      if (prev[postId] === likes) return prev; // 변경이 없으면 이전 상태를 반환
+      if (prev[postId] === likes) return prev;
       return { ...prev, [postId]: likes };
     });
   }, []);

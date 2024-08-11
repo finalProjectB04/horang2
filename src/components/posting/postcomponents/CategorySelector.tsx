@@ -1,4 +1,3 @@
-// CategorySelector.tsx
 import React from "react";
 
 const categories = ["전체", "여행지", "음식", "축제", "놀거리", "숙소"];

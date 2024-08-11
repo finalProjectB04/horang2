@@ -43,7 +43,7 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
 
   const handleAddLike = useCallback(async (): Promise<void> => {
     if (!user_id) {
-      alert("로그인이 필요한 서비스입니다");
+      alert("로그인이 필요한 합니다");
       return;
     }
     if (!post_id) {
@@ -63,7 +63,7 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
     mutationFn: handleAddLike,
     onMutate: async () => {
       if (!user_id) {
-        alert("로그인이 필요한 서비스입니다");
+        alert("로그인이 필요한 합니다");
         return;
       }
       await queryClient.cancelQueries({ queryKey: ["postLike", post_id] });
