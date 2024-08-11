@@ -1,62 +1,28 @@
 "use client";
 
+import LoadingPage from "@/app/loading";
 import Recommend from "@/components/recommend/Recommend";
 import { Item } from "@/types/APIResponse.type";
-import axios from "axios";
+import { fetchResultData } from "@/utils/travelMbti/FetchResultData";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { results } from "../results";
-
-const shuffleArray = (array: Item[]) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-};
 
 const TypeResultPage = () => {
   const params = useParams(); // useParams로 URL 파라미터를 가져옵니다.
   const type = params.type as string; // type을 문자열로 변환합니다.
   const router = useRouter();
-  const [data, setData] = useState<Item[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`/api/travelMbti/result/${type}`);
-        console.log("API response:", response.data);
-
-        const { firstData, secondData, thirdData, fourthData, fifthData } = response.data;
-
-        const allData = [...firstData, ...secondData, ...thirdData, ...fourthData, ...fifthData];
-
-        const selectedFirstData = shuffleArray(allData).slice(0, 1);
-
-        const remainingData = allData.filter((item) => !selectedFirstData.includes(item));
-
-        const selectedRemainingData = shuffleArray(remainingData).slice(0, 2);
-
-        const combinedData = [...selectedFirstData, ...selectedRemainingData];
-
-        setData(combinedData);
-        console.log("Filtered and combined data:", combinedData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("Error fetching data");
-      }
-
-      setLoading(false);
-    };
-
-    if (type && results[type]) {
-      fetchData();
-    }
-  }, [type]);
+  const { data, error, isLoading }: UseQueryResult<Item[], Error> = useQuery({
+    queryKey: ["resultData", type],
+    queryFn: () => fetchResultData(type),
+    enabled: !!type && !!results[type],
+    retry: 1,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
 
   if (!type || !results[type]) {
     return <div>유효하지 않은 결과입니다.</div>;
@@ -64,8 +30,8 @@ const TypeResultPage = () => {
 
   const result = results[type];
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (isLoading) return <LoadingPage />;
+  if (error) return <p>{(error as Error).message}</p>;
 
   return (
     <div
@@ -93,11 +59,7 @@ const TypeResultPage = () => {
               <p className="mt-6 text-[16px]">{result.description}</p>
             </header>
             <div>
-              <Recommend data={data} MBTIResult={type} />
-              {/* <button onClick={() => setIsModalOpen(true)}>
-                <Image src="/assets/images/shareModal.svg" alt="Custom Button Image" width={48} height={48} />
-              </button>
-              <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} /> */}
+              <Recommend data={data || []} MBTIResult={type} />
             </div>
 
             <div className="flex flex-col gap-4 mt-8 text-center w-full">
