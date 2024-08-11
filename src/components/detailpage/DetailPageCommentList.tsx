@@ -198,74 +198,88 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
   const totalPages = Math.ceil((commentsData?.totalCount || 0) / ITEMS_PER_PAGE);
 
   return (
-    <div className="tablet:mt-4 tablet:max-w-[1024px] tablet:mx-auto desktop:mt-4 desktop:max-w-[1440px] desktop:mx-auto">
+    <div className="sm:mt-4 sm:max-w-[375px] sm:mx-auto md:mt-4 md:max-w-[1024px] md:mx-auto lg:mt-4 lg:max-w-[1440px] lg:mx-auto">
       {commentsData?.comments &&
         commentsData.comments.map((comment: Comments, index) => (
           <div
-            className="tablet:p-4 tablet:border tablet:border-grey-100 tablet:rounded-xl tablet:flex tablet:flex-col tablet:items-start tablet:mx-auto tablet:mb-[33px] tablet:w-full desktop:p-4 desktop:border desktop:border-grey-100 desktop:rounded-xl desktop:flex desktop:flex-col desktop:items-start desktop:mx-auto desktop:mb-[33px] desktop:w-full"
+            className="sm:p-3 sm:border-none sm:border-grey-100 sm:rounded-lg sm:flex sm:flex-col sm:items-start sm:mx-auto sm:mb-[1px] sm:w-full md:p-4 md:border md:border-grey-100 md:rounded-xl md:flex md:flex-col md:items-start md:mx-auto md:mb-[1px] md:w-full lg:p-4 lg:border lg:border-grey-100 lg:rounded-xl lg:flex lg:flex-col lg:items-start lg:mx-auto lg:mb-[1px] lg:w-full"
             key={comment.comment_id ? comment.comment_id : `comment-${index}`}
           >
-            <div className="tablet:flex tablet:items-center tablet:justify-between tablet:w-full tablet:py-5 desktop:flex desktop:items-center desktop:justify-between desktop:w-full desktop:py-5">
-              <div className="tablet:flex tablet:items-center tablet:ps-10 desktop:flex desktop:items-center desktop:ps-10">
+            <div className="sm:flex sm:items-center sm:justify-between sm:w-full sm:py-3 md:flex md:items-center md:justify-between md:w-full md:py-5 lg:flex lg:items-center lg:justify-between lg:w-full lg:py-5">
+              <div className="sm:flex sm:items-center md:flex md:items-center md:ps-10 lg:flex lg:items-center lg:ps-10">
                 <Image
                   src={comment.user_profile_url || "/assets/images/profile_ex.png"}
                   alt="유저 프로필 사진"
-                  width={64}
-                  height={64}
-                  className="tablet:mr-4 desktop:mr-4"
+                  width={40}
+                  height={40}
+                  className="sm:mr-3 sm:w-[48px] sm:h-[48px] md:mr-4 lg:mr-4"
                 />
                 <div>
-                  <h1 className="tablet:text-[24px] tablet:text-grey-700 tablet:font-bold tablet:py-2 tablet:ps-3 desktop:text-[28px] desktop:text-grey-700 desktop:font-bold desktop:py-2 desktop:ps-3">
+                  <h1 className="sm:text-[17px] sm:text-secondary-800 sm:font-bold sm:py-2 sm:ps-2 md:text-[24px] md:text-grey-700 md:font-bold md:py-2 md:ps-3 lg:text-[28px] lg:text-grey-700 lg:font-bold lg:py-2 lg:ps-3">
                     {comment.user_nickname || comment.user_email} 님
                   </h1>
-                  <h2 className="tablet:py-1 tablet:text-grey-600 tablet:text-[16px] tablet:ps-3 desktop:py-1 desktop:text-grey-600 desktop:text-[18px] desktop:ps-3">
+                  <h2 className="sm:py-1 sm:text-grey-600 sm:text-[10px] sm:ps-2 sm:font-normal md:py-1 md:text-grey-600 md:text-[16px] md:ps-3 lg:py-1 lg:text-grey-600 lg:text-[18px] lg:ps-3">
                     {comment.created_at ? formatDate(comment.created_at) : "날짜 정보 없음"}
                   </h2>
                 </div>
               </div>
               {userId === comment.user_id && editCommentId !== comment.comment_id && (
-                <div className="tablet:flex tablet:space-x-2 tablet:justify-end tablet:pr-[95px] desktop:flex desktop:space-x-2 desktop:justify-end desktop:pr-[95px]">
+                <div className="sm:flex sm:space-x-2 sm:justify-end md:flex md:space-x-2 md:justify-end md:pr-[95px] lg:flex lg:space-x-2 lg:justify-end lg:pr-[95px]">
                   <button
                     onClick={() => handleEdit(comment)}
-                    className="tablet:flex tablet:justify-center tablet:items-center tablet:h-[36px] tablet:pb-7 tablet:py-0 tablet:px-[26px] tablet:text-[16px] tablet:text-grey-600 tablet:font-normal tablet:rounded desktop:flex desktop:pb-7 desktop:justify-center desktop:items-center desktop:h-[36px] desktop:py-0 desktop:px-[26px] desktop:text-[18px] desktop:text-grey-600 desktop:font-normal desktop:rounded"
+                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] sm:text-[14px] sm:text-grey-600 sm:font-normal sm:rounded md:flex md:justify-center md:items-center md:h-[36px] md:pb-7 md:py-0 md:px-[26px] md:text-[16px] md:text-grey-600 md:font-normal md:rounded lg:flex lg:pb-7 lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px] lg:text-[18px] lg:text-grey-600 lg:font-normal lg:rounded"
                   >
-                    수정
+                    <Image
+                      src="/assets/images/detailpage/Mode_edit.svg"
+                      alt="수정"
+                      width={16}
+                      height={16}
+                      className="sm:block md:hidden lg:hidden"
+                    />
+                    <span className="sm:hidden">수정</span>
                   </button>
                   <button
                     onClick={() => handleDelete(comment.comment_id)}
-                    className="tablet:flex tablet:justify-center tablet:items-center tablet:h-[36px] tablet:pb-7 tablet:py-0 tablet:px-[26px] tablet:rounded tablet:text-[16px] tablet:text-grey-600 tablet:font-normal desktop:flex desktop:pb-7 desktop:justify-center desktop:items-center desktop:h-[36px] desktop:py-0 desktop:px-[26px] desktop:rounded desktop:text-[18px] desktop:text-grey-600 desktop:font-normal"
+                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] sm:text-[14px] sm:text-grey-600 sm:font-normal sm:rounded md:flex md:justify-center md:items-center md:h-[36px] md:pb-7 md:py-0 md:px-[26px] md:rounded md:text-[16px] md:text-grey-600 md:font-normal lg:flex lg:pb-7 lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px] lg:rounded lg:text-[18px] lg:text-grey-600 lg:font-normal"
                   >
-                    삭제
+                    <Image
+                      src="/assets/images/detailpage/Delete.svg"
+                      alt="삭제"
+                      width={16}
+                      height={16}
+                      className="sm:block md:hidden lg:hidden"
+                    />
+                    <span className="sm:hidden">삭제</span>
                   </button>
                 </div>
               )}
             </div>
-            <div className="tablet:mt-2 tablet:w-full desktop:mt-2 desktop:w-full">
+            <div className="sm:mt-2 sm:w-full md:mt-2 md:w-full lg:mt-2 lg:w-full">
               {editCommentId === comment.comment_id ? (
-                <div className="tablet:ps-[129px] desktop:ps-[129px]">
+                <div className="sm:ps-[48px] md:ps-[129px] lg:ps-[129px]">
                   <textarea
                     value={newComment}
                     onChange={(event) => setNewComment(event.target.value)}
-                    className="tablet:w-full tablet:p-2 tablet:border tablet:rounded tablet:break-all tablet:text-[24px] tablet:max-w-[800px] tablet:text-grey-700 desktop:w-full desktop:p-2 desktop:border desktop:rounded desktop:break-all desktop:text-[28px] desktop:max-w-[1200px] desktop:text-grey-700"
+                    className="resize-none sm:w-full sm:p-2 sm:border sm:rounded-[20px] sm:bg-grey-100 sm:break-all sm:text-[12px] sm:max-w-[280px] sm:text-grey-600 md:w-full md:ml-[-32px] md:p-2 md:border md:rounded md:break-all md:text-[24px] md:max-w-[800px] md:text-grey-700 lg:w-full lg:p-2 lg:border lg:rounded lg:break-all lg:text-[28px] lg:max-w-[1200px] lg:text-grey-700 lg:ml-[-32px]"
                     style={{ wordBreak: "break-all" }}
                   />
-                  <div className="tablet:flex tablet:justify-end tablet:space-x-2 tablet:mt-2 tablet:pr-[95px] desktop:flex desktop:justify-end desktop:space-x-2 desktop:mt-2 desktop:pr-[95px]">
+                  <div className="sm:flex sm:justify-end sm:space-x-2 sm:mt-2 sm:pr-[20px] md:flex md:justify-end md:space-x-2 md:mt-2 md:pr-[95px] lg:flex lg:justify-end lg:space-x-2 lg:mt-2 lg:pr-[95px]">
                     <button
                       onClick={() => handleUpdate(comment.comment_id)}
-                      className="tablet:flex tablet:justify-center tablet:items-center tablet:h-[36px] tablet:py-0 tablet:px-[26px] tablet:text-[16px] tablet:text-grey-600 tablet:font-normal tablet:rounded desktop:flex desktop:justify-center desktop:items-center desktop:h-[36px] desktop:py-0 desktop:px-[26px] desktop:text-[18px] desktop:text-grey-600 desktop:font-normal desktop:rounded"
+                      className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] sm:text-[14px] sm:text-grey-600 sm:font-normal sm:rounded md:flex md:justify-center md:items-center md:h-[36px] md:py-0 md:px-[26px] md:text-[16px] md:text-grey-600 md:font-normal md:rounded lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px] lg:text-[18px] lg:text-grey-600 lg:font-normal lg:rounded"
                     >
                       저장
                     </button>
                     <button
                       onClick={handleCancelEdit}
-                      className="tablet:flex tablet:justify-center tablet:items-center tablet:h-[36px] tablet:py-0 tablet:px-[26px] tablet:text-[16px] tablet:text-grey-600 tablet:font-normal tablet:rounded desktop:flex desktop:justify-center desktop:items-center desktop:h-[36px] desktop:py-0 desktop:px-[26px] desktop:text-[18px] desktop:text-grey-600 desktop:font-normal desktop:rounded"
+                      className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] sm:text-[14px] sm:text-grey-600 sm:font-normal sm:rounded md:flex md:justify-center md:items-center md:h-[36px] md:py-0 md:px-[26px] md:text-[16px] md:text-grey-600 md:font-normal md:rounded lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px] lg:text-[18px] lg:text-grey-600 lg:font-normal lg:rounded"
                     >
                       취소
                     </button>
                   </div>
                 </div>
               ) : (
-                <p className="tablet:ps-[129px] tablet:mb-8 tablet:pb-5 tablet:break-all tablet:whitespace-pre-wrap tablet:pr-[70px] tablet:text-grey-700 tablet:text-[24px] desktop:ps-[129px] desktop:mb-8 desktop:pb-5 desktop:break-all desktop:whitespace-pre-wrap desktop:pr-[95px] desktop:text-grey-700 desktop:text-[28px]">
+                <p className="sm:ps-[65px] sm:mb-2 sm:pb-2 sm:break-all sm:whitespace-pre-wrap sm:pr-[20px] sm:text-grey-600 sm:text-[12px] md:ps-[105px] md:mb-8 md:pb-5 md:break-all md:whitespace-pre-wrap md:pr-[70px] md:text-grey-700 md:text-[24px] lg:ps-[105px] lg:mb-8 lg:pb-5 lg:break-all lg:whitespace-pre-wrap lg:pr-[95px] lg:text-grey-700 lg:text-[28px]">
                   {comment.comment}
                 </p>
               )}

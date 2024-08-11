@@ -44,13 +44,18 @@ const DetailPage = () => {
   }
 
   return (
-    <main className="tablet:max-w-[1024px] tablet:mx-auto tablet:grid tablet:justify-items-center desktop:max-w-[1440px] desktop:mx-auto desktop:grid desktop:justify-items-center">
+    <main className="sm:max-w-[640px] md:max-w-[1024px] md:mx-auto md:grid md:justify-items-center lg:max-w-[1440px] lg:mx-auto lg:grid lg:justify-items-center">
       <DetailPageImage contentItemData={contentItemData} />
-      <section className="flex justify-between items-center w-full max-w-[1440px] mt-12 py-20 tablet:flex tablet:items-center tablet:justify-between tablet:w-full tablet:max-w-[1024px] tablet:mt-8 tablet:py-10">
-        <div className="text-left tablet:flex-grow">
-          <div className="text-4xl font-bold tablet:text-3xl">{title}</div>
+      <section
+        className="flex justify-between items-center w-full max-w-[1440px] lg:pt-[140px] md:flex md:items-center md:justify-between md:w-full md:max-w-[1024px] md:mt-8
+      sm:px-[24px] sm:pt-[46px] sm:pb-[17px]"
+      >
+        <div className="text-left md:flex-grow">
+          <div className="lg:text-[38px] lg:font-bold md:text-[30px] md:font-semibold sm:text-[14px] sm:font-bold">
+            {title}
+          </div>
         </div>
-        <div className="flex justify-center space-x-2 tablet:mt-0">
+        <div className="flex justify-center space-x-2 md:mt-0">
           <DetailPageLikeButton
             contentId={contentId}
             imageUrl={imageUrl || ""}
@@ -65,24 +70,24 @@ const DetailPage = () => {
               alt="Custom Button Image"
               width={48}
               height={48}
-              className="tablet:w-12 tablet:h-12"
+              className="md:w-12 md:h-12 sm:w-[20px] sm:h-[20px]"
             />
           </button>
           <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
       </section>
-      <section className="tablet:w-full tablet:max-w-[1024px] tablet:mt-4 desktop:w-full desktop:max-w-[1440px] desktop:mt-4">
+      <section className="md:w-full md:max-w-[1024px] md:mt-4 lg:w-full lg:max-w-[1440px] lg:mt-4 lg:pb-[88px] sm:w-[640px] sm:px-[24px] sm:">
         <ContentDetail title={title || ""} addr1={addr1 || ""} tel={tel || ""} homepageLink={homepageLink} />
       </section>
       {contentItemData.data.overview && <ContentOverview overview={overview || ""} />}
-      <section className="tablet:w-full tablet:flex tablet:justify-center tablet:mb-12 desktop:w-full desktop:flex desktop:justify-center desktop:mb-15">
+      <section className="md:w-full md:flex md:justify-center md:mb-12 lg:w-full lg:flex lg:justify-center lg:mb-15 sm:max-w-[640px] sm-max-h-[290px]">
         <KakaoMap mapx={parseFloat(mapx || "0")} mapy={parseFloat(mapy || "0")} />
       </section>
-      <section className="tablet:w-full tablet:max-w-[1024px] tablet:mt-12 tablet:pt-12 desktop:w-full desktop:max-w-[1440px] desktop:mt-20 desktop:pt-[181px]">
-        <div className="desktop:pt-[33px] tablet:pt-[33px]">
+      <section className="md:w-full md:max-w-[1024px] md:mt-12 md:pt-12 lg:w-full lg:max-w-[1440px] lg:mt-20 lg:pt-[200px] sm:max-w-[640px]">
+        <div className="lg:pt-[33px] md:pt-[33px]">
           <DetailPageAddComment contentId={contentId} contenTypeId={contentTypeId || ""} />
         </div>
-        <div className="desktop:pt-[33px] tablet:pt-[33px]">
+        <div className="lg:pt-[33px] md:pt-[33px]">
           <DetailPageCommentList contentId={contentId} />
         </div>
       </section>

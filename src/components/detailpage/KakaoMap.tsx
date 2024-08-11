@@ -66,8 +66,8 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
   }, [longitude, latitude]);
 
   return (
-    <div className="w-full h-[500px] relative tablet:w-full tablet:h-[400px] desktop:w-full desktop:h-[500px]">
-      <h1 className="text-start py-[65px] font-extrabold text-2xl tablet:text-start tablet:py-[45px] tablet:font-bold tablet:text-xl desktop:text-start desktop:py-[65px] desktop:font-extrabold desktop:text-2xl">
+    <div className="w-full h-[500px] relative md:w-full md:h-[400px] lg:w-full lg:h-[500px] sm:w-[375px]">
+      <h1 className="text-start py-[65px] font-extrabold md:text-start md:py-[45px] md:font-semibold md:text-[30px] lg:text-start lg:py-[65px] lg:font-bold lg:text-[38px] sm:px-[24px] sm:text-[14px] sm:font-bold sm:mb-[-40px] sm:leading-[24px]">
         위치
       </h1>
       <div id="map" className="w-full h-full"></div>

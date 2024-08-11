@@ -43,32 +43,22 @@ const ShareModal = ({ isOpen, onClose }: ModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="tablet:fixed tablet:inset-0 bg-black bg-opacity-50 tablet:flex tablet:items-center tablet:justify-center z-50 desktop:fixed desktop:inset-0 bg-black bg-opacity-50 desktop:flex desktop:items-center desktop:justify-center z-50">
-      <div className="bg-white tablet:p-4 tablet:rounded-lg shadow-lg tablet:relative tablet:w-[320px] desktop:p-6 desktop:rounded-lg desktop:relative desktop:w-[480px]">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 sm:max-w-[375px]">
+      <div className="bg-white p-3 rounded-md shadow-lg relative w-[280px] md:w-[320px] lg:w-[480px]">
         <button
-          className="tablet:absolute tablet:top-2 tablet:right-2 bg-transparent tablet:text-black hover:text-red-500 transition duration-300 ease-in-out focus:outline-none tablet:text-xl desktop:absolute desktop:top-2 desktop:right-2 bg-transparent desktop:text-black hover:text-red-500 transition duration-300 ease-in-out focus:outline-none desktop:text-2xl"
+          className="absolute top-2 right-2 bg-transparent text-black hover:text-red-500 transition duration-300 ease-in-out focus:outline-none text-lg"
           onClick={onClose}
         >
           &times;
         </button>
-        <div className="tablet:text-center tablet:font-bold tablet:text-lg tablet:mb-4 desktop:text-center desktop:font-bold desktop:text-xl desktop:mb-4">
-          공유하기
-        </div>
-        <div className="tablet:flex tablet:items-center tablet:mb-4 desktop:flex desktop:items-center desktop:mb-4">
-          <input
-            type="text"
-            value={copiedUrl}
-            readOnly
-            className="tablet:w-full tablet:px-4 tablet:py-2 tablet:border tablet:rounded-l-md bg-gray-100 desktop:w-full desktop:px-4 desktop:py-2 desktop:border desktop:rounded-l-md bg-gray-100"
-          />
-          <button
-            onClick={handleCopyClick}
-            className="tablet:px-4 tablet:p-2 bg-primary-400 text-white tablet:rounded-xl desktop:px-4 desktop:p-2 bg-primary-400 text-white desktop:rounded-xl"
-          >
+        <div className="text-center font-bold text-base mb-3 md:text-lg md:mb-4 lg:text-xl lg:mb-4">공유하기</div>
+        <div className="flex items-center mb-3 md:mb-4 lg:mb-4">
+          <input type="text" value={copiedUrl} readOnly className="w-full px-3 py-2 border rounded-l-md bg-gray-100" />
+          <button onClick={handleCopyClick} className="px-3 p-2 bg-primary-400 text-white rounded-md">
             {">>"}
           </button>
         </div>
-        <div className="tablet:flex tablet:justify-center desktop:flex desktop:justify-center">
+        <div className="flex justify-center">
           <KakaoShareButton id={params.contentId} className="hover:cursor-pointer" />
         </div>
       </div>

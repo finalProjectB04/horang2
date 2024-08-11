@@ -20,13 +20,13 @@ const LinkUrlButton = () => {
   return (
     <>
       <div onClick={handleCopyClick}>
-        <div className="desktop:px-4 desktop:py-2 bg-slate-200 text-gray-950 desktop:rounded bg-white tablet:px-2 tablet:py-1">
+        <div className="lg:px-4 lg:py-2 bg-slate-200 text-gray-950 lg:rounded bg-white md:px-2 md:py-1">
           <Image
             src="/assets/images/linkUrl.png"
             alt="이미지가 없습니다"
             width={55}
             height={55}
-            className="tablet:w-12 tablet:h-12"
+            className="md:w-12 md:h-12"
           />
         </div>
       </div>
