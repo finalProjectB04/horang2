@@ -1,5 +1,6 @@
 "use client";
 
+import { useModal } from "@/context/modal.context";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import KakaoShareButton from "./KakaoShareButton";
@@ -12,6 +13,7 @@ interface ModalProps {
 const ShareModal = ({ isOpen, onClose }: ModalProps) => {
   const params = useParams() as { contentId: string };
   const [copiedUrl, setCopiedUrl] = useState("");
+  const modal = useModal();
 
   useEffect(() => {
     if (isOpen) {
@@ -28,7 +30,14 @@ const ShareModal = ({ isOpen, onClose }: ModalProps) => {
   const handleCopyClick = () => {
     const textToCopy = `${process.env.NEXT_PUBLIC_BASE_URL}/detail/${params.contentId}`;
     copyToClipboard(textToCopy);
-    alert("url이 복사되었습니다");
+    modal.open({
+      title: "알림",
+      content: (
+        <div className="text-center">
+          <p>url이 복사 되었습니다.</p>
+        </div>
+      ),
+    });
   };
 
   if (!isOpen) return null;
