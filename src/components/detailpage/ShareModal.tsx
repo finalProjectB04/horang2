@@ -34,18 +34,18 @@ const ShareModal = ({ isOpen, onClose }: ModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg relative" style={{ width: "480px" }}>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 sm:max-w-[375px]">
+      <div className="bg-white p-3 rounded-md shadow-lg relative w-[280px] md:w-[320px] lg:w-[480px]">
         <button
-          className="absolute top-2 right-2 bg-transparent text-black hover:text-red-500 transition duration-300 ease-in-out focus:outline-none text-2xl"
+          className="absolute top-2 right-2 bg-transparent text-black hover:text-red-500 transition duration-300 ease-in-out focus:outline-none text-lg"
           onClick={onClose}
         >
           &times;
         </button>
-        <div className="text-center font-bold text-xl mb-4">공유하기</div>
-        <div className="flex items-center mb-4">
-          <input type="text" value={copiedUrl} readOnly className="w-full px-4 py-2 border rounded-l-md bg-gray-100" />
-          <button onClick={handleCopyClick} className="px-4 p-2 bg-primary-400 text-white rounded-xl">
+        <div className="text-center font-bold text-base mb-3 md:text-lg md:mb-4 lg:text-xl lg:mb-4">공유하기</div>
+        <div className="flex items-center mb-3 md:mb-4 lg:mb-4">
+          <input type="text" value={copiedUrl} readOnly className="w-full px-3 py-2 border rounded-l-md bg-gray-100" />
+          <button onClick={handleCopyClick} className="px-3 p-2 bg-primary-400 text-white rounded-md">
             {">>"}
           </button>
         </div>
