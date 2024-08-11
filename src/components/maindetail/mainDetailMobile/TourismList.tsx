@@ -89,7 +89,7 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
           )}
         </div>
       </div>
-      <div className=" block sm:block lg:block">
+      <div className=" block  lg:block">
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <div className="mx-auto py-8 max-w-[327px] flex flex-col gap-10">
           <div className="flex my-6 gap-3">

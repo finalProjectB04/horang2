@@ -6,7 +6,6 @@ import { ApiInformation } from "@/types/Main";
 import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
-import { Mobilemode } from "./mainmobile/Mobilemode";
 
 interface FestivalProps {
   searchTerm: string;

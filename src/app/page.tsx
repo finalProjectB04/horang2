@@ -20,7 +20,10 @@ const Home = () => {
       <div className="flex flex-col justify-center items-center">
         <MidImage />
       </div>
-      <Leports searchTerm={searchTerm} />
+      <div className="mb-[120px]">
+        <Leports searchTerm={searchTerm} />
+      </div>
+
       <Festival searchTerm={searchTerm} />
     </main>
   );

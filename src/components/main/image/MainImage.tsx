@@ -49,7 +49,7 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
           </div>
         </div>
       </div>
-      <div className="block sm:hidden lg:hidden">
+      <div className="block  lg:hidden">
         <div className="  relative w-[375px] h-[295px]">
           <Image
             src="/assets/images/ex6.png"

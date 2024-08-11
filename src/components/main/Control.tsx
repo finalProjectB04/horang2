@@ -39,7 +39,7 @@ const Control = () => {
           ))}
         </div>
       </div>
-      <div className="block sm:hidden lg:hidden ">
+      <div className="block  lg:hidden ">
         <div className="flex items-center justify-between w-[326px] h-[78px] mx-auto">
           {buttons.map((button, index) => (
             <div

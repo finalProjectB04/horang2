@@ -67,7 +67,7 @@ export const TourismListMobile: React.FC<TourismListProps> = ({ contentTypeId, t
   if (error) return <div>Error: {error.message}</div>;
   return (
     <div>
-      <div className="  block sm:hidden lg:hidden">
+      <div className="  block  lg:hidden">
         <div className="flex flex-col justify-center items-center">
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           <div className=" max-w-[326px]">

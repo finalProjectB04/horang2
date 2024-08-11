@@ -7,7 +7,7 @@ const Festival = () => {
       <div className=" hidden lg:block">
         <TourismList contentTypeId={15} title="축제 및 공연 추천" />;
       </div>
-      <div className="block lg:hidden sm:hidden">
+      <div className="block lg:hidden ">
         <TourismListMobile contentTypeId={15} title="축제 및 공연 추천" />
       </div>
     </>
