@@ -1,12 +1,17 @@
-"use client";
 import Image from "next/image";
+import React from "react";
 
-export const MidImage = () => {
+const MidImage = () => {
   return (
-    <div className="  w-full h-screen ">
-      <div className="relative w-full  h-full  max-w-[1920px] max-h-[357px]">
-        <Image src="/assets/images/banner.jpg" alt="profile" layout="fill" objectFit="cover" />
+    <>
+      <div className="my-[70px] hidden lg:block">
+        <Image src="/assets/images/backgrounds/midImage.jpg" alt={"midimage"} width={1920} height={360} />
       </div>
-    </div>
+      <div className="my-[64px] block lg:hidden">
+        <Image src="/assets/images/backgrounds/midImage.jpg" alt={"midimage"} width={375} height={140} />
+      </div>
+    </>
   );
 };
+
+export default MidImage;

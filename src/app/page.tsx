@@ -5,6 +5,7 @@ import { MainImage } from "@/components/main/image/MainImage";
 import { Leports } from "@/components/main/Leports";
 import { useState } from "react";
 import { Festival } from "@/components/main/Festival";
+import MidImage from "@/components/main/image/MidImage";
 import Header from "@/components/common/Header";
 
 const Home = () => {
@@ -15,10 +16,16 @@ const Home = () => {
       <div className="flex flex-col justify-center items-center">
         <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <MainImage searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <Control />
       </div>
+      <Control />
       <Travel searchTerm={searchTerm} />
-      <Leports searchTerm={searchTerm} />
+      <div className="flex flex-col justify-center items-center">
+        <MidImage />
+      </div>
+      <div className="mb-[120px]">
+        <Leports searchTerm={searchTerm} />
+      </div>
+
       <Festival searchTerm={searchTerm} />
     </main>
   );
