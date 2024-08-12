@@ -5,9 +5,12 @@ const DetailPagePagination: React.FC<{
 }> = ({ totalPages, page, setPage }) => {
   return (
     <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-      <button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
-        prev
-      </button>
+      {totalPages > 1 && (
+        <button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
+          prev
+        </button>
+      )}
+
       {[...Array(totalPages)].map((_, index) => (
         <button
           key={index + 1}
@@ -20,9 +23,11 @@ const DetailPagePagination: React.FC<{
           {index + 1}
         </button>
       ))}
-      <button onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))} disabled={page === totalPages}>
-        next
-      </button>
+      {totalPages > 1 && (
+        <button onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))} disabled={page === totalPages}>
+          next
+        </button>
+      )}
     </div>
   );
 };
