@@ -42,8 +42,8 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, setSearchTerm }) => {
   };
 
   return (
-    <header className="fixed top-0 w-full left-0 z-50 text-white h-[84px] bg-cover bg-center lg:bg-[url('/assets/images/header/header.png')] lg:bg-secondary-800 bg-[#0932C7]">
-      <div className="container mx-auto max-w-[1440px] flex items-center h-full px-4">
+    <header className="fixed top-0 w-full left-0 z-50 text-white h-[84px] lg:bg-cover lg:bg-center lg:bg-[url('/assets/images/header/header.png')] lg:bg-secondary-800 bg-secondary-800">
+      <div className="container mx-auto max-w-[1440px] flex items-center h-full px-4 bg-cover bg-center bg-[url('/assets/images/header/header.png')] lg:bg-none">
         <MobileHeader
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}

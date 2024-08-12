@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useMemo, useState, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -21,7 +23,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
   const router = useRouter();
   const [postLikes, setPostLikes] = useState<Record<string, number>>({});
 
-  const handleLikesChange = useCallback((postId: string, likes: number) => {
+  const handleLikesChange = useCallback((likes: number, postId: string) => {
     setPostLikes((prev) => {
       if (prev[postId] === likes) return prev;
       return { ...prev, [postId]: likes };
@@ -56,7 +58,11 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {sortedAndFilteredPosts.map((post: Post) => (
-        <article key={post.id} className="rounded-[32px] overflow-hidden shadow-lg  ">
+        <article
+          key={post.id}
+          className="rounded-[32px] overflow-hidden shadow-lg cursor-pointer"
+          onClick={() => router.push(`/postDetail/${post.id}`)}
+        >
           <div className="relative h-64">
             <Image
               src={getFirstImageUrl(post.files)}
@@ -67,24 +73,20 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
             />
           </div>
           <div className="p-4">
-            <div className=" flex justify-between items-center  text-lg mb-4 line-clamp-2">
+            <div className="flex justify-between items-center text-lg mb-4 line-clamp-2">
               <span className="text-lg font-semibold mb-2 truncate">{post.title}</span>
-              <span
-                className="rounded-lg overflow-hidden  transition-transform cursor-pointer"
-                onClick={() => router.push(`/postDetail/${post.id}`)}
-              >
-                보기
-              </span>
             </div>
             <p className="text-gray-600 text-sm mb-4 line-clamp-2">{post.content}</p>
             <div className="flex justify-between items-center text-xs text-gray-500">
               <span>{post.category}</span>
               <time>{new Date(post.created_at || "").toLocaleDateString()}</time>
-              <PostLike
-                post_id={post.id}
-                onLikesChange={(likes) => handleLikesChange(post.id, likes)}
-                initialLikes={postLikes[post.id] ?? 0}
-              />
+              <div className="flex items-center">
+                <PostLike
+                  post_id={post.id}
+                  onLikesChange={(likes) => handleLikesChange(likes, post.id)}
+                  initialLikes={postLikes[post.id] ?? 0}
+                />
+              </div>
             </div>
           </div>
         </article>

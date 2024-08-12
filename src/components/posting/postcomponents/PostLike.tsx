@@ -5,9 +5,17 @@ import { useUserStore } from "@/zustand/userStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 
-const DEFAULT_HEART = <Image src="/assets/images/defaultLikeIcon.png" alt="빈하트" width={48} height={48} />;
+const DEFAULT_HEART = (
+  <Image
+    src="/assets/images/defaultLikeIcon.png"
+    alt="빈하트"
+    width={48}
+    height={32}
+    className=" w-4 h-4 mt-1 lg:mt-4"
+  />
+);
 const PUSHED_HEART = (
-  <Image src="/assets/images/successLikeIcon.png" alt="하트" width={48} height={48} className="mt-4" />
+  <Image src="/assets/images/successLikeIcon.png" alt="하트" width={48} height={32} className="w-4 h-4 mt-1 lg:mt-4" />
 );
 
 interface PostLikeProps {
@@ -105,9 +113,15 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
 
   return (
     <div>
-      <div className="w-full px-2 py-3 flex flex-row gap-x-3">
-        <button onClick={() => addMutation.mutate()} disabled={!user_id}>
-          <div className="flex items-center justify-center">
+      <div className="w-full px-2 flex flex-row gap-x-3">
+        <button
+          onClick={(event) => {
+            event.stopPropagation();
+            addMutation.mutate();
+          }}
+          disabled={!user_id}
+        >
+          <div className="flex items-center justify-center ">
             <span className="text-sm">{getLikes?.userLike ? PUSHED_HEART : DEFAULT_HEART}</span>
             <span>{likeCount}</span>
           </div>
