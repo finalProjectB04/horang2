@@ -1,10 +1,12 @@
 "use client";
 
+import { useModal } from "@/context/modal.context";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 
 const LinkUrlButton = () => {
   const params = useParams() as { contentId: string };
+  const modal = useModal();
 
   const copyToClipboard = async (text: string) => {
     await navigator.clipboard.writeText(text);
