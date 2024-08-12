@@ -8,11 +8,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      screens: {
-        sm: { max: "640px" }, // 모바일
-        md: { min: "641px", max: "1024px" }, // 태블릿
-        lg: { min: "1025px" }, // 데스크탑
-      },
       animation: {
         "spin-slow": "spin 2s linear infinite",
       },
