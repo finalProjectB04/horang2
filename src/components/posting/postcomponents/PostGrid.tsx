@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useMemo, useState, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -25,7 +23,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
   const router = useRouter();
   const [postLikes, setPostLikes] = useState<Record<string, number>>({});
 
-  const handleLikesChange = useCallback((likes: number, postId: string) => {
+  const handleLikesChange = useCallback((postId: string, likes: number) => {
     setPostLikes((prev) => {
       if (prev[postId] === likes) return prev;
       return { ...prev, [postId]: likes };
