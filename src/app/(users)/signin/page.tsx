@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
 import EmailInput from "@/components/common/userspage/signinpage/EmailInput";
 import PasswordInput from "@/components/common/userspage/signinpage/PasswordInput";
 import LoginButton from "@/components/common/userspage/signinpage/LoginButton";
@@ -15,18 +14,14 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  const queryClient = useQueryClient();
   const setUser = useUserStore((state) => state.setUser);
 
   const handleLogin = async () => {
     setError("");
-
     try {
       const response = await fetch("/api/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
@@ -46,9 +41,9 @@ const LoginPage = () => {
 
   return (
     <div className="flex items-center justify-center w-full h-screen bg-cover bg-center bg-[url('/assets/images/backgrounds/backgrounds.png')] sm:bg-[url('/assets/images/backgrounds/m_signup.png')]">
-      <div className="bg-white p-8 rounded-[40px] border border-gray-300 w-full max-w-[500px] sm:max-w-[327px] h-auto">
+      <div className="bg-white p-8 rounded-[40px] border border-gray-300 w-full max-w-[500px] sm:max-w-[327px]">
         <h1 className="text-2xl font-bold mb-6 text-center">로그인</h1>
-        <div className="space-y-4 w-full max-w-[401px] mx-auto sm:max-w-[280px]">
+        <div className="space-y-4">
           <EmailInput email={email} setEmail={setEmail} />
           <PasswordInput password={password} setPassword={setPassword} />
           <LoginButton onClick={handleLogin} />
