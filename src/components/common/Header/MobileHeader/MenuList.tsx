@@ -18,10 +18,19 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
   const router = useRouter();
   const { user_nickname, profile_url } = useUserStore();
 
+  const handleNavigation = (href: string) => (event: React.MouseEvent) => {
+    if (!userId) {
+      event.preventDefault();
+      router.push("/signin");
+    } else {
+      router.push(href);
+    }
+  };
+
   const buttons = [
-    { name: "내 정보 관리", onClick: () => toggleModal("profile") },
-    { name: "대화 하기", onClick: () => router.push("/chat") },
-    { name: "나만의 여행", onClick: () => router.push("/travelMbti") },
+    { name: "내 정보 관리", onClick: handleNavigation("profile") },
+    { name: "대화 하기", onClick: handleNavigation("/chat") },
+    { name: "나만의 여행", onClick: handleNavigation("/travelMbti") },
     { name: "호랑이 모임", onClick: () => router.push("/community") },
   ];
 
@@ -36,35 +45,20 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
 
       <div className="w-full rounded-[20px] border border-primary-100 p-[18px] mb-4 flex items-center">
         <Image src={profile_url || "/assets/images/profile_ex.png"} alt="profile" width={48} height={48} />
-        <div className="ml-4 text-start text-secondary-800 font-normal text-[14px] leading-[1.5] tracking-[-0.75px]">
+        <div className="ml-4 text-start text-secondary-800 font-normal text-[14px] leading-[1.5] tracking-[-0.75px] whitespace-nowrap overflow-hidden text-ellipsis">
           <strong>{user_nickname || "사용자"}</strong>님
           <br /> 행복한 국내 여행하세요
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-[9px] gap-y-[4px] mb-4">
+      <div className="flex justify-center mb-4 space-x-[18px]">
         {buttons.map((button, index) => (
           <React.Fragment key={index}>
-            <button
-              className="w-[130px] h-[36px] rounded-[6.311px] border-[0.631px] border-solid border-primary-100 bg-white flex items-center justify-center cursor-pointer"
-              onClick={button.onClick}
-            >
-              <Image
-                src="/assets/images/header/Place.png"
-                alt={`${button.name} icon`}
-                width={19.2}
-                height={19.2}
-                className="mr-0"
-              />
-              <span
-                className="text-[12px] text-primary-600 font-normal leading-[19.015px] tracking-[-0.3px]"
-                style={{
-                  fontFeatureSettings: "'calt' off",
-                  fontFamily: "Pretendard, sans-serif",
-                }}
-              >
+            <button className="flex flex-col items-center space-y-2" onClick={button.onClick}>
+              <div className="border border-primary-700 rounded-xl w-[54px] h-[54px]"></div>
+              <p className="text-[12px] text-secondary-800 whitespace-nowrap overflow-hidden text-ellipsis">
                 {button.name}
-              </span>
+              </p>
             </button>
             {button.name === "내 정보 관리" && (
               <Modal id="profile">
@@ -76,25 +70,47 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
       </div>
 
       <Link href="/intro">
-        <span className="text-black hover:text-gray-400 cursor-pointer">호랑 소개</span>
+        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+          호랑 소개
+        </span>
       </Link>
       <Link href="/travel">
-        <span className="text-black hover:text-gray-400 cursor-pointer">추천 여행지</span>
+        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+          추천 여행지
+        </span>
       </Link>
       <Link href="/hotel">
-        <span className="text-black hover:text-gray-400 cursor-pointer">숙소</span>
+        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+          숙소
+        </span>
       </Link>
       <Link href="/leports">
-        <span className="text-black hover:text-gray-400 cursor-pointer">레포츠</span>
+        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+          레포츠
+        </span>
       </Link>
       <Link href="/restaurant">
-        <span className="text-black hover:text-gray-400 cursor-pointer">음식점</span>
+        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+          음식점
+        </span>
       </Link>
       <Link href="/festival">
-        <span className="text-black hover:text-gray-400 cursor-pointer">축제 및 행사</span>
+        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+          축제 및 행사
+        </span>
       </Link>
       <Link href="/location">
-        <span className="text-black hover:text-gray-400 cursor-pointer">내 근처 여행지</span>
+        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+          내 근처 여행지
+        </span>
+      </Link>
+      <Link href="/mypage">
+        <span
+          className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"
+          onClick={handleNavigation("/mypage")}
+        >
+          나의 공간
+        </span>
       </Link>
 
       <div className="space-y-2">

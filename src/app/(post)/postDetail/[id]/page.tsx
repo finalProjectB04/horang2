@@ -34,7 +34,7 @@ const PostDetail: React.FC = () => {
   const [editedContent, setEditedContent] = useState<string>("");
   const [editedTitle, setEditedTitle] = useState<string>("");
   const [editedFile, setEditedFile] = useState<string | null>(null);
-  const { user_nickname, profile_url, setUser } = useUserStore();
+  const { user_nickname } = useUserStore();
 
   const {
     data: sessionData,
@@ -179,22 +179,27 @@ const PostDetail: React.FC = () => {
       ) : (
         <div>
           <div className="prose max-w-none mb-4">{post.content}</div>
-          {sessionData && sessionData.user.id === post.user_id && (
-            <div className="flex space-x-2 justify-end">
-              <button
-                onClick={handleEdit}
-                className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded hover:bg-primary-200"
-              >
-                수정
-              </button>
-              <button
-                onClick={handleDelete}
-                className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black hover:bg-gray-100"
-              >
-                삭제
-              </button>
+          <div className="flex justify-between items-center">
+            {sessionData && sessionData.user.id === post.user_id && (
+              <div className="flex space-x-2 justify-end">
+                <button
+                  onClick={handleEdit}
+                  className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded hover:bg-primary-200"
+                >
+                  수정
+                </button>
+                <button
+                  onClick={handleDelete}
+                  className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black hover:bg-gray-100"
+                >
+                  삭제
+                </button>
+              </div>
+            )}
+            <div className="flex items-center">
+              <PostLike post_id={post.id} onLikesChange={() => {}} initialLikes={0} />
             </div>
-          )}
+          </div>
         </div>
       )}
       <CommentSection postId={post.id} />

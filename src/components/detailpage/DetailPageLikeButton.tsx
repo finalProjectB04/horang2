@@ -1,5 +1,6 @@
 "use client";
 
+import { useModal } from "@/context/modal.context";
 import { Likes } from "@/types/Likes.types";
 import { createClient } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
@@ -24,6 +25,7 @@ interface ContextType {
 
 const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, contentTypeId, title, addr1, tel }) => {
   const [liked, setLiked] = useState<Boolean>(false);
+  const modal = useModal();
 
   const queryClient = useQueryClient();
 
@@ -49,18 +51,40 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
       }
     },
     onSuccess: () => {
-      alert("좋아요가 취소되었습니다");
+      modal.open({
+        title: "알림",
+        content: (
+          <div className="text-center">
+            <p>좋아요가 취소되었습니다.</p>
+          </div>
+        ),
+      });
       queryClient.invalidateQueries({ queryKey: ["likes", contentId] });
     },
     onError: (error) => {
-      console.error("뮤테이션 에러: 좋아요 취소실패", error);
+      modal.open({
+        title: "에러",
+        content: (
+          <div className="text-center">
+            <p>좋아요 취소 중 에러가 발생했습니다.</p>
+            <p>{error.message}</p>
+          </div>
+        ),
+      });
     },
   });
 
   const addMutation = useMutation<Likes, Error, Partial<Likes>, ContextType>({
     mutationFn: async (variables) => {
       if (!userId) {
-        alert("로그인 후 좋아요를 누를 수 있습니다.");
+        modal.open({
+          title: "알림",
+          content: (
+            <div className="text-center">
+              <p>로그인 후 좋아요를 누를 수 있습니다.</p>
+            </div>
+          ),
+        });
         throw new Error("세션 정보가 없습니다.");
       }
 
@@ -104,7 +128,25 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
 
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["likes", contentId] });
-      alert("좋아요 등록이 성공했습니다.");
+      modal.open({
+        title: "알림",
+        content: (
+          <div className="text-center">
+            <p>좋아요 등록이 성공했습니다.</p>
+          </div>
+        ),
+      });
+    },
+    onError: (error) => {
+      modal.open({
+        title: "에러",
+        content: (
+          <div className="text-center">
+            <p>좋아요 등록 중 에러가 발생했습니다.</p>
+            <p>{error.message}</p>
+          </div>
+        ),
+      });
     },
   });
 
@@ -140,7 +182,15 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
       }
       setLiked((prevLiked) => !prevLiked);
     } catch (error) {
-      console.error("좋아요 상태 업데이트를 실패했습니다", error);
+      modal.open({
+        title: "에러",
+        content: (
+          <div className="text-center">
+            <p>좋아요 상태 업데이트를 실패했습니다.</p>
+            <p>{(error as Error).message}</p>
+          </div>
+        ),
+      });
     }
   };
 

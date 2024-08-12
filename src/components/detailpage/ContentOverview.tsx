@@ -13,12 +13,14 @@ const ContentOverview: React.FC<ContentOverviewProps> = ({ overview }) => {
   return (
     <section className="w-full max-w-[1440px] mt-4 text-left py-12 md:w-full md:max-w-[1024px] md:mt-4 md:text-left md:py-8 lg:w-full lg:max-w-[1440px] lg:mt-4 lg:text-left lg:py-12 sm:px-[24px] sm:mt-[-30px]">
       <div className="text-start md:text-start">
-        <h1 className="text-3xl font-bold py-12 md:text-[30px] md:font-bold lg:text-[38px] lg:font-bold lg:pb-[65px] sm:text-[14px] sm:mb-[-30px]">
-          Overview
+        <h1 className="text-3xl font-bold py-12 md:text-[30px] md:font-bold lg:text-[38px] lg:font-bold lg:pb-[65px] sm:text-[14px] sm:mb-[-30px] sm:font-bold sm:leading-[24px]">
+          개요
         </h1>
         <div className="text-grey-700" style={{ whiteSpace: "pre-wrap" }}>
           {showMore ? (
-            <p className="sm:leading-[18px] sm:tracking-[-0.3px]">{overview}</p>
+            <p className="sm:leading-[24px] sm:tracking-[-0.3px] sm:text-[12px] sm:font-normal sm:grey-600">
+              {overview}
+            </p>
           ) : (
             <p>{overview.substring(0, 500)}...</p>
           )}
