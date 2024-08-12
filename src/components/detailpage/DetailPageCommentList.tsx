@@ -202,7 +202,9 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
       {commentsData?.comments &&
         commentsData.comments.map((comment: Comments, index) => (
           <div
-            className="sm:p-3 sm:border-none sm:border-grey-100 sm:rounded-lg sm:flex sm:flex-col sm:items-start sm:mx-auto sm:mb-[1px] sm:w-full md:p-4 md:border md:border-grey-100 md:rounded-xl md:flex md:flex-col md:items-start md:mx-auto md:mb-[32px] md:w-full lg:p-4 lg:border lg:border-grey-100 lg:rounded-xl lg:flex lg:flex-col lg:items-start lg:mx-auto lg:mb-[32px] lg:w-full"
+            className={`sm:p-3 sm:rounded-lg sm:flex sm:flex-col sm:items-start sm:mx-auto sm:mb-[1px] sm:w-full md:p-4 md:border md:border-grey-100 md:rounded-xl md:flex md:flex-col md:items-start md:mx-auto md:mb-[32px] md:w-full lg:p-4 lg:border lg:border-grey-100 lg:rounded-xl lg:flex lg:flex-col lg:items-start lg:mx-auto lg:mb-[32px] lg:w-full ${
+              !comment.comment_id ? "sm:border-none" : ""
+            }`}
             key={comment.comment_id ? comment.comment_id : `comment-${index}`}
           >
             <div className="sm:flex sm:items-center sm:justify-between sm:w-full sm:py-3 md:flex md:items-center md:justify-between md:w-full md:py-5 lg:flex lg:items-center lg:justify-between lg:w-full lg:py-5">
@@ -227,7 +229,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                 <div className="sm:flex sm:space-x-2 sm:justify-end md:flex md:space-x-2 md:justify-end md:pr-[95px] lg:flex lg:space-x-2 lg:justify-end lg:pr-[95px]">
                   <button
                     onClick={() => handleEdit(comment)}
-                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] sm:text-[14px] sm:text-grey-600 sm:font-normal sm:rounded md:flex md:justify-center md:items-center md:h-[36px] md:pb-7 md:py-0 md:px-[26px] md:text-[16px] md:text-grey-600 md:font-normal md:rounded lg:flex lg:pb-7 lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px] lg:text-[18px] lg:text-grey-600 lg:font-normal lg:rounded"
+                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:py-0  lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px]"
                   >
                     <Image
                       src="/assets/images/detailpage/Mode_edit.svg"
@@ -236,11 +238,11 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                       height={16}
                       className="sm:block md:hidden lg:hidden"
                     />
-                    <span className="sm:hidden">수정</span>
+                    <span className="hidden md:inline lg:inline">수정</span>
                   </button>
                   <button
                     onClick={() => handleDelete(comment.comment_id)}
-                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] sm:text-[14px] sm:text-grey-600 sm:font-normal sm:rounded md:flex md:justify-center md:items-center md:h-[36px] md:pb-7 md:py-0 md:px-[26px] md:rounded md:text-[16px] md:text-grey-600 md:font-normal lg:flex lg:pb-7 lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px] lg:rounded lg:text-[18px] lg:text-grey-600 lg:font-normal"
+                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:py-0 md:ps-[36px] lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px]"
                   >
                     <Image
                       src="/assets/images/detailpage/Delete.svg"
@@ -249,7 +251,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                       height={16}
                       className="sm:block md:hidden lg:hidden"
                     />
-                    <span className="sm:hidden">삭제</span>
+                    <span className="hidden md:inline lg:inline">삭제</span>
                   </button>
                 </div>
               )}
@@ -260,26 +262,26 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                   <textarea
                     value={newComment}
                     onChange={(event) => setNewComment(event.target.value)}
-                    className="resize-none sm:w-full sm:p-2 sm:border sm:rounded-[20px] sm:bg-grey-100 sm:break-all sm:text-[12px] sm:max-w-[280px] sm:text-grey-600 md:w-full md:ml-[-32px] md:p-2 md:border md:rounded md:break-all md:text-[24px] md:max-w-[800px] md:text-grey-700 lg:w-full lg:p-2 lg:border lg:rounded lg:break-all lg:text-[28px] lg:max-w-[1200px] lg:text-grey-700 lg:ml-[-32px]"
+                    className="resize-none sm:w-full sm:p-2 sm:rounded-[20px] sm:bg-grey-100 sm:break-all sm:text-[12px] sm:max-w-[280px] md:w-full md:ml-[-32px] md:p-2 md:border md:rounded lg:w-full lg:p-2 lg:border lg:rounded lg:break-all lg:text-[28px] lg:max-w-[1200px]"
                     style={{ wordBreak: "break-all" }}
                   />
                   <div className="sm:flex sm:justify-end sm:space-x-2 sm:mt-2 sm:pr-[20px] md:flex md:justify-end md:space-x-2 md:mt-2 md:pr-[95px] lg:flex lg:justify-end lg:space-x-2 lg:mt-2 lg:pr-[95px]">
                     <button
                       onClick={() => handleUpdate(comment.comment_id)}
-                      className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] sm:text-[14px] sm:text-grey-600 sm:font-normal sm:rounded md:flex md:justify-center md:items-center md:h-[36px] md:py-0 md:px-[26px] md:text-[16px] md:text-grey-600 md:font-normal md:rounded lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px] lg:text-[18px] lg:text-grey-600 lg:font-normal lg:rounded"
+                      className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:py-0 lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px]"
                     >
                       저장
                     </button>
                     <button
                       onClick={handleCancelEdit}
-                      className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] sm:text-[14px] sm:text-grey-600 sm:font-normal sm:rounded md:flex md:justify-center md:items-center md:h-[36px] md:py-0 md:px-[26px] md:text-[16px] md:text-grey-600 md:font-normal md:rounded lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px] lg:text-[18px] lg:text-grey-600 lg:font-normal lg:rounded"
+                      className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:py-0 md:ps-[36px] lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px]"
                     >
                       취소
                     </button>
                   </div>
                 </div>
               ) : (
-                <p className="sm:ps-[65px] sm:mb-2 sm:pb-2 sm:break-all sm:whitespace-pre-wrap sm:pr-[20px] sm:text-grey-600 sm:text-[12px] md:ps-[105px] md:mb-8 md:pb-5 md:break-all md:whitespace-pre-wrap md:pr-[70px] md:text-grey-700 md:text-[24px] lg:ps-[105px] lg:mb-8 lg:pb-5 lg:break-all lg:whitespace-pre-wrap lg:pr-[95px] lg:text-grey-700 lg:text-[28px]">
+                <p className="sm:ps-[65px] sm:mb-2 sm:pb-2 sm:break-all sm:whitespace-pre-wrap sm:pr-[20px] md:ps-[105px] md:mb-8 md:pb-5 md:break-all md:whitespace-pre-wrap md:pr-[70px] lg:ps-[105px] lg:mb-8 lg:pb-5 lg:break-all lg:whitespace-pre-wrap lg:pr-[95px] lg:text-grey-700 lg:text-[28px]">
                   {comment.comment}
                 </p>
               )}
