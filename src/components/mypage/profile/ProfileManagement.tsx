@@ -1,6 +1,9 @@
 "use client";
 
+import CommonModal from "@/components/common/modal/CommonModal";
+import { useModal } from "@/context/modal.context";
 import useAuth from "@/hooks/useAuth";
+import useCustomConfirm from "@/hooks/useCustomConfirm";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -22,20 +25,43 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
     confirmPassword,
     setConfirmPassword,
   } = useAuth();
+  const modal = useModal();
+  const confirm = useCustomConfirm();
 
   const [showPasswordFields, setShowPasswordFields] = useState(false);
 
   const handleSubmit = async () => {
     try {
       if (!nickname) {
-        return alert("닉네임을 입력해주세요.");
+        return modal.open({
+          title: "실패",
+          content: (
+            <div className="text-center ">
+              <p>닉네임을 입력해주세요</p>
+            </div>
+          ),
+        });
       }
       if (showPasswordFields) {
         if (password.length < 6 || confirmPassword.length < 6) {
-          return alert("비밀번호는 6글자 이상이어야 합니다.");
+          return modal.open({
+            title: "실패",
+            content: (
+              <div className="text-center ">
+                <p>비밀번호는 6글자 이상이어야 합니다.</p>
+              </div>
+            ),
+          });
         }
         if (password !== confirmPassword) {
-          return alert("입력하신 비밀번호가 다릅니다.");
+          return modal.open({
+            title: "실패",
+            content: (
+              <div className="text-center ">
+                <p>입력하신 비밀번호가 다릅니다.</p>
+              </div>
+            ),
+          });
         }
         await handleUpadatePassword();
       }

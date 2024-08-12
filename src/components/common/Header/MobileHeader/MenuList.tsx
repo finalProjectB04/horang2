@@ -18,10 +18,19 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
   const router = useRouter();
   const { user_nickname, profile_url } = useUserStore();
 
+  const handleNavigation = (href: string) => (event: React.MouseEvent) => {
+    if (!userId) {
+      event.preventDefault();
+      router.push("/signin");
+    } else {
+      router.push(href);
+    }
+  };
+
   const buttons = [
-    { name: "내 정보 관리", onClick: () => toggleModal("profile") },
-    { name: "대화 하기", onClick: () => router.push("/chat") },
-    { name: "나만의 여행", onClick: () => router.push("/travelMbti") },
+    { name: "내 정보 관리", onClick: handleNavigation("profile") },
+    { name: "대화 하기", onClick: handleNavigation("/chat") },
+    { name: "나만의 여행", onClick: handleNavigation("/travelMbti") },
     { name: "호랑이 모임", onClick: () => router.push("/community") },
   ];
 
@@ -96,7 +105,10 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
         </span>
       </Link>
       <Link href="/mypage">
-        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+        <span
+          className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"
+          onClick={handleNavigation("/mypage")}
+        >
           나의 공간
         </span>
       </Link>
