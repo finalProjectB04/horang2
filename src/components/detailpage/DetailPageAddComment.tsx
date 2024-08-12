@@ -1,5 +1,6 @@
 "use client";
 
+import { useModal } from "@/context/modal.context";
 import { createClient } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -17,11 +18,11 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
   const [comment, setComment] = useState<string>("");
   const queryClient = useQueryClient();
   const { id: userId, user_email: userEmail, user_nickname: userNickname, profile_url: profileUrl } = useUserStore();
+  const modal = useModal();
 
   const addCommentMutation = useMutation({
     mutationFn: async () => {
       if (!userId) {
-        console.log("User is not logged in. Comment cannot be added.");
         throw new Error("로그인 후 댓글을 작성할 수 있습니다.");
       }
 
@@ -43,12 +44,27 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
     },
     onSuccess: () => {
       setComment("");
-      alert("댓글 작성 성공!");
+      modal.open({
+        title: "성공!",
+        content: (
+          <div className="text-center">
+            <p>댓글 작성이 성공했습니다</p>
+          </div>
+        ),
+      });
+
       queryClient.invalidateQueries({ queryKey: ["comments", contentId] });
     },
-    onError: (error: Error) => {
-      alert(`댓글 작성 실패: ${error.message}`);
-    },
+    onError: (error: Error) =>
+      modal.open({
+        title: "실패!",
+        content: (
+          <div className="text-center ">
+            <p>댓글 작성이 실패했습니다</p>
+            <p>${error.message}</p>
+          </div>
+        ),
+      }),
   });
 
   const handleAddComment = () => {
@@ -56,7 +72,10 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
   };
 
   return (
-    <main className="sm:mt-[140px] sm:max-w-[375px] sm:mx-auto md:mt-4 md:max-w-[1024px] md:mx-auto lg:mt-4 lg:max-w-[1440px] lg:mx-auto">
+    <main
+      className="sm:mt-[140px] sm:max-w-[375px] sm:mx-auto md:mt-4 md:max-w-[1024px] md:mx-auto lg:mt-4
+     lg:max-w-[1440px] lg:mx-auto"
+    >
       {userId && (
         <div className="sm:pl-[22px] sm:flex sm:items-center sm:py-3 md:flex md:items-center md:mb-4 md:py-3 lg:flex lg:items-center lg:mb-4 lg:py-3">
           {profileUrl && (
