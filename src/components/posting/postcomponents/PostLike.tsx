@@ -6,7 +6,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 
 const DEFAULT_HEART = <Image src="/assets/images/defaultLikeIcon.png" alt="빈하트" width={48} height={48} />;
-const PUSHED_HEART = <Image src="/assets/images/successLikeIcon.png" alt="하트" width={48} height={48} />;
+const PUSHED_HEART = (
+  <Image src="/assets/images/successLikeIcon.png" alt="하트" width={48} height={48} className="mt-4" />
+);
 
 interface PostLikeProps {
   post_id: string;
