@@ -3,9 +3,10 @@ import React, { useEffect, useCallback } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 
-const DEFAULT_HEART = "🤍";
-const PUSHED_HEART = "❤️";
+const DEFAULT_HEART = <Image src="/assets/images/defaultLikeIcon.png" alt="빈하트" width={24.444} height={24.086} />;
+const PUSHED_HEART = <Image src="/assets/images/successLikeIcon.png" alt="하트" width={24.444} height={24.086} />;
 
 interface PostLikeProps {
   post_id: string;
@@ -104,8 +105,10 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
     <div>
       <div className="w-full px-2 py-3 flex flex-row gap-x-3">
         <button onClick={() => addMutation.mutate()} disabled={!user_id}>
-          <span className="text-2xl">{getLikes?.userLike ? PUSHED_HEART : DEFAULT_HEART}</span>
-          <span>{likeCount}</span>
+          <div className="flex items-center justify-center">
+            <span className="text-sm">{getLikes?.userLike ? PUSHED_HEART : DEFAULT_HEART}</span>
+            <span>{likeCount}</span>
+          </div>
         </button>
       </div>
     </div>

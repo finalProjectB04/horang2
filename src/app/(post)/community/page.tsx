@@ -60,11 +60,9 @@ const Community: React.FC = () => {
         </div>
         <button
           onClick={() => router.push("/writing")}
-          className="p-[13px] fixed bottom-8 left-8  rounded-full bg-orange-500 text-white text-base font-medium hover:bg-orange-600 transition duration-150 ease-in-out"
+          className=" px-[32px] py-[22px] fixed bottom-8 left-8  rounded-[20px] bg-orange-500 text-white text-base font-medium hover:bg-orange-600 transition duration-150 ease-in-out"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M15 0H13V13H0V15H13V28H15V15H28V13H15V0Z" fill="#FFDECC" />
-          </svg>
+          글쓰기+
         </button>
         <PostGrid posts={data} selectedCategory={selectedCategory} sortOrder={sortOrder} />
       </div>
