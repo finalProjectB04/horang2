@@ -11,7 +11,7 @@ import LoadingPage from "@/app/loading";
 interface TravelProps {
   searchTerm: string;
 }
-const FetchTravel = async (): Promise<ApiInformation[]> => {
+const fetchTravel = async (): Promise<ApiInformation[]> => {
   const response = await fetch("/api/main/tourism/travel");
   if (!response.ok) {
     throw new Error("error");
@@ -27,7 +27,7 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
     error,
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["travel"],
-    queryFn: FetchTravel,
+    queryFn: fetchTravel,
   });
 
   const sortedAndFilteredTravel: ApiInformation[] = useMemo(() => {
@@ -62,11 +62,11 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
 
   return (
     <>
-      <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">
+      <div className="mx-auto max-w-[327px]  py-8 lg:max-w-[1440px] flex flex-col lg:gap-10">
         <MainListTitle TitleName={`추천 여행지 `} onClick={() => router.push("/travel")} />
-      </div>
-      <div className=" mx-auto  max-w-[1440px] h-[346px] flex flex-col gap-10">
-        <MainTravelSlider travel={sortedAndFilteredTravel} isPending={isPending} error={error} />
+        <div className=" mx-auto  lg:max-w-[1440px] lg:h-[346px] flex flex-col lg:gap-10 max-w-[327px]">
+          <MainTravelSlider travel={sortedAndFilteredTravel} />
+        </div>
       </div>
     </>
   );

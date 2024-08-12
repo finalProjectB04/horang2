@@ -62,11 +62,11 @@ export const Festival = ({ searchTerm }: FestivalProps) => {
 
   return (
     <>
-      <div className="mx-auto  py-8 max-w-[1440px] flex flex-col gap-10">
+      <div className="mx-auto max-w-[327px] py-8 lg:max-w-[1440px] flex flex-col lg:gap-10">
         <MainListTitle TitleName={`축제 및 행사`} onClick={() => router.push("/festival")} />
       </div>
-      <div className=" mx-auto  max-w-[1440px] h-[346px] flex flex-col gap-10">
-        <MainTravelSlider travel={sortedFestival} isPending={isPending} error={error} />
+      <div className=" mx-auto  max-w-[327px] lg:max-w-[1440px] lg:h-[346px] flex flex-col lg:gap-10">
+        <MainTravelSlider travel={sortedFestival} />
       </div>
     </>
   );

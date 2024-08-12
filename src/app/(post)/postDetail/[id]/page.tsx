@@ -15,6 +15,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import CommentSection from "@/components/common/comments/CommentSection";
 import { useUserStore } from "@/zustand/userStore";
+import PostLike from "@/components/posting/postcomponents/PostLike";
+
 interface Post {
   content: string | null;
   created_at: string | null;
