@@ -3,19 +3,30 @@ import React from "react";
 
 export const CommunityImage = () => {
   return (
-    <div className="relative w-[1920px] h-[900px]">
-      <Image
-        src="/assets/images/community.png"
-        alt="background"
-        layout="fill"
-        objectFit="cover"
-        className="object-cover"
-      />
-      <div className="absolute bottom-10 left-0 w-full px-5 md:px-8 lg:px-10">
-        <div className="max-w-6xl mx-auto my-36">
-          <div className="relative w-full"></div>
+    <>
+      <div className="flex flex-col justify-center items-center">
+        <div className="relative w-[1920px] h-[900px] hidden lg:block">
+          <Image
+            src="/assets/images/community.png"
+            alt="background"
+            layout="fill"
+            objectFit="cover"
+            className="object-cover"
+          />
+        </div>
+
+        <div className="block  lg:hidden ">
+          <div className=" relative w-[375px] h-[295px] ">
+            <Image
+              src="/assets/images/community.png"
+              alt="background"
+              layout="fill"
+              objectFit="cover"
+              className="object-cover"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };

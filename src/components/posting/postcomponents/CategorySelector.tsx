@@ -1,6 +1,6 @@
 import React from "react";
 
-const categories = ["전체", "여행지", "음식", "축제", "놀거리", "숙소"];
+const categories = ["전체", "여행", "음식", "축제", "놀거리", "숙소"];
 
 interface CategorySelectorProps {
   selectedCategory: string;
@@ -13,7 +13,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, o
       {categories.map((category) => (
         <button
           key={category}
-          className={`px-4 py-2 font-bold text-base  ${
+          className={`p-2 lg:px-4 lg:py-2 font-bold lg:text-base text-xs ${
             selectedCategory === category
               ? "font-bold text-black border-b-2 border-orange-500 "
               : "text-gray-400 hover:text-gray-700"
