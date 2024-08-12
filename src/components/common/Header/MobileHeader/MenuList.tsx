@@ -95,6 +95,11 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
           내 근처 여행지
         </span>
       </Link>
+      <Link href="/mypage">
+        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+          나의 공간
+        </span>
+      </Link>
 
       <div className="space-y-2">
         {userId ? (
