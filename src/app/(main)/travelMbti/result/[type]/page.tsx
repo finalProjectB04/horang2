@@ -1,8 +1,12 @@
 "use client";
 
-import React from "react";
-import { useParams, useRouter } from "next/navigation";
+import LoadingPage from "@/app/loading";
+import Recommend from "@/components/recommend/Recommend";
+import { Item } from "@/types/APIResponse.type";
+import { fetchResultData } from "@/utils/travelMbti/FetchResultData";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import { results } from "../results";
 
 const TypeResultPage = () => {
@@ -10,15 +14,28 @@ const TypeResultPage = () => {
   const type = params.type as string; // type을 문자열로 변환합니다.
   const router = useRouter();
 
+  const { data, error, isLoading }: UseQueryResult<Item[], Error> = useQuery({
+    queryKey: ["resultData", type],
+    queryFn: () => fetchResultData(type),
+    enabled: !!type && !!results[type],
+    retry: 1,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+
   if (!type || !results[type]) {
     return <div>유효하지 않은 결과입니다.</div>;
   }
 
   const result = results[type];
 
+  if (isLoading) return <LoadingPage />;
+  if (error) return <p>{(error as Error).message}</p>;
+
   return (
     <div
-      className="w-full h-screen bg-cover bg-center fixed"
+      className="w-full min-h-screen bg-cover bg-center relative"
       style={{ backgroundImage: "url(/assets/images/backgrounds/backgrounds.png)" }}
     >
       <div className="flex justify-center items-start h-full pt-10">
@@ -41,6 +58,10 @@ const TypeResultPage = () => {
               <h3 className="text-4xl font-bold text-primary-600">{result.title}</h3>
               <p className="mt-6 text-[16px]">{result.description}</p>
             </header>
+            <div>
+              <Recommend data={data || []} MBTIResult={type} />
+            </div>
+
             <div className="flex flex-col gap-4 mt-8 text-center w-full">
               <Link href="/travelMbti" className="bg-primary-300 text-white p-3 rounded shadow-sm hover:bg-primary-500">
                 다시 시작하기
