@@ -56,7 +56,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {sortedAndFilteredPosts.map((post: Post) => (
-        <article key={post.id} className="rounded-lg overflow-hidden shadow-lg  ">
+        <article key={post.id} className="rounded-[32px] overflow-hidden shadow-lg  ">
           <div className="relative h-64">
             <Image
               src={getFirstImageUrl(post.files)}
