@@ -84,10 +84,10 @@ const DetailPage = () => {
         <KakaoMap mapx={parseFloat(mapx || "0")} mapy={parseFloat(mapy || "0")} />
       </section>
       <section className="md:w-full md:max-w-[1024px] md:mt-12 md:pt-12 lg:w-full lg:max-w-[1440px] lg:mt-20 lg:pt-[200px] sm:max-w-[640px]">
-        <div className="lg:pt-[33px] md:pt-[33px]">
+        <div className="lg:pt-[16px] md:pt-[16px]">
           <DetailPageAddComment contentId={contentId} contenTypeId={contentTypeId || ""} />
         </div>
-        <div className="lg:pt-[33px] md:pt-[33px]">
+        <div className="lg:pt-[16px] md:pt-[16px]">
           <DetailPageCommentList contentId={contentId} />
         </div>
       </section>

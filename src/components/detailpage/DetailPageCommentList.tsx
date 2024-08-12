@@ -2,12 +2,15 @@
 
 import { Comments } from "@/types/Comments.types";
 
+import { useModal } from "@/context/modal.context";
+import { formatDate } from "@/utils/detailpage/formDateUtil";
 import { createClient } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
-import { formatDate } from "./../../utils/detailpage/formDateUtil";
+
+import useCustomConfirm from "@/hooks/useCustomConfirm";
 import DetailPagePagination from "./DetailPagePagination";
 
 const supabase = createClient();
@@ -28,6 +31,8 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
   const [page, setPage] = useState<number>(1);
   const { id: userId, user_email: userEmail, user_nickname: userNickname, profile_url: profileUrl } = useUserStore();
   const queryClient = useQueryClient();
+  const modal = useModal();
+  const confirm = useCustomConfirm();
 
   const {
     data: commentsData,
@@ -56,10 +61,25 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
     onSuccess: () => {
       setEditCommentId(null);
       setNewComment("");
+      modal.open({
+        title: "성공!",
+        content: (
+          <div className="text-center">
+            <p>댓글 수정이 성공했습니다.</p>
+          </div>
+        ),
+      });
     },
     onError: (error: Error) => {
-      console.error("댓글 작성 실패:", error.message);
-      alert(`댓글 작성 실패: ${error.message}`);
+      modal.open({
+        title: "에러!",
+        content: (
+          <div className="text-center">
+            <p>에러가 발생했습니다.</p>
+            <p>{error.message}</p>
+          </div>
+        ),
+      });
     },
   });
 
@@ -67,36 +87,82 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
     mutationFn: async (commentId: string) => {
       await supabase.from("Comments").delete().eq("comment_id", commentId).single();
     },
-    onSuccess: () => {},
+    onSuccess: () => {
+      modal.open({
+        title: "성공!",
+        content: (
+          <div className="text-center">
+            <p>댓글 삭제가 성공했습니다.</p>
+          </div>
+        ),
+      });
+    },
     onError: (error: Error) => {
-      console.error("댓글 삭제 실패:", error.message);
-      alert(`댓글 삭제 실패: ${error.message}`);
+      modal.open({
+        title: "에러!",
+        content: (
+          <div className="text-center">
+            <p>댓글 삭제가 실패했습니다.</p>
+            <p>{error.message}</p>
+          </div>
+        ),
+      });
     },
   });
 
   const handleUpdate = async (commentId: string) => {
-    if (confirm("정말 수정하시겠습니까?")) {
+    const confirmed = await confirm("정말 수정하시겠습니까?");
+    if (confirmed) {
       updateCommentMutation.mutate(commentId, {
         onSuccess: () => {
-          alert("수정이 완료되었습니다.");
+          modal.open({
+            title: "성공!",
+            content: (
+              <div className="text-center">
+                <p>댓글 수정이 완료되었습니다.</p>
+              </div>
+            ),
+          });
           queryClient.invalidateQueries({ queryKey: ["comments", contentId] });
         },
       });
     } else {
-      alert("수정이 취소되었습니다.");
+      modal.open({
+        title: "알림!",
+        content: (
+          <div className="text-center">
+            <p>댓글 수정이 취소되었습니다.</p>
+          </div>
+        ),
+      });
     }
   };
 
   const handleDelete = async (commentId: string) => {
-    if (confirm("정말 삭제하시겠습니까?")) {
+    const confirmed = await confirm("정말 삭제하시겠습니까?");
+    if (confirmed) {
       deleteCommentMutation.mutate(commentId, {
         onSuccess: () => {
-          alert("삭제가 완료되었습니다.");
+          modal.open({
+            title: "성공!",
+            content: (
+              <div className="text-center">
+                <p>댓글 삭제가 성공했습니다.</p>
+              </div>
+            ),
+          });
           queryClient.invalidateQueries({ queryKey: ["comments", contentId] });
         },
       });
     } else {
-      alert("삭제가 취소되었습니다.");
+      modal.open({
+        title: "알림!",
+        content: (
+          <div className="text-center">
+            <p>댓글 삭제를 취소했습니다.</p>
+          </div>
+        ),
+      });
     }
   };
 
@@ -105,10 +171,19 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
     setNewComment(comment.comment || "");
   };
 
-  const handleCancelEdit = () => {
-    if (confirm("정말 취소하시겠습니까?")) {
+  const handleCancelEdit = async () => {
+    const confirmed = await confirm("정말 취소하시겠습니까?");
+    if (confirmed) {
       setEditCommentId(null);
       setNewComment("");
+      modal.open({
+        title: "알림!",
+        content: (
+          <div className="text-center">
+            <p>댓글 수정을 취소했습니다.</p>
+          </div>
+        ),
+      });
     }
   };
 
@@ -127,7 +202,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
       {commentsData?.comments &&
         commentsData.comments.map((comment: Comments, index) => (
           <div
-            className="sm:p-3 sm:border-none sm:border-grey-100 sm:rounded-lg sm:flex sm:flex-col sm:items-start sm:mx-auto sm:mb-[1px] sm:w-full md:p-4 md:border md:border-grey-100 md:rounded-xl md:flex md:flex-col md:items-start md:mx-auto md:mb-[1px] md:w-full lg:p-4 lg:border lg:border-grey-100 lg:rounded-xl lg:flex lg:flex-col lg:items-start lg:mx-auto lg:mb-[1px] lg:w-full"
+            className="sm:p-3 sm:border-none sm:border-grey-100 sm:rounded-lg sm:flex sm:flex-col sm:items-start sm:mx-auto sm:mb-[1px] sm:w-full md:p-4 md:border md:border-grey-100 md:rounded-xl md:flex md:flex-col md:items-start md:mx-auto md:mb-[32px] md:w-full lg:p-4 lg:border lg:border-grey-100 lg:rounded-xl lg:flex lg:flex-col lg:items-start lg:mx-auto lg:mb-[32px] lg:w-full"
             key={comment.comment_id ? comment.comment_id : `comment-${index}`}
           >
             <div className="sm:flex sm:items-center sm:justify-between sm:w-full sm:py-3 md:flex md:items-center md:justify-between md:w-full md:py-5 lg:flex lg:items-center lg:justify-between lg:w-full lg:py-5">
