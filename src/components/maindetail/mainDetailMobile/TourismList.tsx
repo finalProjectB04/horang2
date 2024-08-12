@@ -69,23 +69,45 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
 
   return (
     <>
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <div className="mx-auto py-8 max-w-[1440px] flex flex-col gap-10">
-        <div className="flex my-6 gap-3">
-          <DetailTitle />
-          <h3 className="text-2xl font-bold">{title}</h3>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10py-8 max-w-[1440px]">
-          {displayedData.map((item) => (
-            <TravelCard key={item.contentid} item={item} />
-          ))}
-        </div>
-        {displayedData.length < filteredData.length && (
-          <div ref={ref} className="py-4 text-center">
-            Loading more...
+      <div className=" hidden lg:block">
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <div className="mx-auto py-8 max-w-[1440px] flex flex-col gap-10">
+          <div className="flex my-6 gap-3">
+            <DetailTitle />
+            <h3 className="text-2xl font-bold">{title}</h3>
           </div>
-        )}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10py-8 max-w-[1440px]">
+            {displayedData.map((item) => (
+              <TravelCard key={item.contentid} item={item} />
+            ))}
+          </div>
+          {displayedData.length < filteredData.length && (
+            <div ref={ref} className="py-4 text-center">
+              Loading more...
+            </div>
+          )}
+        </div>
+      </div>
+      <div className=" block  lg:block">
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <div className="mx-auto py-8 max-w-[327px] flex flex-col gap-10">
+          <div className="flex my-6 gap-3">
+            <DetailTitle />
+            <h3 className="text-2xl font-bold">{title}</h3>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10py-8 max-w-[1440px]">
+            {displayedData.map((item) => (
+              <TravelCard key={item.contentid} item={item} />
+            ))}
+          </div>
+          {displayedData.length < filteredData.length && (
+            <div ref={ref} className="py-4 text-center">
+              Loading more...
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

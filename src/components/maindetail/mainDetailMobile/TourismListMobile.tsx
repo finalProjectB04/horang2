@@ -2,13 +2,12 @@
 
 import LoadingPage from "@/app/loading";
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
-
 import { SearchBar } from "@/components/maindetail/SearchBar";
-import { TravelCard } from "@/components/maindetail/TravelCard";
 import { ApiInformation } from "@/types/Main";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useMemo, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import { TravelCardMobile } from "./TravelCardMobile";
 
 // 관광 유형을 정의하는 인터페이스
 interface TourismListProps {
@@ -25,7 +24,7 @@ const fetchTourismData = async (contentTypeId: number): Promise<ApiInformation[]
   return response.json();
 };
 
-export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }) => {
+export const TourismListMobile: React.FC<TourismListProps> = ({ contentTypeId, title }) => {
   const [displayCount, setDisplayCount] = useState<number>(12);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { ref, inView } = useInView();
@@ -66,27 +65,29 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
 
   if (isPending) return <LoadingPage />;
   if (error) return <div>Error: {error.message}</div>;
-
   return (
-    <>
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <div className="mx-auto py-8 max-w-[1440px] flex flex-col gap-10">
-        <div className="flex my-6 gap-3">
-          <DetailTitle />
-          <h3 className="text-2xl font-bold">{title}</h3>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10py-8 max-w-[1440px]">
-          {displayedData.map((item) => (
-            <TravelCard key={item.contentid} item={item} />
-          ))}
-        </div>
-        {displayedData.length < filteredData.length && (
-          <div ref={ref} className="py-4 text-center">
-            Loading more...
+    <div>
+      <div className="  block  lg:hidden">
+        <div className="flex flex-col justify-center items-center">
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <div className=" max-w-[326px]">
+            <div className="flex my-6 gap-3">
+              <DetailTitle />
+              <h3 className="text-2xl font-bold">{title}</h3>
+            </div>
           </div>
-        )}
+          <div className="max-w-[326px] flex flex-wrap gap-1 items-center justify-center ">
+            {displayedData.map((item) => (
+              <TravelCardMobile key={item.contentid} item={item} />
+            ))}
+          </div>
+          {displayedData.length < filteredData.length && (
+            <div ref={ref} className="py-4 text-center">
+              Loading more...
+            </div>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 };

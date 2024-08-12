@@ -1,4 +1,3 @@
-import ClientHeader from "@/components/common/Header/ClientHeader";
 import { ModalProvider } from "@/context/modal.context";
 import QueryProvider from "@/provider/QueryProvider";
 import RecoilProvider from "@/provider/RecoilProvider";
@@ -7,6 +6,8 @@ import Head from "next/head";
 import Script from "next/script";
 import "swiper/swiper-bundle.css";
 import "./globals.css";
+
+import ClientHeader from "@/components/common/Header/ClientHeader";
 
 export const metadata: Metadata = {
   title: "horang",
