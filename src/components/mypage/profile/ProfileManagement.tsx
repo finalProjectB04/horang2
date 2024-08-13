@@ -15,7 +15,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
     handleImageClick,
     handleImageChange,
     handleUpdateUser,
-    handleUpadatePassword,
+    handleUpdatePassword,
     previewUrl,
     nickname,
     setNickname,
@@ -62,7 +62,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
             ),
           });
         }
-        await handleUpadatePassword();
+        await handleUpdatePassword();
       }
       if (!confirm("정말 변경하시겠습니까?")) {
         return;
@@ -83,11 +83,11 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
             alt="Profile Image"
             width={96}
             height={96}
-            style={{ objectFit: "cover" }}
-            className="rounded-full border-2 border-gray-300"
+            layout="fixed"
+            className="rounded-full border-2 border-gray-300 object-cover h-24"
           />
           <input type="file" id="profileImage" className="hidden" accept="image/*" onChange={handleImageChange} />
-          <div className="absolute bottom-0 right-0 mb-[-5px] mr-[-5px]">
+          <div className="absolute bottom-0 right-0 mb-0 mr-0">
             <Image
               src="/assets/images/edit_image.png"
               alt="edit_image"

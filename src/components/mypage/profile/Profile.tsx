@@ -36,7 +36,7 @@ const Profile: React.FC = () => {
   ];
 
   return (
-    <section className="md:border-b-2 lg:border-b-2 sm:flex-col flex items-center sm:justify-center md:justify-between lg:justify-between sm:mt-[20px] md:mt-[60px] md:pb-16 md:mb-16 lg:mt-[60px] lg:pb-16 lg:mb-16">
+    <section className="md:border-b-2 lg:border-b-2 sm:flex-col flex sm:justify-center md:justify-between lg:justify-between sm:mt-[20px] md:mt-[60px] md:pb-16 md:mb-16 lg:mt-[60px] lg:pb-16 lg:mb-16">
       <button
         className="sm:block md:hidden lg:hidden w-fit flex items-center justify-start pl-6 my-3"
         onClick={() => router.back()}
@@ -44,13 +44,13 @@ const Profile: React.FC = () => {
         <Image src="/assets/images/back.png" width={10} height={17} alt="뒤로가기" />
       </button>
       <div className="px-6 py-5">
-        <div className="sm:flex md:hidden lg:hidden w-full rounded-[20px] border border-primary-100 p-[18px]">
+        <div className="sm:flex md:hidden lg:hidden w-full items-center rounded-[20px] border border-primary-100 p-[18px]">
           <Image
             src={profile_url || "/assets/images/profile_ex.png"}
             alt="profile"
             width={48}
             height={48}
-            className="rounded-full"
+            className="object-cover h-12 rounded-full"
           />
           <div className="ml-4 text-start text-secondary-800 font-normal text-[14px] leading-[1.5] tracking[-0.75px]">
             <strong>{user_nickname}</strong>님
@@ -64,7 +64,7 @@ const Profile: React.FC = () => {
           alt="profile"
           width={200}
           height={200}
-          className="rounded-full"
+          className="object-cover h-[200px] rounded-full"
         />
       </div>
       <div className="sm:block md:hidden lg:hidden w-full my-5">
@@ -73,15 +73,11 @@ const Profile: React.FC = () => {
             <button key={index} onClick={button.onClick}>
               <div className="border border-primary-700 rounded-xl w-[54px] h-[54px] m-[9px]"></div>
               <p className="text-[12px] text-secondary-800">{button.name}</p>
-              {button.name === "내 정보 관리" && (
-                <Modal id="profile">
-                  <ProfileManagement onClick={() => toggleModal("profile")} />
-                </Modal>
-              )}
             </button>
           ))}
         </div>
       </div>
+
       <div className="sm:hidden md:block lg:block w-[420px] mr-8">
         <div className="mb-6 text-start text-secondary-800 font-normal text-[24px] leading-[1.5] tracking[-0.75px]">
           <strong>{user_nickname}</strong>님 행복한 국내 여행하세요
@@ -90,15 +86,17 @@ const Profile: React.FC = () => {
           {buttons.map((button, index) => (
             <React.Fragment key={index}>
               <Button hover={true} buttonName={button.name} onClick={button.onClick} />
-              {button.name === "내 정보 관리" && (
-                <Modal id="profile">
-                  <ProfileManagement onClick={() => toggleModal("profile")} />
-                </Modal>
-              )}
             </React.Fragment>
           ))}
         </div>
       </div>
+
+      {buttons.some((button) => button.name === "내 정보 관리") && (
+        <Modal id="profile">
+          <ProfileManagement onClick={() => toggleModal("profile")} />
+        </Modal>
+      )}
+
       <div
         className="sm:block md:hidden lg:hidden relative cursor-pointer my-5"
         onClick={() => router.push("location")}
