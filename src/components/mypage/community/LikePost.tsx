@@ -32,7 +32,7 @@ const LikePost = () => {
   }, []);
 
   const handleGoLikePosts = (): void => {
-    console.log("동작");
+    console.log("동작"); // 추후 기능 추가 여부
   };
 
   const getLikePostsQuery = useQuery({

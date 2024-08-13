@@ -39,8 +39,6 @@ export default function Person({
     enabled: !!userId,
   });
 
-  console.log(lastMessages);
-
   const lastMessage = lastMessages?.[0]?.message || "서로 대화를 해보세요!";
 
   return (

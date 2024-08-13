@@ -33,7 +33,7 @@ const MyPost = () => {
   }, []);
 
   const handleGoMyPosts = (): void => {
-    console.log("동작");
+    console.log("동작"); // 추후 기능 추가 여부
   };
 
   const getPostsQuery = useQuery({

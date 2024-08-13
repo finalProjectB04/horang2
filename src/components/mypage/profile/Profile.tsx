@@ -36,7 +36,7 @@ const Profile: React.FC = () => {
   ];
 
   return (
-    <section className="md:border-b-2 lg:border-b-2 sm:flex-col flex sm:justify-center md:justify-between lg:justify-between sm:mt-[20px] md:mt-[60px] md:pb-16 md:mb-16 lg:mt-[60px] lg:pb-16 lg:mb-16">
+    <section className="md:border-b-2 lg:border-b-2 sm:flex-col flex items-center sm:justify-center md:justify-between lg:justify-between sm:mt-[20px] md:mt-[60px] md:pb-16 md:mb-16 lg:mt-[60px] lg:pb-16 lg:mb-16">
       <button
         className="sm:block md:hidden lg:hidden w-fit flex items-center justify-start pl-6 my-3"
         onClick={() => router.back()}
@@ -45,7 +45,13 @@ const Profile: React.FC = () => {
       </button>
       <div className="px-6 py-5">
         <div className="sm:flex md:hidden lg:hidden w-full rounded-[20px] border border-primary-100 p-[18px]">
-          <Image src={profile_url || "/assets/images/profile_ex.png"} alt="profile" width={48} height={48} />
+          <Image
+            src={profile_url || "/assets/images/profile_ex.png"}
+            alt="profile"
+            width={48}
+            height={48}
+            className="rounded-full"
+          />
           <div className="ml-4 text-start text-secondary-800 font-normal text-[14px] leading-[1.5] tracking[-0.75px]">
             <strong>{user_nickname}</strong>님
             <br /> 행복한 국내 여행하세요
@@ -53,7 +59,13 @@ const Profile: React.FC = () => {
         </div>
       </div>
       <div className="sm:hidden md:block lg:block mr-8">
-        <Image src={profile_url || "/assets/images/profile_ex.png"} alt="profile" width={200} height={200} />
+        <Image
+          src={profile_url || "/assets/images/profile_ex.png"}
+          alt="profile"
+          width={200}
+          height={200}
+          className="rounded-full"
+        />
       </div>
       <div className="sm:block md:hidden lg:hidden w-full my-5">
         <div className="flex justify-center">

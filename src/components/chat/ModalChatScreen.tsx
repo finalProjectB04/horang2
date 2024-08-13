@@ -80,7 +80,7 @@ const ModalChatScreen = ({ id }: ModalChatScreenProps) => {
         <Image src="/assets/images/back.png" width={10} height={17} alt="뒤로가기" />
       </button>
       <div className="h-screen flex items-center overflow-y-auto flex-col p-4 gap-3" onClick={stopBubble}>
-        <div className="h-full max-h-[80%] overflow-y-auto hidden-scroll">
+        <div className="h-full max-h-[70%] overflow-y-auto hidden-scroll">
           <div className="flex justify-start">
             <div className="w-[360px] flex flex-col p-2 gap-2">
               {getAllMessageQuery.data?.map((message, index) => {

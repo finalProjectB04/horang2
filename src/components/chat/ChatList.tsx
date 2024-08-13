@@ -50,8 +50,6 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
         const newState = channel.presenceState();
         const newStateObj = JSON.parse(JSON.stringify(newState));
         setPresence(newStateObj);
-        console.log(newState);
-        console.log(newStateObj?.[loggedInUser.id]);
       },
     );
 
