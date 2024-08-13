@@ -5,73 +5,95 @@ interface ContentDetailProps {
   addr1: string | null;
   tel: string | null;
   homepageLink: string | null;
+  contenttypeid: string | null;
 }
 
-const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepageLink }) => {
+const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepageLink, contenttypeid }) => {
   const truncateText = (text: string, maxLength: number) => {
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength) + "...";
   };
 
+  const getContentTypeName = (id: string | null) => {
+    switch (id) {
+      case "12":
+        return "관광지";
+      case "14":
+        return "문화시설";
+      case "15":
+        return "축제/공연/행사";
+      case "25":
+        return "여행코스";
+      case "28":
+        return "레포츠";
+      case "32":
+        return "숙박";
+      case "38":
+        return "쇼핑";
+      case "39":
+        return "음식";
+      default:
+        return "기타";
+    }
+  };
+
   return (
-    <div className="md:text-left md:text-grey-700 lg:text-left lg:text-grey-700 sm:text-left">
-      {title && (
-        <div className="md:flex md:items-center md:py-2 lg:flex lg:items-center lg:py-3 sm:flex sm:mb-[10px]">
+    <div className="text-left text-grey-700 ">
+      {contenttypeid && (
+        <div className="flex items-center py-3 sm:mb-2">
           <Image
             src="/assets/images/detailpage/marker_title.svg"
-            alt="장소명"
+            alt="컨텐츠타입"
             width={32}
             height={32}
-            className="sm:w-[20px] sm:h-[20px]"
+            className="sm:w-5 sm:h-5"
           />
-          <span className="md:text-[20px] md:font-normal md:ml-8 lg:text-[28px] lg:font-normal lg:ml-12 sm:text-grey-600 sm:font-normal sm:text-[12px] sm:pl-2">
-            {title}
+          <span className="ml-4 sm:text-[12px] sm:ml-2 md:text-lg lg:text-xl font-normal text-grey-600">
+            {getContentTypeName(contenttypeid)}
           </span>
         </div>
       )}
 
       {addr1 && (
-        <div className="md:flex md:items-center md:py-2 lg:flex lg:items-center lg:py-3 sm:flex sm:mb-[10px]">
+        <div className="flex items-center py-3 sm:mb-2">
           <Image
             src="/assets/images/detailpage/marker_address.svg"
             alt="주소"
             width={32}
             height={32}
-            className="sm:w-[20px] sm:h-[20px]"
+            className="sm:w-5 sm:h-5"
           />
-          <span className="md:text-[20px] md:font-normal md:ml-8 lg:text-[28px] lg:font-normal lg:ml-12 sm:text-[12px] sm:text-grey-600 sm:font-normal sm:pl-2">
-            {addr1}
-          </span>
+          <span className="ml-4 sm:text-[12px] sm:ml-2 md:text-lg lg:text-xl font-normal text-grey-600">{addr1}</span>
         </div>
       )}
+
       {tel && (
-        <div className="md:flex md:items-center md:py-2 lg:flex lg:items-center lg:py-3 sm:flex sm:mb-[10px]">
+        <div className="flex items-center py-3 sm:mb-2">
           <Image
             src="/assets/images/detailpage/marker_tel.svg"
-            alt="tel"
+            alt="전화번호"
             width={32}
             height={32}
-            className="sm:w-[20px] sm:h-[20px]"
+            className="sm:w-5 sm:h-5"
           />
-          <span className="md:text-[20px] md:font-normal md:ml-8 lg:text-[28px] lg:font-normal lg:ml-12 sm:text-[12px] sm:text-grey-600 sm:font-normal sm:pl-2">
-            {tel}
-          </span>
+          <span className="ml-4 sm:text-[12px] sm:ml-2 md:text-lg lg:text-xl font-normal text-grey-600">{tel}</span>
         </div>
       )}
+
       {homepageLink && (
-        <div className="md:flex md:items-center md:py-2 lg:flex lg:items-center lg:py-3 sm:flex sm:mb-[10px]">
+        <div className="flex items-center py-3 sm:mb-2">
           <Image
             src="/assets/images/detailpage/marker_homepage.svg"
-            alt="homepage"
+            alt="홈페이지"
             width={32}
             height={32}
-            className="sm:w-[20px] sm:h-[20px]"
+            className="sm:w-5 sm:h-5"
           />
           <a
             href={homepageLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="md:text-blue-500 md:underline md:text-[20px] lg:text-blue-500 lg:underline md:ml-8 lg:ml-12 lg:text-[28px] sm:text-[12px] sm:text-grey-600 sm:font-normal sm:pl-2"
+            className="ml-4 sm:text-[12px] sm:ml-2 md:text-lg lg:text-xl font-normal text-blue-500 underline"
           >
             <span className="sm:hidden md:inline lg:inline">{homepageLink}</span>
             <span className="sm:inline md:hidden lg:hidden">{truncateText(homepageLink, 50)}</span>
