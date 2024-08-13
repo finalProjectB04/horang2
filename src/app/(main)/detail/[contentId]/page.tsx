@@ -47,27 +47,30 @@ const DetailPage = () => {
     <main className="sm:w-full sm:max-w-full sm:mx-auto md:max-w-[1024px] md:mx-auto md:grid md:justify-items-center lg:max-w-[1440px] lg:mx-auto lg:grid lg:justify-items-center">
       <DetailPageImage contentItemData={contentItemData} />
 
-      <section className="flex justify-between items-center w-full max-w-[1440px] lg:pt-[140px] md:flex md:items-center md:justify-between md:w-full md:max-w-[1024px] md:mt-8 md:px-[32px] sm:px-[24px] sm:pt-[46px] sm:pb-[17px]">
+      <section className="flex justify-between items-center w-full max-w-[1440px] lg:pt-[140px] md:items-center md:justify-between md:w-full md:max-w-[1024px] md:mt-8 md:px-[32px] sm:px-[24px] sm:pt-[46px] sm:pb-[17px]">
         <div className="text-left md:flex-grow">
           <div className="lg:text-[38px] lg:font-bold md:text-[30px] md:font-semibold sm:text-[14px] sm:font-bold">
             {title}
           </div>
         </div>
-        <div className="flex justify-center space-x-2 md:mt-0">
-          <DetailPageLikeButton
-            contentId={contentId}
-            imageUrl={imageUrl || ""}
-            title={title || ""}
-            contentTypeId={contentTypeId || ""}
-            addr1={addr1 || ""}
-            tel={tel || ""}
-          />
-          <button onClick={() => setIsModalOpen(true)}>
+        <div className="flex justify-end space-x-2 items-center md:mt-0">
+          <div className="flex items-center">
+            <DetailPageLikeButton
+              contentId={contentId}
+              imageUrl={imageUrl || ""}
+              title={title || ""}
+              contentTypeId={contentTypeId || ""}
+              addr1={addr1 || ""}
+              tel={tel || ""}
+            />
+          </div>
+          <button onClick={() => setIsModalOpen(true)} className="flex items-center">
             <Image
               src="/assets/images/shareModal.svg"
               alt="Custom Button Image"
               width={48}
               height={48}
+              priority
               className="md:w-12 md:h-12 sm:w-[20px] sm:h-[20px]"
             />
           </button>
