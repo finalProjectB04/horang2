@@ -133,33 +133,33 @@ export interface Question {
 
 export const questions: Question[] = [
   {
-    question: "여행할 때, 숙소에서 가장 중요한 것은?",
+    question: "여행을 준비하는 당신! 숙소를 고를 때 가장 중요한 것은?",
     options: [
-      { answer: "최고급 호텔, 리조트에서 자는 걸 선호해요", type: "luxury" },
-      { answer: "저렴하고 효율적인 숙소를 찾아요", type: "cheap" },
-      { answer: "편안하고 아늑한 숙소가 중요해요", type: "homebody" },
-      { answer: "숙소는 그저 잠만 자는 곳이에요", type: "wanderer" },
-      { answer: "맛있는 조식이 있어야해요", type: "foodie" },
+      { answer: "최고급 호텔, 리조트에서 자야만 해요", type: "luxury" },
+      { answer: "가성비 좋고 깔끔한 숙소를 찾아요", type: "cheap" },
+      { answer: "조용하고 아늑한 숙소가 좋아요", type: "homebody" },
+      { answer: "숙소는 상관없어! 잠만 자는 곳이에요", type: "wanderer" },
+      { answer: "어쨋든 맛있는 조식이 있어야해요", type: "foodie" },
     ],
   },
   {
-    question: "여행 중 가장 좋아하는 활동은 무엇인가요?",
+    question: "20년 지기 친구와 함께가는 여행! 우리의 텐션은?",
     options: [
-      { answer: "지역의 역사와 문화를 탐방해요", type: "cultureLover" },
-      { answer: "여행지, 사람 많은 곳을 찾아다녀요", type: "cityTraveler" },
-      { answer: "산이나 해변에서 야외 액티비티를 즐겨요", type: "active" },
-      { answer: "숙소에서 편하게 쉬며 독서나 영화를 감상해요", type: "homebody" },
-      { answer: "관광지의 쇼핑몰을 꼭 찾아가요", type: "luxury" },
-    ],
-  },
-  {
-    question: "여행 중 액티비티를 즐기시나요?",
-    options: [
-      { answer: "다양한 놀이공원, 축제에 참여하고 모험을 좋아해요", type: "active" },
+      { answer: "다양한 놀이공원, 축제에 참여하고 새로운 사람을 만나요", type: "active" },
       { answer: "주로 자연 속에서 휴식하고, 편안한 시간을 선호해요", type: "relaxationSeeker" },
-      { answer: "쉬지 않고 돌아다니면서 할 수 있는 건 다 해요", type: "wanderer" },
+      { answer: "쉬는 건 사치! 계획표에 빈틈없이 할 수 있는 건 다 해요", type: "wanderer" },
       { answer: "새로운 도시를 구경하고 여행지 방문을 선호해요", type: "cityTraveler" },
       { answer: "산책하며 주변을 구경하는 걸로 충분해요", type: "cheap" },
+    ],
+  },
+  {
+    question: "우리는 여행 계획 중! 꼭 넣는 코스는?",
+    options: [
+      { answer: "여행지의 박물관, 미술관은 필수! 역사와 문화를 탐방해요", type: "cultureLover" },
+      { answer: "주요 도시를 돌며 그 나라의 삶의 모습을 구경해요.", type: "cityTraveler" },
+      { answer: "산이나 해변에서 야외 액티비티를 즐겨요", type: "active" },
+      { answer: "숙소에서 쉬는시간 필수! 독서나 영화를 감상해요", type: "homebody" },
+      { answer: "관광은 쇼핑이지! 쇼핑몰을 꼭 찾아가요", type: "luxury" },
     ],
   },
   {
