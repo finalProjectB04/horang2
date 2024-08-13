@@ -1,26 +1,30 @@
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/zustand/userStore";
 import Link from "next/link";
+import { createClient } from "@/utils/supabase/client";
+
+const supabase = createClient();
 
 interface AuthButtonsProps {
   userId: string | null;
-  handleLogout: () => void;
+  handleLogout: () => Promise<void>;
 }
 
 const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
-  const [mounted, setMounted] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const { clearUser } = useUserStore((state) => ({
     clearUser: state.clearUser,
   }));
 
   useEffect(() => {
-    setMounted(true);
+    setIsClient(true);
   }, []);
 
   const onLogoutClick = async () => {
     if (!userId) return;
 
     try {
+      await supabase.auth.signOut();
       await handleLogout();
       clearUser();
     } catch (error) {
@@ -28,7 +32,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
     }
   };
 
-  if (!mounted) {
+  if (!isClient) {
     return null;
   }
 

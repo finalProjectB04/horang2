@@ -6,7 +6,6 @@ const supabase = createClient();
 
 const useAuth = () => {
   const { id, user_email, setUser, profile_url } = useUserStore();
-
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -29,6 +28,8 @@ const useAuth = () => {
 
   const handleUpdateUser = async () => {
     try {
+      let newProfileUrl = profileImageUrl;
+
       if (profileImage) {
         const { data: avatarData, error: uploadError } = await supabase.storage
           .from("profiles")
@@ -40,18 +41,18 @@ const useAuth = () => {
         }
 
         const { data: publicUrlData } = supabase.storage.from("profiles").getPublicUrl(avatarData.path);
-        setProfileImageUrl(publicUrlData.publicUrl);
+        newProfileUrl = publicUrlData.publicUrl;
 
         const { error: updateError } = await supabase
           .from("Users")
-          .update({ user_nickname: nickname, profile_url: publicUrlData.publicUrl })
+          .update({ user_nickname: nickname, profile_url: newProfileUrl })
           .eq("id", id as string);
 
         if (updateError) {
           console.error("Error updating user:", updateError);
         } else {
           console.log("User information updated successfully");
-          setUser(id as string, user_email as string, nickname, publicUrlData.publicUrl);
+          setUser(id as string, user_email as string, nickname, newProfileUrl, "provider_value", "provider_id_value");
         }
       } else {
         const { error: updateError } = await supabase
@@ -63,7 +64,7 @@ const useAuth = () => {
           console.error("Error updating user:", updateError);
         } else {
           console.log("User information updated successfully");
-          setUser(id as string, user_email as string, nickname, profileImageUrl);
+          setUser(id as string, user_email as string, nickname, profileImageUrl, "provider_value", "provider_id_value");
         }
       }
     } catch (error) {
@@ -71,7 +72,7 @@ const useAuth = () => {
     }
   };
 
-  const handleUpadatePassword = async () => {
+  const handleUpdatePassword = async () => {
     const { error: updateError } = await supabase.auth.updateUser({ password: confirmPassword });
     if (!updateError) {
       alert("변경이 완료되었습니다.");
@@ -86,7 +87,7 @@ const useAuth = () => {
     handleImageClick,
     handleImageChange,
     handleUpdateUser,
-    handleUpadatePassword,
+    handleUpdatePassword,
     previewUrl,
     nickname,
     setNickname,

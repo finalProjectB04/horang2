@@ -16,7 +16,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
     handleImageClick,
     handleImageChange,
     handleUpdateUser,
-    handleUpadatePassword,
+    handleUpdatePassword,
     previewUrl,
     nickname,
     setNickname,
@@ -63,7 +63,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
             ),
           });
         }
-        await handleUpadatePassword();
+        await handleUpdatePassword();
       }
       if (!confirm("정말 변경하시겠습니까?")) {
         return;
