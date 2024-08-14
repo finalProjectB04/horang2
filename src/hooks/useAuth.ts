@@ -20,9 +20,11 @@ const useAuth = () => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileObj = e.target.files?.[0];
+
     if (fileObj) {
       setProfileImage(fileObj);
       const objectUrl = URL.createObjectURL(fileObj);
+
       setPreviewUrl(objectUrl);
     }
   };

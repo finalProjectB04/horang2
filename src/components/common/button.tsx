@@ -20,13 +20,13 @@ const Button = ({ buttonName, bgColor, textColor, paddingY, marginY, opacity, ho
       className={`rounded-[10px] border border-solid border-primary-100
         font-bold ${bgColor ? bgColor : "bg-white"} ${textColor ? textColor : "text-primary-600"} ${
         marginY ? marginY : ""
-      } ${paddingY ? paddingY : "py-1"} [&+&]: px-4 ${opacity} ${
+      } ${paddingY ? paddingY : "py-1"} px-4 ${opacity} ${
         hover ? "hover:bg-primary-100 hover:text-secondary-800" : ""
-      } w-[206px] h-[60px] flex items-center justify-center`}
+      } w-[137px] h-[40px] flex items-center justify-center`}
       onClick={onClick}
     >
       <Image src={`/assets/images/Vector.png`} alt="Korea Travel Destination" width={10} height={10} className="mr-2" />
-      <span>{buttonName}</span>
+      <p className="text-sm">{buttonName}</p>
     </button>
   );
 };

@@ -1,7 +1,6 @@
 "use server";
 
 import { Post } from "@/types/Post.types";
-import { Post_likes } from "@/types/Post_likes.types";
 import { createServerSupabaseClient } from "@/utils/supabase/serverAdmin";
 
 export async function getPosts({ myId }: { myId: string }): Promise<Post[]> {
