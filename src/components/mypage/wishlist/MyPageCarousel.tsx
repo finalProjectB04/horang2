@@ -61,7 +61,7 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
   });
 
   if (isPending) {
-    return <div className="sm:w-[375px] md:w-[1024px] lg:w-[1440px] h-full"></div>;
+    return <div className="sm:w-[375px] md:w-[960px] lg:w-[960px] h-full"></div>;
   }
 
   if (error) {
@@ -70,7 +70,7 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
 
   if (likes.length === 0) {
     return (
-      <div className="sm:w-[375px] md:w-[1024px] lg:w-[1440px] h-full flex items-center justify-center text-center font-semibold sm:text-xl md:text-2xl lg:text-3xl">
+      <div className="sm:w-[375px] md:w-[960px] lg:w-[960px] h-full flex items-center justify-center text-center font-semibold sm:text-sm md:text-lg lg:text-xl">
         좋아요한 장소가 없습니다.
       </div>
     );
@@ -117,7 +117,7 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
           }}
           modules={[Pagination]}
           className="my-page mySwiper"
-          style={{ width: "1920px", height: "830px" }}
+          style={{ width: "1280px", height: "500px" }}
         >
           {likes.map((like: Like) => (
             <SwiperSlide
@@ -129,14 +129,14 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
                 src={like.image_url}
                 alt={like.title}
                 className="object-cover w-full h-full"
-                width={1920}
-                height={830}
+                width={1280}
+                height={500}
               />
               <div className="absolute inset-y-0 left-0 w-[12%] bg-white opacity-70"></div>
               <div className="absolute inset-y-0 right-0 w-[12%] bg-white opacity-70"></div>
-              <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-black/30 to-transparent pb-24">
-                <p className="text-3xl font-bold text-yellow-300">{like.title}</p>
-                <p className="text-lg text-gray-200">{like.address}</p>
+              <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-black/30 to-transparent pb-16">
+                <p className="text-xl font-bold text-yellow-300">{like.title}</p>
+                <p className="text-base text-gray-200">{like.address}</p>
                 {like.tel && <p className="text-lg text-gray-200">{like.tel}</p>}
               </div>
               <div className="absolute inset-x-0 bottom-0 h-[10%] bg-white" />

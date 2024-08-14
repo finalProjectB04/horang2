@@ -1,6 +1,5 @@
 "use client";
 
-import CommonModal from "@/components/common/modal/CommonModal";
 import { useModal } from "@/context/modal.context";
 import useAuth from "@/hooks/useAuth";
 import useCustomConfirm from "@/hooks/useCustomConfirm";
@@ -82,13 +81,21 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
           <Image
             src={previewUrl}
             alt="Profile Image"
-            layout="intrinsic"
             width={96}
             height={96}
-            objectFit="cover"
-            className="rounded-full border-2 border-gray-300"
+            layout="fixed"
+            className="rounded-full border-2 border-gray-300 object-cover h-24"
           />
           <input type="file" id="profileImage" className="hidden" accept="image/*" onChange={handleImageChange} />
+          <div className="absolute bottom-0 right-0 mb-0 mr-0">
+            <Image
+              src="/assets/images/edit_image.png"
+              alt="edit_image"
+              width={35}
+              height={35}
+              className="relative z-10"
+            />
+          </div>
         </div>
         <form>
           <label htmlFor="nickname" className="block text-sm text-start mt-4 font-medium text-gray-700">
