@@ -52,7 +52,7 @@ const DetailPage = () => {
             {title}
           </div>
         </div>
-        <div className="flex justify-center space-x-2 ">
+        <div className="flex justify-center space-x-4">
           <DetailPageLikeButton
             contentId={contentId}
             imageUrl={imageUrl || ""}
@@ -67,7 +67,7 @@ const DetailPage = () => {
               alt="Custom Button Image"
               width={32}
               height={32}
-              className=" sm:w-[20px] sm:h-[20px] lg:mb-5"
+              className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]lg:mb-2"
             />
           </button>
           <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
