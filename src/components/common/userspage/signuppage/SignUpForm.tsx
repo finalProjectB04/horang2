@@ -7,7 +7,6 @@ interface SignUpFormProps {
   setConfirmPassword: (confirmPassword: string) => void;
   nickname: string;
   setNickname: (nickname: string) => void;
-  error: string;
   handleSignUp: () => void;
 }
 
@@ -20,7 +19,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
   setConfirmPassword,
   nickname,
   setNickname,
-  error,
   handleSignUp,
 }) => {
   return (
@@ -84,8 +82,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
       <button onClick={handleSignUp} className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
         회원가입
       </button>
-
-      {error && <p className="text-red-500 text-center">{error}</p>}
     </div>
   );
 };

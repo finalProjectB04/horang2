@@ -102,8 +102,6 @@ const DetailPage = () => {
           <DetailPageCommentList contentId={contentId} />
         </div>
       </section>
-
-      {/* <FloatingButton /> */}
     </main>
   );
 };

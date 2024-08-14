@@ -49,20 +49,26 @@ const Community: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center mb-14">
-        <CommunityImage />
-      </div>
+      <CommunityImage />
 
-      <div className="container w-[1440px] mx-auto ">
-        <div className="flex justify-between gap-5 mb-14 ">
+      <div className="container lg:w-[1440px] mx-auto lg:mt-14 w-[375px] ">
+        <div className="flex justify-between gap-5 lg:mb-14 mb-4 ">
           <CategorySelector selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
           <SortSelector sortOrder={sortOrder} onSortChange={setSortOrder} />
         </div>
         <button
           onClick={() => router.push("/writing")}
-          className=" px-[32px] py-[22px] fixed bottom-8 left-8  rounded-[20px] bg-orange-500 text-white text-base font-medium hover:bg-orange-600 transition duration-150 ease-in-out"
+          className="hidden lg:block z-20 px-[32px] py-[22px] fixed bottom-8 left-8  rounded-[20px] bg-orange-500 text-white text-base font-medium hover:bg-orange-600 transition duration-150 ease-in-out"
         >
           글쓰기+
+        </button>
+        <button
+          onClick={() => router.push("/writing")}
+          className="block lg:hidden z-20 p-[13px] fixed bottom-8 left-8  rounded-full bg-orange-500 text-white text-base font-medium hover:bg-orange-600 transition duration-150 ease-in-out"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M15 0H13V13H0V15H13V28H15V15H28V13H15V0Z" fill="#FFDECC" />
+          </svg>
         </button>
         <PostGrid posts={data} selectedCategory={selectedCategory} sortOrder={sortOrder} />
       </div>
