@@ -11,11 +11,17 @@ const DEFAULT_HEART = (
     alt="빈하트"
     width={48}
     height={32}
-    className=" w-4 h-4 mt-1 lg:mt-4"
+    className=" w-5 h-5 mt-[7px] lg:w-[48px] lg:h-[48px] lg:mt-4"
   />
 );
 const PUSHED_HEART = (
-  <Image src="/assets/images/successLikeIcon.png" alt="하트" width={48} height={32} className="w-4 h-4 mt-1 lg:mt-4" />
+  <Image
+    src="/assets/images/successLikeIcon.png"
+    alt="하트"
+    width={48}
+    height={32}
+    className="w-5 h-5 mt-[7px] lg:w-[48px] lg:h-[48px] lg:mt-4"
+  />
 );
 
 interface PostLikeProps {
@@ -113,7 +119,7 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
 
   return (
     <div>
-      <div className="w-full px-2 flex flex-row gap-x-3">
+      <div className="w-full pr-2 flex flex-row gap-x-3">
         <button
           onClick={(event) => {
             event.stopPropagation();
@@ -122,7 +128,7 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
           disabled={!user_id}
         >
           <div className="flex items-center justify-center ">
-            <span className="text-sm">{getLikes?.userLike ? PUSHED_HEART : DEFAULT_HEART}</span>
+            <span>{getLikes?.userLike ? PUSHED_HEART : DEFAULT_HEART}</span>
             <span>{likeCount}</span>
           </div>
         </button>

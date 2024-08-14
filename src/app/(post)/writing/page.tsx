@@ -19,7 +19,7 @@ interface FormData {
 
 interface FormErrors extends Partial<FormData> {}
 
-const categories = ["여행", "음식", "축제", "레포츠", "숙소"];
+const categories = ["여행", "음식", "축제", "놀거리", "숙소"];
 
 const Writing: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -125,11 +125,11 @@ const Writing: React.FC = () => {
   }
 
   return (
-    <div className="w-[1440px] mx-auto  ">
+    <div className="w-[1440px] mx-auto mt-[300px]">
       <form onSubmit={handleSubmit} className="space-y-8">
         {previewUrls.length > 0 && (
           <div>
-            <h4 className="text-lg font-semibold text-gray-700">Image Previews:</h4>
+            <h4 className="text-lg font-semibold text-gray-700">미리보기:</h4>
             <Swiper
               modules={[Pagination]}
               spaceBetween={5}
@@ -160,6 +160,7 @@ const Writing: React.FC = () => {
             </Swiper>
           </div>
         )}
+
         <div className="grid grid-cols-3 gap-6 my-6">
           <div className="col-span-2">
             <label
@@ -168,32 +169,31 @@ const Writing: React.FC = () => {
             >
               제목
             </label>
-
             <input
               id="title"
               name="title"
               type="text"
               value={formData.title}
               onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
               placeholder="제목을 입력해주세요"
             />
           </div>
           <div>
             <label
-              htmlFor="title"
+              htmlFor="category"
               className="block mb-1 text-black font-sans text-[28px] font-bold leading-[42px] tracking-tight"
             >
-              카테고리
+              분류
             </label>
             <select
               id="category"
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
             >
-              <option value="">카테고리 선택</option>
+              <option value="">분류 선택</option>
               {categories.map((category) => (
                 <option key={category} value={category}>
                   {category}
@@ -205,7 +205,7 @@ const Writing: React.FC = () => {
 
         <div>
           <label
-            htmlFor="title"
+            htmlFor="content"
             className="block mb-1 text-black font-sans text-[28px] font-bold leading-[42px] tracking-tight"
           >
             내용
@@ -215,12 +215,11 @@ const Writing: React.FC = () => {
             name="content"
             value={formData.content}
             onChange={handleChange}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
             rows={12}
             placeholder="내용을 입력해주세요"
           />
         </div>
-
         <div>
           <label
             htmlFor="title"
@@ -236,14 +235,13 @@ const Writing: React.FC = () => {
             accept="image/*"
             multiple
             className="block w-full text-sm text-gray-500
-        file:mr-4 file:py-2 file:px-4
-        file:rounded-full file:border-0
-        file:text-sm file:font-semibold
-        file:bg-gray-100 file:text-gray-700
-        hover:file:bg-gray-200"
+  file:mr-4 file:py-2 file:px-4
+  file:rounded-full file:border-0
+  file:text-sm file:font-semibold
+  file:bg-gray-100 file:text-gray-700
+  hover:file:bg-gray-200"
           />
         </div>
-
         <div className="flex justify-center mt-8">
           <button
             type="submit"
