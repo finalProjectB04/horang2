@@ -2,17 +2,28 @@
 
 import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useModal } from "@/context/modal.context";
 
 const supabase = createClient();
 
 const KakaoLoginButton = () => {
+  const router = useRouter();
+  const { open } = useModal();
+
   const kakaoLogin = async () => {
-    await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
         redirectTo: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
       },
     });
+
+    if (error) {
+      open({ title: "로그인 오류", content: "OAuth 로그인 중 오류가 발생했습니다. 다시 시도해 주세요." });
+    } else {
+      router.push("/");
+    }
   };
 
   return (

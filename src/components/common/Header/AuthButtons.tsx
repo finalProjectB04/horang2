@@ -1,34 +1,74 @@
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/zustand/userStore";
 import Link from "next/link";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+
+const supabase = createClient();
 
 interface AuthButtonsProps {
   userId: string | null;
-  handleLogout: () => void;
+  handleLogout: () => Promise<void>;
 }
 
 const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
-  const [mounted, setMounted] = useState(false);
-  const { clearUser } = useUserStore((state) => ({
+  const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+  const { setUser, clearUser } = useUserStore((state) => ({
+    setUser: state.setUser,
     clearUser: state.clearUser,
   }));
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const checkSessionAndFetchUser = async () => {
+      const { data: sessionData } = await supabase.auth.getSession();
+
+      if (sessionData?.session?.user) {
+        const { id } = sessionData.session.user;
+
+        const { data: userData, error } = await supabase.from("Users").select("*").eq("id", id).single();
+
+        if (error || !userData) {
+          console.error("사용자 정보를 가져오는데 실패했습니다:", error);
+          return;
+        }
+
+        const { user_email = "", user_nickname = "", profile_url = "", provider = "", provider_id = "" } = userData;
+
+        setUser(id, user_email || "", user_nickname || "", profile_url || "", provider || "", provider_id || "");
+      } else {
+        clearUser();
+      }
+    };
+
+    setIsClient(true);
+    checkSessionAndFetchUser();
+  }, [setUser, clearUser]);
 
   const onLogoutClick = async () => {
     if (!userId) return;
 
     try {
-      await handleLogout();
-      clearUser();
+      const response = await fetch("/api/logout", {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        Cookies.remove("accessToken", { path: "/" });
+
+        clearUser();
+
+        router.push("/");
+      } else {
+        console.error("Failed to log out");
+      }
     } catch (error) {
-      console.error("로그아웃 중 오류가 발생했습니다.", error);
+      console.error("Logout error:", error);
     }
   };
 
-  if (!mounted) {
+  if (!isClient) {
     return null;
   }
 

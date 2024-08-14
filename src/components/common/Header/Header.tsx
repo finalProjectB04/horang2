@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { logoutUser } from "@/utils/auth";
+import { useQueryClient } from "@tanstack/react-query";
+import { useUserStore } from "@/zustand/userStore";
 import Logo from "./Logo";
 import Nav from "./Nav";
 import AuthButtons from "./AuthButtons";
-import { useUserStore } from "@/zustand/userStore";
 import MobileHeader from "./MobileHeader/MobileHeader";
 
 interface HeaderProps {
@@ -27,7 +26,6 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, setSearchTerm }) => {
 
   const handleLogout = async () => {
     try {
-      await logoutUser();
       clearUser();
       queryClient.invalidateQueries({ queryKey: ["session"] });
       router.push("/");
@@ -53,7 +51,6 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, setSearchTerm }) => {
           handleLogout={handleLogout}
           userId={userId}
         />
-        {/* 로고 및 내비게이션 - PC 버전 */}
         <div className="hidden lg:flex items-center w-full">
           <Logo />
           <Nav />
