@@ -14,7 +14,7 @@ const Tab = ({ TapName, isActive, onClick }: TapProps) => {
           isActive
             ? "text-secondary-800 font-extrabold border-b-8 border-orange-500"
             : "text-gray-300 hover:text-secondary-800 font-extrabold"
-        } m-3 text-3xl mb-5`}
+        } mx-3 text-xl mb-5`}
         onClick={onClick}
       >
         {TapName}

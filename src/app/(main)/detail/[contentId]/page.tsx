@@ -7,7 +7,6 @@ import DetailPageAddComment from "@/components/detailpage/DetailPageAddComment";
 import DetailPageCommentList from "@/components/detailpage/DetailPageCommentList";
 import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
 import DetailPageImage from "@/components/detailpage/DetailPageSwiper";
-import FloatingButton from "@/components/detailpage/FloatingButton";
 import KakaoMap from "@/components/detailpage/KakaoMap";
 import ShareModal from "@/components/detailpage/ShareModal";
 import { useContentId } from "@/hooks/detailpage/useContentId";
@@ -103,8 +102,6 @@ const DetailPage = () => {
           <DetailPageCommentList contentId={contentId} />
         </div>
       </section>
-
-      <FloatingButton />
     </main>
   );
 };

@@ -12,8 +12,8 @@ const Modal = ({ id, children }: ModalProps) => {
 
   if (!isOpen) return null;
 
-  const stopBubble = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
+  const stopBubble = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
   };
 
   return (
