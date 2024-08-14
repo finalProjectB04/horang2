@@ -8,6 +8,7 @@ import "swiper/swiper-bundle.css";
 import "./globals.css";
 
 import ClientHeader from "@/components/common/Header/ClientHeader";
+import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 
 export const metadata: Metadata = {
   title: "horang",
@@ -37,6 +38,7 @@ export default function RootLayout({
               <Script src="https://developers.kakao.com/sdk/js/kakao.min.js" />
             </body>
           </ModalProvider>
+          <ScrollToTopButton />
         </QueryProvider>
       </RecoilProvider>
     </html>

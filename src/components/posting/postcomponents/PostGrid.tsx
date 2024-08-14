@@ -58,14 +58,14 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
   return (
     <div className="w-full">
       <div className="hidden lg:block">
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-3 gap-[15px]">
           {sortedAndFilteredPosts.map((post: Post) => (
             <article
               key={post.id}
-              className="rounded-[32px] overflow-hidden shadow-lg cursor-pointer"
+              className="rounded-[21px] overflow-hidden shadow-lg cursor-pointer"
               onClick={() => router.push(`/postDetail/${post.id}`)}
             >
-              <div className="relative h-64">
+              <div className="relative h-[293px]">
                 <Image
                   src={getFirstImageUrl(post.files)}
                   alt={`Image for ${post.title}`}
@@ -74,8 +74,8 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
                   loading="lazy"
                 />
               </div>
-              <div className="p-4">
-                <h3 className="text-lg font-semibold mb-2 truncate">{post.title}</h3>
+              <div className="p-2">
+                <h3 className="text-[19px] font-semibold mb-2 truncate">{post.title}</h3>
                 <p className="text-gray-600 text-sm mb-4 line-clamp-2">{post.content}</p>
                 <div className="flex justify-between items-center text-xs text-gray-500">
                   <span>{post.category}</span>

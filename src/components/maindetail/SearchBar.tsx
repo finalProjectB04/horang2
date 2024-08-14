@@ -10,7 +10,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
     <>
       <div className="hidden lg:block">
         <div className="flex flex-col justify-center items-center">
-          <div className="relative w-[1920px] h-[900px]">
+          <div className="relative w-[1280px] h-[600px]">
             <Image
               src="/assets/images/newdetail.png"
               alt="background"
@@ -19,7 +19,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
               className="object-cover"
             />
             <div className="absolute bottom-10 left-0 w-full px-5 md:px-8 lg:px-10">
-              <div className="max-w-6xl mx-auto my-36">
+              <div className="max-w-3xl mx-auto my-36">
                 <input
                   type="text"
                   placeholder="검색어를 입력하세요"

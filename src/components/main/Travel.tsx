@@ -62,9 +62,9 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
 
   return (
     <>
-      <div className="mx-auto max-w-[327px]  py-8 lg:max-w-[1440px] flex flex-col lg:gap-10">
+      <div className="mx-auto max-w-[327px]  py-8 lg:max-w-[960px] flex flex-col lg:gap-10">
         <MainListTitle TitleName={`추천 여행지 `} onClick={() => router.push("/travel")} />
-        <div className=" mx-auto  lg:max-w-[1440px] lg:h-[346px] flex flex-col lg:gap-10 max-w-[327px]">
+        <div className=" mx-auto  lg:max-w-[960px] lg:h-[243px] flex flex-col lg:gap-10 max-w-[327px]">
           <MainTravelSlider travel={sortedAndFilteredTravel} />
         </div>
       </div>

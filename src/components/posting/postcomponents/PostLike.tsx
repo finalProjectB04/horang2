@@ -11,7 +11,7 @@ const DEFAULT_HEART = (
     alt="빈하트"
     width={48}
     height={32}
-    className=" w-5 h-5 mt-[7px] lg:w-[48px] lg:h-[48px] lg:mt-4"
+    className=" w-5 h-5 mt-[7px] lg:w-[30px] lg:h-[30px] lg:mt-2"
   />
 );
 const PUSHED_HEART = (
@@ -20,7 +20,7 @@ const PUSHED_HEART = (
     alt="하트"
     width={48}
     height={32}
-    className="w-5 h-5 mt-[7px] lg:w-[48px] lg:h-[48px] lg:mt-4"
+    className="w-5 h-5 mt-[7px] lg:w-[30px] lg:h-[30px] lg:mt-2"
   />
 );
 
@@ -127,7 +127,7 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
           }}
           disabled={!user_id}
         >
-          <div className="flex items-center justify-center ">
+          <div className=" flex-shrink-0 flex items-center justify-center ">
             <span>{getLikes?.userLike ? PUSHED_HEART : DEFAULT_HEART}</span>
             <span>{likeCount}</span>
           </div>

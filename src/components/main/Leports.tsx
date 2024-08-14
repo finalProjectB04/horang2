@@ -59,11 +59,11 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
   if (!sortedLeports.length) return null;
   return (
     <>
-      <div className=" mx-auto py-8 max-w-[327px] lg:max-w-[1440px] flex flex-col gap-10 ">
+      <div className=" mx-auto py-8 max-w-[327px] lg:max-w-[960px] flex flex-col gap-10 ">
         <MainListTitle TitleName={`놀거리 추천`} onClick={() => router.push("/leports")} />
       </div>
-      <div className="  mx-auto max-w-[327px] lg:max-w-[1440px]">
-        <div className="lg:flex lg:gap-10 lg:h-[712px]  ">
+      <div className="  mx-auto max-w-[327px] lg:max-w-[960px]">
+        <div className="lg:flex lg:gap-[13px] lg:h-[505px]  ">
           {sortedLeports.length > 0 && (
             <Swiper
               modules={[Grid, A11y, Autoplay]}
@@ -81,7 +81,7 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
                 fill: "row",
               }}
               autoplay={{ delay: 5000, disableOnInteraction: false }}
-              className="rounded-[8px] lg:h-full lg:w-[708px] h-[346px] w-full flex flex-col items-start gap-3 self-stretch mb-5"
+              className="rounded-[8px] lg:h-full lg:w-[670px] h-[346px] w-full flex flex-col items-start gap-3 self-stretch mb-5"
               observer={true}
               observeParents={true}
               onInit={(swiper) => {
@@ -91,12 +91,12 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
               }}
             >
               {sortedLeports.map((item: ApiInformation) => (
-                <SwiperSlide key={item.contentid} className="h-[166px] lg:h-[346px]">
+                <SwiperSlide key={item.contentid} className="h-[166px] lg:h-[242.67px]">
                   <div
-                    className="lg:w-[330px] lg:h-[346px] w-[104px] h-[166px] relative cursor-pointer rounded-[8px] transition-transform duration-300 hover:scale-105"
+                    className="lg:w-[220px] lg:h-[242.67px] w-[104px] h-[166px] relative cursor-pointer rounded-[8px] transition-transform duration-300 hover:scale-105"
                     onClick={() => router.push(`/detail/${item.contentid}`)}
                   >
-                    <div className="h-[110px] lg:h-[224px] relative rounded-t-[8px] overflow-hidden">
+                    <div className="h-[110px] lg:h-[149.33px] relative rounded-t-[8px] overflow-hidden">
                       {item.firstimage ? (
                         <Image
                           src={item.firstimage}
@@ -111,8 +111,8 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
                         </div>
                       )}
                     </div>
-                    <div className="bg-white w-full h-[56px] lg:h-[122px] overflow-hidden rounded-b-[8px] p-2 lg:px-[14px] lg:py-[28px] flex flex-col gap-1 lg:gap-[10px] absolute bottom-0 left-0 right-0 items-start">
-                      <h2 className="text-sm lg:text-xl font-semibold text-gray-800 truncate w-full">{item.title}</h2>
+                    <div className="bg-white w-full h-[56px] lg:h-[93.34px] overflow-hidden rounded-b-[8px] p-2 lg:px-[14px] lg:py-[10px] flex flex-col gap-1 lg:gap-[5px] absolute bottom-0 left-0 right-0 items-start">
+                      <h2 className="text-sm lg:text-base font-semibold text-gray-800 truncate w-full">{item.title}</h2>
                       <p className="text-gray-600 text-xs lg:text-sm truncate w-full">
                         {item.addr1 || "Address not available"}
                       </p>
@@ -122,8 +122,8 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
               ))}
             </Swiper>
           )}
-          <div className="flex flex-col lg:gap-6 gap-5 lg:w-[708px] lg:h-full w-full">
-            <div className="lg:h-[590px] lg:w-[708px]  h-[260px] w-[327px] relative rounded-[8px] overflow-hidden">
+          <div className="flex flex-col lg:gap-6 gap-3 lg:w-[708px] lg:h-full w-full">
+            <div className="lg:h-[393px] lg:w-[492px]  h-[260px] w-[327px] relative rounded-[8px] overflow-hidden">
               <Image
                 src="/assets/images/ex4.png"
                 alt="profile"
@@ -132,13 +132,16 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
                 className="object-cover"
               />
             </div>
-            <div className="lg:h-[94px] lg:w-[708px] h-[42px] w-[327px] relative rounded-[8px] overflow-hidden">
+            <div
+              onClick={() => router.push("/travelMbti")}
+              className="cursor-pointer lg:h-[94px] lg:w-[492px] h-[63px] w-[327px] relative rounded-[8px] overflow-hidden"
+            >
               <Image
                 src="/assets/images/ex5.png"
                 alt="profile"
                 layout="fill"
-                objectFit="cover"
-                className="object-cover"
+                objectFit="contain"
+                className="object-contain"
               />
             </div>
           </div>

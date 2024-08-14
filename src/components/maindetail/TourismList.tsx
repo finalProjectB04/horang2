@@ -70,13 +70,13 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
   return (
     <>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <div className="mx-auto py-8 max-w-[1440px] flex flex-col gap-10">
+      <div className="mx-auto py-8 max-w-[960px] flex flex-col gap-10">
         <div className="flex my-6 gap-3">
           <DetailTitle />
           <h3 className="text-2xl font-bold">{title}</h3>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10py-8 max-w-[1440px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10py-8 max-w-[960px]">
           {displayedData.map((item) => (
             <TravelCard key={item.contentid} item={item} />
           ))}
