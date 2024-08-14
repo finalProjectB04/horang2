@@ -69,11 +69,6 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
         ))}
       </div>
 
-      <Link href="/intro">
-        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
-          호랑 소개
-        </span>
-      </Link>
       <Link href="/travel">
         <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
           추천 여행지

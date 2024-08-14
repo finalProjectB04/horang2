@@ -37,8 +37,14 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
         const { user_email = "", user_nickname = "", profile_url = "", provider = "", provider_id = "" } = userData;
 
         setUser(id, user_email || "", user_nickname || "", profile_url || "", provider || "", provider_id || "");
+
+        // 로그인 시 쿠키 초기화
+        Cookies.remove("sb-crjcsxutfsroqsqumefz-auth-token", { path: "/" });
       } else {
         clearUser();
+
+        // 로그아웃 시 쿠키 초기화
+        Cookies.remove("sb-crjcsxutfsroqsqumefz-auth-token", { path: "/" });
       }
     };
 
@@ -46,27 +52,34 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
     checkSessionAndFetchUser();
   }, [setUser, clearUser]);
 
-  const handleKakaoLogout = () => {
+  const handleKakaoLogout = async () => {
     const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
     const KAKAO_LOGOUT_REDIRECT_URI = process.env.NEXT_PUBLIC_KAKAO_LOGOUT_REDIRECT_URI;
 
-    const logoutUrl = `https://kauth.kakao.com/oauth/logout?client_id=${KAKAO_CLIENT_ID}&logout_redirect_uri=${KAKAO_LOGOUT_REDIRECT_URI}`;
-    window.location.href = logoutUrl;
+    try {
+      // 서버 측 로그아웃 처리
+      await fetch("/api/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      // 클라이언트 측 세션 및 쿠키 삭제
+      clearUser();
+      Cookies.remove("sb-crjcsxutfsroqsqumefz-auth-token", { path: "/" });
+
+      // 카카오 로그아웃 처리
+      const logoutUrl = `https://kauth.kakao.com/oauth/logout?client_id=${KAKAO_CLIENT_ID}&logout_redirect_uri=${KAKAO_LOGOUT_REDIRECT_URI}`;
+      window.location.href = logoutUrl;
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   const onLogoutClick = async () => {
     if (!userId) return;
 
     try {
-      // 클라이언트 측 세션 및 상태 삭제
-      clearUser();
-      Cookies.remove("accessToken", { path: "/" });
-
-      // 카카오 로그아웃 처리
-      handleKakaoLogout();
-
-      // 애플리케이션 로그아웃 처리
-      router.push("/");
+      await handleKakaoLogout();
     } catch (error) {
       console.error("Logout error:", error);
     }
