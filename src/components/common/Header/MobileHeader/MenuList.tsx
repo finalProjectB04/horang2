@@ -6,6 +6,7 @@ import ProfileManagement from "@/components/mypage/profile/ProfileManagement";
 import Image from "next/image";
 import React from "react";
 import { useUserStore } from "@/zustand/userStore";
+import Cookies from "js-cookie";
 
 interface MenuListProps {
   userId: string | null;
@@ -24,6 +25,17 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
       router.push("/signin");
     } else {
       router.push(href);
+    }
+  };
+
+  const onLogoutClick = async () => {
+    try {
+      Cookies.remove("accessToken", { path: "/" });
+      handleLogout();
+
+      router.push("/");
+    } catch (error) {
+      console.error("Logout error:", error);
     }
   };
 
@@ -115,7 +127,7 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
 
       <div className="space-y-2">
         {userId ? (
-          <button onClick={handleLogout} className="text-blue-600 hover:text-gray-400 cursor-pointer block">
+          <button onClick={onLogoutClick} className="text-blue-600 hover:text-gray-400 cursor-pointer block">
             로그아웃
           </button>
         ) : (

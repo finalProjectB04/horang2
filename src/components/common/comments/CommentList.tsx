@@ -18,8 +18,8 @@ const CommentList: React.FC<{
   queryKey: string[];
 }> = ({ comments, userId, queryKey }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [initialLoad, setInitialLoad] = useState(true); // 페이지 최초 로드 여부를 추적하는 상태
-  const hasScrolled = useRef(false); // 페이지가 스크롤된 여부를 추적하는 참조
+  const [initialLoad, setInitialLoad] = useState(true);
+  const hasScrolled = useRef(false);
 
   const totalPages = Math.ceil(comments.length / COMMENTS_PER_PAGE);
   const startIndex = (currentPage - 1) * COMMENTS_PER_PAGE;
@@ -33,13 +33,11 @@ const CommentList: React.FC<{
   };
 
   useEffect(() => {
-    // 페이지가 최초 로드될 때는 스크롤하지 않도록 설정
     if (initialLoad) {
       setInitialLoad(false);
       return;
     }
 
-    // 페이지가 변경된 경우 스크롤을 이동
     if (hasScrolled.current) {
       scrollToBottom();
     } else {
