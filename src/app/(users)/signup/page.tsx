@@ -49,7 +49,12 @@ const SignUpPage = () => {
     }
 
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({ email, password });
-    if (signUpError) return open({ title: "회원가입 실패", content: signUpError.message });
+    if (signUpError) {
+      if (signUpError.message.includes("User already registered")) {
+        return open({ title: "회원가입 실패", content: "이미 등록된 이메일 주소입니다. 다른 이메일을 사용해 주세요." });
+      }
+      return open({ title: "회원가입 실패", content: signUpError.message });
+    }
 
     if (signUpData?.user) {
       const profileImagePath = DEFAULT_PROFILE_IMAGE_URL;
