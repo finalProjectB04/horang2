@@ -12,8 +12,8 @@ const DetailPageImage: React.FC<{ contentItemData: ContentItem }> = ({ contentIt
           width={960}
           height={500}
           priority
-          className="w-full h-auto mx-auto"
-          sizes="(max-width: 640px) 375px, 1280px"
+          className="w-full h-auto mx-auto lg:max-w-[960px]"
+          sizes="(max-width: 640px) 375px, (max-width: 1280px) 960px"
         />
       )}
     </section>

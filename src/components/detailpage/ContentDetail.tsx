@@ -44,11 +44,11 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepa
           <Image
             src="/assets/images/detailpage/marker_title.svg"
             alt="컨텐츠타입"
-            width={32}
-            height={32}
+            width={21}
+            height={21}
             className="sm:w-5 sm:h-5"
           />
-          <span className="ml-4 sm:text-[12px] sm:ml-2 md:text-lg lg:text-xl font-normal text-grey-600">
+          <span className="ml-4 sm:text-[12px] sm:ml-2 md:text-[14px] lg:text-[16px] font-normal text-grey-600">
             {getContentTypeName(contenttypeid)}
           </span>
         </div>
@@ -59,11 +59,13 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepa
           <Image
             src="/assets/images/detailpage/marker_address.svg"
             alt="주소"
-            width={32}
-            height={32}
+            width={21}
+            height={21}
             className="sm:w-5 sm:h-5"
           />
-          <span className="ml-4 sm:text-[12px] sm:ml-2 md:text-lg lg:text-xl font-normal text-grey-600">{addr1}</span>
+          <span className="ml-4 sm:text-[12px] sm:ml-2 md:text-[14px] lg:text-[16px] font-normal text-grey-600">
+            {addr1}
+          </span>
         </div>
       )}
 
@@ -72,11 +74,13 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepa
           <Image
             src="/assets/images/detailpage/marker_tel.svg"
             alt="전화번호"
-            width={32}
-            height={32}
+            width={21}
+            height={21}
             className="sm:w-5 sm:h-5"
           />
-          <span className="ml-4 sm:text-[12px] sm:ml-2 md:text-lg lg:text-xl font-normal text-grey-600">{tel}</span>
+          <span className="ml-4 sm:text-[12px] sm:ml-2 md:text-[14px] lg:text-[16px] font-normal text-grey-600">
+            {tel}
+          </span>
         </div>
       )}
 
@@ -85,18 +89,18 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepa
           <Image
             src="/assets/images/detailpage/marker_homepage.svg"
             alt="홈페이지"
-            width={32}
-            height={32}
+            width={21}
+            height={21}
             className="sm:w-5 sm:h-5"
           />
           <a
             href={homepageLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-4 sm:text-[12px] sm:ml-2 md:text-lg lg:text-xl font-normal text-blue-500 underline"
+            className="ml-4 sm:text-[12px] sm:ml-2 md:text-[14px] lg:text-[16px] font-normal text-blue-500 underline"
           >
-            <span className="sm:hidden md:inline lg:inline">{homepageLink}</span>
-            <span className="sm:inline md:hidden lg:hidden">{truncateText(homepageLink, 50)}</span>
+            <span className="sm:hidden md:inline lg:inline">{truncateText(homepageLink, 100)}</span>
+            <span className="sm:inline md:hidden lg:hidden">{truncateText(homepageLink, 30)}</span>
           </a>
         </div>
       )}

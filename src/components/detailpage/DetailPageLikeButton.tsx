@@ -196,17 +196,17 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
 
   const likeImage =
     data && data.find((item) => item.user_id === userId)
-      ? "/assets/images/successLikeIcon.png"
-      : "/assets/images/defaultLikeIcon.png";
+      ? "/assets/images/successLikeIcon.svg"
+      : "/assets/images/defaultLikeIcon.svg";
 
   return (
     <button onClick={handleLikeButton} disabled={!userId}>
       <Image
         src={likeImage}
         alt={liked ? "Unlike" : "Like"}
-        width={96}
-        height={96}
-        className="lg:pt-10 lg:pr-4 lg:py-2 md:w-24 md:h-24 md:pt-6 md:pr-2 sm:w-[40px] sm:h-[40px] sm:pt-3"
+        width={64}
+        height={64}
+        className=" lg:pr-4  md:pt-6 md:pr-2 sm:w-[40px] sm:h-[40px] sm:pt-3"
       />
     </button>
   );
