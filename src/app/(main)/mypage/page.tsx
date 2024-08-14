@@ -7,12 +7,14 @@ import Advertisement from "@/components/common/Advertisement";
 const myPage: React.FC = () => {
   return (
     <main className="flex justify-center">
-      <div className="sm:w-[375px] lg:w-[1920px] flex flex-col justify-center items-center text-center">
-        <div className="sm:w-[375px] lg:w-[1440px] mx-auto grid grid-cols-1 gap-4">
+      <div className="sm:w-[375px] lg:w-[1280px] flex flex-col justify-center items-center text-center">
+        <div className="sm:w-[375px] lg:w-[960px] mx-auto grid grid-cols-1 gap-4">
           <Profile />
         </div>
         <WishList />
-        <Community />
+        <div className="sm:w-[375px] lg:w-[960px] mx-auto grid grid-cols-1 gap-4">
+          <Community />
+        </div>
         <Advertisement />
       </div>
     </main>
