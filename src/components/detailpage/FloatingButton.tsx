@@ -17,11 +17,10 @@ const FloatingButton = () => {
   return (
     <button
       onClick={handleClick}
-      className="fixed text-white lg:p-4 rounded-full text-gray-600 lg:flex lg:flex-col lg:items-center z-50 sm:hidden"
-      style={{ right: "118px", bottom: "216px" }}
+      className="fixed right-[2%] bottom-[7%] rounded-ful lg:flex lg:flex-col lg:items-center z-50"
     >
-      <Image src="/assets/images/profile_ex.png" alt="채팅하기" width={64} height={64} />
-      <span className="lg:mt-2 text-gray-600">chat</span>
+      <Image className="opacity-80" src="/assets/images/chat.png" alt="채팅하기" width={40} height={40} />
+      <span className="font-extrabold text-secondary-800">chat</span>
     </button>
   );
 };
