@@ -71,7 +71,7 @@ const useAuth = () => {
     }
   };
 
-  const handleUpadatePassword = async () => {
+  const handleUpdatePassword = async () => {
     const { error: updateError } = await supabase.auth.updateUser({ password: confirmPassword });
     if (!updateError) {
       alert("변경이 완료되었습니다.");
@@ -86,7 +86,7 @@ const useAuth = () => {
     handleImageClick,
     handleImageChange,
     handleUpdateUser,
-    handleUpadatePassword,
+    handleUpdatePassword,
     previewUrl,
     nickname,
     setNickname,
