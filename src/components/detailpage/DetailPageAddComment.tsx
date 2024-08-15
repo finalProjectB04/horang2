@@ -16,6 +16,7 @@ interface DetailPageAddCommentProps {
 
 const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, contentTypeId }) => {
   const [comment, setComment] = useState<string>("");
+  const [lastCommentTime, setLastCommentTime] = useState<number | null>(null);
   const queryClient = useQueryClient();
   const { id: userId, user_email: userEmail, user_nickname: userNickname, profile_url: profileUrl } = useUserStore();
   const modal = useModal();
@@ -44,6 +45,7 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
     },
     onSuccess: () => {
       setComment("");
+      setLastCommentTime(Date.now());
       modal.open({
         title: "성공!",
         content: (
@@ -68,6 +70,30 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
   });
 
   const handleAddComment = () => {
+    if (comment.length < 1) {
+      modal.open({
+        title: "실패!",
+        content: (
+          <div className="text-center">
+            <p>댓글은 최소 1글자 이상 입력해야 합니다.</p>
+          </div>
+        ),
+      });
+      return;
+    }
+
+    if (lastCommentTime && Date.now() - lastCommentTime < 10000) {
+      modal.open({
+        title: "제한!",
+        content: (
+          <div className="text-center">
+            <p>댓글 작성은 10초 간격으로 가능합니다.</p>
+          </div>
+        ),
+      });
+      return;
+    }
+
     addCommentMutation.mutate();
   };
 
@@ -105,11 +131,12 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
           } lg:border-none lg:flex-grow lg:min-h-[80px] lg:max-h-[500px]`}
           disabled={!userId}
           maxLength={2000}
+          required
         />
         <button
           onClick={handleAddComment}
           className={`sm:ml-3 sm:py-[10px] sm:px-[20px] sm:text-[12px] sm:font-bold sm:text-white sm:bg-primary-400 sm:rounded-2xl md:w-[75px] md:h-[40px] md:ml-4 lg:w-[100px] lg:h-[53px] md:flex md:justify-center md:items-center md:text-[17px] md:font-black md:bg-primary-100 md:text-primary-700 md:rounded-xl md:border-2 md:border-primary-200 md:hover:bg-primary-400 lg:ml-8 lg:w-[100px] lg:h-[53px] lg:flex lg:justify-center lg:items-center lg:text-[19px] lg:font-black lg:bg-primary-100 lg:text-primary-700 lg:rounded-[20px] lg:border-2 lg:border-primary-200 lg:hover:bg-primary-400`}
-          disabled={!userId}
+          disabled={!userId || comment.length < 1}
         >
           등록
         </button>
