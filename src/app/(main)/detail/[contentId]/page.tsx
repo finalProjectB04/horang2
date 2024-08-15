@@ -43,7 +43,7 @@ const DetailPage = () => {
   }
 
   if (!contentItemData || !contentItemData.data) {
-    return <div>데이터가 없습니다</div>;
+    return <div>데이터가 없거나 api 서버와 연결 할 수 없습니다</div>;
   }
 
   return (
@@ -74,7 +74,9 @@ const DetailPage = () => {
               className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]lg:mb-2"
             />
           </button>
-          <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+          <div>
+            <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+          </div>
         </div>
       </section>
 
