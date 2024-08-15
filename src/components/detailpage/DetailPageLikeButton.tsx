@@ -158,7 +158,15 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
   }, [data, userId]);
 
   if (isPending) {
-    return <Image src="/assets/images/defaultLikeIcon.png" alt={"Unlike"} width={70} height={70} />;
+    return (
+      <Image
+        src="/assets/images/defaultLikeIcon.svg"
+        alt={"Unlike"}
+        width={32}
+        height={32}
+        className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]"
+      />
+    );
   }
 
   if (isError) {
