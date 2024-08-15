@@ -150,11 +150,11 @@ export const GET = async (request: NextRequest, { params }: { params: { type: st
 
     const [firstResponse, secondResponse, thirdResponse, fourthResponse, fifthResponse] = await axios.all(requests);
 
-    const firstData = firstResponse.data.response.body.items.item || [];
-    const secondData = secondResponse.data.response.body.items.item || [];
-    const thirdData = thirdResponse.data.response.body.items.item || [];
-    const fourthData = fourthResponse.data.response.body.items.item || [];
-    const fifthData = fifthResponse.data.response.body.items.item || [];
+    const firstData = firstResponse.data?.response?.body?.items?.item || [];
+    const secondData = secondResponse.data?.response?.body?.items?.item || [];
+    const thirdData = thirdResponse.data?.response?.body?.items?.item || [];
+    const fourthData = fourthResponse.data?.response?.body?.items?.item || [];
+    const fifthData = fifthResponse.data?.response?.body?.items?.item || [];
 
     return NextResponse.json({
       firstData,
@@ -166,10 +166,10 @@ export const GET = async (request: NextRequest, { params }: { params: { type: st
   } catch (error) {
     if (error instanceof Error) {
       console.error("데이터 펫칭에 에러가 생겼습니다:", error.message);
-      NextResponse.json({ error: "데이터 펫칭에 에러가 생겼습니다", details: error.message });
+      return NextResponse.json({ error: "데이터 펫칭에 에러가 생겼습니다", details: error.message });
     } else {
       console.error("예상치못한 에러:", error);
-      NextResponse.json({ error: "예상치못한 에러", details: error });
+      return NextResponse.json({ error: "예상치못한 에러", details: error });
     }
   }
 };
