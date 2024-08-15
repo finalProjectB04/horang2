@@ -2,9 +2,8 @@ import { TouristSpot, useTouristSpots } from "@/hooks/useTouristSpots";
 import { useLocationStore } from "@/zustand/locationStore";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Loading } from "../common/Loading";
 import LoadingPage from "@/app/loading";
-import { ScrollToTopButton } from "../maindetail/ScrollToTopButton";
+import { convertToHttps } from "@/utils/convertToHttps";
 
 const KAKAO_MAP_API = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
 
@@ -218,41 +217,41 @@ const MapComponent: React.FC = () => {
       </div>
       <div className="relative flex-1 lg:w-1/3 overflow-y-auto">
         {selectedSpot ? (
-          <div className="flex flex-col md:flex-row items-start m-10">
+          <div className="flex flex-col md:flex-row items-start m-10 sm:m-6">
             <div className="w-full md:w-1/2">
               {selectedSpot.firstimage ? (
                 <Image
-                  src={selectedSpot.firstimage}
+                  src={convertToHttps(selectedSpot.firstimage)}
                   alt={selectedSpot.title}
-                  width={400}
-                  height={280}
-                  className="h-[280px] object-cover rounded"
+                  width={200}
+                  height={140}
+                  className="h-[180px] sm:h-[120px] w-full object-cover rounded"
                 />
               ) : (
                 <Image
                   src="/assets/images/null_image.svg"
                   alt="No Image"
-                  width={400}
-                  height={280}
-                  className="h-[240px] object-cover rounded"
+                  width={200}
+                  height={140}
+                  className="h-[180px] sm:h-[120px] w-full object-cover rounded"
                 />
               )}
             </div>
-            <div className="md:ml-10 mt-8 md:w-1/2">
+            <div className="md:ml-10 md:mt-0 mt-8 md:w-1/2">
               <a href={`/detail/${selectedSpot.contentid}`} className="flex items-center">
-                <span className="text-[26px] lg:text-[28px] font-bold mr-4">{selectedSpot.title}</span>
-                <span className="border-b-2 border-primary-300 text-primary-300 text-[16px] lg:text-[18px]">
+                <span className="text-[20px] lg:text-[24px] font-bold mr-4">{selectedSpot.title}</span>
+                <span className="border-b-2 border-primary-300 text-primary-300 text-[12px] lg:text-[14px]">
                   더보기
                 </span>
               </a>
-              <p className="text-secondary-700 text-[16px] lg:text-[18px] mt-2">
+              <p className="text-secondary-700 text-[14px] lg:text-[16px] mt-2">
                 {getDistance(latitude!, longitude!, selectedSpot.mapy, selectedSpot.mapx).toFixed(2)} km
               </p>
-              <p className="text-grey-800 mt-2 text-[16px] lg:text-[18px]">{selectedSpot.address}</p>
-              <p className="text-grey-800 mt-2 text-[16px] lg:text-[18px]">{selectedSpot.tel}</p>
+              <p className="text-grey-800 mt-2 text-[14px] lg:text-[16px]">{selectedSpot.address}</p>
+              <p className="text-grey-800 mt-2 text-[14px] lg:text-[16px]">{selectedSpot.tel}</p>
               <button
                 onClick={handleBackToList}
-                className="mt-8 px-4 py-2 bg-primary-300 text-white rounded text-[15px]"
+                className="mt-8 px-4 py-2 bg-primary-300 text-white rounded text-[14px] sm:text-[12px]"
               >
                 목록으로 돌아가기
               </button>
@@ -271,11 +270,11 @@ const MapComponent: React.FC = () => {
                 >
                   {spot.firstimage ? (
                     <Image
-                      src={spot.firstimage}
+                      src={convertToHttps(spot.firstimage)}
                       alt={spot.title}
                       width={192}
                       height={128}
-                      className="min-w-48 h-32 object-cover ml-6 mr-8 rounded"
+                      className="w-36 h-28 sm:w-30 sm:h-18 object-cover ml-6 mr-8  sm:mr-6 rounded"
                     />
                   ) : (
                     <Image
@@ -283,19 +282,17 @@ const MapComponent: React.FC = () => {
                       alt={spot.title}
                       width={192}
                       height={128}
-                      className="min-w-48 h-32 object-cover ml-6 mr-8 rounded"
+                      className="w-36 h-28 sm:w-30 sm:h-18 object-cover ml-6 mr-8 sm:mr-6 rounded"
                     />
                   )}
-                  <div>
-                    <p className="text-secondary-800 text-[18px] lg:text-[20px] mb-4 font-bold">{spot.title}</p>
-                    <div className="flex items-center">
-                      <p className="text-secondary-700 text-[14px] lg:text-[16px] lg:w-[80px] min-w-[50px]">
-                        {distance.toFixed(2)} km
-                      </p>
-                      <span className="border-l border-gray-300 h-6 mx-5"></span>
-                      <p className="text-grey-800 text-[14px] lg:text-[16px] leading-6">{spot.address}</p>
-                    </div>
+                  <div className="flex flex-col mr-6">
+                    <p className="text-secondary-800 text-[16px] lg:text-[18px] mb-4 sm:mb-2 font-bold">{spot.title}</p>
+                    {/* <div className="flex items-center"> */}
+                    <p className="text-secondary-700 text-[12px] lg:text-[14px]">{distance.toFixed(2)} km</p>
+                    {/* <span className="border-l border-gray-300 h-6 mx-5"></span> */}
+                    <p className="text-grey-800 text-[14px] leading-6 mt-2 sm:mt-1">{spot.address}</p>
                   </div>
+                  {/* </div> */}
                 </li>
               );
             })}
