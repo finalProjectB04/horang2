@@ -136,7 +136,7 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
         <button
           onClick={handleAddComment}
           className={`sm:ml-3 sm:py-[10px] sm:px-[20px] sm:text-[12px] sm:font-bold sm:text-white sm:bg-primary-400 sm:rounded-2xl md:w-[75px] md:h-[40px] md:ml-4 lg:w-[100px] lg:h-[53px] md:flex md:justify-center md:items-center md:text-[17px] md:font-black md:bg-primary-100 md:text-primary-700 md:rounded-xl md:border-2 md:border-primary-200 md:hover:bg-primary-400 lg:ml-8 lg:w-[100px] lg:h-[53px] lg:flex lg:justify-center lg:items-center lg:text-[19px] lg:font-black lg:bg-primary-100 lg:text-primary-700 lg:rounded-[20px] lg:border-2 lg:border-primary-200 lg:hover:bg-primary-400`}
-          disabled={!userId || comment.length < 1}
+          disabled={!userId}
         >
           등록
         </button>
