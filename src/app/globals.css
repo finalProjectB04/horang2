@@ -7,8 +7,8 @@
 }
 
 .my-page .swiper-pagination-bullet {
-  width: 20px !important;
-  height: 20px !important;
+  width: 15px !important;
+  height: 15px !important;
   background: orange !important;
   margin: 0 5px !important;
 }
