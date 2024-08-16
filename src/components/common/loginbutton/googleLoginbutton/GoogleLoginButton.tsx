@@ -7,15 +7,15 @@ const supabase = createClient();
 
 const GoogleLoginButton: React.FC = () => {
   const googleLogin = async (): Promise<void> => {
-    try {
-      await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: process.env.NEXT_PUBLIC_CALLBACK_URL_FOR_GOOGLE,
-        },
-      });
-    } catch (error) {
-      console.error("Google 로그인 오류:", error);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: process.env.NEXT_PUBLIC_CALLBACK_URL_FOR_GOOGLE,
+      },
+    });
+
+    if (error) {
+      console.error("Google login error:", error.message);
     }
   };
 

@@ -4,7 +4,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import Modal from "@/components/location/LocationModal";
 import MapComponent from "@/components/location/Map";
 import { useLocationStore } from "@/zustand/locationStore";
-import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
 
 const LocationPage = () => {
   const { setLocation } = useLocationStore();
@@ -96,7 +95,9 @@ const LocationPage = () => {
       {hasAgreed && <MapComponent />}
       {hasAgreed && (
         <div className="text-center mt-4 mb-20">
-          <p className="text-lg text-grey-700">내 위치 반경 50km의 관광지를 지도에서 확인할 수 있습니다.</p>
+          <p className="text-[14px] text-grey-700">
+            내 위치 반경 50km의 관광지를 <br /> 지도에서 확인할 수 있습니다.
+          </p>
         </div>
       )}
     </div>

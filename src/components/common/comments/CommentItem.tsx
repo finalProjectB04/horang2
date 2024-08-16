@@ -186,7 +186,7 @@ const CommentItem: React.FC<{
   useEffect(() => {
     if (scrollToReplyForm) {
       scrollToReplyFormHandler();
-      setScrollToReplyForm(false); // 스크롤이 이동한 후에는 플래그를 리셋
+      setScrollToReplyForm(false);
     }
   }, [replyPage, scrollToReplyForm]);
 
@@ -247,7 +247,7 @@ const CommentItem: React.FC<{
             <button
               onClick={() => {
                 setShowReplies((prev) => !prev);
-                setScrollToReplyForm(true); // 대댓글 보기 버튼 클릭 시 스크롤을 이동하도록 설정
+                setScrollToReplyForm(true);
               }}
               className="text-blue-500 hover:text-blue-700 mt-2"
             >

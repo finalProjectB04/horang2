@@ -6,6 +6,7 @@ import ProfileManagement from "@/components/mypage/profile/ProfileManagement";
 import Image from "next/image";
 import React from "react";
 import { useUserStore } from "@/zustand/userStore";
+import Cookies from "js-cookie";
 
 interface MenuListProps {
   userId: string | null;
@@ -27,8 +28,19 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
     }
   };
 
+  const onLogoutClick = async () => {
+    try {
+      Cookies.remove("accessToken", { path: "/" });
+      handleLogout();
+
+      router.push("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
   const buttons = [
-    { name: "내 정보 관리", onClick: handleNavigation("profile") },
+    { name: "내 정보 관리", onClick: () => toggleModal("profile") },
     { name: "대화 하기", onClick: handleNavigation("/chat") },
     { name: "나만의 여행", onClick: handleNavigation("/travelMbti") },
     { name: "호랑이 모임", onClick: () => router.push("/community") },
@@ -115,7 +127,7 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
 
       <div className="space-y-2">
         {userId ? (
-          <button onClick={handleLogout} className="text-blue-600 hover:text-gray-400 cursor-pointer block">
+          <button onClick={onLogoutClick} className="text-blue-600 hover:text-gray-400 cursor-pointer block">
             로그아웃
           </button>
         ) : (

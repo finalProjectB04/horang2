@@ -7,7 +7,6 @@ import DetailPageAddComment from "@/components/detailpage/DetailPageAddComment";
 import DetailPageCommentList from "@/components/detailpage/DetailPageCommentList";
 import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
 import DetailPageImage from "@/components/detailpage/DetailPageSwiper";
-import FloatingButton from "@/components/detailpage/FloatingButton";
 import KakaoMap from "@/components/detailpage/KakaoMap";
 import ShareModal from "@/components/detailpage/ShareModal";
 import { useContentId } from "@/hooks/detailpage/useContentId";
@@ -44,16 +43,16 @@ const DetailPage = () => {
   }
 
   return (
-    <main className="sm:w-full sm:max-w-full sm:mx-auto md:max-w-[1024px] md:mx-auto md:grid md:justify-items-center lg:max-w-[1440px] lg:mx-auto lg:grid lg:justify-items-center">
+    <main className="sm:w-full sm:max-w-full sm:mx-auto  md:max-w-[910px] md:mx-auto md:grid md:justify-items-center lg:max-w-[960px] lg:mx-auto lg:grid lg:justify-items-center">
       <DetailPageImage contentItemData={contentItemData} />
 
-      <section className="flex justify-between items-center w-full max-w-[1440px] lg:pt-[140px] md:flex md:items-center md:justify-between md:w-full md:max-w-[1024px] md:mt-8 md:px-[32px] sm:px-[24px] sm:pt-[46px] sm:pb-[17px]">
+      <section className="flex justify-between items-center w-full lg:max-w-[1280px] lg:pt-[80px] md:flex md:items-center md:justify-between md:w-full md:max-w-[910px] md:mt-8 md:px-[32px] sm:px-[24px] sm:pt-[46px] sm:pb-[17px]">
         <div className="text-left md:flex-grow">
-          <div className="lg:text-[38px] lg:font-bold md:text-[30px] md:font-semibold sm:text-[14px] sm:font-bold">
+          <div className="lg:text-[19px] lg:font-bold md:text-[17px] md:font-semibold sm:text-[14px] sm:font-bold">
             {title}
           </div>
         </div>
-        <div className="flex justify-center space-x-2 md:mt-0">
+        <div className="flex justify-center space-x-4">
           <DetailPageLikeButton
             contentId={contentId}
             imageUrl={imageUrl || ""}
@@ -66,16 +65,16 @@ const DetailPage = () => {
             <Image
               src="/assets/images/shareModal.svg"
               alt="Custom Button Image"
-              width={48}
-              height={48}
-              className="md:w-12 md:h-12 sm:w-[20px] sm:h-[20px]"
+              width={32}
+              height={32}
+              className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]lg:mb-2"
             />
           </button>
           <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
       </section>
 
-      <section className="md:w-full md:max-w-[1024px] md:mt-4 md:px-[24px] lg:w-full lg:max-w-[1440px] lg:mt-4 lg:pb-[88px] sm:w-full sm:px-[24px]">
+      <section className="md:w-full  md:max-w-[910px] md:mt-4 md:px-[24px] lg:w-full lg:max-w-[1280px] lg:mt-4 sm:w-full sm:px-[24px]">
         <ContentDetail
           title={title || ""}
           addr1={addr1 || ""}
@@ -91,11 +90,11 @@ const DetailPage = () => {
         </div>
       )}
 
-      <section className="md:w-full md:flex md:justify-center md:mb-12 lg:w-full lg:flex lg:justify-center lg:mb-15 sm:max-w-full sm-max-h-[290px]">
+      <section className="md:w-full md:flex md:justify-center md:mb-12 lg:w-full lg:flex lg:justify-center sm:max-w-full sm-max-h-[290px]">
         <KakaoMap mapx={parseFloat(mapx || "0")} mapy={parseFloat(mapy || "0")} />
       </section>
 
-      <section className="md:w-full md:max-w-[1024px] md:mt-12 md:pt-12 md:px-[24px] lg:w-full lg:max-w-[1440px] lg:mt-20 lg:pt-[200px] sm:max-w-full">
+      <section className="md:w-full  md:max-w-[910px]  md:pt-6 md:px-[24px] lg:w-full lg:max-w-[1280px] lg:pt-[128px] sm:max-w-full">
         <div className="lg:pt-[16px] md:pt-[16px]">
           <DetailPageAddComment contentId={contentId} contentTypeId={contentTypeId || ""} />
         </div>
@@ -103,8 +102,6 @@ const DetailPage = () => {
           <DetailPageCommentList contentId={contentId} />
         </div>
       </section>
-
-      <FloatingButton />
     </main>
   );
 };

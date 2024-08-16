@@ -8,6 +8,7 @@ type ModalProps = {
   content: ReactNode | null;
   path?: string;
   type?: "normal" | "confirm";
+  onClose?: () => void;
 };
 
 type ModalContextValue = {
@@ -55,6 +56,7 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
           content={modalOptions.content}
           path={modalOptions.path}
           type={modalOptions.type}
+          onClose={modalOptions.onClose}
         />
       )}
       {confirmOptions && (
@@ -63,6 +65,7 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
           content={confirmOptions.content}
           path={confirmOptions.path}
           type={confirmOptions.type}
+          onClose={confirmOptions.onClose}
         />
       )}
     </ModalContext.Provider>

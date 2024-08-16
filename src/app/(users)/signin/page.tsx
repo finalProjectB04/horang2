@@ -7,17 +7,30 @@ import PasswordInput from "@/components/common/userspage/signinpage/PasswordInpu
 import LoginButton from "@/components/common/userspage/signinpage/LoginButton";
 import SocialLoginButtons from "@/components/common/userspage/SocialLoginButtons";
 import SignInLink from "@/components/common/userspage/signinpage/SignInLink";
+import useRedirectIfLoggedIn from "@/components/common/userspage/useRedirectIfLoggedIn ";
 import { useUserStore } from "@/zustand/userStore";
+import { useModal } from "@/context/modal.context";
 
 const LoginPage = () => {
+  useRedirectIfLoggedIn();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const router = useRouter();
   const setUser = useUserStore((state) => state.setUser);
+  const { open } = useModal();
 
   const handleLogin = async () => {
-    setError("");
+    if (!email) {
+      open({ title: "오류", content: "이메일을 입력해 주세요." });
+      return;
+    }
+
+    if (!password) {
+      open({ title: "오류", content: "비밀번호를 입력해 주세요." });
+      return;
+    }
+
     try {
       const response = await fetch("/api/login", {
         method: "POST",
@@ -28,14 +41,18 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        const { id, user_email, user_nickname, profile_url } = data;
-        setUser(id, user_email, user_nickname, profile_url);
+        const { id, user_email, user_nickname, profile_url, provider, provider_id } = data;
+        setUser(id, user_email, user_nickname, profile_url, provider, provider_id);
         router.push("/");
       } else {
-        setError(`로그인 오류: ${data.error}`);
+        if (data.error === "Invalid login credentials") {
+          open({ title: "로그인 오류", content: "이메일 또는 비밀번호가 올바르지 않습니다." });
+        } else {
+          open({ title: "로그인 오류", content: data.error });
+        }
       }
     } catch (error) {
-      setError("로그인 중 오류가 발생했습니다.");
+      open({ title: "오류", content: "로그인 중 오류가 발생했습니다." });
     }
   };
 
