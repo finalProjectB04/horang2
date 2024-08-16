@@ -4,6 +4,11 @@ import { createClient } from "@/utils/supabase/client";
 import AddReply from "./AddReply";
 import ReplyItem from "./ReplyItem";
 import Image from "next/image";
+import TimeAgo from "javascript-time-ago";
+import ko from "javascript-time-ago/locale/ko.json";
+
+TimeAgo.addDefaultLocale(ko);
+const timeAgo = new TimeAgo("ko-KR");
 
 const supabase = createClient();
 
@@ -191,65 +196,76 @@ const CommentItem: React.FC<{
   }, [replyPage, scrollToReplyForm]);
 
   return (
-    <li className="border-b py-4 bg-white shadow rounded-lg">
+    <li className="border border-primary-100 py-4 bg-white shadow rounded-lg w-full max-w-full lg:max-w-[1440px] mx-auto h-auto">
       {editingCommentId === comment.post_comment_id ? (
         <div className="bg-white p-4 rounded-lg shadow">
           <textarea
             value={editingContent}
             onChange={(e) => setEditingContent(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="w-full p-2 border rounded mb-2"
+            className="w-full p-2 border border-primary-100 rounded-lg mb-2"
             rows={4}
           />
           <button
             onClick={() => handleSaveEdit(comment.post_comment_id)}
-            className="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600"
+            className="px-4 py-2 mr-2 border-primary-200 font-black bg-primary-100 rounded"
           >
             저장
           </button>
           <button
             onClick={() => setEditingCommentId(null)}
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+            className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
           >
             취소
           </button>
         </div>
       ) : (
-        <div className="flex items-start space-x-4">
+        <div className="flex items-start" style={{ marginLeft: "5px" }}>
           <Image
             src="/assets/images/profile_ex.png"
             alt="유저 프로필 사진"
             width={40}
             height={40}
             className="rounded-full"
+            style={{ marginLeft: "5px" }}
           />
-          <div className="flex-1">
+          <div className="flex-1" style={{ marginLeft: "10px" }}>
             <div className="flex items-center justify-between">
-              <p className="font-semibold">{comment.user_nickname}</p>
+              <div className="flex items-center">
+                <p className="font-semibold">{comment.user_nickname}</p>
+                <p className="text-sm text-gray-500 ml-2">
+                  {comment.created_at ? timeAgo.format(new Date(comment.created_at)) : "방금 전"}
+                </p>
+              </div>
               {comment.user_id === userId && (
-                <div className="flex space-x-2 justify-end">
-                  <button
+                <div className="flex space-x-2 justify-end" style={{ marginRight: "10px" }}>
+                  <span
                     onClick={() => handleEditComment(comment.post_comment_id, comment.comments)}
-                    className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded"
+                    className="cursor-pointer"
+                    style={{ fontSize: "12px", color: "black" }}
                   >
                     수정
-                  </button>
-                  <button
+                  </span>
+                  <span
                     onClick={() => handleDeleteComment(comment.post_comment_id)}
-                    className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
+                    className="cursor-pointer"
+                    style={{ fontSize: "12px", color: "black" }}
                   >
                     삭제
-                  </button>
+                  </span>
                 </div>
               )}
             </div>
-            <p className="mt-2 text-gray-800">{comment.comments}</p>
+            <p className="mt-2 text-gray-800" style={{ fontSize: "18px" }}>
+              {comment.comments}
+            </p>
             <button
               onClick={() => {
                 setShowReplies((prev) => !prev);
                 setScrollToReplyForm(true);
               }}
-              className="text-blue-500 hover:text-blue-700 mt-2"
+              className="hover:text-blue-700 mt-2"
+              style={{ fontSize: "12px", color: "black" }}
             >
               {showReplies ? "대댓글 숨기기" : "대댓글 보기"}
             </button>

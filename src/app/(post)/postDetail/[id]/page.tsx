@@ -16,6 +16,7 @@ import "swiper/css/pagination";
 import CommentSection from "@/components/common/comments/CommentSection";
 import { useUserStore } from "@/zustand/userStore";
 import PostLike from "@/components/posting/postcomponents/PostLike";
+import ShareModal from "@/components/detailpage/ShareModal";
 
 interface Post {
   content: string | null;
@@ -34,7 +35,8 @@ const PostDetail: React.FC = () => {
   const [editedContent, setEditedContent] = useState<string>("");
   const [editedTitle, setEditedTitle] = useState<string>("");
   const [editedFile, setEditedFile] = useState<string | null>(null);
-  const { user_nickname } = useUserStore();
+  const { user_nickname, profile_url } = useUserStore();
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   const {
     data: sessionData,
@@ -103,31 +105,25 @@ const PostDetail: React.FC = () => {
     }
   };
 
+  const handleShareClick = () => {
+    setIsShareModalOpen(true);
+  };
+
   const getImageUrls = (files: string | null): string[] => {
     return files ? files.split(",").filter((url) => url.trim() !== "") : [];
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <button onClick={() => router.back()} className="mb-4 bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">
-        뒤로 가기
-      </button>
-      <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
-      <div className="mb-4 text-sm text-gray-500">
-        <span>작성자: {user_nickname}</span>
-        <span className="ml-4">
-          작성일: {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Unknown"}
-        </span>
-      </div>
-      {post.files && (
-        <div className="mb-4">
+    <div className="container mx-auto px-4 max-w-[959px]">
+      <div className="mb-4">
+        {post.files && (
           <Swiper
             modules={[Navigation, Pagination]}
-            spaceBetween={50}
+            spaceBetween={0}
             slidesPerView={1}
             navigation
             pagination={{ clickable: true }}
-            className="w-full h-[400px] overflow-hidden"
+            className="w-full h-[500px] max-w-[1280px] mx-auto overflow-hidden"
           >
             {getImageUrls(post.files).map((url, index) => (
               <SwiperSlide key={index}>
@@ -136,15 +132,62 @@ const PostDetail: React.FC = () => {
                     src={url}
                     alt={`게시물 이미지 ${index + 1}`}
                     layout="fill"
-                    objectFit="contain"
+                    objectFit="cover"
                     className="object-center"
                   />
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
+        )}
+      </div>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold">{post.title}</h1>
+        <div className="flex items-center">
+          <PostLike post_id={post.id} onLikesChange={() => {}} initialLikes={0} />
+          <Image
+            src="/assets/images/shareModal.svg"
+            alt="공유하기"
+            width={24}
+            height={24}
+            className="ml-4 cursor-pointer"
+            onClick={handleShareClick}
+          />
         </div>
-      )}
+      </div>
+      <div className="text-sm text-gray-500 mt-[30px] mb-[40px]">
+        작성일: {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Unknown"}
+      </div>
+      <div className="flex items-center mb-[40px]">
+        <Image
+          src={profile_url || "/path/to/default_profile_image.jpg"}
+          alt="프로필 이미지"
+          width={30}
+          height={30}
+          className="rounded-full"
+        />
+        <div className="ml-4">
+          <p className="text-lg text-black">{user_nickname}</p>
+        </div>
+      </div>
+      <div className="mb-40">
+        <div className="flex items-center mb-2">
+          <Image src="/assets/images/icon1.png" alt="여행 장소" width={24} height={24} />
+          <p className="text-lg text-black ml-2">여행 장소 ㅣ null</p>
+        </div>
+        <div className="flex items-center mb-2">
+          <Image src="/assets/images/icon.png" alt="출발 장소" width={24} height={24} />
+          <p className="text-lg text-black ml-2">출발 장소 ㅣ null</p>
+        </div>
+        <div className="flex items-center mb-2">
+          <Image src="/assets/images/icon2.png" alt="여행 비용" width={24} height={24} />
+          <p className="text-lg text-black ml-2">여행 비용 ㅣ null</p>
+        </div>
+        <div className="flex items-center">
+          <Image src="/assets/images/icon3.png" alt="여행 기간" width={24} height={24} />
+          <p className="text-lg text-black ml-2">여행 기간 ㅣ null</p>
+        </div>
+      </div>
       {isEditing ? (
         <div>
           <input
@@ -156,7 +199,7 @@ const PostDetail: React.FC = () => {
           <textarea
             value={editedContent}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setEditedContent(e.target.value)}
-            className="w-full p-2 border rounded mb-2"
+            className="w-full p-2 border rounded mb-2 resize-y"
             rows={10}
           />
           <input
@@ -178,31 +221,34 @@ const PostDetail: React.FC = () => {
         </div>
       ) : (
         <div>
-          <div className="prose max-w-none mb-4">{post.content}</div>
+          <div className="prose max-w-none mb-4" style={{ minHeight: "150px" }}>
+            {post.content}
+          </div>
+
           <div className="flex justify-between items-center">
             {sessionData && sessionData.user.id === post.user_id && (
               <div className="flex space-x-2 justify-end">
                 <button
                   onClick={handleEdit}
-                  className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded hover:bg-primary-200"
+                  className="text-sm text-gray-700 hover:text-black"
+                  style={{ padding: "8px 12px" }}
                 >
                   수정
                 </button>
                 <button
                   onClick={handleDelete}
-                  className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black hover:bg-gray-100"
+                  className="text-sm text-gray-700 hover:text-black"
+                  style={{ padding: "8px 12px" }}
                 >
                   삭제
                 </button>
               </div>
             )}
-            <div className="flex items-center">
-              <PostLike post_id={post.id} onLikesChange={() => {}} initialLikes={0} />
-            </div>
           </div>
         </div>
       )}
       <CommentSection postId={post.id} />
+      <ShareModal isOpen={isShareModalOpen} onClose={() => setIsShareModalOpen(false)} />
     </div>
   );
 };

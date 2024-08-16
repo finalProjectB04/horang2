@@ -54,7 +54,7 @@ const AddReply: React.FC<{
   };
 
   return (
-    <div className="mt-4 max-w-[1440px] mx-auto">
+    <div className="mt-4 max-w-[1440px] mx-auto" style={{ marginRight: "50px" }}>
       {userId && (
         <div className="flex items-center mb-4 py-3">
           <Image src={profile_url || "/assets/images/profile_ex.png"} alt="유저 프로필 사진" width={25} height={25} />

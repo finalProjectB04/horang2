@@ -93,20 +93,26 @@ const ReplyItem: React.FC<{
   };
 
   return (
-    <li className="border p-4 rounded-lg mb-2">
+    <li className="border border-primary-100 p-4 rounded-lg mb-2 mx-auto" style={{ marginRight: "50px" }}>
       {editingReplyId === reply.id ? (
         <div>
           <textarea
             value={editingContent}
             onChange={(e) => setEditingContent(e.target.value)}
             onKeyDown={(e) => handleKeyDown(e, reply.id)}
-            className="w-full p-2 border rounded mb-2"
+            className="w-full p-2 border border-primary-100 rounded-lg mb-2"
             rows={4}
           />
-          <button onClick={() => handleSaveEdit(reply.id)} className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+          <button
+            onClick={() => handleSaveEdit(reply.id)}
+            className="px-4 py-2 mr-2 border-primary-200 font-black bg-primary-100 rounded"
+          >
             저장
           </button>
-          <button onClick={() => setEditingReplyId(null)} className="bg-gray-500 text-white px-4 py-2 rounded">
+          <button
+            onClick={() => setEditingReplyId(null)}
+            className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
+          >
             취소
           </button>
         </div>
@@ -118,28 +124,33 @@ const ReplyItem: React.FC<{
             width={40}
             height={40}
             className="rounded-full"
+            style={{ marginLeft: "5px" }} // 좌측 간격 조정
           />
           <div className="flex-1">
             <div className="flex items-center justify-between">
               <p className="font-semibold">{reply.user_nickname}</p>
               {reply.user_id === userId && (
-                <div className="flex space-x-2 justify-end">
-                  <button
+                <div className="flex space-x-2 justify-end" style={{ marginRight: "5px" }}>
+                  <span
                     onClick={() => handleEditReply(reply.id, reply.content)}
-                    className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded"
+                    className="cursor-pointer"
+                    style={{ fontSize: "12px", color: "black" }} // 수정 텍스트 스타일
                   >
                     수정
-                  </button>
-                  <button
+                  </span>
+                  <span
                     onClick={() => handleDeleteReply(reply.id)}
-                    className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
+                    className="cursor-pointer"
+                    style={{ fontSize: "12px", color: "black" }} // 삭제 텍스트 스타일
                   >
                     삭제
-                  </button>
+                  </span>
                 </div>
               )}
             </div>
-            <p className="mt-2 text-gray-800">{reply.content}</p>
+            <p className="mt-2 text-gray-800" style={{ fontSize: "14px" }}>
+              {reply.content}
+            </p>
           </div>
         </div>
       )}

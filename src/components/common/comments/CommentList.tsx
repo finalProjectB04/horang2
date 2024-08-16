@@ -64,7 +64,7 @@ const CommentList: React.FC<{
   };
 
   return (
-    <div>
+    <div className="comment-list-container">
       <div className="mb-4 mt-4 rounded-lg">
         {currentComments.length > 0 ? (
           <ul className="space-y-4">

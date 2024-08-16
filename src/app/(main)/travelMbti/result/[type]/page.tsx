@@ -44,10 +44,7 @@ const TypeResultPage = () => {
             <header className="py-4 px-6 flex flex-col items-center justify-center">
               <h1 className="text-3xl font-bold text-center">여행 MBTI 결과</h1>
             </header>
-            <button
-              onClick={() => router.back()} // 브라우저의 이전 페이지로 이동합니다.
-              className="absolute top-4 left-4 p-2"
-            >
+            <button onClick={() => router.back()} className="absolute top-4 left-4 p-2">
               <img src="/assets/images/back.svg" alt="뒤로가기" className="w-6 h-6" />
             </button>
           </div>
