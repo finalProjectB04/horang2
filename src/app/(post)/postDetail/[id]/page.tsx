@@ -17,6 +17,7 @@ import CommentSection from "@/components/common/comments/CommentSection";
 import { useUserStore } from "@/zustand/userStore";
 import PostLike from "@/components/posting/postcomponents/PostLike";
 import ShareModal from "@/components/detailpage/ShareModal";
+import { createClient } from "@/utils/supabase/client";
 
 interface Post {
   content: string | null;
@@ -26,6 +27,8 @@ interface Post {
   title: string | null;
   user_id: string;
 }
+
+const supabase = createClient();
 
 const PostDetail: React.FC = () => {
   const router = useRouter();
@@ -56,22 +59,72 @@ const PostDetail: React.FC = () => {
     queryFn: () => selectPostById(id),
   });
 
+  const deletePostWithComments = async (postId: string) => {
+    // Step 1: 댓글에 연결된 모든 대댓글 삭제
+    const { data: comments, error: commentsError } = await supabase
+      .from("Post_comments")
+      .select("post_comment_id")
+      .eq("post_id", postId);
+
+    if (commentsError) {
+      console.error("Error fetching comments:", commentsError.message);
+      throw new Error(commentsError.message);
+    }
+
+    const commentIds = comments.map((comment) => comment.post_comment_id);
+
+    const { error: repliesError } = await supabase
+      .from("Post_commentreplies")
+      .delete()
+      .in("parent_comment_id", commentIds);
+
+    if (repliesError) {
+      console.error("Error deleting replies:", repliesError.message);
+      throw new Error(repliesError.message);
+    }
+
+    // Step 2: 게시글에 연결된 모든 댓글 삭제
+    const { error: deleteCommentsError } = await supabase.from("Post_comments").delete().eq("post_id", postId);
+
+    if (deleteCommentsError) {
+      console.error("Error deleting comments:", deleteCommentsError.message);
+      throw new Error(deleteCommentsError.message);
+    }
+
+    // Step 3: 게시글 삭제
+    const { error: deletePostError } = await supabase.from("Post").delete().eq("id", postId);
+
+    if (deletePostError) {
+      console.error("Error deleting post:", deletePostError.message);
+      throw new Error(deletePostError.message);
+    }
+  };
+
+  const deleteMutation = useMutation({
+    mutationFn: async (postId: string) => {
+      await deletePostWithComments(postId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      router.push("/community");
+    },
+    onError: (error: Error) => {
+      console.error("Delete failed:", error.message);
+      alert("삭제에 실패했습니다. 다시 시도해주세요.");
+    },
+  });
+
   const updateMutation = useMutation({
-    mutationFn: updatePost,
+    mutationFn: async (updatedPost: { id: string; content: string; title: string; file: string | null }) => {
+      await updatePost(updatedPost);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["post", id] });
       setIsEditing(false);
     },
     onError: (error: Error) => {
-      console.error("Update failed:", error);
+      console.error("Update failed:", error.message);
       alert("수정에 실패했습니다. 다시 시도해주세요.");
-    },
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: deletePost,
-    onSuccess: () => {
-      router.push("/community");
     },
   });
 
