@@ -29,10 +29,10 @@ const Profile: React.FC = () => {
   }
 
   const buttons = [
-    { name: "내 정보 관리", onClick: () => toggleModal("profile") },
-    { name: "대화 하기", onClick: () => router.push("/chat") },
-    { name: "나만의 여행", onClick: () => router.push("/travelMbti") },
-    { name: "호랑이 모임", onClick: () => router.push("/community") },
+    { name: "내 정보 관리", onClick: () => toggleModal("profile"), src: "/assets/images/edit_profile.svg" },
+    { name: "대화 하기", onClick: () => router.push("/chat"), src: "/assets/images/chat.svg" },
+    { name: "나만의 여행", onClick: () => router.push("/travelMbti"), src: "/assets/images/my_travel.svg" },
+    { name: "호랑이 모임", onClick: () => router.push("/community"), src: "/assets/images/community.svg" },
   ];
 
   return (
@@ -56,11 +56,13 @@ const Profile: React.FC = () => {
             <p className="text-lg">행복한 국내 여행하세요</p>
           </div>
         </div>
-        <div className="w-full my-5">
+        <div className="w-full my-10">
           <div className="flex justify-center">
             {buttons.map((button, index) => (
               <button key={index} onClick={button.onClick}>
-                <div className="border border-primary-700 rounded-xl w-[54px] h-[54px] m-[9px]"></div>
+                <div className="w-[54px] h-[54px] mx-[18px] p-[8px] flex items-center justify-center">
+                  <Image width={32} height={32} sizes="100%" src={button.src} alt="Icon" />
+                </div>
                 <p className="text-[12px] text-secondary-800">{button.name}</p>
               </button>
             ))}

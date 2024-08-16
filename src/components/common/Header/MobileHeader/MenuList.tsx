@@ -40,10 +40,10 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
   };
 
   const buttons = [
-    { name: "내 정보 관리", onClick: () => toggleModal("profile") },
-    { name: "대화 하기", onClick: handleNavigation("/chat") },
-    { name: "나만의 여행", onClick: handleNavigation("/travelMbti") },
-    { name: "호랑이 모임", onClick: () => router.push("/community") },
+    { name: "내 정보 관리", onClick: () => toggleModal("profile"), src: "/assets/images/edit_profile.svg" },
+    { name: "대화 하기", onClick: () => handleNavigation("/chat"), src: "/assets/images/chat.svg" },
+    { name: "나만의 여행", onClick: () => handleNavigation("/travelMbti"), src: "/assets/images/my_travel.svg" },
+    { name: "호랑이 모임", onClick: () => router.push("/community"), src: "/assets/images/community.svg" },
   ];
 
   return (
@@ -66,8 +66,10 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
       <div className="flex justify-center mb-4 space-x-[18px]">
         {buttons.map((button, index) => (
           <React.Fragment key={index}>
-            <button className="flex flex-col items-center space-y-2" onClick={button.onClick}>
-              <div className="border border-primary-700 rounded-xl w-[54px] h-[54px]"></div>
+            <button className="flex flex-col items-center" onClick={button.onClick}>
+              <div className="w-[54px] h-[54px]  flex items-center justify-center">
+                <Image width={32} height={32} sizes="100%" src={button.src} alt="Icon" />
+              </div>
               <p className="text-[12px] text-secondary-800 whitespace-nowrap overflow-hidden text-ellipsis">
                 {button.name}
               </p>
