@@ -6,6 +6,7 @@ import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAllMessageWithUser, getUserById, sendMessage } from "@/actions/chatActions";
 import send from "../../../public/assets/images/send.png";
+import sending from "../../../public/assets/images/loading_icon.png";
 import Image from "next/image";
 import useChatStore from "@/zustand/chatStore";
 
@@ -84,7 +85,7 @@ const ChatScreen = () => {
           </div>
         </div>
         <form
-          className="flex mt-4 border border-primary-100 rounded"
+          className="flex mt-4 border border-primary-100 rounded-[20px] justify-between"
           onSubmit={(event) => {
             event.preventDefault();
             if (message.trim()) {
@@ -105,11 +106,18 @@ const ChatScreen = () => {
           />
           <button
             type="submit"
-            className="mr-4 bg-light-blue-600 text-black flex justify-end items-center"
+            className="mr-4 bg-light-blue-600 text-black flex justify-center items-center ml-5"
             disabled={message.length > 1000 || message.trim() === ""}
           >
             {sendMessageMutation.isPending ? (
-              <span>전송 중</span>
+              <Image
+                width={20}
+                height={20}
+                sizes="100%"
+                src={sending}
+                alt="전송중"
+                className="ml-5 animate-spin-veryslow"
+              />
             ) : (
               <Image width={20} height={20} sizes="100%" src={send} alt="전송" />
             )}

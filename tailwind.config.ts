@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       animation: {
         "spin-slow": "spin 2s linear infinite",
+        "spin-veryslow": "spin 3s linear infinite",
       },
       screens: {
         sm: { max: "640px" },

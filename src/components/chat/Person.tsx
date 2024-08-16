@@ -61,7 +61,11 @@ export default function Person({
             {onlineAt && timeAgo.format(Date.parse(onlineAt))}
           </p>
         </div>
-        <p className="text-gray-500 sm:text-[10px] md:text-sm lg:text-sm">{lastMessage}</p>
+        <p
+          className={`text-gray-500 ${!onChatScreen && isActive && "text-white"}  sm:text-[10px] md:text-sm lg:text-sm`}
+        >
+          {lastMessage}
+        </p>
       </div>
     </div>
   );

@@ -56,7 +56,8 @@ const Profile: React.FC = () => {
             <p className="text-lg">행복한 국내 여행하세요</p>
           </div>
         </div>
-        <div className="w-full my-10">
+        {/* 모바일 헤더에 들어가서 임시 제외 */}
+        {/* <div className="w-full my-10">
           <div className="flex justify-center">
             {buttons.map((button, index) => (
               <button key={index} onClick={button.onClick}>
@@ -67,7 +68,7 @@ const Profile: React.FC = () => {
               </button>
             ))}
           </div>
-        </div>
+        </div> */}
         <div className="relative cursor-pointer my-5" onClick={() => router.push("location")}>
           <div className="w-full h-[100px] relative">
             <ProfileCarousel />

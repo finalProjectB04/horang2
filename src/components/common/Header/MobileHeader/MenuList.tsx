@@ -21,7 +21,7 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
 
   const handleNavigation = (href: string) => (event: React.MouseEvent) => {
     if (!userId) {
-      event.preventDefault();
+      // event.preventDefault();
       router.push("/signin");
     } else {
       router.push(href);
@@ -63,10 +63,10 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
         </div>
       </div>
 
-      <div className="flex justify-center mb-4 space-x-[18px]">
+      <div className="flex justify-center mb-4 padding-[18px]">
         {buttons.map((button, index) => (
           <React.Fragment key={index}>
-            <button className="flex flex-col items-center" onClick={button.onClick}>
+            <button className="flex flex-col items-center m-[9px]" onClick={button.onClick}>
               <div className="w-[54px] h-[54px]  flex items-center justify-center">
                 <Image width={32} height={32} sizes="100%" src={button.src} alt="Icon" />
               </div>
@@ -100,7 +100,7 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
       </Link>
       <Link href="/leports">
         <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
-          레포츠
+          놀거리
         </span>
       </Link>
       <Link href="/restaurant">
