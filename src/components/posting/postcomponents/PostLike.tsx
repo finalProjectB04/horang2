@@ -1,13 +1,13 @@
 "use client";
-import React, { useEffect, useCallback } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import React, { useCallback, useEffect } from "react";
 
 const DEFAULT_HEART = (
   <Image
-    src="/assets/images/defaultLikeIcon.png"
+    src="/assets/images/defaultLikeIcon.svg"
     alt="빈하트"
     width={48}
     height={32}
@@ -16,7 +16,7 @@ const DEFAULT_HEART = (
 );
 const PUSHED_HEART = (
   <Image
-    src="/assets/images/successLikeIcon.png"
+    src="/assets/images/successLikeIcon.svg"
     alt="하트"
     width={48}
     height={32}

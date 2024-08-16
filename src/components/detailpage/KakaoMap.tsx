@@ -67,10 +67,10 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
 
   return (
     <div className="w-full relative md:w-full lg:w-full sm:w-full">
-      <h1 className="text-start py-[65px] font-extrabold md:text-start md:py-[45px] md:px-[32px] md:font-semibold md:text-[30px] lg:text-start lg:py-[65px] lg:font-bold lg:text-[38px] sm:px-[24px] sm:text-[14px] sm:font-bold sm:mb-[-40px] sm:leading-[24px]">
+      <h1 className="text-start font-extrabold md:text-start md:py-[45px] md:px-[32px] md:font-semibold md:text-[17px] lg:text-start lg:py-[21px] lg:font-bold lg:text-[19px] sm:px-[24px] sm:text-[14px] sm:mt-10 sm:pb-5 sm:font-bold sm:leading-[24px]">
         위치
       </h1>
-      <div id="map" className="w-full h-[500px] md:h-[400px] lg:h-[500px] sm:h-[300px]"></div>
+      <div id="map" className="w-full md:h-[342px] lg:h-[427px] sm:h-[256px]"></div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { ApiInformation } from "@/types/Main";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface TravelCardProps {

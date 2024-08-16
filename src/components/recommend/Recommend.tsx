@@ -13,31 +13,37 @@ const Recommend: React.FC<RecommendProps> = ({ data, MBTIResult }) => {
   return (
     <div className="flex justify-center">
       {data.length > 0 ? (
-        <ul className="grid grid-cols-3 gap-11 text-[18px] text-grey-600 font-normal">
+        <ul className="grid grid-cols-2 gap-10 sm:gap-6 text-[14px] text-primary-500">
           {data.map((item, index) => (
-            <li key={index} className="flex flex-col items-center space-y-2 items-stretch">
-              <h2
-                className="text-center w-full truncate"
-                style={{ maxWidth: "120px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
-              >
-                {item.title}
-              </h2>
+            <li key={index} className="flex flex-col items-center justify-start space-y-3">
               <button
                 onClick={() => router.push(`/detail/${item.contentid}`)}
-                className="flex-grow flex items-center justify-center"
+                className="flex items-center justify-center w-36 h-36 sm:w-24 sm:h-24 rounded-full overflow-hidden"
               >
                 {item.firstimage ? (
-                  <Image src={item.firstimage} alt={item.title} width={100} height={100} className="object-contain" />
+                  <Image
+                    src={item.firstimage}
+                    alt={item.title}
+                    width={120}
+                    height={120}
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <Image
                     src="/assets/images/null_image.svg"
                     alt="No image available"
-                    width={100}
-                    height={100}
-                    className="object-contain"
+                    width={120}
+                    height={120}
+                    className="w-full h-full object-cover"
                   />
                 )}
               </button>
+              <p
+                className="text-center font-medium"
+                style={{ maxWidth: "120px", whiteSpace: "normal", overflow: "hidden", textOverflow: "ellipsis" }}
+              >
+                {item.title}
+              </p>
             </li>
           ))}
         </ul>

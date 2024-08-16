@@ -9,9 +9,10 @@ interface CommonModalProps {
   content: React.ReactNode | null;
   path?: string;
   type?: "normal" | "confirm";
+  onClose?: () => void;
 }
 
-const CommonModal = ({ title, content, path, type = "normal" }: CommonModalProps) => {
+const CommonModal = ({ title, content, path, type = "normal", onClose }: CommonModalProps) => {
   const modal = useModal();
   const router = useRouter();
 
@@ -23,6 +24,9 @@ const CommonModal = ({ title, content, path, type = "normal" }: CommonModalProps
         router.push(`${path}`);
       }
       modal.close();
+    }
+    if (onClose) {
+      onClose();
     }
   };
 

@@ -6,8 +6,9 @@ import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { SearchBar } from "@/components/maindetail/SearchBar";
 import { TravelCard } from "@/components/maindetail/TravelCard";
 import { ApiInformation } from "@/types/Main";
+
 import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 // 관광 유형을 정의하는 인터페이스
