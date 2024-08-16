@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from "react";
 
-import { regions } from "./route";
+import { Regions, regions } from "./Area";
 
-// RegionSelector 컴포넌트
 interface RegionSelectorProps {
   onSelect: (region: string, sigungu: string) => void;
   onClose: () => void;
@@ -18,7 +17,7 @@ export const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelect, onClos
 
   useEffect(() => {
     if (selectedRegion) {
-      const sigunguList = regions.시군구[selectedRegion] || [];
+      const sigunguList = (regions as Regions).시군구[selectedRegion] || [];
       setFilteredSigungu(sigunguList.filter((sigungu) => sigungu.toLowerCase().includes(searchTerm.toLowerCase())));
     }
   }, [selectedRegion, searchTerm]);
@@ -54,7 +53,7 @@ export const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelect, onClos
         <div className="flex">
           <div className="w-1/2 pr-2">
             <h3 className="font-semibold mb-2">광역시/도</h3>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="flex flex-wrap gap-2">
               {regions.광역시도.map((region) => (
                 <button
                   key={region}
@@ -68,19 +67,13 @@ export const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelect, onClos
           </div>
           <div className="w-1/2 pl-2">
             <h3 className="font-semibold mb-2">시/군/구</h3>
-            <input
-              type="text"
-              placeholder="검색..."
-              value={searchTerm}
-              onChange={handleSearch}
-              className="w-full p-2 mb-2 border rounded"
-            />
-            <div className="grid grid-cols-3 gap-2 max-h-60 overflow-y-auto">
+
+            <div className="flex flex-wrap gap-2 max-h-60 overflow-y-auto">
               {filteredSigungu.map((sigungu) => (
                 <button
                   key={sigungu}
                   onClick={() => handleSigunguSelect(sigungu)}
-                  className={`p-2 rounded ${selectedSigungu === sigungu ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+                  className={`p-2 rounded ${selectedSigungu === sigungu ? "bg-orange-500 text-white" : "bg-gray-200"}`}
                 >
                   {sigungu}
                 </button>
@@ -89,11 +82,11 @@ export const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelect, onClos
           </div>
         </div>
         <div className="mt-4 flex justify-end">
-          <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded mr-2">
-            취소
-          </button>
-          <button onClick={handleConfirm} className="px-4 py-2 bg-blue-500 text-white rounded">
+          <button onClick={handleConfirm} className="px-4 py-2 bg-orange-500 text-white mr-2 rounded">
             확인
+          </button>
+          <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded ">
+            취소
           </button>
         </div>
       </div>

@@ -1,48 +1,56 @@
-import Image from "next/image";
+import { useState, useRef } from "react";
 
 interface SearchBarProps {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
+  onRegionSelectorOpen: () => void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm, onRegionSelectorOpen }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => setIsFocused(false);
+
+  const handleClick = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
-    <>
-      <div className="hidden lg:block">
-        <div className="flex flex-col justify-center items-center">
-          <div className="relative w-[1280px] h-[600px]">
-            <Image
-              src="/assets/images/newdetail.png"
-              alt="background"
-              layout="fill"
-              objectFit="cover"
-              className="object-cover"
-            />
-            <div className="absolute bottom-10 left-0 w-full px-5 md:px-8 lg:px-10">
-              <div className="max-w-3xl mx-auto my-36">
-                <input
-                  type="text"
-                  placeholder="검색어를 입력하세요"
-                  value={searchTerm}
-                  onChange={(event) => setSearchTerm(event.target.value)}
-                  className="w-full p-3 md:p-4 text-base md:text-lg bg-black bg-opacity-70 text-white placeholder-gray-400 border-2 border-gray-600 rounded-full shadow-lg focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="block lg:hidden">
-        <div className="  relative w-[375px] h-[295px]">
-          <Image
-            src="/assets/images/newdetail.png"
-            alt="background"
-            layout="fill"
-            objectFit="cover"
-            className="object-cover"
-          />
-        </div>
-      </div>
-    </>
+    <div className="flex max-w-3xl mx-auto my-36 relative" onClick={handleClick}>
+      <input
+        ref={inputRef}
+        type="text"
+        placeholder="시/군/구 또는 검색어를 입력하세요"
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        className="w-full p-3 md:p-4 pl-24 text-base md:text-lg bg-black bg-opacity-70 text-white placeholder-gray-400 border-2 border-gray-600 rounded-full shadow-lg focus:outline-none focus:border-orange-500 transition duration-300 ease-in-out"
+      />
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onRegionSelectorOpen();
+        }}
+        className="absolute left-2 top-1/2 transform -translate-y-1/2 px-4 py-1 text-sm bg-gray-700 text-gray-300 rounded-full hover:bg-gray-600 transition duration-300 ease-in-out"
+      >
+        시/군/구
+      </button>
+      {isFocused && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setSearchTerm("");
+          }}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200"
+        >
+          ✕
+        </button>
+      )}
+    </div>
   );
 };

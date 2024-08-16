@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { MainListTitle } from "../common/MainListTitle";
 import { useRouter } from "next/navigation";
 import "swiper/swiper-bundle.css";
+import { convertToHttps } from "@/utils/convertToHttps";
 
 interface TravelProps {
   searchTerm: string;
@@ -91,15 +92,15 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
               }}
             >
               {sortedLeports.map((item: ApiInformation) => (
-                <SwiperSlide key={item.contentid} className="h-[166px] lg:h-[242.67px]">
+                <SwiperSlide key={item.contentid} className="h-[166px] lg:h-[242px]">
                   <div
-                    className="lg:w-[220px] lg:h-[242.67px] w-[104px] h-[166px] relative cursor-pointer rounded-[8px] transition-transform duration-300 hover:scale-105"
+                    className="lg:w-[220px] lg:h-[242px] w-[104px] h-[166px] relative cursor-pointer rounded-[8px] transition-transform duration-300 hover:scale-105"
                     onClick={() => router.push(`/detail/${item.contentid}`)}
                   >
                     <div className="h-[110px] lg:h-[149.33px] relative rounded-t-[8px] overflow-hidden">
                       {item.firstimage ? (
                         <Image
-                          src={item.firstimage}
+                          src={convertToHttps(item.firstimage)}
                           alt={item.title}
                           layout="fill"
                           objectFit="cover"

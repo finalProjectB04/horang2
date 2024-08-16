@@ -1,28 +1,12 @@
-interface regions {
+export type Regions = {
   광역시도: string[];
   시군구: {
-    서울: string[];
-    인천: string[];
-    부산: string[];
-    대구: string[];
-    광주: string[];
-    대전: string[];
-    울산: string[];
-    경기도: string[];
-    강원도: string[];
-    충청북도: string[];
-    충청남도: string[];
-    경상북도: string[];
-    경상남도: string[];
-    전라북도: string[];
-    전라남도: string[];
-    제주도: string[];
+    [key: string]: string[];
   };
-}
+};
 
 export const regions = {
   광역시도: [
-    "전국",
     "서울",
     "인천",
     "대전",
