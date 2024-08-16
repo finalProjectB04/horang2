@@ -1,15 +1,15 @@
 "use client";
 
+import LoadingPage from "@/app/loading";
+import useModalStore from "@/zustand/modalStore";
+import { useUserStore } from "@/zustand/userStore";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Button from "../../common/button";
 import Modal from "../../common/Modal";
-import ProfileManagement from "./ProfileManagement";
-import { useUserStore } from "@/zustand/userStore";
-import { useRouter } from "next/navigation";
 import ProfileCarousel from "./ProfileCarousel";
-import LoadingPage from "@/app/loading";
-import useModalStore from "@/zustand/modalStore";
+import ProfileManagement from "./ProfileManagement";
 
 const Profile: React.FC = () => {
   const { toggleModal } = useModalStore();

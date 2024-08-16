@@ -24,8 +24,8 @@ const LinkUrlButton = () => {
           <Image
             src="/assets/images/linkUrl.png"
             alt="이미지가 없습니다"
-            width={55}
-            height={55}
+            width={32}
+            height={32}
             className="md:w-12 md:h-12"
           />
         </div>

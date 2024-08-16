@@ -19,7 +19,7 @@ export const fetchResultData = async (type: string): Promise<Item[]> => {
 
   const remainingData = allData.filter((item) => !selectedFirstData.includes(item));
 
-  const selectedRemainingData = shuffleArray(remainingData).slice(0, 2);
+  const selectedRemainingData = shuffleArray(remainingData).slice(0, 1);
 
   return [...selectedFirstData, ...selectedRemainingData];
 };
