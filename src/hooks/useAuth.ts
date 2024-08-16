@@ -1,3 +1,4 @@
+import { useModal } from "@/context/modal.context";
 import { createClient } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
 import { useState } from "react";
@@ -12,6 +13,8 @@ const useAuth = () => {
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>(profile_url || "");
   const [profileImageUrl, setProfileImageUrl] = useState<string>(profile_url || "");
+
+  const modal = useModal();
 
   const handleImageClick = () => {
     document.getElementById("profileImage")?.click();
@@ -77,11 +80,11 @@ const useAuth = () => {
   const handleUpdatePassword = async () => {
     const { error: updateError } = await supabase.auth.updateUser({ password: confirmPassword });
     if (!updateError) {
-      alert("변경이 완료되었습니다.");
+      modal.open({ title: "", content: "변경이 완료되었습니다." });
       setPassword("");
       setConfirmPassword("");
     } else {
-      alert(updateError.message);
+      modal.open({ title: "", content: `${updateError.message}` });
     }
   };
 
