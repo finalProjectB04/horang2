@@ -6,6 +6,7 @@ import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { SearchBar } from "@/components/maindetail/SearchBar";
 import { TravelCard } from "@/components/maindetail/TravelCard";
 import { ApiInformation } from "@/types/Main";
+import { useUserStore } from "@/zustand/userStore";
 
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
@@ -15,6 +16,11 @@ import { useInView } from "react-intersection-observer";
 interface TourismListProps {
   contentTypeId: number;
   title: string;
+  contentId: string;
+  imageUrl: string;
+  addr1: string;
+  tel: string;
+  user_id: string;
 }
 
 // 관광 데이터를 가져오는 함수
@@ -30,6 +36,7 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
   const [displayCount, setDisplayCount] = useState<number>(12);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { ref, inView } = useInView();
+  const { id: userId } = useUserStore();
 
   // React Query를 사용하여 데이터 fetching
   const {
@@ -80,7 +87,17 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10py-8 max-w-[1440px]">
             {displayedData.map((item) => (
-              <TravelCard key={item.contentid} item={item} />
+              <TravelCard
+                key={item.contentid}
+                item={item}
+                user_id={userId || ""}
+                imageUrl={item.firstimage || ""}
+                contentTypeId={item.contenttypeid || ""}
+                title={item.title || ""}
+                addr1={item.addr1 || ""}
+                tel={item.tel || ""}
+                contentId={item.contentid || ""}
+              />
             ))}
           </div>
           {displayedData.length < filteredData.length && (
@@ -100,7 +117,17 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10py-8 max-w-[1440px]">
             {displayedData.map((item) => (
-              <TravelCard key={item.contentid} item={item} />
+              <TravelCard
+                key={item.contentid}
+                item={item}
+                user_id={userId || ""}
+                imageUrl={item.firstimage || ""}
+                contentTypeId={item.contenttypeid || ""}
+                title={item.title || ""}
+                addr1={item.addr1 || ""}
+                tel={item.tel || ""}
+                contentId={item.contentid || ""}
+              />
             ))}
           </div>
           {displayedData.length < filteredData.length && (
