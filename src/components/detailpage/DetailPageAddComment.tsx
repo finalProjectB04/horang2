@@ -16,6 +16,7 @@ interface DetailPageAddCommentProps {
 
 const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, contentTypeId }) => {
   const [comment, setComment] = useState<string>("");
+  const [lastCommentTime, setLastCommentTime] = useState<number | null>(null);
   const queryClient = useQueryClient();
   const { id: userId, user_email: userEmail, user_nickname: userNickname, profile_url: profileUrl } = useUserStore();
   const modal = useModal();
@@ -44,6 +45,7 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
     },
     onSuccess: () => {
       setComment("");
+      setLastCommentTime(Date.now());
       modal.open({
         title: "성공!",
         content: (
@@ -68,6 +70,30 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
   });
 
   const handleAddComment = () => {
+    if (comment.length < 1) {
+      modal.open({
+        title: "실패!",
+        content: (
+          <div className="text-center">
+            <p>댓글은 최소 1글자 이상 입력해야 합니다.</p>
+          </div>
+        ),
+      });
+      return;
+    }
+
+    if (lastCommentTime && Date.now() - lastCommentTime < 10000) {
+      modal.open({
+        title: "제한!",
+        content: (
+          <div className="text-center">
+            <p>댓글 작성은 10초 간격으로 가능합니다.</p>
+          </div>
+        ),
+      });
+      return;
+    }
+
     addCommentMutation.mutate();
   };
 
@@ -105,6 +131,7 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
           } lg:border-none lg:flex-grow lg:min-h-[80px] lg:max-h-[500px]`}
           disabled={!userId}
           maxLength={2000}
+          required
         />
         <button
           onClick={handleAddComment}
