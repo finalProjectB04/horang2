@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import Person from "./Person";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
-import { getAllUsers } from "@/actions/chatActions";
+import { getAllMessage, getAllUsers } from "@/actions/chatActions";
 import { User } from "@/types/User.types";
 import useChatStore from "@/zustand/chatStore";
 import { useRouter } from "next/navigation";
@@ -31,6 +31,23 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
       return allUsers.filter((user) => user.id !== loggedInUser?.id);
     },
   });
+
+  const { data: allMessages, isPending } = useQuery({
+    queryKey: ["lastMessage", loggedInUser?.id],
+    queryFn: () => {
+      if (loggedInUser?.id) {
+        return getAllMessage({ myId: loggedInUser.id });
+      }
+      return Promise.resolve([]);
+    },
+    enabled: !!loggedInUser?.id,
+  });
+
+  function getLastMessage(userId: string) {
+    const lastMessageData = allMessages?.filter((message) => message.sender === userId).pop();
+
+    return lastMessageData?.message || null;
+  }
 
   useEffect(() => {
     const channel = supabase.channel("online_users", {
@@ -115,6 +132,7 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
                   onlineAt={presence?.[user.id]?.[0]?.onlineAt}
                   userId={user.id}
                   myId={loggedInUser.id}
+                  lastMessage={getLastMessage(user.id) || "서로 대화를 해보세요!"}
                 />
               ))
             )}

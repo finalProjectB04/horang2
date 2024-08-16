@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Message from "./Message";
 import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getAllMessage, getUserById, sendMessage } from "@/actions/chatActions";
+import { getAllMessageWithUser, getUserById, sendMessage } from "@/actions/chatActions";
 import send from "../../../public/assets/images/send.png";
 import Image from "next/image";
 import useChatStore from "@/zustand/chatStore";
@@ -36,7 +36,7 @@ const ChatScreen = () => {
 
   const getAllMessageQuery = useQuery({
     queryKey: ["messages", selectedUserId],
-    queryFn: () => getAllMessage({ chatUserId: selectedUserId }),
+    queryFn: () => getAllMessageWithUser({ chatUserId: selectedUserId }),
   });
 
   useEffect(() => {

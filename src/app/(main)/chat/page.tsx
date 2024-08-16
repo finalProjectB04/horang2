@@ -6,12 +6,10 @@ import React from "react";
 const ChatPage = async () => {
   const supabase = await createServerSupabaseClient();
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const { data: User, error } = await supabase.auth.getUser();
 
-  if (!session) return;
-  const { data } = await supabase.from("Users").select("*").eq("id", session?.user.id);
+  if (!User) return;
+  const { data } = await supabase.from("Users").select("*").eq("id", User?.user!.id);
 
   if (!data) return;
 
