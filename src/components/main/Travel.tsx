@@ -11,6 +11,7 @@ import LoadingPage from "@/app/loading";
 interface TravelProps {
   searchTerm: string;
 }
+
 const fetchTravel = async (): Promise<ApiInformation[]> => {
   const response = await fetch("/api/main/tourism/travel");
   if (!response.ok) {
@@ -18,6 +19,7 @@ const fetchTravel = async (): Promise<ApiInformation[]> => {
   }
   return response.json();
 };
+
 export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
   const [displayCount, setDisplayCount] = useState<number>(20);
   const router = useRouter();
@@ -62,10 +64,19 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
 
   return (
     <>
-      <div className="mx-auto max-w-[327px]  py-8 lg:max-w-[960px] flex flex-col lg:gap-10">
+      <div className="mx-auto max-w-[327px] py-8 lg:max-w-[960px] flex flex-col lg:gap-10">
         <MainListTitle TitleName={`추천 여행지 `} onClick={() => router.push("/travel")} />
-        <div className=" mx-auto  lg:max-w-[960px] lg:h-[243px] flex flex-col lg:gap-10 max-w-[327px]">
-          <MainTravelSlider travel={sortedAndFilteredTravel} />
+        <div className="mx-auto lg:max-w-[960px] lg:h-[243px] flex flex-col lg:gap-10 max-w-[327px]">
+          {sortedAndFilteredTravel.length > 0 ? (
+            <MainTravelSlider travel={sortedAndFilteredTravel} />
+          ) : (
+            <div className="w-full h-[243px] flex items-center justify-center  rounded-[8px]">
+              <div className="text-center">
+                <p className="text-xl font-semibold text-gray-600">검색 결과가 없습니다.</p>
+                <p className="text-gray-500 mt-2">다른 검색어를 시도해 보세요.</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

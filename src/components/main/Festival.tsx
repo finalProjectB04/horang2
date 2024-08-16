@@ -66,7 +66,16 @@ export const Festival = ({ searchTerm }: FestivalProps) => {
         <MainListTitle TitleName={`축제 및 행사`} onClick={() => router.push("/festival")} />
       </div>
       <div className=" mx-auto  lg:max-w-[960px] lg:h-[243px] flex flex-col lg:gap-10 max-w-[327px]">
-        <MainTravelSlider travel={sortedFestival} />
+        {sortedFestival.length > 0 ? (
+          <MainTravelSlider travel={sortedFestival} />
+        ) : (
+          <div className="w-full h-[243px] flex items-center justify-center  rounded-[8px]">
+            <div className="text-center">
+              <p className="text-xl font-semibold text-gray-600">검색 결과가 없습니다.</p>
+              <p className="text-gray-500 mt-2">다른 검색어를 시도해 보세요.</p>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

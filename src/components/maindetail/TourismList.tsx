@@ -2,7 +2,6 @@
 
 import LoadingPage from "@/app/loading";
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
-
 import { SearchBar } from "@/components/maindetail/SearchBar";
 import { TravelCard } from "@/components/maindetail/TravelCard";
 import { ApiInformation } from "@/types/Main";
@@ -10,13 +9,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useState, useMemo, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-// 관광 유형을 정의하는 인터페이스
 interface TourismListProps {
   contentTypeId: number;
   title: string;
 }
 
-// 관광 데이터를 가져오는 함수
 const fetchTourismData = async (contentTypeId: number): Promise<ApiInformation[]> => {
   const response = await fetch(`/api/main/tourism?contentTypeId=${contentTypeId}`);
   if (!response.ok) {
@@ -25,12 +22,46 @@ const fetchTourismData = async (contentTypeId: number): Promise<ApiInformation[]
   return response.json();
 };
 
+const KOREAN_CONSONANTS = [
+  "ㄱ",
+  "ㄲ",
+  "ㄴ",
+  "ㄷ",
+  "ㄸ",
+  "ㄹ",
+  "ㅁ",
+  "ㅂ",
+  "ㅃ",
+  "ㅅ",
+  "ㅆ",
+  "ㅇ",
+  "ㅈ",
+  "ㅉ",
+  "ㅊ",
+  "ㅋ",
+  "ㅌ",
+  "ㅍ",
+  "ㅎ",
+];
+
+const getInitialConsonant = (str: string) => {
+  const firstChar = str.charAt(0);
+  const unicodeValue = firstChar.charCodeAt(0);
+
+  if (unicodeValue >= 44032 && unicodeValue <= 55203) {
+    const consonantIndex = Math.floor((unicodeValue - 44032) / 588);
+    return KOREAN_CONSONANTS[consonantIndex];
+  }
+
+  return firstChar.toUpperCase();
+};
+
 export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }) => {
   const [displayCount, setDisplayCount] = useState<number>(12);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedConsonant, setSelectedConsonant] = useState<string>("");
   const { ref, inView } = useInView();
 
-  // React Query를 사용하여 데이터 fetching
   const {
     data: tourismData,
     isPending,
@@ -40,24 +71,30 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
     queryFn: () => fetchTourismData(contentTypeId),
   });
 
-  // 검색어에 따라 데이터 필터링 및 정렬
   const filteredData = useMemo(() => {
     if (!tourismData) return [];
     return tourismData
-      .filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()))
+      .filter((item) => {
+        const titleLower = item.title.toLowerCase();
+        const searchTermLower = searchTerm.toLowerCase();
+        const initialConsonant = getInitialConsonant(item.title);
+
+        const matchesSearch = titleLower.includes(searchTermLower);
+        const matchesConsonant = selectedConsonant === "" || initialConsonant === selectedConsonant;
+
+        return matchesSearch && matchesConsonant;
+      })
       .sort((a, b) => {
         if (a.firstimage && !b.firstimage) return -1;
         if (!a.firstimage && b.firstimage) return 1;
         return 0;
       });
-  }, [tourismData, searchTerm]);
+  }, [tourismData, searchTerm, selectedConsonant]);
 
-  // 화면에 표시할 데이터
   const displayedData = useMemo(() => {
     return filteredData.slice(0, displayCount);
   }, [filteredData, displayCount]);
 
-  // Infinite Scrolling을 위한 useEffect
   useEffect(() => {
     if (inView) {
       setDisplayCount((prevCount) => prevCount + 12);
@@ -76,7 +113,21 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
           <h3 className="text-2xl font-bold">{title}</h3>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10py-8 max-w-[960px]">
+        <div className="flex flex-wrap gap-2 mb-4">
+          {KOREAN_CONSONANTS.map((consonant) => (
+            <button
+              key={consonant}
+              onClick={() => setSelectedConsonant(selectedConsonant === consonant ? "" : consonant)}
+              className={`px-3 py-1 rounded ${
+                selectedConsonant === consonant ? "bg-orange-500 text-white" : "bg-gray-200"
+              }`}
+            >
+              {consonant}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 py-8 max-w-[960px]">
           {displayedData.map((item) => (
             <TravelCard key={item.contentid} item={item} />
           ))}
