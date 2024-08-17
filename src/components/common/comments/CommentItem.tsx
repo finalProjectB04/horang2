@@ -6,6 +6,7 @@ import ReplyItem from "./ReplyItem";
 import Image from "next/image";
 import TimeAgo from "javascript-time-ago";
 import ko from "javascript-time-ago/locale/ko.json";
+import { useModal } from "@/context/modal.context";
 
 TimeAgo.addDefaultLocale(ko);
 const timeAgo = new TimeAgo("ko-KR");
@@ -39,6 +40,7 @@ const CommentItem: React.FC<{
   queryKey: string[];
 }> = ({ comment, userId, queryKey }) => {
   const queryClient = useQueryClient();
+  const modal = useModal();
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState<string>("");
   const [showReplies, setShowReplies] = useState<boolean>(false);
@@ -59,7 +61,10 @@ const CommentItem: React.FC<{
       .eq("parent_comment_id", commentId);
 
     if (deleteRepliesError) {
-      console.error("Error deleting replies:", deleteRepliesError.message);
+      modal.open({
+        title: "에러",
+        content: <div className="text-center">대댓글 삭제 중 오류가 발생했습니다.</div>,
+      });
       throw new Error(deleteRepliesError.message);
     }
   };
@@ -71,7 +76,10 @@ const CommentItem: React.FC<{
       const { error } = await supabase.from("Post_comments").delete().eq("post_comment_id", commentId);
 
       if (error) {
-        console.error("Error deleting comment:", error.message);
+        modal.open({
+          title: "에러",
+          content: <div className="text-center">댓글 삭제 중 오류가 발생했습니다.</div>,
+        });
         throw new Error(error.message);
       }
     },
@@ -79,7 +87,10 @@ const CommentItem: React.FC<{
       queryClient.invalidateQueries({ queryKey });
     },
     onError: (error) => {
-      console.error("Failed to delete comment:", error.message);
+      modal.open({
+        title: "실패",
+        content: <div className="text-center">댓글 삭제에 실패했습니다. 다시 시도해주세요.</div>,
+      });
     },
   });
 
@@ -92,7 +103,10 @@ const CommentItem: React.FC<{
         .select("*");
 
       if (error) {
-        console.error("Error updating comment:", error.message);
+        modal.open({
+          title: "에러",
+          content: <div className="text-center">댓글 수정 중 오류가 발생했습니다.</div>,
+        });
         throw new Error(error.message);
       }
 
@@ -104,7 +118,10 @@ const CommentItem: React.FC<{
       setEditingContent("");
     },
     onError: (error) => {
-      console.error("Failed to update comment:", error.message);
+      modal.open({
+        title: "실패",
+        content: <div className="text-center">댓글 수정에 실패했습니다. 다시 시도해주세요.</div>,
+      });
     },
   });
 
@@ -115,16 +132,33 @@ const CommentItem: React.FC<{
 
   const handleSaveEdit = (commentId: string) => {
     if (editingContent.trim() === "") {
-      alert("댓글 내용이 비어 있습니다.");
+      modal.open({
+        title: "경고",
+        content: <div className="text-center">댓글 내용을 입력하세요.</div>,
+      });
       return;
     }
     updateCommentMutation.mutate({ commentId, newContent: editingContent });
   };
 
   const handleDeleteComment = (commentId: string) => {
-    if (window.confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
-      deleteCommentMutation.mutate(commentId);
-    }
+    modal.open({
+      title: "삭제 확인",
+      content: (
+        <div className="text-center">
+          <p>정말로 이 댓글을 삭제하시겠습니까?</p>
+          <button
+            onClick={() => {
+              deleteCommentMutation.mutate(commentId);
+              modal.close();
+            }}
+            className="bg-red-500 text-white px-4 py-2 rounded mt-4"
+          >
+            삭제
+          </button>
+        </div>
+      ),
+    });
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -154,7 +188,10 @@ const CommentItem: React.FC<{
         .order("created_at", { ascending: true });
 
       if (error) {
-        console.error("Error fetching replies:", error.message);
+        modal.open({
+          title: "에러",
+          content: <div className="text-center">대댓글 불러오기 중 오류가 발생했습니다.</div>,
+        });
         throw new Error(error.message);
       }
 
@@ -201,7 +238,7 @@ const CommentItem: React.FC<{
         <div className="bg-white rounded-lg shadow ">
           <textarea
             value={editingContent}
-            onChange={(e) => setEditingContent(e.target.value)}
+            onChange={(event) => setEditingContent(event.target.value)}
             onKeyDown={handleKeyDown}
             className="w-full py-2 px-3 border border-primary-100 rounded-lg mb-2 sm:py-1 sm:px-2 sm:text-[14px]"
             rows={4}

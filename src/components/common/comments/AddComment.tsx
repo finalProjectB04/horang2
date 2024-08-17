@@ -13,7 +13,7 @@ const AddComment: React.FC<{ postId: string; queryKey: string[] }> = ({ postId, 
   const [commentCount, setCommentCount] = useState(0);
   const [isBlocked, setIsBlocked] = useState(false);
   const commentTimestamps = useRef<number[]>([]);
-  const modal = useModal(); // Use modal for notifications
+  const modal = useModal();
 
   const addCommentMutation = useMutation({
     mutationFn: async (comment: string) => {
@@ -24,7 +24,10 @@ const AddComment: React.FC<{ postId: string; queryKey: string[] }> = ({ postId, 
         .insert([{ post_id: postId, user_id: userId, comments: comment }]);
 
       if (error) {
-        console.error("Error adding comment:", error.message);
+        modal.open({
+          title: "에러",
+          content: <div className="text-center">댓글 작성 중 오류가 발생했습니다.</div>,
+        });
         throw new Error(error.message);
       }
       return data;
@@ -51,7 +54,10 @@ const AddComment: React.FC<{ postId: string; queryKey: string[] }> = ({ postId, 
       }
     },
     onError: (error) => {
-      console.error("Failed to add comment:", error.message);
+      modal.open({
+        title: "실패",
+        content: <div className="text-center">댓글 작성에 실패했습니다. 다시 시도해주세요.</div>,
+      });
     },
   });
 

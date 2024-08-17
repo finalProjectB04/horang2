@@ -17,7 +17,7 @@ const AddReply: React.FC<{
   const [replyCount, setReplyCount] = useState(0);
   const [isBlocked, setIsBlocked] = useState(false);
   const replyTimestamps = useRef<number[]>([]);
-  const modal = useModal(); // 모달을 사용하여 알림 표시
+  const modal = useModal();
 
   const addReplyMutation = useMutation({
     mutationFn: async (content: string) => {
@@ -28,7 +28,10 @@ const AddReply: React.FC<{
         .insert([{ post_id: postId, parent_comment_id: parentCommentId, user_id: userId, content }]);
 
       if (error) {
-        console.error("Error adding reply:", error.message);
+        modal.open({
+          title: "에러",
+          content: <div className="text-center">대댓글 작성 중 오류가 발생했습니다.</div>,
+        });
         throw new Error(error.message);
       }
       return data;
@@ -55,7 +58,10 @@ const AddReply: React.FC<{
       }
     },
     onError: (error) => {
-      console.error("Failed to add reply:", error.message);
+      modal.open({
+        title: "실패",
+        content: <div className="text-center">대댓글 작성에 실패했습니다. 다시 시도해주세요.</div>,
+      });
     },
   });
 

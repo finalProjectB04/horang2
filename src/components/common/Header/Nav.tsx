@@ -21,7 +21,6 @@ const Nav = () => {
       router.push(href);
     }
 
-    // 드롭다운을 닫음
     setIsDropdownOpen(false);
   };
 

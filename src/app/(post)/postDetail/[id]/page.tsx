@@ -18,6 +18,7 @@ import { useUserStore } from "@/zustand/userStore";
 import PostLike from "@/components/posting/postcomponents/PostLike";
 import ShareModal from "@/components/detailpage/ShareModal";
 import { createClient } from "@/utils/supabase/client";
+import { useModal } from "@/context/modal.context";
 
 interface Post {
   content: string | null;
@@ -40,6 +41,7 @@ const PostDetail: React.FC = () => {
   const [editedFile, setEditedFile] = useState<string | null>(null);
   const { user_nickname, profile_url } = useUserStore();
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const modal = useModal();
 
   const {
     data: sessionData,
@@ -67,7 +69,10 @@ const PostDetail: React.FC = () => {
       .order("created_at", { ascending: false });
 
     if (commentsError) {
-      console.error("Error fetching comments:", commentsError.message);
+      modal.open({
+        title: "에러",
+        content: <div className="text-center">댓글을 불러오는 중 오류가 발생했습니다.</div>,
+      });
       throw new Error(commentsError.message);
     }
 
@@ -79,21 +84,30 @@ const PostDetail: React.FC = () => {
       .in("parent_comment_id", commentIds);
 
     if (repliesError) {
-      console.error("Error deleting replies:", repliesError.message);
+      modal.open({
+        title: "에러",
+        content: <div className="text-center">대댓글 삭제 중 오류가 발생했습니다.</div>,
+      });
       throw new Error(repliesError.message);
     }
 
     const { error: deleteCommentsError } = await supabase.from("Post_comments").delete().eq("post_id", postId);
 
     if (deleteCommentsError) {
-      console.error("Error deleting comments:", deleteCommentsError.message);
+      modal.open({
+        title: "에러",
+        content: <div className="text-center">댓글 삭제 중 오류가 발생했습니다.</div>,
+      });
       throw new Error(deleteCommentsError.message);
     }
 
     const { error: deletePostError } = await supabase.from("Post").delete().eq("id", postId);
 
     if (deletePostError) {
-      console.error("Error deleting post:", deletePostError.message);
+      modal.open({
+        title: "에러",
+        content: <div className="text-center">게시물 삭제 중 오류가 발생했습니다.</div>,
+      });
       throw new Error(deletePostError.message);
     }
   };
@@ -107,8 +121,10 @@ const PostDetail: React.FC = () => {
       router.push("/community");
     },
     onError: (error: Error) => {
-      console.error("Delete failed:", error.message);
-      alert("삭제에 실패했습니다. 다시 시도해주세요.");
+      modal.open({
+        title: "삭제 실패",
+        content: <div className="text-center">삭제에 실패했습니다. 다시 시도해주세요.</div>,
+      });
     },
   });
 
@@ -121,8 +137,10 @@ const PostDetail: React.FC = () => {
       setIsEditing(false);
     },
     onError: (error: Error) => {
-      console.error("Update failed:", error.message);
-      alert("수정에 실패했습니다. 다시 시도해주세요.");
+      modal.open({
+        title: "수정 실패",
+        content: <div className="text-center">수정에 실패했습니다. 다시 시도해주세요.</div>,
+      });
     },
   });
 
@@ -151,9 +169,23 @@ const PostDetail: React.FC = () => {
   };
 
   const handleDelete = () => {
-    if (window.confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
-      deleteMutation.mutate(post.id);
-    }
+    modal.open({
+      title: "삭제 확인",
+      content: (
+        <div className="text-center">
+          <p>정말로 이 게시물을 삭제하시겠습니까?</p>
+          <button
+            onClick={() => {
+              deleteMutation.mutate(post.id);
+              modal.close();
+            }}
+            className="bg-red-500 text-white px-4 py-2 rounded mt-4"
+          >
+            삭제
+          </button>
+        </div>
+      ),
+    });
   };
 
   const handleShareClick = () => {
