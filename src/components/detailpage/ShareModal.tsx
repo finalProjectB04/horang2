@@ -3,7 +3,11 @@
 import { useModal } from "@/context/modal.context";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import FacebookShareButton from "./FacebookShareButton";
 import KakaoShareButton from "./KakaoShareButton";
+import LineShareButton from "./LineShareButton";
+import TwitterShareButton from "./TwitterShareButton";
+import WhatsAppShareButton from "./WhatsappShareButton";
 
 interface ModalProps {
   isOpen: boolean;
@@ -14,6 +18,8 @@ const ShareModal = ({ isOpen, onClose }: ModalProps) => {
   const params = useParams() as { contentId: string };
   const [copiedUrl, setCopiedUrl] = useState("");
   const modal = useModal();
+  const url = `https://horang2.vercel.app/detail/${params.contentId}`; //페이스북은 base url이 localhost면 test가 안됩니다.
+  const text = "국내 여행 추천 서비스 호랑";
 
   useEffect(() => {
     if (isOpen) {
@@ -58,8 +64,12 @@ const ShareModal = ({ isOpen, onClose }: ModalProps) => {
             {">>"}
           </button>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-2">
           <KakaoShareButton id={params.contentId} className="hover:cursor-pointer" />
+          <FacebookShareButton url={url} text={text} />
+          <TwitterShareButton url={url} text={text} />
+          <WhatsAppShareButton text={text} url={url} />
+          <LineShareButton id={params.contentId} />
         </div>
       </div>
     </div>

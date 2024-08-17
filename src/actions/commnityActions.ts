@@ -5,9 +5,9 @@ import { createServerSupabaseClient } from "@/utils/supabase/serverAdmin";
 
 export async function getPosts({ myId }: { myId: string }): Promise<Post[]> {
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.auth.getSession();
+  const { data, error } = await supabase.auth.getUser();
 
-  if (error || !data?.session?.user) {
+  if (error || !data?.user) {
     return [];
   }
 
@@ -22,7 +22,6 @@ export async function getPosts({ myId }: { myId: string }): Promise<Post[]> {
 
 export async function getLikePosts({ myId }: { myId: string }): Promise<Post[]> {
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.auth.getSession();
 
   const { data: list, error: getPosts } = await supabase.from("Post_likes").select("*").eq("user_id", myId);
 

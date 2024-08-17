@@ -36,16 +36,16 @@ export async function sendMessage({
   created_at: string;
 }): Promise<void> {
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.auth.getSession();
+  const { data, error } = await supabase.auth.getUser();
 
-  if (error || !data?.session?.user) {
+  if (error || !data?.user) {
     throw new Error("User is not authenticated");
   }
 
   const { data: sendMessageData, error: sendMessageError } = await supabase.from("message").insert({
     message,
     receiver: chatUserId,
-    sender: data.session.user.id,
+    sender: data.user.id,
   });
 
   if (sendMessageError) {
@@ -53,19 +53,19 @@ export async function sendMessage({
   }
 }
 
-export async function getAllMessage({ chatUserId }: { chatUserId: string }): Promise<Message[]> {
+export async function getAllMessageWithUser({ chatUserId }: { chatUserId: string }): Promise<Message[]> {
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.auth.getSession();
+  const { data, error } = await supabase.auth.getUser();
 
-  if (error || !data?.session?.user) {
+  if (error || !data?.user) {
     return [];
   }
 
   const { data: messages, error: getMessageError } = await supabase
     .from("message")
     .select("*")
-    .or(`receiver.eq.${chatUserId}, receiver.eq.${data.session.user.id}`)
-    .or(`sender.eq.${chatUserId}, sender.eq.${data.session.user.id}`)
+    .or(`receiver.eq.${chatUserId}, receiver.eq.${data.user.id}`)
+    .or(`sender.eq.${chatUserId}, sender.eq.${data.user.id}`)
     .order("created_at", { ascending: true });
 
   if (getMessageError) {
@@ -74,20 +74,10 @@ export async function getAllMessage({ chatUserId }: { chatUserId: string }): Pro
   return messages;
 }
 
-export async function showLastMessage({ userId, myId }: { userId: string; myId: string }): Promise<Message[]> {
+export async function getAllMessage({ myId }: { myId: string }): Promise<Message[]> {
   const supabase = await createServerSupabaseClient();
-  const { data, error } = await supabase.auth.getSession();
 
-  if (error || !data?.session?.user) {
-    return [];
-  }
-
-  const { data: messages, error: getMessageError } = await supabase
-    .from("message")
-    .select("*")
-    .eq("sender", userId)
-    .eq("receiver", myId)
-    .order("created_at", { ascending: false });
+  const { data: messages, error: getMessageError } = await supabase.from("message").select("*").eq("receiver", myId);
 
   if (getMessageError) {
     return [];

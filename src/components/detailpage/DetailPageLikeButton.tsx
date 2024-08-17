@@ -1,10 +1,11 @@
 "use client";
 
 import { useModal } from "@/context/modal.context";
+import { useLikes } from "@/hooks/detailpage/useLikes";
 import { Likes } from "@/types/Likes.types";
 import { createClient } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
@@ -31,17 +32,7 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
 
   const { id: userId } = useUserStore();
 
-  const { isPending, isError, data } = useQuery<Likes[]>({
-    queryKey: ["likes", contentId],
-    queryFn: async () => {
-      const { data: likes, error } = await supabase.from("Likes").select("*").eq("content_id", contentId);
-      if (error) {
-        throw error;
-      }
-      return likes;
-    },
-    enabled: !!userId,
-  });
+  const { isPending, isError, data } = useLikes(contentId, userId);
 
   const deleteMutation = useMutation({
     mutationFn: async (userId: string) => {
@@ -85,7 +76,7 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
             </div>
           ),
         });
-        throw new Error("세션 정보가 없습니다.");
+        throw new Error();
       }
 
       const { data, error } = await supabase
@@ -104,11 +95,27 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
         .single();
 
       if (error) {
-        throw new Error(error.message);
+        modal.open({
+          title: "에러",
+          content: (
+            <div className="text-center">
+              <p>에러가 발생했습니다</p>
+            </div>
+          ),
+        });
+        throw new Error();
       }
 
       if (!data) {
-        throw new Error("좋아요 추가에 실패했습니다.");
+        modal.open({
+          title: "에러",
+          content: (
+            <div className="text-center">
+              <p>데이터가 없습니다</p>
+            </div>
+          ),
+        });
+        throw new Error();
       }
 
       return data as Likes;
@@ -132,7 +139,8 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
         title: "알림",
         content: (
           <div className="text-center">
-            <p>좋아요 등록이 성공했습니다.</p>
+            <p>장소가 나의 공간에</p>
+            <p>추가되었습니다.</p>
           </div>
         ),
       });
@@ -158,7 +166,15 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
   }, [data, userId]);
 
   if (isPending) {
-    return <Image src="/assets/images/defaultLikeIcon.png" alt={"Unlike"} width={70} height={70} />;
+    return (
+      <Image
+        src="/assets/images/defaultLikeIcon.svg"
+        alt={"Unlike"}
+        width={32}
+        height={32}
+        className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]"
+      />
+    );
   }
 
   if (isError) {

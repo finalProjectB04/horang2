@@ -143,7 +143,6 @@ const Writing: React.FC = () => {
   }
 
   if (error) {
-    console.log(`Error occurred: ${error.message}`);
     return <h1>에러가 발생했습니다: {error.message}</h1>;
   }
 

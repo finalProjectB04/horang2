@@ -11,6 +11,7 @@ import { useInView } from "react-intersection-observer";
 import { BackgroundImage } from "./BackgroundImage";
 import { SkeletonCard } from "./SkeletonCard";
 import { NoResultsFound } from "./NoResultsFound";
+import { useUserStore } from "@/zustand/userStore";
 interface TourismListProps {
   contentTypeId: number;
   title: string;
@@ -67,7 +68,8 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
   const [selectedSigungu, setSelectedSigungu] = useState<string>("");
   const [isRegionSelectorOpen, setIsRegionSelectorOpen] = useState<boolean>(false);
   const { ref, inView } = useInView();
-  const [isSearching, setIsSearching] = useState(false);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const { id: userId } = useUserStore();
   const {
     data: tourismData,
     isPending,
@@ -171,7 +173,19 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
           {isSearching ? (
             Array.from({ length: 12 }).map((_, index) => <SkeletonCard key={index} />)
           ) : displayedData.length > 0 ? (
-            displayedData.map((item) => <TravelCard key={item.contentid} item={item} />)
+            displayedData.map((item) => (
+              <TravelCard
+                key={item.contentid}
+                item={item}
+                user_id={userId || ""}
+                imageUrl={item.firstimage || ""}
+                contentTypeId={item.contenttypeid || ""}
+                title={item.title || ""}
+                addr1={item.addr1 || ""}
+                tel={item.tel || ""}
+                contentId={""}
+              />
+            ))
           ) : (
             <NoResultsFound />
           )}

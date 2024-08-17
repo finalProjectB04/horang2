@@ -42,6 +42,10 @@ const DetailPage = () => {
     return <h1>에러가 발생했습니다: {contentItemError.message}</h1>;
   }
 
+  if (!contentItemData || !contentItemData.data) {
+    return <div>데이터가 없거나 api 서버와 연결 할 수 없습니다</div>;
+  }
+
   return (
     <main className="sm:w-full sm:max-w-full sm:mx-auto  md:max-w-[910px] md:mx-auto md:grid md:justify-items-center lg:max-w-[960px] lg:mx-auto lg:grid lg:justify-items-center">
       <DetailPageImage contentItemData={contentItemData} />
@@ -70,7 +74,9 @@ const DetailPage = () => {
               className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]lg:mb-2"
             />
           </button>
-          <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+          <div>
+            <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+          </div>
         </div>
       </section>
 

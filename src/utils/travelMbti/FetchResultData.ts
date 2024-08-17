@@ -9,17 +9,23 @@ export const shuffleArray = (array: Item[]) => {
   return array;
 };
 
+export const getRandomItem = (array: Item[]) => {
+  return array[Math.floor(Math.random() * array.length)];
+};
+
 export const fetchResultData = async (type: string): Promise<Item[]> => {
   const response = await axios.get(`/api/travelMbti/result/${type}`);
   const { firstData, secondData, thirdData, fourthData, fifthData } = response.data;
 
-  const allData = [...firstData, ...secondData, ...thirdData, ...fourthData, ...fifthData];
+  const selectedItems = [
+    getRandomItem(firstData),
+    getRandomItem(secondData),
+    getRandomItem(thirdData),
+    getRandomItem(fourthData),
+    getRandomItem(fifthData),
+  ];
 
-  const selectedFirstData = shuffleArray(allData).slice(0, 1);
+  const finalSelection = shuffleArray(selectedItems).slice(0, 2);
 
-  const remainingData = allData.filter((item) => !selectedFirstData.includes(item));
-
-  const selectedRemainingData = shuffleArray(remainingData).slice(0, 1);
-
-  return [...selectedFirstData, ...selectedRemainingData];
+  return finalSelection;
 };
