@@ -1,11 +1,12 @@
 "use Client";
 
 import { useModal } from "@/context/modal.context";
+import { useLikes } from "@/hooks/detailpage/useLikes";
 import { Likes } from "@/types/Likes.types";
 import { ApiInformation } from "@/types/Main";
 import { createClient } from "@/utils/supabase/server";
 import { useUserStore } from "@/zustand/userStore";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -33,18 +34,7 @@ export const MainTravelCard: React.FC<Props> = ({ item }: Props) => {
   const queryClient = useQueryClient();
   const modal = useModal();
   const { id: userId } = useUserStore();
-
-  const { isPending, isError, data } = useQuery<Likes[]>({
-    queryKey: ["likes", item.contentid],
-    queryFn: async () => {
-      const { data: likes, error } = await supabase.from("Likes").select("*").eq("content_id", item.contentid);
-      if (error) {
-        throw error;
-      }
-      return likes;
-    },
-    enabled: !!userId,
-  });
+  const { isPending, isError, data } = useLikes(item.contentid, userId);
 
   const deleteMutation = useMutation({
     mutationFn: async (userId: string) => {
@@ -136,7 +126,8 @@ export const MainTravelCard: React.FC<Props> = ({ item }: Props) => {
         title: "알림",
         content: (
           <div className="text-center">
-            <p>좋아요 등록이 성공했습니다.</p>
+            <p>장소가 나의 공간에</p>
+            <p>추가되었습니다.</p>
           </div>
         ),
       });

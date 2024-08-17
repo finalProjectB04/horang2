@@ -82,7 +82,7 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
           ),
         });
 
-        throw new Error("세션 정보가 없습니다.");
+        throw new Error();
       }
 
       const { data, error } = await supabase
@@ -102,7 +102,15 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
         .single();
 
       if (error) {
-        throw new Error(error.message);
+        modal.open({
+          title: "에러",
+          content: (
+            <div className="text-center">
+              <p>에러가 발생했습니다</p>
+            </div>
+          ),
+        });
+        throw new Error();
       }
 
       return data as Likes;
@@ -136,15 +144,20 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
           ),
         });
       } else {
-        modal.open({
-          title: "알림",
-          content: (
-            <div className="text-center">
-              <p>좋아요 등록이 성공했습니다.</p>
-            </div>
-          ),
-        });
       }
+    },
+    onSuccess: (data) => {
+      modal.open({
+        title: "알림",
+        content: (
+          <div className="text-center">
+            <p>장소가 나의 공간에</p>
+            <p>추가되었습니다.</p>
+          </div>
+        ),
+      });
+
+      queryClient.invalidateQueries({ queryKey: ["likes", data.content_id] });
     },
 
     onError: (error, variables, context) => {
@@ -223,7 +236,6 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
           content: (
             <div className="text-center">
               <p>좋아요 상태 업데이트를 실패했습니다.</p>
-              <p>{(error as Error).message}</p>
             </div>
           ),
         });

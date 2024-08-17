@@ -132,7 +132,8 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
         title: "알림",
         content: (
           <div className="text-center">
-            <p>좋아요 등록이 성공했습니다.</p>
+            <p>장소가 나의 공간에</p>
+            <p>추가되었습니다.</p>
           </div>
         ),
       });
