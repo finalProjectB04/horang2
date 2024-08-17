@@ -74,7 +74,7 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
       <div className="sm:w-[375px] md:w-[960px] lg:w-[960px] sm:h-[196px] md:h-[500px] lg:h-[500px]">
         <div className="h-full flex flex-col items-center justify-center text-center font-semibold sm:text-sm md:text-lg lg:text-xl">
           <p className="sm:text-base md:text-lg lg:text-xl">아직 좋아요한 장소가 없습니다.</p>
-          <p className="sm:text-xs md:text-sm lg:text-base text-gray-400">"새로운 장소를 찾아보세요!"</p>
+          <p className="sm:text-xs md:text-sm lg:text-base text-gray-400">새로운 장소를 찾아보세요!</p>
           <Link
             href={"travelMbti"}
             className="mt-4 px-6 py-2 bg-blue-500 text-white font-bold rounded-lg shadow-lg hover:bg-blue-600 transition duration-200"
