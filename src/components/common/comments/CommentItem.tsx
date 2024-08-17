@@ -196,130 +196,159 @@ const CommentItem: React.FC<{
   }, [replyPage, scrollToReplyForm]);
 
   return (
-    <li className="border border-primary-100 py-4 bg-white shadow rounded-lg w-full max-w-full lg:max-w-[1440px] mx-auto h-auto">
+    <li className="border border-primary-100 sm:border-none bg-white  rounded-lg w-full max-w-full lg:max-w-[1440px] mx-auto h-auto ">
       {editingCommentId === comment.post_comment_id ? (
-        <div className="bg-white p-4 rounded-lg shadow">
+        <div className="bg-white rounded-lg shadow ">
           <textarea
             value={editingContent}
             onChange={(e) => setEditingContent(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="w-full p-2 border border-primary-100 rounded-lg mb-2"
+            className="w-full py-2 px-3 border border-primary-100 rounded-lg mb-2 sm:py-1 sm:px-2 sm:text-[14px]"
             rows={4}
           />
-          <button
-            onClick={() => handleSaveEdit(comment.post_comment_id)}
-            className="px-4 py-2 mr-2 border-primary-200 font-black bg-primary-100 rounded"
-          >
-            저장
-          </button>
-          <button
-            onClick={() => setEditingCommentId(null)}
-            className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black"
-          >
-            취소
-          </button>
+          <div className="flex space-x-2 mb-2 ">
+            <button
+              onClick={() => handleSaveEdit(comment.post_comment_id)}
+              className="px-4 py-2 border-primary-200 font-black bg-primary-100 rounded sm:px-2 sm:py-1"
+            >
+              저장
+            </button>
+            <button
+              onClick={() => setEditingCommentId(null)}
+              className="px-4 py-2 bg-white text-primary-600 border border-orange-300 rounded font-black sm:px-2 sm:py-1"
+            >
+              취소
+            </button>
+          </div>
         </div>
       ) : (
-        <div className="flex items-start" style={{ marginLeft: "5px" }}>
-          <Image
-            src="/assets/images/profile_ex.png"
-            alt="유저 프로필 사진"
-            width={40}
-            height={40}
-            className="rounded-full"
-            style={{ marginLeft: "5px" }}
-          />
-          <div className="flex-1" style={{ marginLeft: "10px" }}>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <p className="font-semibold">{comment.user_nickname}</p>
-                <p className="text-sm text-gray-500 ml-2">
-                  {comment.created_at ? timeAgo.format(new Date(comment.created_at)) : "방금 전"}
-                </p>
+        <div className="relative sm:p-2 ">
+          <div className="absolute top-[5px] left-[5px] sm:top-[2px] sm:left-[2px]">
+            <Image
+              src="/assets/images/profile_ex.png"
+              alt="유저 프로필 사진"
+              width={40}
+              height={40}
+              className="rounded-full sm:w-[30px] sm:h-[30px]"
+            />
+          </div>
+          <div className="ml-16 flex items-center sm:ml-12">
+            <span className="font-semibold mt-[15px] inline-block sm:mt-[10px] sm:text-[14px]">
+              {comment.user_nickname}
+            </span>
+            {comment.user_id === userId && (
+              <div className="absolute top-[15px] right-2 flex space-x-3 sm:top-[10px] sm:right-1">
+                <button
+                  onClick={() => {
+                    setShowReplies((prev) => !prev);
+                    setScrollToReplyForm(true);
+                  }}
+                  className="hidden sm:inline-block sm:mr-1"
+                >
+                  <Image
+                    src={`/assets/images/${showReplies ? "icon5.png" : "icon4.png"}`}
+                    alt={showReplies ? "대댓글 숨기기" : "대댓글 보기"}
+                    width={20}
+                    height={20}
+                  />
+                </button>
+                <span
+                  onClick={() => handleEditComment(comment.post_comment_id, comment.comments)}
+                  className="cursor-pointer hidden sm:inline-block"
+                >
+                  <Image src="/assets/images/detailpage/Mode_edit.svg" alt="수정" width={20} height={20} />
+                </span>
+                <span
+                  onClick={() => handleDeleteComment(comment.post_comment_id)}
+                  className="cursor-pointer hidden sm:inline-block"
+                >
+                  <Image src="/assets/images/detailpage/Delete.svg" alt="삭제" width={20} height={20} />
+                </span>
+                <span
+                  onClick={() => handleEditComment(comment.post_comment_id, comment.comments)}
+                  className="cursor-pointer sm:hidden text-black"
+                >
+                  수정
+                </span>
+                <span
+                  onClick={() => handleDeleteComment(comment.post_comment_id)}
+                  className="cursor-pointer sm:hidden text-black"
+                >
+                  삭제
+                </span>
               </div>
-              {comment.user_id === userId && (
-                <div className="flex space-x-2 justify-end" style={{ marginRight: "10px" }}>
-                  <span
-                    onClick={() => handleEditComment(comment.post_comment_id, comment.comments)}
-                    className="cursor-pointer"
-                    style={{ fontSize: "12px", color: "black" }}
-                  >
-                    수정
-                  </span>
-                  <span
-                    onClick={() => handleDeleteComment(comment.post_comment_id)}
-                    className="cursor-pointer"
-                    style={{ fontSize: "12px", color: "black" }}
-                  >
-                    삭제
-                  </span>
-                </div>
-              )}
-            </div>
-            <p className="mt-2 text-gray-800" style={{ fontSize: "18px" }}>
-              {comment.comments}
-            </p>
-            <button
-              onClick={() => {
-                setShowReplies((prev) => !prev);
-                setScrollToReplyForm(true);
-              }}
-              className="hover:text-blue-700 mt-2"
-              style={{ fontSize: "12px", color: "black" }}
-            >
-              {showReplies ? "대댓글 숨기기" : "대댓글 보기"}
-            </button>
-            {showReplies && (
-              <div className="ml-4 mt-2">
-                {isRepliesError ? (
-                  <p className="text-red-500">대댓글을 불러오는 중 오류가 발생했습니다.</p>
-                ) : (
-                  <>
-                    <ul className="space-y-2">
-                      {currentReplies.map((reply) => (
-                        <ReplyItem
-                          key={reply.id}
-                          reply={reply}
-                          userId={userId}
-                          queryKey={["replies", comment.post_comment_id]}
-                        />
-                      ))}
-                    </ul>
-                    {totalReplyPages > 1 && (
-                      <div ref={replyFormRef} className="flex justify-center mt-4 space-x-4">
+            )}
+          </div>
+          <div className="ml-16 mt-[6px] text-sm sm:ml-12 sm:mt-[4px] text-gray-500 sm:text-[12px]">
+            {comment.created_at ? timeAgo.format(new Date(comment.created_at)) : "방금 전"}
+          </div>
+          <p className="ml-16 mt-[20px] sm:ml-12 sm:mt-[10px] text-gray-800 text-base sm:text-[14px]">
+            {comment.comments}
+          </p>
+          <button
+            onClick={() => {
+              setShowReplies((prev) => !prev);
+              setScrollToReplyForm(true);
+            }}
+            className="hover:text-blue-700 ml-16 mb-4 mt-10 text-[12px] sm:hidden"
+          >
+            {showReplies ? "대댓글 숨기기" : "대댓글 보기"}
+          </button>
+
+          {showReplies && (
+            <div>
+              {isRepliesError ? (
+                <p className="text-red-500 sm:text-[12px]">대댓글을 불러오는 중 오류가 발생했습니다.</p>
+              ) : (
+                <>
+                  <ul className="space-y-2 mt-4">
+                    {currentReplies.map((reply) => (
+                      <ReplyItem
+                        key={reply.id}
+                        reply={reply}
+                        userId={userId}
+                        queryKey={["replies", comment.post_comment_id]}
+                      />
+                    ))}
+                  </ul>
+                  {totalReplyPages > 1 && (
+                    <div ref={replyFormRef} className="flex justify-center items-center mt-4 space-x-4">
+                      <div className="w-[100px] flex justify-center">
                         <button
                           onClick={handlePreviousReplyPage}
                           style={{ visibility: replyPage === 1 ? "hidden" : "visible" }}
-                          className="px-4 py-2 bg-gray-200 rounded-lg"
+                          className="px-4 py-2 bg-gray-200 rounded-lg sm:px-2 sm:py-1"
                         >
                           이전
                         </button>
-                        <span className="text-lg">
-                          {replyPage} / {totalReplyPages}
-                        </span>
+                      </div>
+                      <span className="text-lg sm:text-[14px]">
+                        {replyPage} / {totalReplyPages}
+                      </span>
+                      <div className="w-[100px] flex justify-center">
                         <button
                           onClick={handleNextReplyPage}
                           style={{ visibility: replyPage === totalReplyPages ? "hidden" : "visible" }}
-                          className="px-4 py-2 bg-gray-200 rounded-lg"
+                          className="px-4 py-2 bg-gray-200 rounded-lg sm:px-2 sm:py-1"
                         >
                           다음
                         </button>
                       </div>
-                    )}
-                  </>
-                )}
-                {userId && (
-                  <div ref={replyFormRef}>
-                    <AddReply
-                      parentCommentId={comment.post_comment_id}
-                      postId={comment.post_id}
-                      queryKey={["replies", comment.post_comment_id]}
-                    />
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+                    </div>
+                  )}
+                </>
+              )}
+              {userId && (
+                <div ref={replyFormRef}>
+                  <AddReply
+                    parentCommentId={comment.post_comment_id}
+                    postId={comment.post_id}
+                    queryKey={["replies", comment.post_comment_id]}
+                  />
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </li>

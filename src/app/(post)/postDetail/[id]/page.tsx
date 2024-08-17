@@ -60,11 +60,11 @@ const PostDetail: React.FC = () => {
   });
 
   const deletePostWithComments = async (postId: string) => {
-    // Step 1: 댓글에 연결된 모든 대댓글 삭제
     const { data: comments, error: commentsError } = await supabase
       .from("Post_comments")
       .select("post_comment_id")
-      .eq("post_id", postId);
+      .eq("post_id", postId)
+      .order("created_at", { ascending: false });
 
     if (commentsError) {
       console.error("Error fetching comments:", commentsError.message);
@@ -83,7 +83,6 @@ const PostDetail: React.FC = () => {
       throw new Error(repliesError.message);
     }
 
-    // Step 2: 게시글에 연결된 모든 댓글 삭제
     const { error: deleteCommentsError } = await supabase.from("Post_comments").delete().eq("post_id", postId);
 
     if (deleteCommentsError) {
@@ -91,7 +90,6 @@ const PostDetail: React.FC = () => {
       throw new Error(deleteCommentsError.message);
     }
 
-    // Step 3: 게시글 삭제
     const { error: deletePostError } = await supabase.from("Post").delete().eq("id", postId);
 
     if (deletePostError) {
@@ -167,7 +165,7 @@ const PostDetail: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 max-w-[959px]">
+    <div className="container mx-auto px-4 sm:px-0 max-w-[960px]">
       <div className="mb-4">
         {post.files && (
           <Swiper
@@ -176,17 +174,17 @@ const PostDetail: React.FC = () => {
             slidesPerView={1}
             navigation
             pagination={{ clickable: true }}
-            className="w-full h-[500px] max-w-[1280px] mx-auto overflow-hidden"
+            className="w-full h-auto max-w-full mx-auto overflow-hidden"
           >
             {getImageUrls(post.files).map((url, index) => (
               <SwiperSlide key={index}>
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-[500px] sm:h-[250px]">
                   <Image
                     src={url}
                     alt={`게시물 이미지 ${index + 1}`}
                     layout="fill"
-                    objectFit="cover"
-                    className="object-center"
+                    objectFit="contain"
+                    className="w-full h-full"
                   />
                 </div>
               </SwiperSlide>
@@ -194,24 +192,24 @@ const PostDetail: React.FC = () => {
           </Swiper>
         )}
       </div>
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold">{post.title}</h1>
-        <div className="flex items-center">
+      <div className="flex justify-between items-center mb-4 ">
+        <h1 className="text-3xl sm:text-xl font-bold sm:ml-4">{post.title}</h1>
+        <div className="flex items-center sm:ml-4 sm:mr-4">
           <PostLike post_id={post.id} onLikesChange={() => {}} initialLikes={0} />
           <Image
             src="/assets/images/shareModal.svg"
             alt="공유하기"
             width={24}
             height={24}
-            className="ml-4 cursor-pointer"
+            className="ml-4 sm:ml-2 cursor-pointer "
             onClick={handleShareClick}
           />
         </div>
       </div>
-      <div className="text-sm text-gray-500 mt-[30px] mb-[40px]">
+      <div className="text-sm text-gray-500 mt-[30px] mb-[40px] sm:mt-[20px] sm:mb-[20px] sm:ml-4">
         작성일: {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Unknown"}
       </div>
-      <div className="flex items-center mb-[40px]">
+      <div className="flex items-center mb-[40px] sm:mb-[20px] sm:ml-4">
         <Image
           src={profile_url || "/path/to/default_profile_image.jpg"}
           alt="프로필 이미지"
@@ -219,30 +217,30 @@ const PostDetail: React.FC = () => {
           height={30}
           className="rounded-full"
         />
-        <div className="ml-4">
-          <p className="text-lg text-black">{user_nickname}</p>
+        <div className="ml-4 sm:ml-2">
+          <p className="text-lg sm:text-base text-black">{user_nickname}</p>
         </div>
       </div>
-      <div className="mb-40">
+      <div className="mb-10 sm:mb-5 sm:ml-4">
         <div className="flex items-center mb-2">
           <Image src="/assets/images/icon1.png" alt="여행 장소" width={24} height={24} />
-          <p className="text-lg text-black ml-2">여행 장소 ㅣ null</p>
+          <p className="text-lg sm:text-base text-black ml-2 sm:ml-1">여행 장소 ㅣ null</p>
         </div>
         <div className="flex items-center mb-2">
           <Image src="/assets/images/icon.png" alt="출발 장소" width={24} height={24} />
-          <p className="text-lg text-black ml-2">출발 장소 ㅣ null</p>
+          <p className="text-lg sm:text-base text-black ml-2 sm:ml-1">출발 장소 ㅣ null</p>
         </div>
         <div className="flex items-center mb-2">
           <Image src="/assets/images/icon2.png" alt="여행 비용" width={24} height={24} />
-          <p className="text-lg text-black ml-2">여행 비용 ㅣ null</p>
+          <p className="text-lg sm:text-base text-black ml-2 sm:ml-1">여행 비용 ㅣ null</p>
         </div>
         <div className="flex items-center">
           <Image src="/assets/images/icon3.png" alt="여행 기간" width={24} height={24} />
-          <p className="text-lg text-black ml-2">여행 기간 ㅣ null</p>
+          <p className="text-lg sm:text-base text-black ml-2 sm:ml-1">여행 기간 ㅣ null</p>
         </div>
       </div>
       {isEditing ? (
-        <div>
+        <div className="sm:ml-4">
           <input
             type="text"
             value={editedTitle}
@@ -273,8 +271,8 @@ const PostDetail: React.FC = () => {
           </button>
         </div>
       ) : (
-        <div>
-          <div className="prose max-w-none mb-4" style={{ minHeight: "150px" }}>
+        <div className="sm:ml-4">
+          <div className="prose max-w-none " style={{ minHeight: "100px" }}>
             {post.content}
           </div>
 

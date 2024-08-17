@@ -20,6 +20,9 @@ const Nav = () => {
     } else {
       router.push(href);
     }
+
+    // 드롭다운을 닫음
+    setIsDropdownOpen(false);
   };
 
   const handleDropdownToggle = () => {
@@ -52,19 +55,39 @@ const Nav = () => {
         </span>
         {isDropdownOpen && (
           <div className="absolute left-0 mt-2 min-w-max bg-white border border-gray-200 shadow-lg rounded-md z-50">
-            <Link href="/travel" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <Link
+              href="/travel"
+              onClick={handleNavigation("/travel")}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               추천 여행지
             </Link>
-            <Link href="/hotel" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <Link
+              href="/hotel"
+              onClick={handleNavigation("/hotel")}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               숙소
             </Link>
-            <Link href="/leports" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <Link
+              href="/leports"
+              onClick={handleNavigation("/leports")}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               레포츠
             </Link>
-            <Link href="/restaurant" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <Link
+              href="/restaurant"
+              onClick={handleNavigation("/restaurant")}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               음식점
             </Link>
-            <Link href="/festival" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <Link
+              href="/festival"
+              onClick={handleNavigation("/festival")}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               축제 및 행사
             </Link>
           </div>
