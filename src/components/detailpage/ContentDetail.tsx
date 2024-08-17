@@ -25,7 +25,7 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepa
       case "25":
         return "여행코스";
       case "28":
-        return "레포츠";
+        return "놀거리";
       case "32":
         return "숙박";
       case "38":

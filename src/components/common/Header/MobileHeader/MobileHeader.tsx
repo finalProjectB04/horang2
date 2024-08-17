@@ -5,6 +5,8 @@ import Image from "next/image";
 import SearchInput from "./SearchInput";
 import MenuList from "./MenuList";
 import HamburgerButton from "./HamburgerButton";
+import { useRouter } from "next/navigation";
+import MobileLogo from "./MobileLogo";
 
 interface MobileHeaderProps {
   searchTerm: string;
@@ -26,13 +28,18 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
   userId,
 }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const router = useRouter();
 
   const toggleSearch = () => {
     setIsSearchOpen((prev) => !prev);
   };
 
+  const goToHome = () => {
+    router.push("/");
+  };
+
   return (
-    <div className="flex justify-between w-full h-[60px] lg:hidden">
+    <div className="flex justify-between w-full h-[60px] lg:hidden items-center">
       <HamburgerButton toggleMenu={toggleMenu} />
       <div className="relative flex items-center">
         <button className="text-[#FF7C33] focus:outline-none" onClick={toggleSearch}>
@@ -44,6 +51,12 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
           isSearchOpen={isSearchOpen}
           closeSearchOnClickOutside={(event: MouseEvent) => setIsSearchOpen(false)}
         />
+      </div>
+
+      <div className="absolute left-1/2 transform -translate-x-1/2">
+        <div onClick={goToHome} className="cursor-pointer">
+          <MobileLogo />
+        </div>
       </div>
 
       {isMenuOpen && (
