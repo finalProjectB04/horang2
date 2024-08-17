@@ -1,7 +1,5 @@
 "use client";
 
-import { showLastMessage } from "@/actions/chatActions";
-import { useQuery } from "@tanstack/react-query";
 import TimeAgo from "javascript-time-ago";
 import ko from "javascript-time-ago/locale/ko";
 import Image from "next/image";
@@ -20,6 +18,7 @@ interface PersonProps {
   onChatScreen?: boolean;
   onClick?: () => void;
   myId: string;
+  lastMessage: string;
 }
 
 export default function Person({
@@ -32,15 +31,8 @@ export default function Person({
   onChatScreen = false,
   onClick,
   myId,
+  lastMessage,
 }: PersonProps) {
-  const { data: lastMessages, isPending } = useQuery({
-    queryKey: ["lastMessage", userId],
-    queryFn: () => showLastMessage({ userId, myId }),
-    enabled: !!userId,
-  });
-
-  const lastMessage = lastMessages?.[0]?.message || "서로 대화를 해보세요!";
-
   return (
     <div
       className={`w-full flex border-b border-gray-200 items-center p-4 ${onClick && "cursor-pointer"} ${
@@ -69,7 +61,11 @@ export default function Person({
             {onlineAt && timeAgo.format(Date.parse(onlineAt))}
           </p>
         </div>
-        <p className="text-gray-500 sm:text-[10px] md:text-sm lg:text-sm">{lastMessage}</p>
+        <p
+          className={`text-gray-500 ${!onChatScreen && isActive && "text-white"}  sm:text-[10px] md:text-sm lg:text-sm`}
+        >
+          {lastMessage}
+        </p>
       </div>
     </div>
   );

@@ -69,12 +69,8 @@ const Nav = () => {
             >
               숙소
             </Link>
-            <Link
-              href="/leports"
-              onClick={handleNavigation("/leports")}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            >
-              레포츠
+            <Link href="/leports" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+              놀거리
             </Link>
             <Link
               href="/restaurant"
