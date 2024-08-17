@@ -4,8 +4,9 @@ import LoadingPage from "@/app/loading";
 import { DetailTitle } from "@/components/maindetail/DetailTitle";
 import { SearchBar } from "@/components/maindetail/SearchBar";
 import { ApiInformation } from "@/types/Main";
+import { useUserStore } from "@/zustand/userStore";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { TravelCardMobile } from "./TravelCardMobile";
 
@@ -28,6 +29,7 @@ export const TourismListMobile: React.FC<TourismListProps> = ({ contentTypeId, t
   const [displayCount, setDisplayCount] = useState<number>(12);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { ref, inView } = useInView();
+  const { id: userId } = useUserStore();
 
   // React Query를 사용하여 데이터 fetching
   const {
@@ -78,7 +80,17 @@ export const TourismListMobile: React.FC<TourismListProps> = ({ contentTypeId, t
           </div>
           <div className="max-w-[326px] flex flex-wrap gap-1 items-center justify-center ">
             {displayedData.map((item) => (
-              <TravelCardMobile key={item.contentid} item={item} />
+              <TravelCardMobile
+                key={item.contentid}
+                item={item}
+                user_id={userId || ""}
+                imageUrl={item.firstimage || ""}
+                contentTypeId={item.contenttypeid || ""}
+                title={item.title || ""}
+                addr1={item.addr1 || ""}
+                tel={item.tel || ""}
+                contentId={""}
+              />
             ))}
           </div>
           {displayedData.length < filteredData.length && (
