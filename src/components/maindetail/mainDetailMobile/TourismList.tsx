@@ -15,6 +15,12 @@ import { useInView } from "react-intersection-observer";
 interface TourismListProps {
   contentTypeId: number;
   title: string;
+  item: ApiInformation;
+  contentId: string;
+  imageUrl: string;
+  addr1: string;
+  tel: string;
+  user_id: string;
 }
 
 // 관광 데이터를 가져오는 함수
@@ -39,6 +45,7 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
   } = useQuery<ApiInformation[], Error>({
     queryKey: ["tourism", contentTypeId],
     queryFn: () => fetchTourismData(contentTypeId),
+    enabled: !!contentTypeId,
   });
 
   // 검색어에 따라 데이터 필터링 및 정렬
@@ -64,6 +71,8 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title }
       setDisplayCount((prevCount) => prevCount + 12);
     }
   }, [inView]);
+
+  useEffect(() => {}, [displayCount, displayedData]);
 
   if (isPending) return <LoadingPage />;
   if (error) return <div>Error: {error.message}</div>;
