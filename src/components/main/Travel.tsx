@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
 import LoadingPage from "@/app/loading";
+import { NoResultsFound } from "../maindetail/NoResultsFound";
 
 interface TravelProps {
   searchTerm: string;
@@ -70,12 +71,7 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
           {sortedAndFilteredTravel.length > 0 ? (
             <MainTravelSlider travel={sortedAndFilteredTravel} />
           ) : (
-            <div className="w-full h-[243px] flex items-center justify-center  rounded-[8px]">
-              <div className="text-center">
-                <p className="text-xl font-semibold text-gray-600">검색 결과가 없습니다.</p>
-                <p className="text-gray-500 mt-2">다른 검색어를 시도해 보세요.</p>
-              </div>
-            </div>
+            <NoResultsFound />
           )}
         </div>
       </div>

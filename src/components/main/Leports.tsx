@@ -10,6 +10,7 @@ import { MainListTitle } from "../common/MainListTitle";
 import { useRouter } from "next/navigation";
 import "swiper/swiper-bundle.css";
 import { convertToHttps } from "@/utils/convertToHttps";
+import { NoResultsFound } from "../maindetail/NoResultsFound";
 
 interface TravelProps {
   searchTerm: string;
@@ -123,12 +124,7 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
               ))}
             </Swiper>
           ) : (
-            <div className="w-full h-[346px] lg:h-[505px] flex items-center justify-center  rounded-[8px]">
-              <div className="text-center">
-                <p className="text-xl font-semibold text-gray-600">검색 결과가 없습니다.</p>
-                <p className="text-gray-500 mt-2">다른 검색어를 시도해 보세요.</p>
-              </div>
-            </div>
+            <NoResultsFound />
           )}
           <div className="flex flex-col lg:gap-6 gap-3 lg:w-[708px] lg:h-full w-full">
             <div className="lg:h-[393px] lg:w-[492px]  h-[260px] w-[327px] relative rounded-[8px] overflow-hidden">

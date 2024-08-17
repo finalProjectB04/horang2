@@ -75,7 +75,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
                 />
               </div>
               <div className="p-2">
-                <h3 className="text-[19px] font-semibold mb-2 truncate">{post.title}</h3>
+                <h3 className="text-lg font-semibold mb-2 truncate">{post.title}</h3>
                 <p className="text-gray-600 text-sm mb-4 line-clamp-2">{post.content}</p>
                 <div className="flex justify-between items-center text-xs text-gray-500">
                   <span>{post.category}</span>

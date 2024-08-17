@@ -10,10 +10,10 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
   const router = useRouter();
   return (
     <div
-      className="lg:w-[220px] gap-[26px] lg:h-[242px] w-[104px] h-[166px] flex-shrink-0 relative cursor-pointer rounded-[8px] transition-transform duration-300 hover:scale-105"
+      className="lg:w-[220px]  lg:h-[242px] w-[104px] h-[166px] flex-shrink-0 relative cursor-pointer rounded-[8px] transition-transform duration-300 hover:scale-105"
       onClick={() => router.push(`/detail/${item.contentid}`)}
     >
-      <div className="h-full relative">
+      <div className="h-full  relative">
         {item.firstimage ? (
           <Image src={item.firstimage} alt={item.title} layout="fill" objectFit="cover" className="rounded-t-[8px]" />
         ) : (

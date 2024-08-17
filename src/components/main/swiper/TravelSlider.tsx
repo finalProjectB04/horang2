@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/navigation";
+import { convertToHttps } from "@/utils/convertToHttps";
 
 interface MainTravelSliderProps {
   travel: ApiInformation[];
@@ -61,7 +62,7 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
             >
               {item.firstimage ? (
                 <Image
-                  src={item.firstimage}
+                  src={convertToHttps(item.firstimage)}
                   alt={item.title}
                   layout="fill"
                   objectFit="cover"

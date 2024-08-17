@@ -136,25 +136,23 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
           />
         </div>
       </BackgroundImage>
-
-      <div className="mx-auto py-8 max-w-[960px] flex flex-col gap-10">
-        <div className="flex my-6 gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <g clip-path="url(#clip0_1893_11600)">
-              <path
-                d="M8.77022 10.1112H1.61133L7.43855 14.2762L5.22855 21.4446L11.0558 17.0151L16.8924 21.4446L14.673 14.2762L20.5002 10.1112H13.3413L11.0558 2.55566L8.77022 10.1112ZM20.8402 21.4446L19.0836 15.7684L23.0313 12.9446H19.7824L16.8736 15.0223L18.2524 19.4801L20.8402 21.4446ZM16.7224 8.22233L15.0036 2.55566L14.0213 5.814L14.7486 8.22233H16.7224Z"
-                fill="#FF5C00"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_1893_11600">
-                <rect width="22.6667" height="22.6667" fill="white" transform="translate(0.666748 0.666504)" />
-              </clipPath>
-            </defs>
-          </svg>
-          <h3 className="text-[19px] font-bold">{title}</h3>
-        </div>
-
+      <div className="flex my-6 gap-3 mx-auto max-w-[960px] mt-10">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <g clip-path="url(#clip0_1893_11600)">
+            <path
+              d="M8.77022 10.1112H1.61133L7.43855 14.2762L5.22855 21.4446L11.0558 17.0151L16.8924 21.4446L14.673 14.2762L20.5002 10.1112H13.3413L11.0558 2.55566L8.77022 10.1112ZM20.8402 21.4446L19.0836 15.7684L23.0313 12.9446H19.7824L16.8736 15.0223L18.2524 19.4801L20.8402 21.4446ZM16.7224 8.22233L15.0036 2.55566L14.0213 5.814L14.7486 8.22233H16.7224Z"
+              fill="#FF5C00"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_1893_11600">
+              <rect width="22.6667" height="22.6667" fill="white" transform="translate(0.666748 0.666504)" />
+            </clipPath>
+          </defs>
+        </svg>
+        <h3 className="text-[19px] font-bold">{title}</h3>
+      </div>
+      <div className="mx-auto py-8 max-w-[960px] flex flex-col items-center justify-center ">
         <div className="flex flex-wrap gap-[2px]   lg:gap-2 lg:mb-4">
           {KOREAN_CONSONANTS.map((consonant) => (
             <button
@@ -169,7 +167,7 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
           ))}
         </div>
 
-        <div className="flex flex-wrap gap-1 items-center justify-center lg:gap-[26px] py-8 max-w-[327px] lg:max-w-[960px]">
+        <div className="flex flex-wrap gap-1  lg:gap-[26px] py-8 max-w-[327px] lg:max-w-[960px]">
           {isSearching ? (
             Array.from({ length: 12 }).map((_, index) => <SkeletonCard key={index} />)
           ) : displayedData.length > 0 ? (
