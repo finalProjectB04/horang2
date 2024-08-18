@@ -10,7 +10,7 @@ const GoogleLoginButton: React.FC = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: process.env.NEXT_PUBLIC_CALLBACK_URL_FOR_GOOGLE,
+        redirectTo: `${process.env.NEXT_PUBLIC_CALLBACK_URL_FOR_GOOGLE}/auth/callback`,
       },
     });
 
