@@ -49,9 +49,7 @@ const Nav = () => {
   return (
     <nav className="ml-auto flex items-center space-x-4 relative">
       <Link href="/about">
-        <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleNavigation("/about")}>
-          호랑 소개
-        </span>
+        <span className="text-primary hover:text-gray-400 cursor-pointer">호랑 소개</span>
       </Link>
       <div ref={dropdownRef} className="relative">
         <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleDropdownToggle}>
