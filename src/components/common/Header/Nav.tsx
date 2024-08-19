@@ -12,9 +12,9 @@ const Nav = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleNavigation = (href: string) => (event: React.MouseEvent) => {
-    if (href === "/community") {
-      router.push(href);
-    } else if (!userId) {
+    const protectedRoutes = ["/mypage", "/travelMbti"];
+
+    if (protectedRoutes.includes(href) && !userId) {
       event.preventDefault();
       router.push("/signin");
     } else {
@@ -56,31 +56,35 @@ const Nav = () => {
           <div className="absolute left-0 mt-2 min-w-max bg-white border border-gray-200 shadow-lg rounded-md z-50">
             <Link
               href="/travel"
-              onClick={handleNavigation("/travel")}
+              onClick={() => setIsDropdownOpen(false)}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
               추천 여행지
             </Link>
             <Link
               href="/hotel"
-              onClick={handleNavigation("/hotel")}
+              onClick={() => setIsDropdownOpen(false)}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
               숙소
             </Link>
-            <Link href="/leports" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <Link
+              href="/leports"
+              onClick={() => setIsDropdownOpen(false)}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               놀거리
             </Link>
             <Link
               href="/restaurant"
-              onClick={handleNavigation("/restaurant")}
+              onClick={() => setIsDropdownOpen(false)}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
               음식점
             </Link>
             <Link
               href="/festival"
-              onClick={handleNavigation("/festival")}
+              onClick={() => setIsDropdownOpen(false)}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
               축제 및 행사

@@ -17,6 +17,13 @@ const supabase = createClient();
 
 const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+const validatePassword = (password: string) => {
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return passwordRegex.test(password);
+};
+
+const validateNickname = (nickname: string) => /^[a-zA-Z0-9_-]{3,10}$/.test(nickname);
+
 const SignUpPage = () => {
   useRedirectIfLoggedIn();
 
@@ -31,9 +38,19 @@ const SignUpPage = () => {
 
   const handleSignUp = async () => {
     if (!nickname) return open({ title: "오류", content: "닉네임을 입력해 주세요." });
+    if (!validateNickname(nickname))
+      return open({
+        title: "오류",
+        content: "닉네임은 3자에서 10자 사이여야 하며, 알파벳, 숫자, 밑줄, 대시만 포함할 수 있습니다.",
+      });
     if (!email) return open({ title: "오류", content: "이메일을 입력해 주세요." });
     if (!validateEmail(email)) return open({ title: "오류", content: "유효한 이메일 주소를 입력해 주세요." });
-    if (password.length < 6) return open({ title: "오류", content: "비밀번호는 6자 이상이어야 합니다." });
+    if (!password) return open({ title: "오류", content: "비밀번호를 입력해 주세요." });
+    if (!validatePassword(password))
+      return open({
+        title: "오류",
+        content: "비밀번호는 최소 8자 이상이어야 하며, 대문자, 소문자, 숫자 및 특수 문자가 포함되어야 합니다.",
+      });
     if (password !== confirmPassword) return open({ title: "오류", content: "비밀번호가 일치하지 않습니다." });
 
     const { data: existingNickname } = await supabase.from("Users").select("*").eq("user_nickname", nickname).single();
@@ -85,11 +102,16 @@ const SignUpPage = () => {
     }
   };
 
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleSignUp();
+  };
+
   return (
-    <div className="flex items-center justify-center w-full h-screen bg-cover bg-center bg-[url('/assets/images/backgrounds/backgrounds.png')] sm:bg-[url('/assets/images/backgrounds/m_signup.png')]">
+    <div className="flex items-center justify-center w-full h-screen bg-cover bg-center bg-[url('/assets/images/backgrounds/backgrounds.svg')] sm:bg-[url('/assets/images/backgrounds/m_signup.png')]">
       <div className="bg-white p-8 rounded-[40px] border border-gray-300 w-full max-w-[503px] sm:max-w-[327px]">
         <h1 className="text-2xl font-bold mb-6 text-center">회원가입</h1>
-        <div className="space-y-4 w-full max-w-[401px] mx-auto sm:max-w-[280px]">
+        <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-[401px] mx-auto sm:max-w-[280px]">
           <SignUpForm
             email={email}
             setEmail={setEmail}
@@ -106,9 +128,9 @@ const SignUpPage = () => {
             <span className="text-gray-500 mx-4">OR</span>
             <div className="flex-1 border-t border-gray-300"></div>
           </div>
-          <SocialLoginButtons />
-          <SignUpLinks />
-        </div>
+        </form>
+        <SocialLoginButtons />
+        <SignUpLinks />
       </div>
     </div>
   );

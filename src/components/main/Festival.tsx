@@ -6,6 +6,7 @@ import { ApiInformation } from "@/types/Main";
 import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
+import { NoResultsFound } from "../maindetail/NoResultsFound";
 
 interface FestivalProps {
   searchTerm: string;
@@ -62,11 +63,11 @@ export const Festival = ({ searchTerm }: FestivalProps) => {
 
   return (
     <>
-      <div className="mx-auto max-w-[327px] py-8 lg:max-w-[1440px] flex flex-col lg:gap-10">
+      <div className="mx-auto max-w-[327px]  py-8 lg:max-w-[960px] flex flex-col lg:gap-10">
         <MainListTitle TitleName={`축제 및 행사`} onClick={() => router.push("/festival")} />
       </div>
-      <div className=" mx-auto  max-w-[327px] lg:max-w-[1440px] lg:h-[346px] flex flex-col lg:gap-10">
-        <MainTravelSlider travel={sortedFestival} />
+      <div className=" mx-auto  lg:max-w-[960px] lg:h-[243px] flex flex-col lg:gap-10 max-w-[327px]">
+        {sortedFestival.length > 0 ? <MainTravelSlider travel={sortedFestival} /> : <NoResultsFound />}
       </div>
     </>
   );
