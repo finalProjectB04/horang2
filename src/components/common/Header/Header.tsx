@@ -29,9 +29,7 @@ const Header: React.FC<HeaderProps> = ({ searchTerm, setSearchTerm }) => {
       clearUser();
       queryClient.invalidateQueries({ queryKey: ["session"] });
       router.push("/");
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
+    } catch (error) {}
   };
 
   const closeMenuOnClickOutside = (event: React.MouseEvent) => {

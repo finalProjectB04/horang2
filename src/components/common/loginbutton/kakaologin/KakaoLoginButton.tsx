@@ -15,7 +15,7 @@ const KakaoLoginButton = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
+        redirectTo: `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
       },
     });
 
