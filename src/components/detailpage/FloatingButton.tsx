@@ -1,14 +1,20 @@
+import { useModal } from "@/context/modal.context";
 import { useUserStore } from "@/zustand/userStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const FloatingButton = () => {
   const { id: userId } = useUserStore();
+  const modal = useModal();
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!userId) {
-      alert("로그인이 필요합니다.");
+      await modal.open({
+        title: "",
+        content: "로그인이 필요합니다.",
+      });
+      router.push("signin");
     } else {
       router.push("/chat");
     }

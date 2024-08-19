@@ -98,14 +98,14 @@ const Nav = () => {
           나만의 여행
         </span>
       </Link>
-      <Link href="/mypage">
-        <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleNavigation("/mypage")}>
-          나의 공간
-        </span>
-      </Link>
       <Link href="/community">
         <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleNavigation("/community")}>
           호랑이 모임
+        </span>
+      </Link>
+      <Link href="/mypage">
+        <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleNavigation("/mypage")}>
+          나의 공간
         </span>
       </Link>
     </nav>

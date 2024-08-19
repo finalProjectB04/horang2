@@ -13,9 +13,10 @@ import useModalStore from "@/zustand/modalStore";
 
 interface ModalChatScreenProps {
   id: string;
+  nickName: string;
 }
 
-const ModalChatScreen = ({ id }: ModalChatScreenProps) => {
+const ModalChatScreen = ({ id, nickName }: ModalChatScreenProps) => {
   const { selectedUserId } = useChatStore();
   const { modals, toggleModal } = useModalStore();
   const isOpen = modals[id];
@@ -77,9 +78,13 @@ const ModalChatScreen = ({ id }: ModalChatScreenProps) => {
 
   return (
     <div className="sm:flex md:hidden lg:hidden fixed top-0 left-0 w-full h-screen flex flex-col bg-primary-100 z-50">
-      <button className="w-fit flex items-center justify-start mx-6 my-8" onClick={() => toggleModal(id)}>
-        <Image src="/assets/images/back.png" width={10} height={17} alt="뒤로가기" />
-      </button>
+      <div className="flex items-center justify-between">
+        <button className="flex items-center justify-start mx-6 my-8" onClick={() => toggleModal(id)}>
+          <Image src="/assets/images/back.png" width={10} height={17} alt="뒤로가기" />
+        </button>
+        <p className="flex-grow text-center text-lg font-bold text-black p-2">{nickName}</p>
+        <span className="mx-6 my-8"></span>
+      </div>
       <div className="h-screen flex items-center overflow-y-auto flex-col p-4 gap-3" onClick={stopBubble}>
         <div className="h-full max-h-[70%] overflow-y-auto hidden-scroll">
           <div className="flex justify-start">
@@ -105,7 +110,7 @@ const ModalChatScreen = ({ id }: ModalChatScreenProps) => {
           className="fixed bottom-10 w-[300px] flex mt-4 rounded-[20px] bg-white mx-auto"
           onSubmit={(event) => {
             event.preventDefault();
-            if (message.trim()) {
+            if (message.trim() && !sendMessageMutation.isPending) {
               sendMessageMutation.mutate();
             }
           }}

@@ -6,8 +6,8 @@ import { useState } from "react";
 const supabase = createClient();
 
 const useAuth = () => {
-  const { id, user_email, setUser, profile_url } = useUserStore();
-  const [nickname, setNickname] = useState("");
+  const { id, user_email, setUser, profile_url, user_nickname } = useUserStore();
+  const [nickname, setNickname] = useState(user_nickname);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [profileImage, setProfileImage] = useState<File | null>(null);
@@ -57,7 +57,7 @@ const useAuth = () => {
           console.error("Error updating user:", updateError);
         } else {
           console.log("User information updated successfully");
-          setUser(id as string, user_email as string, nickname, newProfileUrl, "provider_value", "provider_id_value");
+          setUser(id as string, user_email as string, nickname!, newProfileUrl, "provider_value", "provider_id_value");
         }
       } else {
         const { error: updateError } = await supabase
@@ -69,7 +69,14 @@ const useAuth = () => {
           console.error("Error updating user:", updateError);
         } else {
           console.log("User information updated successfully");
-          setUser(id as string, user_email as string, nickname, profileImageUrl, "provider_value", "provider_id_value");
+          setUser(
+            id as string,
+            user_email as string,
+            nickname!,
+            profileImageUrl,
+            "provider_value",
+            "provider_id_value",
+          );
         }
       }
     } catch (error) {

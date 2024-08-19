@@ -30,9 +30,9 @@ const Profile: React.FC = () => {
 
   const buttons = [
     { name: "내 정보 관리", onClick: () => toggleModal("profile"), src: "/assets/images/edit_profile.svg" },
-    { name: "대화 하기", onClick: () => router.push("/chat"), src: "/assets/images/chat.svg" },
-    { name: "나만의 여행", onClick: () => router.push("/travelMbti"), src: "/assets/images/my_travel.svg" },
-    { name: "호랑이 모임", onClick: () => router.push("/community"), src: "/assets/images/community.svg" },
+    // { name: "대화 하기", onClick: () => router.push("/chat"), src: "/assets/images/chat.svg" },
+    // { name: "나만의 여행", onClick: () => router.push("/travelMbti"), src: "/assets/images/my_travel.svg" },
+    // { name: "호랑이 모임", onClick: () => router.push("/community"), src: "/assets/images/community.svg" },
   ];
 
   return (

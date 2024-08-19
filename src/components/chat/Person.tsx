@@ -35,9 +35,11 @@ export default function Person({
 }: PersonProps) {
   return (
     <div
-      className={`w-full flex border-b border-gray-200 items-center p-4 ${onClick && "cursor-pointer"} ${
-        onChatScreen && "bg-orange-500"
-      } ${!onChatScreen && isActive && "bg-orange-500"} ${!onChatScreen && !isActive && "bg-white"}`}
+      className={`w-full flex border-b border-gray-200 items-center sm:p-4 md:p-0 lg:p-0 ${
+        onClick && "cursor-pointer"
+      } ${onChatScreen && "bg-orange-500"} ${!onChatScreen && isActive && "bg-orange-500"} ${
+        !onChatScreen && !isActive && "bg-white"
+      }`}
       onClick={onClick}
     >
       <Image

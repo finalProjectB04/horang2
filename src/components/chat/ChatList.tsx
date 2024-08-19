@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Person from "./Person";
 import { createClient } from "@/utils/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -19,8 +19,10 @@ interface loggedInUserProps {
 const ChatList = ({ loggedInUser }: loggedInUserProps) => {
   const { selectedUserId, setSelectedUserId, selectedUserIndex, setSelectedUserIndex, presence, setPresence } =
     useChatStore();
-  const { toggleModal } = useModalStore();
+  const { toggleModal, resetModals } = useModalStore();
   const router = useRouter();
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   const supabase = createClient();
 
@@ -45,7 +47,6 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
 
   function getLastMessage(userId: string) {
     const lastMessageData = allMessages?.filter((message) => message.sender === userId).pop();
-
     return lastMessageData?.message || null;
   }
 
@@ -84,9 +85,27 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
     };
   }, []);
 
+  const filteredUsers = getAllUsersQuery.data?.filter((user) =>
+    user.user_nickname?.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        resetModals();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <div className="h-screen flex-1 flex flex-col sm:px-6 justify-center items-center">
-      <div className="w-3/4 sm:h-5/6 md:h-3/4 lg:h-3/4  flex flex-col ">
+    <div className="h-full flex-1 flex flex-col sm:px-6 justify-center items-center">
+      <div className="w-3/4 sm:h-5/6 md:h-5/6 lg:h-5/6 flex flex-col ">
         <button
           className="sm:block md:hidden lg:hidden w-fit flex items-center justify-start"
           onClick={() => router.back()}
@@ -94,10 +113,17 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
           <Image src="/assets/images/back.png" width={10} height={17} alt="뒤로가기" />
         </button>
         <div className="w-full min-w-[300px] flex flex-col overflow-y-auto">
-          <div className="flex">
-            <div className="text-black sm:font-bold md:font-extrabold lg:font-extrabold sm:py-3 sm:text-2xl md:text-4xl lg:text-4xl sm:my-2 md:my-3 lg:md-4">
+          <div className="flex flex-col">
+            <div className="text-black sm:font-bold md:font-extrabold lg:font-extrabold sm:py-3 sm:text-2xl md:text-4xl lg:text-4xl sm:my-2 md:my-3 lg:my-4">
               호랑이 목록
             </div>
+            <input
+              type="text"
+              placeholder="호랑이 이름을 입력하세요"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="border p-2 mb-4 rounded"
+            />
           </div>
           <div className="w-full flex flex-col overflow-y-auto hidden-scroll">
             {getAllUsersQuery.isPending ? (
@@ -115,31 +141,39 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
                   </div>
                 ))}
               </div>
+            ) : filteredUsers?.length! > 0 ? (
+              filteredUsers?.map((user, index) =>
+                user.user_nickname ? (
+                  <Person
+                    key={user.id}
+                    onClick={() => {
+                      setSelectedUserId(user.id);
+                      setSelectedUserIndex(index);
+                      toggleModal(user.id);
+                    }}
+                    index={index}
+                    isActive={selectedUserId === user.id}
+                    name={user.user_nickname}
+                    url={user.profile_url!}
+                    onChatScreen={false}
+                    onlineAt={presence?.[user.id]?.[0]?.onlineAt}
+                    userId={user.id}
+                    myId={loggedInUser.id}
+                    lastMessage={getLastMessage(user.id) || "서로 대화를 해보세요!"}
+                  />
+                ) : (
+                  <div key={user.id} className="p-4 text-gray-500 text-center">
+                    사용자 별명이 없습니다
+                  </div>
+                ),
+              )
             ) : (
-              getAllUsersQuery.data?.map((user, index) => (
-                <Person
-                  key={user.id}
-                  onClick={() => {
-                    setSelectedUserId(user.id);
-                    setSelectedUserIndex(index);
-                    toggleModal(user.id);
-                  }}
-                  index={index}
-                  isActive={selectedUserId === user.id}
-                  name={user.user_nickname!}
-                  url={user.profile_url!}
-                  onChatScreen={false}
-                  onlineAt={presence?.[user.id]?.[0]?.onlineAt}
-                  userId={user.id}
-                  myId={loggedInUser.id}
-                  lastMessage={getLastMessage(user.id) || "서로 대화를 해보세요!"}
-                />
-              ))
+              <div className="p-4 text-gray-500 text-center">검색 결과가 없습니다</div>
             )}
           </div>
         </div>
-        {getAllUsersQuery.data?.map((user) => (
-          <ModalChatScreen key={user.id} id={user.id} />
+        {filteredUsers?.map((user) => (
+          <ModalChatScreen key={user.id} id={user.id} nickName={user.user_nickname!} />
         ))}
       </div>
     </div>
