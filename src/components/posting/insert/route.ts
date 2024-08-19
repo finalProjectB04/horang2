@@ -4,11 +4,25 @@ const supabase = createClient();
 interface InsertData {
   title: string;
   content: string;
-  files: File[]; // File 배열로 변경
+  files: File[];
   userId: string;
   category: string;
+  cost: string;
+  departure: string;
+  period: string;
+  place: string;
 }
-export const insertCommunityData = async ({ title, content, files, userId, category }: InsertData) => {
+export const insertCommunityData = async ({
+  title,
+  content,
+  files,
+  userId,
+  category,
+  cost,
+  departure,
+  period,
+  place,
+}: InsertData) => {
   let fileUrls: string[] = [];
 
   if (files && files.length > 0) {
@@ -38,6 +52,10 @@ export const insertCommunityData = async ({ title, content, files, userId, categ
     files: fileUrls.join(","),
     user_id: userId,
     category,
+    cost,
+    departure,
+    period,
+    place,
   });
 
   if (error) {

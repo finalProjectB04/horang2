@@ -10,7 +10,7 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
   return (
     <>
       <div className="hidden lg:block">
-        <div className="relative w-[1920px] h-[900px]">
+        <div className="relative w-[1280px] h-[600px]">
           <Image
             src="/assets/images/ex6.png"
             alt="background"
@@ -19,7 +19,7 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
             className="object-cover"
           />
           <div className="absolute bottom-10 left-0 w-full px-5 md:px-8 lg:px-10">
-            <div className="max-w-6xl mx-auto my-36">
+            <div className="max-w-3xl mx-auto my-36">
               <div className="relative w-full">
                 <input
                   type="text"
@@ -50,7 +50,7 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
         </div>
       </div>
       <div className="block  lg:hidden">
-        <div className="  relative w-[375px] h-[295px]">
+        <div className=" relative w-[375px] h-[295px]">
           <Image
             src="/assets/images/ex6.png"
             alt="background"

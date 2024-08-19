@@ -7,10 +7,12 @@ import { useRouter } from "next/navigation";
 import { MainListTitle } from "../common/MainListTitle";
 import { MainTravelSlider } from "./swiper/TravelSlider";
 import LoadingPage from "@/app/loading";
+import { NoResultsFound } from "../maindetail/NoResultsFound";
 
 interface TravelProps {
   searchTerm: string;
 }
+
 const fetchTravel = async (): Promise<ApiInformation[]> => {
   const response = await fetch("/api/main/tourism/travel");
   if (!response.ok) {
@@ -18,6 +20,7 @@ const fetchTravel = async (): Promise<ApiInformation[]> => {
   }
   return response.json();
 };
+
 export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
   const [displayCount, setDisplayCount] = useState<number>(20);
   const router = useRouter();
@@ -62,10 +65,14 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
 
   return (
     <>
-      <div className="mx-auto max-w-[327px]  py-8 lg:max-w-[1440px] flex flex-col lg:gap-10">
+      <div className="mx-auto max-w-[327px] py-8 lg:max-w-[960px] flex flex-col lg:gap-10">
         <MainListTitle TitleName={`추천 여행지 `} onClick={() => router.push("/travel")} />
-        <div className=" mx-auto  lg:max-w-[1440px] lg:h-[346px] flex flex-col lg:gap-10 max-w-[327px]">
-          <MainTravelSlider travel={sortedAndFilteredTravel} />
+        <div className="mx-auto lg:max-w-[960px] lg:h-[243px] flex flex-col lg:gap-10 max-w-[327px]">
+          {sortedAndFilteredTravel.length > 0 ? (
+            <MainTravelSlider travel={sortedAndFilteredTravel} />
+          ) : (
+            <NoResultsFound />
+          )}
         </div>
       </div>
     </>
