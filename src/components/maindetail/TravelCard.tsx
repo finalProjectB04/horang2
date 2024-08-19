@@ -1,9 +1,10 @@
 import { useModal } from "@/context/modal.context"; // Modal context import
+import { useLikes } from "@/hooks/detailpage/useLikes";
 import { Likes } from "@/types/Likes.types";
 import { ApiInformation } from "@/types/Main";
 import { createClient } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -31,17 +32,7 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
   const modal = useModal();
   const { id: userId } = useUserStore();
 
-  const { isPending, isError, data } = useQuery<Likes[]>({
-    queryKey: ["likes", item.contentid],
-    queryFn: async () => {
-      const { data: likes, error } = await supabase.from("Likes").select("*").eq("content_id", item.contentid);
-      if (error) {
-        throw error;
-      }
-      return likes;
-    },
-    enabled: !!userId,
-  });
+  const { isPending, isError, data } = useLikes(item.contentid, userId);
 
   const deleteMutation = useMutation({
     mutationFn: async (userId: string) => {

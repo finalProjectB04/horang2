@@ -19,6 +19,6 @@ export const useLikes = (contentId: string | undefined | null, userId: string | 
       }
       return likes;
     },
-    enabled: !!userId && !!contentId,
+    enabled: !!contentId,
   });
 };
