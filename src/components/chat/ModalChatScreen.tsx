@@ -82,7 +82,7 @@ const ModalChatScreen = ({ id, nickName }: ModalChatScreenProps) => {
         <button className="flex items-center justify-start mx-6 my-8" onClick={() => toggleModal(id)}>
           <Image src="/assets/images/back.png" width={10} height={17} alt="뒤로가기" />
         </button>
-        <p className="flex-grow text-center text-lg font-bold text-black p-2">{nickName}</p>
+        <p className="flex-grow text-center text-lg font-bold text-secondary-800 p-2">{nickName}</p>
         <span className="mx-6 my-8"></span>
       </div>
       <div className="h-screen flex items-center overflow-y-auto flex-col p-4 gap-3" onClick={stopBubble}>

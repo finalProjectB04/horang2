@@ -114,7 +114,7 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
         </button>
         <div className="w-full min-w-[300px] flex flex-col overflow-y-auto">
           <div className="flex flex-col">
-            <div className="text-black sm:font-bold md:font-extrabold lg:font-extrabold sm:py-3 sm:text-2xl md:text-4xl lg:text-4xl sm:my-2 md:my-3 lg:my-4">
+            <div className="text-black sm:font-bold md:font-extrabold lg:font-extrabold sm:py-3 sm:text-2xl md:text-4xl lg:text-4xl sm:my-2 md:my-3 lg:my-4 ">
               호랑이 목록
             </div>
             <input
@@ -122,7 +122,7 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
               placeholder="호랑이 이름을 입력하세요"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="border p-2 mb-4 rounded"
+              className="border p-2 mb-4 border-primary-100 rounded-[20px]"
             />
           </div>
           <div className="w-full flex flex-col overflow-y-auto hidden-scroll">

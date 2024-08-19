@@ -66,7 +66,7 @@ const ChatScreen = () => {
   return (
     <div className="sm:hidden h-screen flex-1 flex flex-col justify-center items-center bg-primary-50">
       <div className="w-3/4 h-2/3 min-w-[300px] overflow-y-auto hidden-scroll bg-white rounded-2xl flex flex-col py-8 px-10 gap-3">
-        <p className="flex-grow text-center text-lg font-bold text-black p-2">
+        <p className="flex-grow text-center text-lg font-bold text-secondary-800 p-2">
           {selectedUserQuery.data && Array.isArray(selectedUserQuery.data) && selectedUserQuery.data.length > 0
             ? selectedUserQuery.data[0].user_nickname
             : ""}
