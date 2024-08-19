@@ -35,7 +35,6 @@ const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
   }, []);
   const handleShare = () => {
     if (!isKakaoLoaded || typeof window === "undefined" || !window.Kakao || !window.Kakao.Link) {
-      console.error("Kakao SDK를 사용할 수 없습니다.");
       return;
     }
     window.Kakao.Link.sendDefault({
@@ -54,7 +53,7 @@ const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
         alt="이미지가 없습니다"
         width={55}
         height={55}
-        className="hover:cursor-pointer"
+        className="hover:cursor-pointer  rounded-xl"
       />
     </div>
   );

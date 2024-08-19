@@ -17,7 +17,7 @@ const FacebookShareButton: React.FC<FacebookShareButtonProps> = ({ url, text }) 
         alt="Facebook Share"
         width={55}
         height={55}
-        className="cursor-pointer"
+        className="cursor-pointer rounded-xl"
       />
     </button>
   );

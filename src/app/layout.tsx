@@ -46,10 +46,10 @@ export default function RootLayout({
             <body className="font-sans mt-[84px]">
               <ClientHeader />
               {children}
+              <ScrollToTopButton />
               <Script src="https://developers.kakao.com/sdk/js/kakao.min.js" />
             </body>
           </ModalProvider>
-          <ScrollToTopButton />
         </QueryProvider>
       </RecoilProvider>
     </html>

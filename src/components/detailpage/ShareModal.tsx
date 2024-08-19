@@ -79,7 +79,7 @@ const ShareModal = ({ isOpen, onClose }: ModalProps) => {
           />
           <button
             onClick={handleCopyClick}
-            className="absolute right-0 top-0 h-full px-3 py-2 bg-primary-400 text-white rounded-r-md"
+            className="absolute right-0 top-0 h-full px-3 py-2 bg-primary-400 text-white rounded-xl "
           >
             복사
           </button>

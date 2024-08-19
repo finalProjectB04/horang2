@@ -11,7 +11,13 @@ const TwitterShareButton: React.FC<TwitterShareButtonProps> = ({ url, text }) =>
 
   return (
     <button onClick={() => window.open(shareUrl, "_blank")}>
-      <Image src="/assets/images/X_icon.svg" alt="Twitter Share" width={55} height={55} className="cursor-pointer" />
+      <Image
+        src="/assets/images/X_icon.svg"
+        alt="Twitter Share"
+        width={55}
+        height={55}
+        className="cursor-pointer rounded-xl"
+      />
     </button>
   );
 };

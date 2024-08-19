@@ -24,7 +24,16 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
   const addCommentMutation = useMutation({
     mutationFn: async () => {
       if (!userId) {
-        throw new Error("로그인 후 댓글을 작성할 수 있습니다.");
+        modal.open({
+          title: "에러!",
+          content: (
+            <div className="text-center">
+              <p>로그인 후 댓글을</p>
+              <p>작성할 수 있습니다.</p>
+            </div>
+          ),
+        });
+        throw new Error();
       }
 
       const response = await supabase.from("Comments").insert([
@@ -98,9 +107,9 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
   };
 
   return (
-    <main className="sm:mt-[140px] sm:max-w-[375px] sm:mt-[50px] sm:mx-auto md:mt-4 md:max-w-[1024px] md:mx-auto lg:mt-4 lg:max-w-[1440px] lg:mx-auto">
+    <main className="sm:mt-[140px] sm:max-w-[375px] sm:mt-[50px] sm:mx-auto  md:mt-4 md:max-w-[1024px] md:mx-auto lg:mt-4 lg:max-w-[1440px] lg:mx-auto">
       {userId && (
-        <div className="sm:pl-[22px] sm:flex sm:items-center sm:py-3 md:flex md:items-center md:mb-4 md:py-3 lg:flex lg:items-center lg:mb-4 lg:py-3">
+        <div className="sm:pl-[22px]  sm:flex sm:items-center sm:py-3 md:flex md:items-center md:mb-4 md:py-3 lg:flex lg:items-center lg:mb-4 lg:py-3">
           {profileUrl && (
             <Image src={profileUrl || "/assets/images/profile_ex.png"} alt="유저 프로필 사진" width={20} height={20} />
           )}
@@ -110,7 +119,7 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
         </div>
       )}
       <div
-        className="sm:p-3 sm:border-none sm:h-[102px] md:p-4 md:border md:border-primary-100 md:rounded-xl md:h-[120px] lg:p-4 lg:border lg:border-primary-100 lg:rounded-xl lg:h-[151px] flex items-center place-items-center"
+        className="sm:p-3 sm:border-none sm:h-[102px] sm:rounded-xl md:p-4 md:border md:border-primary-100 md:rounded-xl md:h-[120px] lg:p-4 lg:border lg:border-primary-100 lg:rounded-xl lg:h-[151px] flex items-center place-items-center"
         style={{ backgroundColor: "#FAFAFA" }}
       >
         <textarea

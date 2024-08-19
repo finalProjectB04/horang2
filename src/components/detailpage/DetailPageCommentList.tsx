@@ -10,6 +10,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
 
+import useShowMore from "@/hooks/detailpage/useShowMore";
 import useCustomConfirm from "@/hooks/useCustomConfirm";
 import DetailPagePagination from "./DetailPagePagination";
 
@@ -33,6 +34,7 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
   const queryClient = useQueryClient();
   const modal = useModal();
   const confirm = useCustomConfirm();
+  const { showMore, toggleShowMore } = useShowMore();
 
   const {
     data: commentsData,
@@ -198,13 +200,11 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
   const totalPages = Math.ceil((commentsData?.totalCount || 0) / ITEMS_PER_PAGE);
 
   return (
-    <div className="sm:mt-4 sm:max-w-[375px] sm:mx-auto md:mt-4 md:max-w-[1024px] md:mx-auto lg:mt-4 lg:max-w-[1440px] lg:mx-auto lg:h-[209px]">
-      {commentsData?.comments &&
+    <div className="sm:mt-4 sm:max-w-[375px] sm:mb-[80px] sm:mx-auto md:mt-4 md:max-w-[1024px] md:mx-auto lg:mt-4 lg:max-w-[1440px] lg:mx-auto lg:h-auto">
+      {commentsData?.comments && commentsData.comments.length > 0 ? (
         commentsData.comments.map((comment: Comments, index) => (
           <div
-            className={`lg:border lg:border-primary-100 lg:rounded-xl
-
-md:border md:border-primary-100 md:rounded-xl sm:p-3 sm:rounded-lg sm:flex sm:flex-col sm:items-start sm:mx-auto sm:mb-[1px] sm:w-full md:p-4 md:border md:border-grey-100 md:rounded-xl md:flex md:flex-col md:items-start md:mx-auto md:mb-[21px] md:w-full lg:p-4 lg:border lg:border-grey-100 lg:rounded-xl lg:flex lg:flex-col lg:items-start lg:mx-auto lg:mb-[21px] lg:w-full ${
+            className={`lg:border lg:border-primary-100 lg:rounded-xl md:border md:border-primary-100 md:rounded-xl sm:p-3 sm:rounded-lg sm:flex sm:flex-col sm:items-start sm:mx-auto sm:mb-[1px] sm:w-full md:p-4 md:border md:border-grey-100 md:rounded-xl md:flex md:flex-col md:items-start md:mx-auto md:mb-[21px] md:w-full lg:p-4 lg:border lg:border-grey-100 lg:rounded-xl lg:flex lg:flex-col lg:items-start lg:mx-auto lg:mb-[21px] lg:w-full ${
               !comment.comment_id ? "sm:border-none" : ""
             }`}
             key={comment.comment_id ? comment.comment_id : `comment-${index}`}
@@ -229,13 +229,18 @@ md:border md:border-primary-100 md:rounded-xl sm:p-3 sm:rounded-lg sm:flex sm:fl
               </div>
               {userId === comment.user_id && editCommentId !== comment.comment_id && (
                 <div className="sm:flex sm:space-x-2 sm:justify-end md:flex md:space-x-2 md:justify-end md:pr-[75px] md:mb-[20px] lg:flex lg:space-x-2 lg:justify-end lg:pr-[95px] lg:mb-[20px]">
-                  <button className="sm:hidden">
-                    {" "}
-                    <Image src="/assets/images/detailpage/back.svg" alt={"back.svg"} width={17} height={17} />
-                  </button>
+                  {comment.comment && comment.comment.length > 300 && (
+                    <button onClick={toggleShowMore} className="sm:hidden">
+                      {showMore ? (
+                        <Image src="/assets/images/detailpage/back.svg" alt="back.svg" width={17} height={17} />
+                      ) : (
+                        <Image src="/assets/images/detailpage/Frame161.svg" alt="Frame161.svg" width={17} height={17} />
+                      )}
+                    </button>
+                  )}
                   <button
                     onClick={() => handleEdit(comment)}
-                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:py-0 md:px-[13px] lg:text-[12px] lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[13px] text-grey-600"
+                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:px-[13px] lg:text-[12px] lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:px-[13px] text-grey-600"
                   >
                     <Image
                       src="/assets/images/detailpage/Mode_edit.svg"
@@ -248,7 +253,7 @@ md:border md:border-primary-100 md:rounded-xl sm:p-3 sm:rounded-lg sm:flex sm:fl
                   </button>
                   <button
                     onClick={() => handleDelete(comment.comment_id)}
-                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:py-0 md:ps-[13px] md:px-[13px] lg:flex lg:justify-center lg:items-center lg:text-[12px] lg:h-[36px] lg:py-0 lg:px-[13px]  text-grey-600"
+                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:ps-[13px] md:px-[13px] lg:flex lg:justify-center lg:items-center lg:text-[12px] lg:h-[36px] lg:px-[13px] text-grey-600"
                   >
                     <Image
                       src="/assets/images/detailpage/Delete.svg"
@@ -264,36 +269,49 @@ md:border md:border-primary-100 md:rounded-xl sm:p-3 sm:rounded-lg sm:flex sm:fl
             </div>
             <div className="sm:mt-2 sm:w-full md:mt-2 md:w-full lg:mt-2 lg:w-full">
               {editCommentId === comment.comment_id ? (
-                <div className="sm:ps-[48px] md:ps-[129px] lg:ps-[129px]">
+                <div className="sm:ps-[48px] md:ps-[129px] lg:ps-[109px] lg:pr-[40px]">
                   <textarea
                     value={newComment}
                     onChange={(event) => setNewComment(event.target.value)}
-                    className="resize-none sm:w-full sm:p-2 sm:rounded-[20px] sm:bg-grey-100 sm:break-all sm:text-[12px] sm:max-w-[280px] md:w-full md:ml-[-32px] md:p-2 md:border md:rounded lg:w-full lg:p-2 lg:border lg:rounded lg:break-all lg:text-[16px] lg:max-w-[1200px]"
+                    className="h-auto sm:w-full sm:p-2 sm:rounded-[20px] sm:bg-grey-100 sm:break-all sm:text-[12px] sm:max-w-[280px] md:w-full md:ml-[-32px] md:p-2 md:border md:rounded lg:w-full lg:p-2 lg:border lg:rounded lg:break-all lg:text-[16px] lg:max-w-[1200px]"
                     style={{ wordBreak: "break-all" }}
                   />
-                  <div className="sm:flex sm:justify-end sm:space-x-2 sm:mt-2 sm:pr-[20px] md:flex md:justify-end md:space-x-2 md:mt-2 md:pr-[95px] lg:flex lg:justify-end lg:space-x-2 lg:mt-2 lg:pr-[95px]">
+                  <div className="sm:flex sm:justify-end sm:space-x-2 sm:mt-2 sm:pr-[20px] md:flex md:justify-end md:space-x-2 md:mt-2 md:pr-[75px] lg:flex lg:justify-end lg:space-x-2 lg:mt-2 lg:pr-[57px]">
                     <button
                       onClick={() => handleUpdate(comment.comment_id)}
-                      className=" text-grey-600 sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:px-[13px] md:py-0 lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px] lg:text-[12px]"
+                      className=" text-grey-600 sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:px-[13px] lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:px-[13px] lg:text-[12px]"
                     >
                       저장
                     </button>
                     <button
                       onClick={handleCancelEdit}
-                      className=" text-grey-600 sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:py-0 sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:px-[13px] md:py-0 md:ps-[13px] lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:py-0 lg:px-[26px] lg:text-[12px]"
+                      className=" text-grey-600 sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:px-[13px] md:ps-[13px] lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:px-[13px] lg:text-[12px]"
                     >
                       취소
                     </button>
                   </div>
                 </div>
               ) : (
-                <p className="sm:ps-[65px] sm:mb-2 sm:pb-2 sm:break-all sm:whitespace-pre-wrap sm:pr-[20px] md:ps-[105px] md:mb-8 md:pb-5 md:break-all md:whitespace-pre-wrap md:pr-[70px] lg:ps-[105px] lg:mb-8 lg:pb-5 lg:break-all lg:whitespace-pre-wrap lg:pr-[95px] lg:text-grey-600 lg:text-[16px]">
-                  {comment.comment}
-                </p>
+                <div
+                  className={`sm:mt-2 sm:w-full md:mt-2 md:w-full lg:mt-2 lg:w-full ${
+                    showMore ? "lg:h-auto" : "overflow-hidden"
+                  }`}
+                >
+                  <p className="sm:ps-[65px] sm:mb-2 sm:pb-2 sm:break-all sm:whitespace-pre-wrap sm:pr-[20px] md:ps-[105px] md:mb-8 md:pb-5 md:break-all md:whitespace-pre-wrap md:pr-[70px] lg:ps-[110px] lg:mb-8 lg:pb-5 lg:break-all lg:whitespace-pre-wrap lg:pr-[95px] lg:text-grey-600 lg:text-[16px]">
+                    {showMore
+                      ? comment.comment
+                      : comment.comment && comment.comment.length > 300
+                      ? `${comment.comment.slice(0, 300)}....`
+                      : comment.comment}
+                  </p>
+                </div>
               )}
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <p className="item-start text-grey-600 lg:text-[16px]">댓글이 없습니다.</p>
+      )}
       <DetailPagePagination totalPages={totalPages} page={page} setPage={setPage} />
     </div>
   );

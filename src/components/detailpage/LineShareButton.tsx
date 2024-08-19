@@ -12,7 +12,13 @@ const LineShareButton: React.FC<LineShareProps> = ({ id }) => {
 
   return (
     <a href={shareUrl} target="_blank" rel="noopener noreferrer">
-      <Image src="/assets/images/line-icon.svg" alt="Share on LINE" width={55} height={55} className="mt-2" />
+      <Image
+        src="/assets/images/line-icon.svg"
+        alt="Share on LINE"
+        width={55}
+        height={55}
+        className="lg:mt-2 md:mt-2"
+      />
     </a>
   );
 };
