@@ -13,7 +13,6 @@ export async function POST(request: Request) {
     });
 
     if (loginError) {
-      console.error("Login error:", loginError.message);
       return NextResponse.json({ error: loginError.message }, { status: 401 });
     }
 
@@ -27,7 +26,6 @@ export async function POST(request: Request) {
         .maybeSingle();
 
       if (fetchError) {
-        console.error("Fetch error:", fetchError.message);
         return NextResponse.json({ error: fetchError.message }, { status: 500 });
       }
 
@@ -36,14 +34,13 @@ export async function POST(request: Request) {
         path: "/",
         httpOnly: true,
         secure: true,
-        maxAge: 60 * 60 * 24 * 7,
+        maxAge: 3600,
       });
       return response;
     }
 
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   } catch (error) {
-    console.error("Server error:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
