@@ -46,11 +46,23 @@ const ShareModal = ({ isOpen, onClose }: ModalProps) => {
     });
   };
 
+  const handleBackdropClick = (event: React.MouseEvent) => {
+    if (event.target === event.currentTarget) {
+      onClose();
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 sm:max-w-[375px]">
-      <div className="bg-white p-3 rounded-md shadow-lg relative w-[280px] md:w-[320px] lg:w-[480px]">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      onClick={handleBackdropClick}
+    >
+      <div
+        className="bg-white p-3 rounded-md shadow-lg relative w-[280px] md:w-[320px] lg:w-[480px]"
+        onClick={(event) => event.stopPropagation()}
+      >
         <button
           className="absolute top-2 right-2 bg-transparent text-black hover:text-red-500 transition duration-300 ease-in-out focus:outline-none text-lg"
           onClick={onClose}
@@ -58,10 +70,18 @@ const ShareModal = ({ isOpen, onClose }: ModalProps) => {
           &times;
         </button>
         <div className="text-center font-bold text-base mb-3 md:text-lg md:mb-4 lg:text-xl lg:mb-4">공유하기</div>
-        <div className="flex items-center mb-3 md:mb-4 lg:mb-4">
-          <input type="text" value={copiedUrl} readOnly className="w-full px-3 py-2 border rounded-l-md bg-gray-100" />
-          <button onClick={handleCopyClick} className="px-3 p-2 bg-primary-400 text-white rounded-md">
-            {">>"}
+        <div className="relative flex items-center mb-3 md:mb-4 lg:mb-4">
+          <input
+            type="text"
+            value={copiedUrl}
+            readOnly
+            className="w-full px-3 py-2 border rounded-l-md bg-gray-100 pr-16"
+          />
+          <button
+            onClick={handleCopyClick}
+            className="absolute right-0 top-0 h-full px-3 py-2 bg-primary-400 text-white rounded-r-md"
+          >
+            복사
           </button>
         </div>
         <div className="flex justify-center gap-2">

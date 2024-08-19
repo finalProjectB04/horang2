@@ -50,7 +50,7 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
         title: "성공!",
         content: (
           <div className="text-center">
-            <p>댓글 작성이 성공했습니다</p>
+            <p>댓글 작성에 성공했습니다</p>
           </div>
         ),
       });
@@ -62,7 +62,7 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
         title: "실패!",
         content: (
           <div className="text-center ">
-            <p>댓글 작성이 실패했습니다</p>
+            <p>댓글 작성에 실패했습니다</p>
             <p>${error.message}</p>
           </div>
         ),
@@ -109,7 +109,10 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
           </span>
         </div>
       )}
-      <div className="sm:p-3 sm:border-none sm:h-[102px] md:bg-grey-100 md:p-4 md:border md:border-primary-100 md:rounded-xl md:h-[120px] lg:p-4 lg:border lg:border-primary-100 lg:rounded-xl lg:h-[151px] flex items-center place-items-center lg:bg-grey-100">
+      <div
+        className="sm:p-3 sm:border-none sm:h-[102px] md:p-4 md:border md:border-primary-100 md:rounded-xl md:h-[120px] lg:p-4 lg:border lg:border-primary-100 lg:rounded-xl lg:h-[151px] flex items-center place-items-center"
+        style={{ backgroundColor: "#FAFAFA" }}
+      >
         <textarea
           value={comment}
           onChange={(event) => setComment(event.target.value)}
@@ -122,16 +125,17 @@ const DetailPageAddComment: React.FC<DetailPageAddCommentProps> = ({ contentId, 
               ? "댓글을 작성하세요"
               : "댓글 작성은 로그인한 유저만 가능합니다"
           }
-          className={`resize-none sm:w-[270px] sm:p-4 sm:flex-shrink-0 sm:rounded-[20px] sm:bg-grey-100 sm:text-[14px] sm:leading-5 sm:text-grey-600 sm:pl-[24px] ${
+          className={`resize-none sm:w-[270px] sm:p-4 sm:flex-shrink-0 sm:rounded-[20px] sm:bg-grey-50 sm:text-[14px] sm:leading-5 sm:text-grey-600 sm:pl-[24px] ${
             !userId ? "text-grey-500" : "text-grey-900"
-          } sm:border-none sm:min-h-[24px] sm:resize-y md:max-w-[800px] md:p-4 md:rounded-l-lg md:bg-grey-100 lg:h-[100px] md:flex md:flex-col md:text-[17px] md:leading-6 md:text-grey-600 ${
+          } sm:border-none sm:min-h-[24px] sm:resize-y md:max-w-[800px] md:p-4 md:rounded-l-lg  lg:h-[100px] md:flex md:flex-col md:text-[17px] md:leading-6 md:text-grey-600 ${
             !userId ? "text-grey-500" : "text-grey-900"
-          } md:border-none md:flex-grow md:min-h-[80px] md:max-h-[400px] lg:max-w-[1200px] lg:p-6 lg:py-15 lg:rounded-l-lg lg:bg-grey-100 lg:h-[100px] lg:flex lg:flex-col lg:text-[19px] lg:leading-[40px] lg:text-grey-600 ${
+          } md:border-none md:flex-grow md:min-h-[80px] md:max-h-[400px] lg:max-w-[1200px] lg:p-6 lg:py-15 lg:rounded-l-lg  lg:h-[100px] lg:flex lg:flex-col lg:text-[19px] lg:leading-[40px] lg:text-grey-600 ${
             !userId ? "text-grey-500" : "text-grey-900"
           } lg:border-none lg:flex-grow lg:min-h-[80px] lg:max-h-[500px]`}
           disabled={!userId}
           maxLength={2000}
           required
+          style={{ backgroundColor: "#FAFAFA" }}
         />
         <button
           onClick={handleAddComment}

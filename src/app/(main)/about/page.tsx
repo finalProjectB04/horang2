@@ -66,7 +66,7 @@ const AboutPage = () => {
         </div>
         <div className="flex justify-between ml-[241px]">
           <div className="pt-[100px]">
-            <div className="flex">
+            <div className="flex ">
               <Image src="/assets/images/about/aboutHorang.svg" alt={"aboutHorang.svg"} width={118} height={29} />
             </div>
             <div className="mt-[24px] w-[calc(259px+132px+16px)]" style={{ borderTop: "1px solid #B2A374" }}></div>
@@ -80,30 +80,42 @@ const AboutPage = () => {
               className="mt-[12px] text-white text-[24px] font-normal"
               style={{ lineHeight: "35px", letterSpacing: "-0.6px" }}
             >
-              여행지, 숙소, 음식점과 축제 및 행사 등 다양한
-              <span style={{ color: "#4068F7" }}>국내 여행 정보 제공 플랫폼</span>
+              여행지, 숙소, 음식점과 축제 및 행사 등 다양한&nbsp;
+              <span className="font-black" style={{ color: "#4068F7" }}>
+                국내 여행 정보 제공 플랫폼
+              </span>
             </p>
             <p
               className="mt-[12px] text-white text-[24px] font-normal"
               style={{ lineHeight: "35px", letterSpacing: "-0.6px" }}
             >
-              사용자의 <span style={{ color: "#4068F7" }}>여행 MBTI 유형</span>을 나눠 사용자의 취향을 고려한
-              <span style={{ color: "#4068F7" }}>맞춤형 추천 서비스 제공</span>
+              사용자의
+              <span className="font-black" style={{ color: "#4068F7" }}>
+                여행 MBTI 유형
+              </span>
+              을 나눠 사용자의 취향을 고려한&nbsp;
+              <span className="font-black" style={{ color: "#4068F7" }}>
+                맞춤형 추천 서비스 제공
+              </span>
             </p>
             <p
               className="mt-[12px] text-white text-[24px] font-normal mb-[241px]"
               style={{ lineHeight: "35px", letterSpacing: "-0.6px" }}
             >
-              호랑 여행객을 위한 <span style={{ color: "#4068F7" }}>커뮤니티, 채팅 기능</span>을 통해 소통의 장 제공
+              호랑 여행객을 위한&nbsp;
+              <span className="font-black" style={{ color: "#4068F7" }}>
+                커뮤니티, 채팅 기능
+              </span>
+              을 통해 소통의 장 제공
             </p>
           </div>
-          <div className="mr-[241px] pt-[90px]">
+          <div className="mr-[191px] pt-[100px]">
             <Image src="/assets/images/about/image1278.svg" alt={"image1278.svg"} width={560} height={409} />
           </div>
         </div>
-        <div className="flex ml-[241px] pt-[100px] pr-[241px] mb-[100px]">
+        <div className="flex ml-[241px] pt-[100px] pr-[106px] mb-[100px]">
           <Image src="/assets/images/about/Frame351.svg" alt={"Frame351.svg"} width={452} height={468} />
-          <div className="ml-[186px]">
+          <div className="ml-[246px]">
             <p
               className="text-white text-[28px] font-bold mb-[24px]"
               style={{ lineHeight: "36px", letterSpacing: "-0.7px" }}
@@ -112,22 +124,26 @@ const AboutPage = () => {
             </p>
             <div className="w-[calc(364px)]" style={{ borderTop: "1px solid #B2A374" }}></div>
             <p
-              className="text-white text-[28px] font-bold mb-[30px] pt-[24px]"
-              style={{ lineHeight: "36px", letterSpacing: "-0.7px" }}
+              className="text-white text-[28px] font-bold mb-[12px] pt-[24px]"
+              style={{
+                lineHeight: "36px",
+                letterSpacing: "-0.7px",
+              }}
             >
               새로운 여행의 바람
             </p>
             <p
-              className="text-white text-[24px] font-normal mb-[24px]"
-              style={{ lineHeight: "30px", letterSpacing: "-0.6px" }}
+              className="text-white text-[24px] font-normal"
+              style={{
+                lineHeight: "35px",
+                letterSpacing: "-0.6px",
+                // WebkitTextStrokeWidth: "1px",
+                // WebkitTextStrokeColor: "#000",
+              }}
             >
-              메인 페이지에서는 국내 여행 정보를 제공하고 추천 여행지, 숙소, 놀거리, 음식점, 축제 및 행사 등 다양한
-              카테고리 별 정보를 찾을 수 있습니다. 컨트롤러를 누르면 더 다양한 장소를 추천해주는 페이지로 이동하며, 해당
-              페이지에서 무한 스크롤을 통해 최대 1000개의 정보를 제공하고 검색 기능이 시/군/구로 검색이 가능하고
-              자유롭고 차용으로도 검색이 가능합니다. 해당 장소를 누르면 상세 페이지로 이동합니다.
-            </p>
-            <p className="text-white text-[24px] font-normal" style={{ lineHeight: "30px", letterSpacing: "-0.6px" }}>
-              호랑은 개인 취향에 맞는 여행 및 먹거리를 추천하는 정보 제공 플랫폼입니다.
+              가볼 만한 여행지, 맛집, 놀거리, 축제 및 행사 등 모든 것을 한 곳에서 찾을 수 있습니다. 지역별 구분과 검색
+              기능을 통해 쉽게 원하는 정보를 찾아보세요. 여러분의 여행 계획을 보다 알차게 만들어줄 다양한 여행지들을
+              만나보세요! 호랑은 개인 취향에 맞는 여행 및 먹거리를 추천하는 정보 제공 플랫폼입니다.
             </p>
           </div>
         </div>
@@ -176,7 +192,7 @@ const AboutPage = () => {
         </div>
       </section>
       <section className="bg-secondary-700">
-        <div className=" ml-[241px] pt-[100px]">
+        <div className=" ml-[241px] pt-[100px] overflow-hidden">
           <p
             className="text-white text-[28px] font-bold mb-[24px]"
             style={{ lineHeight: "36px", letterSpacing: "-0.7px" }}
