@@ -51,7 +51,7 @@ const Community: React.FC = () => {
     <>
       <CommunityImage />
 
-      <div className="container lg:w-[1440px] mx-auto lg:mt-14 w-[375px] ">
+      <div className="container lg:w-[960px] mx-auto lg:my-14 w-[375px] ">
         <div className="flex justify-between gap-5 lg:mb-14 mb-4 ">
           <CategorySelector selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
           <SortSelector sortOrder={sortOrder} onSortChange={setSortOrder} />

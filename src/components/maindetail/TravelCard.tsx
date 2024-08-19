@@ -202,36 +202,32 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
 
   return (
     <div
-      className="bg-gray-100 w-[330px] h-[346px] relative overflow-hidden cursor-pointer rounded-[9.11px] transition-transform duration-300 hover:scale-105"
+      className="lg:w-[220px]  lg:h-[242px] w-[104px] h-[166px] flex-shrink-0 relative cursor-pointer rounded-[8px] transition-transform duration-300 hover:scale-105"
       onClick={() => router.push(`/detail/${item.contentid}`)}
     >
-      {item.firstimage ? (
-        <div className="relative">
-          <Image
-            src={item.firstimage}
-            alt={item.title}
-            width={330}
-            height={224}
-            className="w-[330px] h-[224px] object-cover rounded-t-[9.11px]"
-          />
-          <button onClick={handleLikeButton} disabled={!userId} className="absolute top-2 right-2">
-            <Image
-              src={likeImage}
-              alt={liked ? "Unlike" : "Like"}
-              width={32}
-              height={32}
-              className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]"
-            />
-          </button>
-        </div>
-      ) : (
-        <div className="w-[330px] h-[224px] bg-gray-200 flex items-center justify-center rounded-t-[9.11px]">
-          <span className="text-gray-500">No Image Available</span>
-        </div>
-      )}
-      <div className="bg-white w-full h-[122px] overflow-hidden rounded-b-[9.11px] px-[14px] py-[28px] flex flex-col gap-[10px]">
-        <h2 className="text-xl font-semibold text-gray-800 truncate">{item.title}</h2>
-        <p className="text-gray-600 text-sm truncate">{item.addr1 || "Address not available"}</p>
+      <div className="h-full  relative">
+        {item.firstimage ? (
+          <div>
+            <Image src={item.firstimage} alt={item.title} layout="fill" objectFit="cover" className="rounded-t-[8px]" />
+            <button onClick={handleLikeButton} disabled={!userId} className="absolute top-2 right-2">
+              <Image
+                src={likeImage}
+                alt={liked ? "Unlike" : "Like"}
+                width={32}
+                height={32}
+                className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]"
+              />
+            </button>
+          </div>
+        ) : (
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-t-[9.11px]">
+            <span className="text-gray-500 text-xs">No Image</span>
+          </div>
+        )}
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 bg-white p-2 flex flex-col items-start gap-1.5 self-stretch">
+        <h2 className="text-sm font-semibold text-gray-800 truncate w-full">{item.title}</h2>
+        <p className="text-gray-600 text-xs truncate w-full">{item.addr1 || "Address not available"}</p>
       </div>
     </div>
   );
