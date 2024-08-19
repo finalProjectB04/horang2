@@ -151,49 +151,9 @@ const Writing: React.FC = () => {
   }
 
   return (
-<<<<<<< HEAD
-    <div className="w-[1440px] mx-auto my-[300px]">
-      <form onSubmit={handleSubmit} className="space-y-8">
-        {previewUrls.length > 0 && (
-          <div>
-            <h4 className="text-lg font-semibold text-gray-700">미리보기:</h4>
-            <Swiper
-              modules={[Pagination]}
-              spaceBetween={5}
-              slidesPerView={1}
-              pagination={{ clickable: true }}
-              className="w-full h-[800px]"
-            >
-              {previewUrls.map((url, index) => (
-                <SwiperSlide key={index}>
-                  <div className="relative">
-                    <Image
-                      src={url}
-                      alt={`Preview ${index + 1}`}
-                      width={1440}
-                      height={800}
-                      className="w-[1440px] h-[800px] object-contain rounded-t-[9.11px]"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeFile(index)}
-                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
-                    >
-                      X
-                    </button>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        )}
-
-        <div className="grid grid-cols-3 gap-6 my-6">
-=======
     <div className="w-[375px] lg:w-[1280px] mx-auto my-[200px]">
       <form onSubmit={handleSubmit} className="lg:space-y-28 space-y-14">
         <div className="grid grid-cols-3 lg:gap-6 ">
->>>>>>> 498f99fc16aef7af609ec3032d9fd5955b01095e
           <div className="col-span-2">
             <div className="flex items-center space-x-4">
               <label
