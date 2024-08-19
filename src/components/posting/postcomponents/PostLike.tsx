@@ -23,7 +23,7 @@ const DEFAULT_HEART = (
     alt="빈하트"
     width={48}
     height={32}
-    className=" w-5 h-5 mt-[7px] lg:w-[30px] lg:h-[30px] lg:mt-2"
+    className=" w-5 h-5  lg:w-[30px] lg:h-[30px] "
   />
 );
 const PUSHED_HEART = (
@@ -32,7 +32,7 @@ const PUSHED_HEART = (
     alt="하트"
     width={48}
     height={32}
-    className="w-5 h-5 mt-[7px] lg:w-[30px] lg:h-[30px] lg:mt-2"
+    className="w-5 h-5  lg:w-[30px] lg:h-[30px] "
   />
 );
 
