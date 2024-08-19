@@ -37,7 +37,7 @@ const TypeResultPage = () => {
   return (
     <div
       className="w-full h-screen bg-cover bg-center relative"
-      style={{ backgroundImage: "url(/assets/images/backgrounds/backgrounds.png)" }}
+      style={{ backgroundImage: "url(/assets/images/backgrounds/backgrounds.svg)" }}
     >
       <div className="flex justify-center items-start h-full py-10 px-4">
         <div className="bg-white p-6 rounded-[40px] sm:w-[350px] h-[80vh] w-[500px] flex flex-col max-h-[80vh] overflow-auto relative">

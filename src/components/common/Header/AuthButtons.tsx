@@ -27,16 +27,15 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
       if (sessionData?.session?.user) {
         const { id } = sessionData.session.user;
 
-        const { data: userData, error } = await supabase.from("Users").select("*").eq("id", id).single();
+        const { data: userData } = await supabase.from("Users").select("*").eq("id", id).single();
 
-        if (error || !userData) {
-          console.error("사용자 정보를 가져오는데 실패했습니다:", error);
-          return;
+        if (userData) {
+          const { user_email = "", user_nickname = "", profile_url = "", provider = "", provider_id = "" } = userData;
+
+          setUser(id, user_email || "", user_nickname || "", profile_url || "", provider || "", provider_id || "");
+        } else {
+          clearUser();
         }
-
-        const { user_email = "", user_nickname = "", profile_url = "", provider = "", provider_id = "" } = userData;
-
-        setUser(id, user_email || "", user_nickname || "", profile_url || "", provider || "", provider_id || "");
       } else {
         clearUser();
       }
@@ -60,12 +59,8 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
         clearUser();
 
         router.push("/");
-      } else {
-        console.error("Failed to log out");
       }
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
+    } catch (error) {}
   };
 
   if (!isClient) {

@@ -56,11 +56,16 @@ const LoginPage = () => {
     }
   };
 
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleLogin();
+  };
+
   return (
-    <div className="flex items-center justify-center w-full h-screen bg-cover bg-center bg-[url('/assets/images/backgrounds/backgrounds.png')] sm:bg-[url('/assets/images/backgrounds/m_signup.png')]">
+    <div className="flex items-center justify-center w-full h-screen bg-cover bg-center bg-[url('/assets/images/backgrounds/backgrounds.svg')] sm:bg-[url('/assets/images/backgrounds/m_signup.png')]">
       <div className="bg-white p-8 rounded-[40px] border border-gray-300 w-full max-w-[500px] sm:max-w-[327px]">
         <h1 className="text-2xl font-bold mb-6 text-center">로그인</h1>
-        <div className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <EmailInput email={email} setEmail={setEmail} />
           <PasswordInput password={password} setPassword={setPassword} />
           <LoginButton onClick={handleLogin} />
@@ -69,9 +74,9 @@ const LoginPage = () => {
             <span className="text-gray-500 mx-4">OR</span>
             <div className="flex-1 border-t border-gray-300"></div>
           </div>
-          <SocialLoginButtons />
-          <SignInLink />
-        </div>
+        </form>
+        <SocialLoginButtons />
+        <SignInLink />
       </div>
     </div>
   );
