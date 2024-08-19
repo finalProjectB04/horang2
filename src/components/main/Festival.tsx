@@ -35,7 +35,7 @@ export const Festival = ({ searchTerm }: FestivalProps) => {
     if (!festival) return [];
 
     const filterd: ApiInformation[] = festival.filter((item) =>
-      item.title.toLowerCase().includes(searchTerm.toLowerCase()),
+      item.addr1.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
     const shuffled: ApiInformation[] = [...filterd];

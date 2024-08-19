@@ -18,7 +18,7 @@ export async function GET(request: Request) {
         MobileApp: "horang",
         _type: "json",
         listYN: "Y",
-        arrange: "A",
+        arrange: "C",
         contentTypeId: contentTypeId,
       },
     });
