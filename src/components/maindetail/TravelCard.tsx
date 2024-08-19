@@ -8,6 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { SkeletonCard } from "./SkeletonCard";
 
 const supabase = createClient();
 
@@ -150,15 +151,7 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
   }, [data, userId]);
 
   if (isPending) {
-    return (
-      <Image
-        src="/assets/images/defaultLikeIcon.svg"
-        alt={"Unlike"}
-        width={32}
-        height={32}
-        className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]"
-      />
-    );
+    return <SkeletonCard />;
   }
 
   if (isError) {

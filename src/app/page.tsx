@@ -10,6 +10,10 @@ import Header from "@/components/common/Header";
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedConsonant, setSelectedConsonant] = useState<string>("");
+  const [selectedRegion, setSelectedRegion] = useState<string>("");
+  const [selectedSigungu, setSelectedSigungu] = useState<string>("");
+  const [isRegionSelectorOpen, setIsRegionSelectorOpen] = useState<boolean>(false);
 
   return (
     <main>
