@@ -324,8 +324,8 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
                   </button>
                 </div>
               ) : (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-t-[6px]">
-                  <span className="text-gray-500 text-sm">No Image Available</span>
+                <div className="w-full h-full bg-grey-200 flex items-center justify-center rounded-t-[6px]">
+                  <span className="text-grey-500 text-sm">No Image Available</span>
                 </div>
               )}
             </div>
@@ -339,11 +339,11 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
               <h2
                 className={`${
                   isLgScreen ? "text-lg" : "lg:text-xl text-sm"
-                } font-semibold text-gray-800 truncate w-full`}
+                } font-semibold text-grey-800 truncate w-full`}
               >
                 {item.title}
               </h2>
-              <p className={`text-gray-600 ${isLgScreen ? "text-xs" : "lg:text-sm text-xs"} truncate w-full`}>
+              <p className={`text-grey-600 ${isLgScreen ? "text-xs" : "lg:text-sm text-xs"} truncate w-full`}>
                 {item.addr1 || "Address not available"}
               </p>
             </div>

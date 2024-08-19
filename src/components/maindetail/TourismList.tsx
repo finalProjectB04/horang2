@@ -164,7 +164,7 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
               key={consonant}
               onClick={() => setSelectedConsonant(selectedConsonant === consonant ? "" : consonant)}
               className={`px-3 py-1 rounded ${
-                selectedConsonant === consonant ? "bg-orange-500 text-white" : "bg-gray-200"
+                selectedConsonant === consonant ? "bg-orange-500 text-white" : "bg-grey-200"
               }`}
             >
               {consonant}

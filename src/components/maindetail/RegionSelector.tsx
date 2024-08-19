@@ -58,7 +58,7 @@ export const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelect, onClos
                 <button
                   key={region}
                   onClick={() => handleRegionSelect(region)}
-                  className={`p-2 rounded ${selectedRegion === region ? "bg-orange-500 text-white" : "bg-gray-200"}`}
+                  className={`p-2 rounded ${selectedRegion === region ? "bg-orange-500 text-white" : "bg-grey-200"}`}
                 >
                   {region}
                 </button>
@@ -73,7 +73,7 @@ export const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelect, onClos
                 <button
                   key={sigungu}
                   onClick={() => handleSigunguSelect(sigungu)}
-                  className={`p-2 rounded ${selectedSigungu === sigungu ? "bg-orange-500 text-white" : "bg-gray-200"}`}
+                  className={`p-2 rounded ${selectedSigungu === sigungu ? "bg-orange-500 text-white" : "bg-grey-200"}`}
                 >
                   {sigungu}
                 </button>
@@ -85,7 +85,7 @@ export const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelect, onClos
           <button onClick={handleConfirm} className="px-4 py-2 bg-orange-500 text-white mr-2 rounded">
             확인
           </button>
-          <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded ">
+          <button onClick={onClose} className="px-4 py-2 bg-grey-300 rounded ">
             취소
           </button>
         </div>

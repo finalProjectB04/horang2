@@ -76,8 +76,8 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
               </div>
               <div className=" p-2">
                 <h3 className="text-lg font-semibold mb-2 truncate">{post.title}</h3>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">{post.content}</p>
-                <div className="flex justify-between items-center text-xs text-gray-500">
+                <p className="text-grey-600 text-sm mb-4 line-clamp-2">{post.content}</p>
+                <div className="flex justify-between items-center text-xs text-grey-500">
                   <span>{post.category}</span>
                   <time>{new Date(post.created_at || "").toLocaleDateString()}</time>
                   <PostLike
@@ -111,8 +111,8 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
               </div>
               <div className="w-[238px]  p-2">
                 <h3 className="text-lg font-semibold mb-2 truncate">{post.title}</h3>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">{post.content}</p>
-                <div className="flex justify-between items-center text-xs text-gray-500">
+                <p className="text-grey-600 text-sm mb-4 line-clamp-2">{post.content}</p>
+                <div className="flex justify-between items-center text-xs text-grey-500">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 29" fill="none">
                     <path
                       d="M9 0.199951C4.02429 0.199951 0 3.62715 0 9.19995C0 16.76 9 28.9999 9 28.9999C9 28.9999 18 16.76 18 9.19995C18 3.62715 13.9757 0.199951 9 0.199951Z"

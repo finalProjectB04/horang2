@@ -72,7 +72,7 @@ const Profile: React.FC = () => {
         <div className="relative cursor-pointer my-5" onClick={() => router.push("location")}>
           <div className="w-full h-[100px] relative">
             <ProfileCarousel />
-            <div className="absolute top-0 left-4 p-5 text-white font-extrabold text-lg pt-5 z-10 text-stroke-1 text-stroke-gray-900">
+            <div className="absolute top-0 left-4 p-5 text-white font-extrabold text-lg pt-5 z-10 text-stroke-1 text-stroke-grey-900">
               <p className="text-start mb-1">이런 여행지는 어떠신가요</p>
               <p className="">
                 주변 여행지 구경하러 가기 <span>&gt;</span>
@@ -114,7 +114,7 @@ const Profile: React.FC = () => {
         <div className="relative cursor-pointer" onClick={() => router.push("location")}>
           <div className="w-[467px] h-[131px] relative">
             <ProfileCarousel />
-            <div className="absolute top-1 left-4 p-5 text-white font-extrabold text-lg pt-6 z-10 text-stroke-1 text-stroke-gray-900">
+            <div className="absolute top-1 left-4 p-5 text-white font-extrabold text-lg pt-6 z-10 text-stroke-1 text-stroke-grey-900">
               <p className="text-start mb-5">이런 여행지는 어떠신가요</p>
               <p className="">
                 주변 여행지 구경하러 가기 <span>&gt;</span>

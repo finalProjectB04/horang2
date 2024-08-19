@@ -59,7 +59,7 @@ const ShareModal = ({ isOpen, onClose }: ModalProps) => {
         </button>
         <div className="text-center font-bold text-base mb-3 md:text-lg md:mb-4 lg:text-xl lg:mb-4">공유하기</div>
         <div className="flex items-center mb-3 md:mb-4 lg:mb-4">
-          <input type="text" value={copiedUrl} readOnly className="w-full px-3 py-2 border rounded-l-md bg-gray-100" />
+          <input type="text" value={copiedUrl} readOnly className="w-full px-3 py-2 border rounded-l-md bg-grey-100" />
           <button onClick={handleCopyClick} className="px-3 p-2 bg-primary-400 text-white rounded-md">
             {">>"}
           </button>

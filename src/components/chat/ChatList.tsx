@@ -114,7 +114,7 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
         </button>
         <div className="w-full min-w-[300px] flex flex-col overflow-y-auto">
           <div className="flex flex-col">
-            <div className="text-black sm:font-bold md:font-extrabold lg:font-extrabold sm:py-3 sm:text-2xl md:text-4xl lg:text-4xl sm:my-2 md:my-3 lg:my-4 ">
+            <div className="text-secondary-800 sm:font-bold md:font-extrabold lg:font-extrabold sm:py-3 sm:text-2xl md:text-4xl lg:text-4xl sm:my-2 md:my-3 lg:my-4 ">
               호랑이 목록
             </div>
             <input
@@ -131,12 +131,12 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
                 {Array.from({ length: 20 }).map((_, index) => (
                   <div
                     key={index}
-                    className="animate-pulse flex items-center space-x-4 p-4 border-b border-gray-200 lg:h-[170px]"
+                    className="animate-pulse flex items-center space-x-4 p-4 border-b border-grey-200 lg:h-[170px]"
                   >
-                    <div className="sm:h-10 lg:h-20 w-20 bg-gray-200 rounded-full" />
+                    <div className="sm:h-10 lg:h-20 w-20 bg-grey-200 rounded-full" />
                     <div className="flex-1 space-y-2">
-                      <div className="sm:h-5 lg:h-10 bg-gray-200 rounded" />
-                      <div className="sm:h-5 lg:h-10 bg-gray-200 rounded w-3/4" />
+                      <div className="sm:h-5 lg:h-10 bg-grey-200 rounded" />
+                      <div className="sm:h-5 lg:h-10 bg-grey-200 rounded w-3/4" />
                     </div>
                   </div>
                 ))}
@@ -162,13 +162,13 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
                     lastMessage={getLastMessage(user.id) || "서로 대화를 해보세요!"}
                   />
                 ) : (
-                  <div key={user.id} className="p-4 text-gray-500 text-center">
+                  <div key={user.id} className="p-4 text-grey-500 text-center">
                     사용자 별명이 없습니다
                   </div>
                 ),
               )
             ) : (
-              <div className="p-4 text-gray-500 text-center">검색 결과가 없습니다</div>
+              <div className="p-4 text-grey-500 text-center">검색 결과가 없습니다</div>
             )}
           </div>
         </div>

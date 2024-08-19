@@ -112,8 +112,8 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
               />
               <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-black/30 to-transparent pb-6">
                 <p className="text-lg font-bold text-yellow-300">{like.title}</p>
-                <p className="text-xs text-gray-200">{like.address}</p>
-                {like.tel && <p className="text-xs text-gray-200">{like.tel}</p>}
+                <p className="text-xs text-grey-200">{like.address}</p>
+                {like.tel && <p className="text-xs text-grey-200">{like.tel}</p>}
               </div>
               <div className="absolute inset-x-0 bottom-0 h-[10%] bg-white" />
             </SwiperSlide>
@@ -146,8 +146,8 @@ const MyPageCarousel = ({ carouselName }: MyPageCarouselProps) => {
               <div className="absolute inset-y-0 right-0 w-[12%] bg-white opacity-70"></div>
               <div className="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-black/30 to-transparent pb-16">
                 <p className="text-xl font-bold text-yellow-300">{like.title}</p>
-                <p className="text-base text-gray-200">{like.address}</p>
-                {like.tel && <p className="text-base text-gray-200">{like.tel}</p>}
+                <p className="text-base text-grey-200">{like.address}</p>
+                {like.tel && <p className="text-base text-grey-200">{like.tel}</p>}
               </div>
               <div className="absolute inset-x-0 bottom-0 h-[10%] bg-white" />
             </SwiperSlide>

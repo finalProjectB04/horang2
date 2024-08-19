@@ -41,7 +41,7 @@ export default function Message({ message, createdAt, previousCreatedAt, isFromM
             {isFromMe && <p className="flex items-end text-[10px] text-primary-600">{formatDateToHours(createdAt)}</p>}
             <div
               className={`w-fit max-w-[300px] mx-2 px-3 py-4 rounded-md ${
-                isFromMe ? "bg-primary-400 text-white" : "bg-gray-100 text-secondary-800"
+                isFromMe ? "bg-primary-400 text-white" : "bg-grey-100 text-secondary-800"
               }`}
             >
               <p>{message}</p>
@@ -60,7 +60,7 @@ export default function Message({ message, createdAt, previousCreatedAt, isFromM
             {isFromMe && <p className="flex items-end text-[10px] text-primary-600">{formatDateToHours(createdAt)}</p>}
             <div
               className={`w-fit max-w-[250px] mx-2 px-3 py-4 rounded-md ${
-                isFromMe ? "bg-primary-200 text-white" : "bg-gray-100 text-gray-600"
+                isFromMe ? "bg-primary-200 text-white" : "bg-grey-100 text-grey-600"
               }`}
             >
               <p className="text-xs">{message}</p>

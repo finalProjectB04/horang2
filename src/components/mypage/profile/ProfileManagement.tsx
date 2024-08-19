@@ -84,7 +84,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
             width={96}
             height={96}
             layout="fixed"
-            className="rounded-full border-2 border-gray-300 object-cover h-24"
+            className="rounded-full border-2 border-grey-300 object-cover h-24"
           />
           <input type="file" id="profileImage" className="hidden" accept="image/*" onChange={handleImageChange} />
           <div className="absolute bottom-0 right-0 mb-0 mr-0">
@@ -98,7 +98,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
           </div>
         </div>
         <form>
-          <label htmlFor="nickname" className="block text-sm text-start mt-4 font-medium text-gray-700">
+          <label htmlFor="nickname" className="block text-sm text-start mt-4 font-medium text-grey-700">
             새로운 닉네임
           </label>
           <input
@@ -106,7 +106,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
             type="text"
             value={nickname!}
             onChange={(event) => setNickname(event.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-bl text-black"
+            className="mt-1 block w-full px-3 py-2 border border-grey-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-bl text-black"
             required
           />
 
@@ -120,7 +120,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
 
           {showPasswordFields && (
             <>
-              <label htmlFor="password" className="block text-sm text-start mt-4 font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm text-start mt-4 font-medium text-grey-700">
                 새로운 비밀번호
               </label>
               <input
@@ -128,10 +128,10 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+                className="mt-1 block w-full px-3 py-2 border border-grey-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                 required
               />
-              <label htmlFor="confirmPassword" className="block text-sm text-start mt-4 font-medium text-gray-700">
+              <label htmlFor="confirmPassword" className="block text-sm text-start mt-4 font-medium text-grey-700">
                 비밀번호 확인
               </label>
               <input
@@ -139,7 +139,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
                 type="password"
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+                className="mt-1 block w-full px-3 py-2 border border-grey-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
                 required
               />
             </>
@@ -155,7 +155,7 @@ const ProfileManagement: React.FC<ProfileManagementProps> = ({ onClick }) => {
           </button>
           <button
             type="button"
-            className="px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="px-4 py-2 border border-grey-300 text-sm font-medium rounded-md text-grey-700 bg-white hover:bg-grey-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             onClick={onClick}
           >
             닫기

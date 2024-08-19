@@ -114,34 +114,34 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
       <div className="relative">
         <button
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className="text-black hover:text-gray-400 cursor-pointer block"
+          className="text-black hover:text-grey-400 cursor-pointer block"
         >
           여행지 추천
         </button>
         {dropdownOpen && (
           <div className="absolute left-0 bg-white shadow-lg p-2 rounded-lg flex space-x-4">
             <Link href="/travel">
-              <span className="block text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+              <span className="block text-black hover:text-grey-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
                 추천 여행지
               </span>
             </Link>
             <Link href="/hotel">
-              <span className="block text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+              <span className="block text-black hover:text-grey-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
                 숙소
               </span>
             </Link>
             <Link href="/leports">
-              <span className="block text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+              <span className="block text-black hover:text-grey-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
                 놀거리
               </span>
             </Link>
             <Link href="/restaurant">
-              <span className="block text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+              <span className="block text-black hover:text-grey-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
                 음식점
               </span>
             </Link>
             <Link href="/festival">
-              <span className="block text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+              <span className="block text-black hover:text-grey-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
                 축제 및 행사
               </span>
             </Link>
@@ -150,33 +150,33 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
       </div>
 
       <Link href="/intro">
-        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+        <span className="text-black hover:text-grey-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
           호랑 소개
         </span>
       </Link>
       <Link href="/location">
-        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+        <span className="text-black hover:text-grey-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
           내 근처 여행지
         </span>
       </Link>
       <Link href="/mypage" onClick={(event) => handleProtectedNavigation("/mypage")(event)}>
-        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
+        <span className="text-black hover:text-grey-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
           나의 공간
         </span>
       </Link>
 
       <div className="space-y-2">
         {userId ? (
-          <button onClick={onLogoutClick} className="text-blue-600 hover:text-gray-400 cursor-pointer block">
+          <button onClick={onLogoutClick} className="text-blue-600 hover:text-grey-400 cursor-pointer block">
             로그아웃
           </button>
         ) : (
           <>
             <Link href="/signin" onClick={toggleMenu}>
-              <span className="text-black hover:text-gray-400 cursor-pointer block">로그인</span>
+              <span className="text-black hover:text-grey-400 cursor-pointer block">로그인</span>
             </Link>
             <Link href="/signup" onClick={toggleMenu}>
-              <span className="text-black hover:text-gray-400 cursor-pointer block" style={{ marginTop: "8px" }}>
+              <span className="text-black hover:text-grey-400 cursor-pointer block" style={{ marginTop: "8px" }}>
                 회원가입
               </span>
             </Link>

@@ -60,7 +60,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({
       </div>
 
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 lg:hidden" onClick={closeMenuOnClickOutside}>
+        <div className="fixed inset-0 bg-grey-800 bg-opacity-75 z-50 lg:hidden" onClick={closeMenuOnClickOutside}>
           <MenuList toggleMenu={toggleMenu} userId={userId} handleLogout={handleLogout} />
         </div>
       )}

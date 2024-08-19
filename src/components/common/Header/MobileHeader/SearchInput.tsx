@@ -32,7 +32,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         type="text"
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}
-        className="bg-[#062799] border border-gray-300 rounded-lg px-4 py-2 text-white w-64"
+        className="bg-[#062799] border border-grey-300 rounded-lg px-4 py-2 text-white w-64"
         placeholder="검색어를 입력해주세요"
         autoFocus
       />

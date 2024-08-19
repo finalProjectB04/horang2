@@ -12,9 +12,9 @@ import React, { useEffect, useState } from "react";
 
 const Skeleton = () => (
   <div className="flex flex-col animate-pulse">
-    <div className="h-[110px] bg-gray-200 rounded-lg mb-2"></div>
-    <div className="h-4 bg-gray-200 rounded mb-1"></div>
-    <div className="h-4 bg-gray-200 rounded"></div>
+    <div className="h-[110px] bg-grey-200 rounded-lg mb-2"></div>
+    <div className="h-4 bg-grey-200 rounded mb-1"></div>
+    <div className="h-4 bg-grey-200 rounded"></div>
   </div>
 );
 
