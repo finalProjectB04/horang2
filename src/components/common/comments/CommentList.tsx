@@ -64,7 +64,7 @@ const CommentList: React.FC<{
   };
 
   return (
-    <div>
+    <div className="comment-list-container ">
       <div className="mb-4 mt-4 rounded-lg">
         {currentComments.length > 0 ? (
           <ul className="space-y-4">
@@ -79,23 +79,27 @@ const CommentList: React.FC<{
 
       {totalPages > 1 && (
         <div className="flex justify-center items-center mt-4 space-x-4">
-          <button
-            onClick={handlePreviousPage}
-            className="px-4 py-2 bg-gray-200 rounded-lg"
-            style={{ visibility: currentPage === 1 ? "hidden" : "visible" }}
-          >
-            이전
-          </button>
+          <div className="w-[100px] flex justify-center">
+            <button
+              onClick={handlePreviousPage}
+              className="px-4 py-2 bg-gray-200 rounded-lg"
+              style={{ visibility: currentPage === 1 ? "hidden" : "visible" }}
+            >
+              이전
+            </button>
+          </div>
           <span className="text-lg">
             {currentPage} / {totalPages}
           </span>
-          <button
-            onClick={handleNextPage}
-            className="px-4 py-2 bg-gray-200 rounded-lg"
-            style={{ visibility: currentPage === totalPages ? "hidden" : "visible" }}
-          >
-            다음
-          </button>
+          <div className="w-[100px] flex justify-center">
+            <button
+              onClick={handleNextPage}
+              className="px-4 py-2 bg-gray-200 rounded-lg"
+              style={{ visibility: currentPage === totalPages ? "hidden" : "visible" }}
+            >
+              다음
+            </button>
+          </div>
         </div>
       )}
     </div>

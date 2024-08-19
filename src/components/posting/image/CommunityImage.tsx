@@ -5,7 +5,7 @@ export const CommunityImage = () => {
   return (
     <>
       <div className="flex flex-col justify-center items-center">
-        <div className="relative w-[1920px] h-[900px] hidden lg:block">
+        <div className="relative w-[1280px] h-[600px] hidden lg:block">
           <Image
             src="/assets/images/community.png"
             alt="background"
