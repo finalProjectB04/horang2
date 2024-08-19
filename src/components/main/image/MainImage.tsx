@@ -12,7 +12,7 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
       <div className="hidden lg:block">
         <div className="relative w-[1280px] h-[600px]">
           <Image
-            src="/assets/images/ex6.png"
+            src="/assets/images/mainBanner.png"
             alt="background"
             layout="fill"
             objectFit="cover"
