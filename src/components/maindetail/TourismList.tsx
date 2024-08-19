@@ -12,6 +12,7 @@ import { BackgroundImage } from "./BackgroundImage";
 import { SkeletonCard } from "./SkeletonCard";
 import { NoResultsFound } from "./NoResultsFound";
 import { useUserStore } from "@/zustand/userStore";
+import Control from "../main/Control";
 interface TourismListProps {
   contentTypeId: number;
   title: string;
@@ -138,6 +139,7 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
           />
         </div>
       </BackgroundImage>
+      <Control />
       <div className="flex my-6 gap-3 mx-auto max-w-[960px] mt-10">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <g clip-path="url(#clip0_1893_11600)">
@@ -154,6 +156,7 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
         </svg>
         <h3 className="text-[19px] font-bold">{title}</h3>
       </div>
+
       <div className="mx-auto py-8 max-w-[960px] flex flex-col items-center justify-center ">
         <div className="flex flex-wrap gap-[2px]   lg:gap-2 lg:mb-4">
           {KOREAN_CONSONANTS.map((consonant) => (
@@ -196,7 +199,6 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
           </div>
         )}
       </div>
-
       {isRegionSelectorOpen && (
         <RegionSelector onSelect={handleRegionSelect} onClose={() => setIsRegionSelectorOpen(false)} />
       )}

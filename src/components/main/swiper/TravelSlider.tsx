@@ -14,6 +14,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { A11y, Autoplay, Grid } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { SkeletonCard } from "@/components/maindetail/SkeletonCard";
+import TravelSwiperSkeleton from "./TravelSwiperSkeleton ";
 
 const supabase = createClient();
 
@@ -236,15 +238,7 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
     }
   }, [data, travel, userId]);
   if (isPending) {
-    return (
-      <Image
-        src="/assets/images/defaultLikeIcon.svg"
-        alt={"Unlike"}
-        width={32}
-        height={32}
-        className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]"
-      />
-    );
+    return <TravelSwiperSkeleton />;
   }
 
   if (isError) {
@@ -260,7 +254,7 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
     <Swiper
       modules={isLgScreen ? [Autoplay, A11y] : [Grid, A11y, Autoplay]}
       spaceBetween={isLgScreen ? 40 : 20}
-      slidesPerView={isLgScreen ? 4 : 3}
+      slidesPerView={travel.length >= 4 ? 4 : travel.length}
       slidesPerGroup={isLgScreen ? 4 : undefined}
       grid={
         !isLgScreen

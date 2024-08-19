@@ -37,7 +37,7 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
     if (!travel) return [];
 
     const filtered: ApiInformation[] = travel.filter((item) =>
-      item.title.toLowerCase().includes(searchTerm.toLowerCase()),
+      item.addr1.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
     const shuffled: ApiInformation[] = [...filtered];
