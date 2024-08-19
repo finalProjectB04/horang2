@@ -1,5 +1,6 @@
 "use client";
-import { useEffect } from "react";
+import { useModal } from "@/context/modal.context";
+import React, { useEffect } from "react";
 
 interface KakaoMapProps {
   mapx: number;
@@ -9,6 +10,7 @@ interface KakaoMapProps {
 const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
   const longitude = mapx;
   const latitude = mapy;
+  const modal = useModal();
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -49,13 +51,27 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
             }
           });
         } else {
-          console.error("Map container not found");
+          modal.open({
+            title: "에러",
+            content: (
+              <div className="text-center">
+                <p>맵 컨테이너를 찾을수 없습니다.</p>
+              </div>
+            ),
+          });
         }
       });
     };
 
     script.onerror = () => {
-      console.error("Failed to load Kakao Maps script");
+      modal.open({
+        title: "에러",
+        content: (
+          <div className="text-center">
+            <p>카카오 맵 스크립트 로드 실패.</p>
+          </div>
+        ),
+      });
     };
 
     return () => {
@@ -75,4 +91,4 @@ const KakaoMap: React.FC<KakaoMapProps> = ({ mapx, mapy }) => {
   );
 };
 
-export default KakaoMap;
+export default React.memo(KakaoMap);

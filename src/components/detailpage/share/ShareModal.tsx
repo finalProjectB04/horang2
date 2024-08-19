@@ -2,7 +2,7 @@
 
 import { useModal } from "@/context/modal.context";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import FacebookShareButton from "./FacebookShareButton";
 import KakaoShareButton from "./KakaoShareButton";
 import LineShareButton from "./LineShareButton";
@@ -96,4 +96,4 @@ const ShareModal = ({ isOpen, onClose }: ModalProps) => {
   );
 };
 
-export default ShareModal;
+export default React.memo(ShareModal);

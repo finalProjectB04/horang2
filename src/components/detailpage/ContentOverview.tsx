@@ -1,4 +1,5 @@
 import useShowMore from "@/hooks/detailpage/useShowMore";
+import React from "react";
 
 interface ContentOverviewProps {
   overview: string;
@@ -49,4 +50,4 @@ const ContentOverview: React.FC<ContentOverviewProps> = ({ overview }) => {
   );
 };
 
-export default ContentOverview;
+export default React.memo(ContentOverview);
