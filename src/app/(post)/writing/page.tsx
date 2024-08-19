@@ -125,7 +125,7 @@ const Writing: React.FC = () => {
   }
 
   return (
-    <div className="w-[1440px] mx-auto mt-[300px]">
+    <div className="w-[1440px] mx-auto my-[300px]">
       <form onSubmit={handleSubmit} className="space-y-8">
         {previewUrls.length > 0 && (
           <div>

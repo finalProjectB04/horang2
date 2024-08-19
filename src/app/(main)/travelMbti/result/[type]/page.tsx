@@ -44,9 +44,9 @@ const TypeResultPage = () => {
           <div className="relative pb-16">
             <header className="absolute top-0 left-0 right-0 bg-white p-5 rounded-t-[40px] z-10">
               <h1 className="text-3xl sm:text-xl font-bold text-center">여행 MBTI 결과</h1>
-              <button onClick={() => router.back()} className="absolute top-4 left-4 p-2">
+              {/* <button onClick={() => router.back()} className="absolute top-4 left-4 p-2">
                 <img src="/assets/images/back.svg" alt="뒤로가기" className="w-5 h-5" />
-              </button>
+              </button> */}
             </header>
           </div>
 
@@ -60,10 +60,10 @@ const TypeResultPage = () => {
                   alt={result.title}
                   width={400}
                   height={400}
-                  style={{ width: "400px", height: "auto" }}
+                  style={{ width: "400px", height: "auto", borderRadius: "20px" }}
                 />
               ) : (
-                <div className="w-[400px] h-[400px] bg-grey-200">이미지 없음</div>
+                <div className="w-[400px] h-[400px] bg-grey-200">이미지 준비중입니다</div>
               )}
               <p className="mt-6 text-[16px] sm:text-[14px]">{result.description}</p>
             </div>

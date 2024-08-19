@@ -95,7 +95,7 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
         </button>
         <div className="w-full min-w-[300px] flex flex-col overflow-y-auto">
           <div className="flex">
-            <div className="text-black sm:font-bold md:font-extrabold lg:font-extrabold sm:py-3 sm:text-2xl md:text-4xl lg:text-4xl sm:my-2 md:my-3 lg:md-4">
+            <div className="text-black sm:font-bold md:font-extrabold lg:font-extrabold sm:py-3 sm:text-2xl md:text-4xl lg:text-4xl sm:my-2 md:my-3 lg:my-4">
               호랑이 목록
             </div>
           </div>
