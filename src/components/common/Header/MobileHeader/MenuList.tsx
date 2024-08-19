@@ -20,39 +20,57 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
   const { user_nickname, profile_url } = useUserStore();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleNavigation = (href: string) => (event: React.MouseEvent) => {
+  const handleNavigation = (href: string) => async (event: React.MouseEvent) => {
+    await router.push(href);
+    toggleMenu();
+  };
+
+  const handleProtectedNavigation = (href: string) => async (event: React.MouseEvent) => {
+    event.preventDefault();
+
     if (!userId) {
       event.preventDefault();
       router.push("/signin");
     } else if (href === "profile") {
       toggleModal("profile");
     } else {
-      router.push(href);
+      await router.push(href);
+    }
+    toggleMenu();
+  };
+
+  const handleModalOrRedirect = async (modalId: string) => {
+    if (!userId) {
+      await router.push("/signin");
+      toggleMenu();
+    } else {
+      toggleModal(modalId);
     }
   };
 
   const onLogoutClick = async () => {
+    if (!userId) return;
+
     try {
-      Cookies.remove("accessToken", { path: "/" });
-      handleLogout();
-      router.push("/");
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
+      toggleMenu();
+      const response = await fetch("/api/logout", {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        Cookies.remove("accessToken", { path: "/" });
+
+        handleLogout();
+
+        router.push("/");
+      }
+    } catch (error) {}
   };
 
   const buttons = [
-    { name: "내 정보 관리", onClick: handleNavigation("profile"), src: "/assets/images/edit_profile.svg" },
-    {
-      name: "대화 하기",
-      onClick: (event: React.MouseEvent) => handleNavigation("/chat")(event),
-      src: "/assets/images/chat.svg",
-    },
-    {
-      name: "나만의 여행",
-      onClick: (event: React.MouseEvent) => handleNavigation("/travelMbti")(event),
-      src: "/assets/images/my_travel.svg",
-    },
+    { name: "내 정보 관리", onClick: () => handleModalOrRedirect("profile"), src: "/assets/images/edit_profile.svg" },
+    { name: "대화 하기", onClick: handleProtectedNavigation("/chat"), src: "/assets/images/chat.svg" },
+    { name: "나만의 여행", onClick: handleProtectedNavigation("/travelMbti"), src: "/assets/images/my_travel.svg" },
     { name: "호랑이 모임", onClick: () => router.push("/community"), src: "/assets/images/community.svg" },
   ];
 
@@ -84,7 +102,7 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
                 {button.name}
               </p>
             </button>
-            {button.name === "내 정보 관리" && (
+            {button.name === "내 정보 관리" && userId && (
               <Modal id="profile">
                 <ProfileManagement onClick={() => toggleModal("profile")} />
               </Modal>
@@ -141,11 +159,8 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
           내 근처 여행지
         </span>
       </Link>
-      <Link href="/mypage">
-        <span
-          className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"
-          onClick={handleNavigation("/mypage")}
-        >
+      <Link href="/mypage" onClick={(event) => handleProtectedNavigation("/mypage")(event)}>
+        <span className="text-black hover:text-gray-400 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis">
           나의 공간
         </span>
       </Link>
@@ -157,10 +172,10 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
           </button>
         ) : (
           <>
-            <Link href="/signin">
+            <Link href="/signin" onClick={toggleMenu}>
               <span className="text-black hover:text-gray-400 cursor-pointer block">로그인</span>
             </Link>
-            <Link href="/signup">
+            <Link href="/signup" onClick={toggleMenu}>
               <span className="text-black hover:text-gray-400 cursor-pointer block" style={{ marginTop: "8px" }}>
                 회원가입
               </span>

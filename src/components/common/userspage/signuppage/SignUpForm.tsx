@@ -33,7 +33,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
           value={nickname}
           onChange={(event) => setNickname(event.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
+          placeholder="닉네임을 입력해주세요"
         />
       </div>
 
@@ -43,11 +43,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
         </label>
         <input
           id="email"
-          type="email"
+          type="text"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
+          placeholder="이메일을 입력해주세요"
         />
       </div>
 
@@ -61,7 +61,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
+          placeholder="비밀번호를 입력해주세요"
         />
       </div>
 
@@ -75,7 +75,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
           value={confirmPassword}
           onChange={(event) => setConfirmPassword(event.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
+          placeholder="비밀번호를 한번 더 입력해주세요"
         />
       </div>
 
