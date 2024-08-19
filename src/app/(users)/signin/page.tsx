@@ -74,9 +74,9 @@ const LoginPage = () => {
             <span className="text-gray-500 mx-4">OR</span>
             <div className="flex-1 border-t border-gray-300"></div>
           </div>
-          <SocialLoginButtons />
-          <SignInLink />
         </form>
+        <SocialLoginButtons />
+        <SignInLink />
       </div>
     </div>
   );
