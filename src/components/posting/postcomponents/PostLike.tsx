@@ -5,13 +5,24 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import React, { useCallback, useEffect } from "react";
 
+// 새로 정의한 인터페이스들
+interface PostLike {
+  post_id: string;
+  user_id: string;
+}
+
+interface PostLikeQueryData {
+  data: PostLike[];
+  userLike: boolean;
+}
+
 const DEFAULT_HEART = (
   <Image
     src="/assets/images/defaultLikeIcon.svg"
     alt="빈하트"
     width={48}
     height={32}
-    className=" w-5 h-5 mt-[7px] lg:w-[48px] lg:h-[48px] lg:mt-4"
+    className=" w-5 h-5 mt-[7px] lg:w-[30px] lg:h-[30px] lg:mt-2"
   />
 );
 const PUSHED_HEART = (
@@ -20,7 +31,7 @@ const PUSHED_HEART = (
     alt="하트"
     width={48}
     height={32}
-    className="w-5 h-5 mt-[7px] lg:w-[48px] lg:h-[48px] lg:mt-4"
+    className="w-5 h-5 mt-[7px] lg:w-[30px] lg:h-[30px] lg:mt-2"
   />
 );
 
@@ -46,10 +57,10 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
       const { data, error } = await supabase.from("Post_likes").select("*").eq("post_id", post_id);
       if (error) throw error;
       const userLike = !!data?.find((like) => like.user_id === user_id);
-      return { data: data || [], userLike };
+      return { data: data || [], userLike } as PostLikeQueryData;
     },
     enabled: !!post_id,
-    initialData: { data: [], userLike: false },
+    initialData: { data: [], userLike: false } as PostLikeQueryData,
   });
 
   useEffect(() => {
@@ -84,20 +95,20 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
         return;
       }
       await queryClient.cancelQueries({ queryKey: ["postLike", post_id] });
-      const previousLikes = queryClient.getQueryData(["postLike", post_id]);
-      queryClient.setQueryData(["postLike", post_id], (old: any) => {
+      const previousLikes = queryClient.getQueryData(["postLike", post_id]) as PostLikeQueryData | undefined;
+      queryClient.setQueryData(["postLike", post_id], (old: PostLikeQueryData | undefined) => {
         if (!old) return old;
         return {
           data: !old.userLike
             ? [...old.data, { post_id, user_id }]
-            : old.data.filter((like: any) => like.user_id !== user_id),
+            : old.data.filter((like: PostLike) => like.user_id !== user_id),
           userLike: !old.userLike,
         };
       });
       return { previousLikes };
     },
-    onError: (err, _, context: any) => {
-      if (context) {
+    onError: (err: Error, _: void, context: { previousLikes: PostLikeQueryData | undefined } | undefined) => {
+      if (context?.previousLikes) {
         queryClient.setQueryData(["postLike", post_id], context.previousLikes);
       }
       console.error("Error updating like:", err);
@@ -109,7 +120,6 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
       queryClient.invalidateQueries({ queryKey: ["postLike", post_id] });
     },
   });
-
   if (isLikesError) {
     console.error("Likes query error:", likesError);
     return <div>좋아요 정보를 불러오는 중 오류가 발생했습니다: {(likesError as Error).message}</div>;
@@ -127,7 +137,7 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
           }}
           disabled={!user_id}
         >
-          <div className="flex items-center justify-center ">
+          <div className=" flex-shrink-0 flex items-center justify-center ">
             <span>{getLikes?.userLike ? PUSHED_HEART : DEFAULT_HEART}</span>
             <span>{likeCount}</span>
           </div>

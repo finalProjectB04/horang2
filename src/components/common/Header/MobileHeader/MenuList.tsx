@@ -59,12 +59,8 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
         handleLogout();
 
         router.push("/");
-      } else {
-        console.error("Failed to log out");
       }
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
+    } catch (error) {}
   };
 
   const buttons = [
