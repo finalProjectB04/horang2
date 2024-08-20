@@ -6,7 +6,6 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (request: NextRequest, { params }: { params: { contentId: string } }) => {
   const { contentId } = params;
 
-  console.log("contentId:", contentId); // 디버깅을 위해 콘솔 로그 추가
   try {
     const response = await axios.get("https://apis.data.go.kr/B551011/KorService1/detailCommon1", {
       params: {
@@ -35,7 +34,6 @@ export const GET = async (request: NextRequest, { params }: { params: { contentI
       return NextResponse.json({ messasge: "데이타가 없습니다" });
     }
   } catch (error) {
-    console.error("Error fetching data:", error);
     return NextResponse.json({ message: "데이터 펫칭 실패" });
   }
 };
