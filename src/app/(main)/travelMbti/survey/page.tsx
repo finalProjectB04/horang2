@@ -52,7 +52,7 @@ const SurveyPage = () => {
           </div>
 
           <div className="pt-2 flex flex-col flex-1 p-4 overflow-auto">
-            <div className="w-full bg-grey-200  rounded-full my-2">
+            <div className="w-full bg-grey-200  rounded-full my-2 mt-10 sm:mt-2">
               <div
                 className="bg-primary-300 p-1 rounded-full"
                 style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
@@ -61,7 +61,7 @@ const SurveyPage = () => {
               </div>
             </div>
             {testStarted && resultType === null ? (
-              <div className="w-full text-cen ter">
+              <div className="w-full text-center">
                 <TravelMbtiQuest
                   question={questions[currentQuestion].question}
                   options={questions[currentQuestion].options}
@@ -71,7 +71,7 @@ const SurveyPage = () => {
                 />
               </div>
             ) : (
-              <div className="text-center">
+              <div className="text-center ">
                 <h2 className="text-[16px] font-semibold mb-4">결과를 확인하세요!</h2>
                 <p className="text-[14px]">결과 페이지로 자동 이동합니다...</p>
               </div>

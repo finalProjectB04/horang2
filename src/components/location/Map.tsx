@@ -26,8 +26,6 @@ const MapComponent: React.FC = () => {
   const [visibleSpots, setVisibleSpots] = useState<TouristSpot[]>([]);
   const [selectedSpot, setSelectedSpot] = useState<TouristSpot | null>(null);
   const [currentOverlay, setCurrentOverlay] = useState<kakao.maps.CustomOverlay | null>(null);
-
-  // 이전 지도 상태를 저장하기 위한 상태
   const [previousCenter, setPreviousCenter] = useState<kakao.maps.LatLng | null>(null);
   const [previousLevel, setPreviousLevel] = useState<number | null>(null);
 
@@ -140,7 +138,6 @@ const MapComponent: React.FC = () => {
       if (document.head.contains(script)) {
         document.head.removeChild(script);
       }
-      // Clean up map events and markers if necessary
       if (map) {
         markers.forEach((marker) => marker.setMap(null));
         setMarkers([]);
@@ -154,7 +151,6 @@ const MapComponent: React.FC = () => {
       map.setCenter(position);
       map.setLevel(4);
 
-      // 선택된 스팟의 인포윈도우 생성
       const infoWindowContent = `
       <a href="/detail/${selectedSpot.contentid}" class="info-window" style="padding: 10px; border-radius: 5px; background: white; border: 1px solid #ddd; display: flex; align-items: center; text-decoration: none;">
         <p style="font-size: 18px; font-weight: bold; margin-right: 5px; flex-grow: 1;">

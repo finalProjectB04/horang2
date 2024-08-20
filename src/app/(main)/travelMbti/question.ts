@@ -139,7 +139,7 @@ export const questions: Question[] = [
       { answer: "가성비 좋고 깔끔한 숙소를 찾아요", type: "cheap" },
       { answer: "조용하고 아늑한 숙소가 좋아요", type: "homebody" },
       { answer: "숙소는 상관없어! 잠만 자는 곳이에요", type: "wanderer" },
-      { answer: "어쨌든 맛있는 조식이 있어야해요", type: "foodie" },
+      { answer: "무조건 맛있는 조식이 있어야해요", type: "foodie" },
     ],
   },
   {

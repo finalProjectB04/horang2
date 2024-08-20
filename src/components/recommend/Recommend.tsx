@@ -42,7 +42,7 @@ const Recommend: React.FC<RecommendProps> = ({ data, MBTIResult }) => {
                 className="text-center font-medium"
                 style={{ maxWidth: "120px", whiteSpace: "normal", overflow: "hidden", textOverflow: "ellipsis" }}
               >
-                {item.title}
+                {item?.title}
               </p>
             </li>
           ))}

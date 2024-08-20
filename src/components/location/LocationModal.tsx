@@ -7,7 +7,6 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onAgree }) => {
-  // props를 출력
   console.log("Modal Props:", { isOpen, onClose, onAgree });
 
   if (!isOpen) return null;

@@ -1,6 +1,7 @@
 export const results: { [key: string]: { title: string; image?: string | undefined; description: string } } = {
   luxury: {
     title: "놀부 호랑이",
+    image: "/assets/images/travelMbtis/luxury.png",
     description: `호랑이들 중 가장 호화로운 여행을 선호하는 놀부 호랑이는 세상에서 가장 럭셔리한 호텔로 여행을 떠납니다.
     모든 것이 완벽하게 준비된 5성급 호텔에서 최고급 스파를 경험하고, 고급 식당에서 미식을 즐기며, 전용 수영장에서 여유로운 시간을 보냅니다.
     저녁에는 전용 요트에서 별빛 아래의 디너를 즐기며, 호화로운 여행을 만끽합니다. 놀부 호랑이는 지친 일상에서 벗어나 호화로운 여행으로 새 힘을 얻습니다.
@@ -39,6 +40,7 @@ export const results: { [key: string]: { title: string; image?: string | undefin
   },
   foodie: {
     title: "식도락 호랑이",
+    image: "/assets/images/travelMbtis/foodie.png",
     description: `식도락 호랑이는 각종 음식점을 탐방하는 것을 주된 목표로 삼습니다. 미식의 도시에서 유명한 레스토랑과 길거리 음식을 찾아다니며, 지역 특산물과 다양한 요리를 맛봅니다.
       매일 저녁 새로운 음식과 맛집을 발견하며 미식의 즐거움을 만끽합니다.
       유명 셰프가 운영하는 레스토랑에서의 디너와 지역 시장에서의 길거리 음식은 그의 여행에 풍미를 더합니다.
@@ -68,6 +70,7 @@ export const results: { [key: string]: { title: string; image?: string | undefin
   },
   cityTraveler: {
     title: "도시여행자형 호랑이",
+    image: "/assets/images/travelMbtis/cityTraveler.png",
     description: `도시여행자형 호랑이는 현대적이고 도시적인 여행지를 선호합니다. 그는 대도시에서 최신 트렌드를 따르는 쇼핑과 다양한 문화 행사를 즐깁니다.
       저녁에는 유명한 루프탑 바에서 도시의 야경을 감상하며 여행지를 만끽합니다. 도시여행자형 호랑이는 도시의 에너지를 체험하며 여행을 즐깁니다.
       그는 다양한 문화적 체험과 각 도시의 현대적 요소를 통해 여행의 매력을 발견합니다. 대도시의 역동적인 분위기와 다양한 오락거리는 그의 여행을 더욱 풍부하게 만듭니다.`,
