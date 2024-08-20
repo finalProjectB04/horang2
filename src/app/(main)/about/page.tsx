@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingPage from "@/app/loading";
 import CategorySelector from "@/components/posting/postcomponents/CategorySelector";
 import PostGrid from "@/components/posting/postcomponents/PostGrid";
 import { SortOrder } from "@/components/posting/postcomponents/SortSelector";
@@ -30,7 +31,7 @@ const AboutPage = () => {
   };
 
   if (isPending) {
-    return <div className="text-center py-10">로딩중...</div>;
+    return <LoadingPage />;
   }
 
   if (isError) {
