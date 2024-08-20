@@ -4,7 +4,6 @@ import { useModal } from "@/context/modal.context";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import FacebookShareButton from "./FacebookShareButton";
-import InstagramShareButton from "./InstaShareButton";
 import KakaoShareButton from "./KakaoShareButton";
 import LineShareButton from "./LineShareButton";
 import TwitterShareButton from "./TwitterShareButton";
@@ -91,7 +90,6 @@ const ShareModal = ({ isOpen, onClose }: ModalProps) => {
           <TwitterShareButton url={url} text={text} />
           <WhatsAppShareButton text={text} url={url} />
           <LineShareButton id={params.contentId} />
-          <InstagramShareButton url={url} text={text} />
         </div>
       </div>
     </div>
