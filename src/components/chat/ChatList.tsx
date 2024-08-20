@@ -121,7 +121,7 @@ const ChatList = ({ loggedInUser }: loggedInUserProps) => {
               type="text"
               placeholder="호랑이 이름을 입력하세요"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(event) => setSearchTerm(event.target.value)}
               className="border p-2 mb-4 border-primary-100 rounded-[20px]"
             />
           </div>
