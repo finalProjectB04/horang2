@@ -1,24 +1,21 @@
-"use Client";
+"use client";
 
-import { useModal } from "@/context/modal.context";
-import { useLikes } from "@/hooks/detailpage/useLikes";
-import { Likes } from "@/types/Likes.types";
 import { ApiInformation } from "@/types/Main";
-import { createClient } from "@/utils/supabase/client";
-import { useUserStore } from "@/zustand/userStore";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { convertToHttps } from "@/utils/convertToHttps";
-import { useCallback, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { A11y, Autoplay, Grid } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { SkeletonCard } from "@/components/maindetail/SkeletonCard";
 import TravelSwiperSkeleton from "./TravelSwiperSkeleton ";
-
-const supabase = createClient();
-
+import SwiperCore from "swiper";
+import { useCallback, useEffect, useState } from "react";
+import { Likes } from "@/types/Likes.types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useModal } from "@/context/modal.context";
+import { useUserStore } from "@/zustand/userStore";
+import { useLikes } from "@/hooks/detailpage/useLikes";
+import { createClient } from "@/utils/supabase/client";
 interface MainTravelSliderProps {
   travel: ApiInformation[];
 }
@@ -27,14 +24,15 @@ interface ContextType {
 }
 
 export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) => {
-  const [likedStates, setLikedStates] = useState<Record<string, boolean>>({});
   const isLgScreen = useMediaQuery({ minWidth: 1024 });
+  const [swiper, setSwiper] = useState<SwiperCore | null>(null);
   const router = useRouter();
+  const supabase = createClient();
   const queryClient = useQueryClient();
   const { id: userId } = useUserStore();
   const modal = useModal();
   const item = travel[0] as ApiInformation;
-
+  const [likedStates, setLikedStates] = useState<Record<string, boolean>>({});
   const { isPending, isError, data } = useLikes(item.contentid, userId);
 
   const deleteMutation = useMutation({
@@ -228,6 +226,11 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
   );
 
   useEffect(() => {
+    if (swiper) {
+      swiper.update();
+    }
+  }, [isLgScreen, swiper]);
+  useEffect(() => {
     if (data) {
       const newLikedStates = travel.reduce((acc, item) => {
         const result = data.find((like) => like.user_id === userId && like.content_id === item.contentid);
@@ -252,35 +255,29 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
 
   return (
     <Swiper
-      modules={isLgScreen ? [Autoplay, A11y] : [Grid, A11y, Autoplay]}
-      spaceBetween={isLgScreen ? 40 : 20}
-      slidesPerView={travel.length >= 4 ? 4 : travel.length}
-      slidesPerGroup={isLgScreen ? 4 : undefined}
-      grid={
-        !isLgScreen
-          ? {
-              rows: 2,
-              fill: "row",
-            }
-          : undefined
-      }
-      autoplay={{ delay: 5000, disableOnInteraction: false }}
+      modules={[Grid, A11y, Autoplay]}
+      spaceBetween={20}
+      onSwiper={setSwiper}
+      breakpoints={{
+        320: {
+          slidesPerView: Math.min(3, travel.length),
+          grid: {
+            rows: 2,
+            fill: "row",
+          },
+        },
+        1024: {
+          slidesPerView: Math.min(4, travel.length),
+          slidesPerGroup: Math.min(4, travel.length),
+          grid: undefined,
+        },
+      }}
+      autoplay={travel.length > 4 ? { delay: 5000, disableOnInteraction: false } : false}
       className={`w-full ${
         isLgScreen
           ? "h-[280px]"
-          : "rounded-[8px] lg:h-full lg:w-[708px] h-[346px] flex flex-col items-start gap-3 self-stretch"
+          : "rounded-[8px] lg:h-full lg:w-[708px] h-[346px] flex flex-col items-start self-stretch"
       }`}
-      observer={!isLgScreen}
-      observeParents={!isLgScreen}
-      onInit={
-        !isLgScreen
-          ? (swiper) => {
-              setTimeout(() => {
-                swiper.update();
-              }, 0);
-            }
-          : undefined
-      }
     >
       {travel.map((item) => (
         <SwiperSlide key={item.contentid} className={isLgScreen ? "w-[220px] h-[280px]" : "h-[166px]"}>
@@ -319,7 +316,6 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
                       alt={likedStates[item.contentid] ? "Unlike" : "Like"}
                       width={32}
                       height={32}
-                      className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]"
                     />
                   </button>
                 </div>
