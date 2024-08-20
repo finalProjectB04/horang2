@@ -59,12 +59,15 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
 
       if (response.ok) {
         Cookies.remove("accessToken", { path: "/" });
+        Cookies.remove("user-storage"); // 소셜 로그인 상태 쿠키도 제거
 
         handleLogout();
 
         router.push("/");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   const buttons = [
