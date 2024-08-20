@@ -12,6 +12,7 @@ const MidImage = () => {
       </div>
     </>
   );
+  ``;
 };
 
 export default MidImage;

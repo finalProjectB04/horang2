@@ -1,6 +1,5 @@
 import { ModalProvider } from "@/context/modal.context";
 import QueryProvider from "@/provider/QueryProvider";
-import RecoilProvider from "@/provider/RecoilProvider";
 import type { Metadata } from "next";
 import Head from "next/head";
 import Script from "next/script";
@@ -32,19 +31,16 @@ export default function RootLayout({
         <meta property="og:url" content={process.env.NEXT_PUBLIC_BASE_URL} />
         <link rel="stylesheet" href="assets/fonts/pretendard.css" />
       </Head>
-
-      <RecoilProvider>
-        <QueryProvider>
-          <ModalProvider>
-            <body className="font-sans mt-[84px]">
-              <ClientHeader />
-              {children}
-              <Script src="https://developers.kakao.com/sdk/js/kakao.min.js" />
-            </body>
-          </ModalProvider>
-          <ScrollToTopButton />
-        </QueryProvider>
-      </RecoilProvider>
+      <QueryProvider>
+        <ModalProvider>
+          <body className="font-sans mt-[84px]">
+            <ClientHeader />
+            {children}
+            <Script src="https://developers.kakao.com/sdk/js/kakao.min.js" />
+          </body>
+        </ModalProvider>
+        <ScrollToTopButton />
+      </QueryProvider>
     </html>
   );
 }

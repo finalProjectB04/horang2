@@ -208,7 +208,7 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
                 alt={liked ? "Unlike" : "Like"}
                 width={32}
                 height={32}
-                className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]"
+                className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px] opacity-70"
               />
             </button>
           </div>

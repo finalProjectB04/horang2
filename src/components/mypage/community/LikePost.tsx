@@ -60,8 +60,10 @@ const LikePost = () => {
             Array.from({ length: 4 }).map((_, index) => <Skeleton key={index} />)
           ) : getLikePostsQuery.data?.length === 0 ? (
             <div className="col-span-full text-center py-10">
-              <p className="text-lg font-bold">아직 좋아요한 게시글이 없습니다.</p>
-              <p className="text-sm text-grey-400">호랑이 모임에서 도움이 될 만한 글을 찾아보세요!</p>
+              <p className="sm:text-sm md:text-base lg:text-base font-bold">아직 좋아요한 게시글이 없습니다.</p>
+              <p className="sm:text-xs md:text-sm lg:text-sm text-grey-400">
+                호랑이 모임에서 도움이 될 만한 글을 찾아보세요!
+              </p>
             </div>
           ) : (
             getLikePostsQuery.data?.map((post) => {

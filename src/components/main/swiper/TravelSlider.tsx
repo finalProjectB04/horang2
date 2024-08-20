@@ -308,7 +308,7 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
                     data-contentid={item.contentid}
                     onClick={(event) => handleLikeButton(event)}
                     disabled={!userId}
-                    className="absolute top-2 right-2"
+                    className="absolute top-2 right-2 opacity-70"
                   >
                     <Image
                       src={

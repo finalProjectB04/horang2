@@ -61,8 +61,10 @@ const MyPost = () => {
             Array.from({ length: 4 }).map((_, index) => <Skeleton key={index} />)
           ) : getPostsQuery.data?.length === 0 ? (
             <div className="col-span-full text-center py-10">
-              <p className="text-lg font-bold">아직 작성한 게시글이 없습니다.</p>
-              <p className="text-sm text-grey-400">국내 여행에 대한 생생한 정보를 호랑객과 나눠보세요!</p>
+              <p className="sm:text-sm md:text-base lg:text-base font-bold">아직 작성한 게시글이 없습니다.</p>
+              <p className="sm:text-xs md:text-sm lg:text-sm text-grey-400">
+                국내 여행에 대한 생생한 정보를 호랑객과 나눠보세요!
+              </p>
             </div>
           ) : (
             getPostsQuery.data?.map((post) => {
