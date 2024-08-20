@@ -29,14 +29,14 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm,
         onChange={(event) => setSearchTerm(event.target.value)}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className="w-full p-3 md:p-4 pl-24 text-base md:text-lg bg-black bg-opacity-70 text-white placeholder-gray-400 border-2 border-gray-600 rounded-full shadow-lg focus:outline-none focus:border-orange-500 transition duration-300 ease-in-out"
+        className="w-full p-3 md:p-4 pl-24 text-base md:text-lg bg-black bg-opacity-70 text-white placeholder-grey-400 border-2 border-grey-600 rounded-full shadow-lg focus:outline-none focus:border-orange-500 transition duration-300 ease-in-out"
       />
       <button
         onClick={(e) => {
           e.stopPropagation();
           onRegionSelectorOpen();
         }}
-        className="absolute left-2 top-1/2 transform -translate-y-1/2 px-4 py-1 text-sm bg-gray-700 text-gray-300 rounded-full hover:bg-gray-600 transition duration-300 ease-in-out"
+        className="absolute left-2 top-1/2 transform -translate-y-1/2 px-4 py-1 text-sm bg-grey-700 text-grey-300 rounded-full hover:bg-grey-600 transition duration-300 ease-in-out"
       >
         시/군/구
       </button>
@@ -46,7 +46,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm,
             e.stopPropagation();
             setSearchTerm("");
           }}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-grey-400 hover:text-grey-200"
         >
           ✕
         </button>

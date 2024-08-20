@@ -109,7 +109,7 @@ const SignUpPage = () => {
 
   return (
     <div className="flex items-center justify-center w-full h-screen bg-cover bg-center bg-[url('/assets/images/backgrounds/backgrounds.svg')] sm:bg-[url('/assets/images/backgrounds/m_signup.png')]">
-      <div className="bg-white p-8 rounded-[40px] border border-gray-300 w-full max-w-[503px] sm:max-w-[327px]">
+      <div className="bg-white p-8 rounded-[40px] border border-grey-300 w-full max-w-[503px] sm:max-w-[327px]">
         <h1 className="text-2xl font-bold mb-6 text-center">회원가입</h1>
         <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-[401px] mx-auto sm:max-w-[280px]">
           <SignUpForm
@@ -124,9 +124,9 @@ const SignUpPage = () => {
             handleSignUp={handleSignUp}
           />
           <div className="flex items-center justify-between mt-4 w-full max-w-[280px] mx-auto">
-            <div className="flex-1 border-t border-gray-300"></div>
-            <span className="text-gray-500 mx-4">OR</span>
-            <div className="flex-1 border-t border-gray-300"></div>
+            <div className="flex-1 border-t border-grey-300"></div>
+            <span className="text-grey-500 mx-4">OR</span>
+            <div className="flex-1 border-t border-grey-300"></div>
           </div>
         </form>
         <SocialLoginButtons />

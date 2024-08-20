@@ -169,7 +169,7 @@ const ReplyItem: React.FC<{
             <p className="font-semibold" style={{ display: "inline-block", marginRight: "10px" }}>
               {reply.user_nickname}
             </p>
-            <p className="text-sm text-gray-500" style={{ marginTop: "5px" }}>
+            <p className="text-sm text-grey-500" style={{ marginTop: "5px" }}>
               {timeAgo.format(new Date(reply.created_at))}
             </p>
             {reply.user_id === userId && (
@@ -198,7 +198,7 @@ const ReplyItem: React.FC<{
               </div>
             )}
           </div>
-          <p className="mt-2 text-gray-800 text-sm" style={{ marginLeft: "35px" }}>
+          <p className="mt-2 text-grey-800 text-sm" style={{ marginLeft: "35px" }}>
             {reply.content}
           </p>
         </div>

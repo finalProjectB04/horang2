@@ -36,7 +36,7 @@ const TypeResultPage = () => {
 
   return (
     <div
-      className="w-full h-screen bg-cover bg-center relative"
+      className="w-full h-[calc(100vh-84px)] bg-cover bg-center relative"
       style={{ backgroundImage: "url(/assets/images/backgrounds/backgrounds.svg)" }}
     >
       <div className="flex justify-center items-start h-full py-10 px-4">
@@ -50,12 +50,13 @@ const TypeResultPage = () => {
             </header>
           </div>
 
-          <div className="pt-8 flex flex-col flex-1 p-4 overflow-auto">
+          <div className="pt-8 flex flex-col flex-1 p-4 overflow-auto hidden-scroll">
             <div className="flex flex-col text-center mb-6 justify-center items-center">
               <h2 className="text-3xl sm:text-xl font-semibold mb-2">당신의 유형은</h2>
               {/* <h3 className="text-3xl sm:text-2xl font-bold text-primary-600">{result.title}</h3> */}
               {result.image ? (
                 <Image
+                  className="rounded-[20px]"
                   src={result.image}
                   alt={result.title}
                   width={400}

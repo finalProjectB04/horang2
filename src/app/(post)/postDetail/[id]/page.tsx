@@ -237,7 +237,7 @@ const PostDetail: React.FC = () => {
           />
         </div>
       </div>
-      <div className="text-sm text-gray-500 mt-[30px] mb-[40px] sm:mt-[20px] sm:mb-[20px] sm:ml-4">
+      <div className="text-sm text-grey-500 mt-[30px] mb-[40px] sm:mt-[20px] sm:mb-[20px] sm:ml-4">
         작성일: {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Unknown"}
       </div>
       <div className="flex items-center mb-[40px] sm:mb-[20px] sm:ml-4">
@@ -296,7 +296,7 @@ const PostDetail: React.FC = () => {
           </button>
           <button
             onClick={() => setIsEditing(false)}
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+            className="bg-grey-500 text-white px-4 py-2 rounded hover:bg-grey-600"
           >
             취소
           </button>
@@ -312,14 +312,14 @@ const PostDetail: React.FC = () => {
               <div className="flex space-x-2 justify-end">
                 <button
                   onClick={handleEdit}
-                  className="text-sm text-gray-700 hover:text-black"
+                  className="text-sm text-grey-700 hover:text-black"
                   style={{ padding: "8px 12px" }}
                 >
                   수정
                 </button>
                 <button
                   onClick={handleDelete}
-                  className="text-sm text-gray-700 hover:text-black"
+                  className="text-sm text-grey-700 hover:text-black"
                   style={{ padding: "8px 12px" }}
                 >
                   삭제
