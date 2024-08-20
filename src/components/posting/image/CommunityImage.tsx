@@ -20,7 +20,7 @@ export const CommunityImage = () => {
             <Image
               src="/assets/images/post/Frame 11891.png"
               alt="background"
-              layout="fill"
+              fill
               objectFit="cover"
               className="object-cover"
             />

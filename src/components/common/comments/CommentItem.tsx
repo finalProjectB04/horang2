@@ -7,6 +7,7 @@ import Image from "next/image";
 import TimeAgo from "javascript-time-ago";
 import ko from "javascript-time-ago/locale/ko.json";
 import { useModal } from "@/context/modal.context";
+import useCustomConfirm from "@/hooks/useCustomConfirm";
 
 TimeAgo.addDefaultLocale(ko);
 const timeAgo = new TimeAgo("ko-KR");
@@ -41,6 +42,7 @@ const CommentItem: React.FC<{
 }> = ({ comment, userId, queryKey }) => {
   const queryClient = useQueryClient();
   const modal = useModal();
+  const confirm = useCustomConfirm(); // useCustomConfirm 훅 사용
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState<string>("");
   const [showReplies, setShowReplies] = useState<boolean>(false);
@@ -141,24 +143,16 @@ const CommentItem: React.FC<{
     updateCommentMutation.mutate({ commentId, newContent: editingContent });
   };
 
-  const handleDeleteComment = (commentId: string) => {
-    modal.open({
-      title: "삭제 확인",
-      content: (
-        <div className="text-center">
-          <p>정말로 이 댓글을 삭제하시겠습니까?</p>
-          <button
-            onClick={() => {
-              deleteCommentMutation.mutate(commentId);
-              modal.close();
-            }}
-            className="bg-red-500 text-white px-4 py-2 rounded mt-4"
-          >
-            삭제
-          </button>
-        </div>
-      ),
-    });
+  const handleDeleteComment = async (commentId: string) => {
+    const confirmed = await confirm("정말로 이 댓글을 삭제하시겠습니까?");
+    if (confirmed) {
+      deleteCommentMutation.mutate(commentId);
+    } else {
+      modal.open({
+        title: "취소됨",
+        content: <div className="text-center">댓글 삭제가 취소되었습니다.</div>,
+      });
+    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -233,7 +227,7 @@ const CommentItem: React.FC<{
   }, [replyPage, scrollToReplyForm]);
 
   return (
-    <li className="border border-primary-100 sm:border-none bg-white  rounded-lg w-full max-w-full lg:max-w-[1440px] mx-auto h-auto ">
+    <li className="border border-primary-100 sm:border-none bg-white rounded-lg w-full max-w-full lg:max-w-[1440px] mx-auto h-auto ">
       {editingCommentId === comment.post_comment_id ? (
         <div className="bg-white rounded-lg shadow ">
           <textarea
@@ -260,7 +254,7 @@ const CommentItem: React.FC<{
         </div>
       ) : (
         <div className="relative sm:p-2 ">
-          <div className="absolute top-[5px] left-[5px] sm:top-[2px] sm:left-[2px]">
+          <div className="absolute top-[10px] left-[10px] sm:top-[2px] sm:left-[2px]">
             <Image
               src="/assets/images/profile_ex.png"
               alt="유저 프로필 사진"

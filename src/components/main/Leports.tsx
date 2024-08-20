@@ -352,25 +352,13 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
           )}
           <div className="flex flex-col lg:gap-6 gap-3 lg:w-[708px] lg:h-full w-full">
             <div className="lg:h-[393px] lg:w-[492px]  h-[260px] w-[327px] relative rounded-[8px] overflow-hidden">
-              <Image
-                src="/assets/images/ex4.png"
-                alt="profile"
-                layout="fill"
-                objectFit="cover"
-                className="object-cover"
-              />
+              <Image src="/assets/images/ex4.png" alt="profile" fill objectFit="cover" className="object-cover" />
             </div>
             <div
               onClick={() => router.push("/travelMbti")}
               className="cursor-pointer lg:h-[94px] lg:w-[492px] h-[63px] w-[327px] relative rounded-[8px] overflow-hidden"
             >
-              <Image
-                src="/assets/images/ex5.png"
-                alt="profile"
-                layout="fill"
-                objectFit="contain"
-                className="object-contain"
-              />
+              <Image src="/assets/images/ex5.png" alt="profile" fill objectFit="contain" className="object-contain" />
             </div>
           </div>
         </div>

@@ -69,7 +69,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
                 <Image
                   src={getFirstImageUrl(post.files)}
                   alt={`Image for ${post.title}`}
-                  layout="fill"
+                  fill
                   objectFit="cover"
                   loading="lazy"
                 />
@@ -104,7 +104,7 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
                 <Image
                   src={getFirstImageUrl(post.files)}
                   alt={`Image for ${post.title}`}
-                  layout="fill"
+                  fill
                   objectFit="cover"
                   loading="lazy"
                 />

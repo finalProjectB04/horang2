@@ -51,7 +51,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
   });
 
   return (
-    <div className="mt-4 max-w-full lg:max-w-[1440px] mx-auto p-4 sm:p-6 lg:p-8">
+    <div className="mt-6 max-w-full lg:max-w-[1440px] mx-auto sm:p-4">
       <h2 className="text-2xl font-bold mb-4 sm:text-xl">댓글</h2>
       {isError ? (
         <div className="text-center py-10 text-red-500 sm:text-sm">댓글을 불러오는 중 오류가 발생했습니다.</div>
@@ -60,7 +60,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
           {userId ? (
             <AddComment postId={postId} queryKey={queryKey} />
           ) : (
-            <p className="sm:text-sm">로그인 후 댓글을 작성할 수 있습니다.</p>
+            <p className="text-gray-600 font-normal sm:text-sm">로그인 후 댓글을 작성할 수 있습니다.</p>
           )}
           <CommentList comments={comments} userId={userId} queryKey={queryKey} />
         </>

@@ -73,7 +73,7 @@ const CommentList: React.FC<{
             ))}
           </ul>
         ) : (
-          <p className="text-grey-600">댓글이 없습니다.</p>
+          <p className="text-grey-600 font-normal">댓글이 없습니다.</p>
         )}
       </div>
 
