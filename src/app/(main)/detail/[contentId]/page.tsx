@@ -8,16 +8,13 @@ import ContentOverview from "@/components/detailpage/ContentOverview";
 import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
 import DetailPageImage from "@/components/detailpage/DetailPageSwiper";
 import KakaoMap from "@/components/detailpage/KakaoMap";
-import ShareModal from "@/components/detailpage/share/ShareModal";
+import ShareButtonWithModal from "@/components/detailpage/share/ShareButtonWithModal";
 import { useContentId } from "@/hooks/detailpage/useContentId";
 import { useContentItem } from "@/hooks/detailpage/useContentItem";
 import { parseHTMLString } from "@/utils/detailpage/StringUtils";
-import Image from "next/image";
-import { useState } from "react";
 
 const DetailPage = () => {
   const contentId = useContentId();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: contentItemData, isPending: pendingContentItem, error: contentItemError } = useContentItem(contentId);
   const {
@@ -47,7 +44,7 @@ const DetailPage = () => {
   }
 
   return (
-    <main className="sm:w-full sm:max-w-full sm:mx-auto  md:max-w-[910px] md:mx-auto md:grid md:justify-items-center lg:max-w-[960px] lg:mx-auto lg:grid lg:justify-items-center">
+    <main className="sm:w-full sm:max-w-full sm:min-w-[375px] sm:mx-auto  md:max-w-[910px] md:mx-auto md:grid md:justify-items-center lg:max-w-[960px] lg:mx-auto lg:grid lg:justify-items-center">
       <DetailPageImage contentItemData={contentItemData} />
 
       <section className="flex justify-between items-center w-full lg:max-w-[1280px] lg:pt-[80px] md:flex md:items-center md:justify-between md:w-full md:max-w-[910px] md:mt-8 md:px-[32px] sm:px-[24px] sm:pt-[46px] sm:pb-[17px]">
@@ -65,17 +62,9 @@ const DetailPage = () => {
             addr1={addr1 || ""}
             tel={tel || ""}
           />
-          <button onClick={() => setIsModalOpen(true)}>
-            <Image
-              src="/assets/images/shareModal.svg"
-              alt="Custom Button Image"
-              width={32}
-              height={32}
-              className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]lg:mb-2"
-            />
-          </button>
+
           <div>
-            <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ShareButtonWithModal />
           </div>
         </div>
       </section>
