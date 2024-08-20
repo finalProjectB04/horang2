@@ -1,14 +1,14 @@
 "use client";
 
 import LoadingPage from "@/app/loading";
+import DetailPageAddComment from "@/components/detailpage/comment/DetailPageAddComment";
+import DetailPageCommentList from "@/components/detailpage/comment/DetailPageCommentList";
 import ContentDetail from "@/components/detailpage/ContentDetail";
 import ContentOverview from "@/components/detailpage/ContentOverview";
-import DetailPageAddComment from "@/components/detailpage/DetailPageAddComment";
-import DetailPageCommentList from "@/components/detailpage/DetailPageCommentList";
 import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
 import DetailPageImage from "@/components/detailpage/DetailPageSwiper";
 import KakaoMap from "@/components/detailpage/KakaoMap";
-import ShareModal from "@/components/detailpage/ShareModal";
+import ShareModal from "@/components/detailpage/share/ShareModal";
 import { useContentId } from "@/hooks/detailpage/useContentId";
 import { useContentItem } from "@/hooks/detailpage/useContentItem";
 import { parseHTMLString } from "@/utils/detailpage/StringUtils";

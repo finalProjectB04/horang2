@@ -10,7 +10,7 @@ const ResultPage = () => {
 
   return (
     <div
-      className="w-full h-screen bg-cover bg-center relative"
+      className="w-full h-[calc(100vh-84px)] bg-cover bg-center relative"
       style={{ backgroundImage: "url(/assets/images/backgrounds/backgrounds.svg)" }}
     >
       <div className="flex justify-center items-start h-full py-10 px-4">
@@ -25,7 +25,7 @@ const ResultPage = () => {
           </div>
 
           <div className="pt-2 flex flex-col flex-1 p-4 overflow-auto">
-            <div className="w-full space-y-4 overflow-auto">
+            <div className="w-full space-y-4 overflow-auto hidden-scroll">
               {/* 각 MBTI 유형에 대한 결과를 나열합니다. */}
               {Object.entries(results).map(([key, { title, description }]) => (
                 <Link

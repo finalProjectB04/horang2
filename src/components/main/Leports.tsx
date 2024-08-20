@@ -314,8 +314,8 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
                       {item.firstimage ? (
                         <Image src={convertToHttps(item.firstimage)} alt={item.title} layout="fill" objectFit="cover" />
                       ) : (
-                        <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-t-[8px]">
-                          <span className="text-gray-500 text-xs lg:text-sm">No Image</span>
+                        <div className="w-full h-full bg-grey-200 flex items-center justify-center rounded-t-[8px]">
+                          <span className="text-grey-500 text-xs lg:text-sm">No Image</span>
                         </div>
                       )}
                       <button
@@ -338,8 +338,8 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
                       </button>
                     </div>
                     <div className="bg-white w-full h-[56px] lg:h-[93.34px] overflow-hidden rounded-b-[8px] p-2 lg:px-[14px] lg:py-[10px] flex flex-col gap-1 lg:gap-[5px] absolute bottom-0 left-0 right-0 items-start">
-                      <h2 className="text-sm lg:text-base font-semibold text-gray-800 truncate w-full">{item.title}</h2>
-                      <p className="text-gray-600 text-xs lg:text-sm truncate w-full">
+                      <h2 className="text-sm lg:text-base font-semibold text-grey-800 truncate w-full">{item.title}</h2>
+                      <p className="text-grey-600 text-xs lg:text-sm truncate w-full">
                         {item.addr1 || "Address not available"}
                       </p>
                     </div>

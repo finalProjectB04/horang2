@@ -310,10 +310,10 @@ const CommentItem: React.FC<{
               </div>
             )}
           </div>
-          <div className="ml-16 mt-[6px] text-sm sm:ml-12 sm:mt-[4px] text-gray-500 sm:text-[12px]">
+          <div className="ml-16 mt-[6px] text-sm sm:ml-12 sm:mt-[4px] text-grey-500 sm:text-[12px]">
             {comment.created_at ? timeAgo.format(new Date(comment.created_at)) : "방금 전"}
           </div>
-          <p className="ml-16 mt-[20px] sm:ml-12 sm:mt-[10px] text-gray-800 text-base sm:text-[14px]">
+          <p className="ml-16 mt-[20px] sm:ml-12 sm:mt-[10px] text-grey-800 text-base sm:text-[14px]">
             {comment.comments}
           </p>
           <button
@@ -348,7 +348,7 @@ const CommentItem: React.FC<{
                         <button
                           onClick={handlePreviousReplyPage}
                           style={{ visibility: replyPage === 1 ? "hidden" : "visible" }}
-                          className="px-4 py-2 bg-gray-200 rounded-lg sm:px-2 sm:py-1"
+                          className="px-4 py-2 bg-grey-200 rounded-lg sm:px-2 sm:py-1"
                         >
                           이전
                         </button>
@@ -360,7 +360,7 @@ const CommentItem: React.FC<{
                         <button
                           onClick={handleNextReplyPage}
                           style={{ visibility: replyPage === totalReplyPages ? "hidden" : "visible" }}
-                          className="px-4 py-2 bg-gray-200 rounded-lg sm:px-2 sm:py-1"
+                          className="px-4 py-2 bg-grey-200 rounded-lg sm:px-2 sm:py-1"
                         >
                           다음
                         </button>

@@ -14,6 +14,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { A11y, Autoplay, Grid } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { SkeletonCard } from "@/components/maindetail/SkeletonCard";
+import TravelSwiperSkeleton from "./TravelSwiperSkeleton ";
 
 const supabase = createClient();
 
@@ -236,15 +238,7 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
     }
   }, [data, travel, userId]);
   if (isPending) {
-    return (
-      <Image
-        src="/assets/images/defaultLikeIcon.svg"
-        alt={"Unlike"}
-        width={32}
-        height={32}
-        className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]"
-      />
-    );
+    return <TravelSwiperSkeleton />;
   }
 
   if (isError) {
@@ -260,7 +254,7 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
     <Swiper
       modules={isLgScreen ? [Autoplay, A11y] : [Grid, A11y, Autoplay]}
       spaceBetween={isLgScreen ? 40 : 20}
-      slidesPerView={isLgScreen ? 4 : 3}
+      slidesPerView={travel.length >= 4 ? 4 : travel.length}
       slidesPerGroup={isLgScreen ? 4 : undefined}
       grid={
         !isLgScreen
@@ -314,7 +308,7 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
                     data-contentid={item.contentid}
                     onClick={(event) => handleLikeButton(event)}
                     disabled={!userId}
-                    className="absolute top-2 right-2"
+                    className="absolute top-2 right-2 opacity-70"
                   >
                     <Image
                       src={
@@ -330,8 +324,8 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
                   </button>
                 </div>
               ) : (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-t-[6px]">
-                  <span className="text-gray-500 text-sm">No Image Available</span>
+                <div className="w-full h-full bg-grey-200 flex items-center justify-center rounded-t-[6px]">
+                  <span className="text-grey-500 text-sm">No Image Available</span>
                 </div>
               )}
             </div>
@@ -345,11 +339,11 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
               <h2
                 className={`${
                   isLgScreen ? "text-lg" : "lg:text-xl text-sm"
-                } font-semibold text-gray-800 truncate w-full`}
+                } font-semibold text-grey-800 truncate w-full`}
               >
                 {item.title}
               </h2>
-              <p className={`text-gray-600 ${isLgScreen ? "text-xs" : "lg:text-sm text-xs"} truncate w-full`}>
+              <p className={`text-grey-600 ${isLgScreen ? "text-xs" : "lg:text-sm text-xs"} truncate w-full`}>
                 {item.addr1 || "Address not available"}
               </p>
             </div>

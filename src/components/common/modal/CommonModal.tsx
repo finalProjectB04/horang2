@@ -37,7 +37,7 @@ const CommonModal = ({ title, content, path, type = "normal", onClose }: CommonM
         <div className="modal-content">{content}</div>
         {type === "normal" && (
           <button
-            className="px-4 py-1 bg-primary-400 text-white font-semibold border border-gray-200 rounded hover:opacity-85 active:opacity-75"
+            className="px-4 py-1 bg-primary-400 text-white font-semibold border border-grey-200 rounded hover:opacity-85 active:opacity-75"
             onClick={handleConfirmClick}
           >
             확인

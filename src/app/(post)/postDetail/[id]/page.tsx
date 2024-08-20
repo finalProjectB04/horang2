@@ -4,7 +4,7 @@ import PostHeader from "@/components/common/postdetail/PostHeader";
 import PostContent from "@/components/common/postdetail/PostContent";
 
 import CommentSection from "@/components/common/comments/CommentSection";
-import ShareModal from "@/components/detailpage/ShareModal";
+import ShareModal from "@/components/detailpage/share/ShareModal";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";

@@ -1,4 +1,5 @@
 "use client";
+import { useModal } from "@/context/modal.context";
 import { createClient } from "@/utils/supabase/client";
 import { useUserStore } from "@/zustand/userStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -22,7 +23,7 @@ const DEFAULT_HEART = (
     alt="빈하트"
     width={48}
     height={32}
-    className=" w-5 h-5 mt-[7px] lg:w-[30px] lg:h-[30px] lg:mt-2"
+    className=" w-5 h-5  lg:w-[30px] lg:h-[30px] "
   />
 );
 const PUSHED_HEART = (
@@ -31,7 +32,7 @@ const PUSHED_HEART = (
     alt="하트"
     width={48}
     height={32}
-    className="w-5 h-5 mt-[7px] lg:w-[30px] lg:h-[30px] lg:mt-2"
+    className="w-5 h-5  lg:w-[30px] lg:h-[30px] "
   />
 );
 
@@ -45,6 +46,7 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
   const supabase = createClient();
   const { id: user_id } = useUserStore();
   const queryClient = useQueryClient();
+  const modal = useModal();
 
   const {
     data: getLikes,
@@ -71,11 +73,26 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
 
   const handleAddLike = useCallback(async (): Promise<void> => {
     if (!user_id) {
-      alert("로그인이 필요한 합니다");
+      modal.open({
+        title: "오류",
+        content: (
+          <div className="text-center">
+            <p>좋아요는 로그인 유저만</p>
+            <p>가능합니다</p>
+          </div>
+        ),
+      });
       return;
     }
     if (!post_id) {
-      alert("게시물 ID가 없습니다");
+      modal.open({
+        title: "오류",
+        content: (
+          <div className="text-center">
+            <p>게시물 ID가 없습니다</p>
+          </div>
+        ),
+      });
       return;
     }
     if (!getLikes?.userLike) {
@@ -91,7 +108,15 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
     mutationFn: handleAddLike,
     onMutate: async () => {
       if (!user_id) {
-        alert("로그인이 필요한 합니다");
+        modal.open({
+          title: "오류",
+          content: (
+            <div className="text-center">
+              <p>좋아요는 로그인 유저만</p>
+              <p>가능합니다</p>
+            </div>
+          ),
+        });
         return;
       }
       await queryClient.cancelQueries({ queryKey: ["postLike", post_id] });
@@ -113,7 +138,15 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
       }
       console.error("Error updating like:", err);
       if (typeof window !== "undefined") {
-        alert("좋아요 업데이트 중 오류가 발생했습니다.");
+        modal.open({
+          title: "오류",
+          content: (
+            <div className="text-center">
+              <p>좋아요 업데이트중</p>
+              <p>오류가 발생했습니다</p>
+            </div>
+          ),
+        });
       }
     },
     onSettled: () => {
@@ -121,7 +154,6 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
     },
   });
   if (isLikesError) {
-    console.error("Likes query error:", likesError);
     return <div>좋아요 정보를 불러오는 중 오류가 발생했습니다: {(likesError as Error).message}</div>;
   }
 

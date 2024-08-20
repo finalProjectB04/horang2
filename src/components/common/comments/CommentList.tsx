@@ -82,7 +82,7 @@ const CommentList: React.FC<{
           <div className="w-[100px] flex justify-center">
             <button
               onClick={handlePreviousPage}
-              className="px-4 py-2 bg-gray-200 rounded-lg"
+              className="px-4 py-2 bg-grey-200 rounded-lg"
               style={{ visibility: currentPage === 1 ? "hidden" : "visible" }}
             >
               이전
@@ -94,7 +94,7 @@ const CommentList: React.FC<{
           <div className="w-[100px] flex justify-center">
             <button
               onClick={handleNextPage}
-              className="px-4 py-2 bg-gray-200 rounded-lg"
+              className="px-4 py-2 bg-grey-200 rounded-lg"
               style={{ visibility: currentPage === totalPages ? "hidden" : "visible" }}
             >
               다음

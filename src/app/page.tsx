@@ -7,9 +7,14 @@ import { useState } from "react";
 import { Festival } from "@/components/main/Festival";
 import MidImage from "@/components/main/image/MidImage";
 import Header from "@/components/common/Header";
+import { useSearchStore } from "@/zustand/searchStore";
 
 const Home = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const { searchTerm, setSearchTerm } = useSearchStore();
+  const [selectedConsonant, setSelectedConsonant] = useState<string>("");
+  const [selectedRegion, setSelectedRegion] = useState<string>("");
+  const [selectedSigungu, setSelectedSigungu] = useState<string>("");
+  const [isRegionSelectorOpen, setIsRegionSelectorOpen] = useState<boolean>(false);
 
   return (
     <main>
@@ -22,7 +27,7 @@ const Home = () => {
       <div className="flex flex-col justify-center items-center">
         <MidImage />
       </div>
-      <div className="mb-[70px]">
+      <div className="lg:mb-[70px]">
         <Leports searchTerm={searchTerm} />
       </div>
 

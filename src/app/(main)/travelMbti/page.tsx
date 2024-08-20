@@ -12,7 +12,7 @@ const TravelMbti = () => {
 
   return (
     <div
-      className="w-full h-screen bg-cover bg-center relative"
+      className="w-full h-[calc(100vh-84px)] bg-cover bg-center relative"
       style={{ backgroundImage: "url(/assets/images/backgrounds/backgrounds.svg)" }}
     >
       <div className="flex justify-center items-start h-full py-10 px-4">

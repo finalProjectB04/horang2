@@ -289,7 +289,7 @@ const MapComponent: React.FC = () => {
                     <p className="text-secondary-800 text-[16px] lg:text-[18px] mb-4 sm:mb-2 font-bold">{spot.title}</p>
                     {/* <div className="flex items-center"> */}
                     <p className="text-secondary-700 text-[12px] lg:text-[14px]">{distance.toFixed(2)} km</p>
-                    {/* <span className="border-l border-gray-300 h-6 mx-5"></span> */}
+                    {/* <span className="border-l border-grey-300 h-6 mx-5"></span> */}
                     <p className="text-grey-800 text-[14px] leading-6 mt-2 sm:mt-1">{spot.address}</p>
                   </div>
                   {/* </div> */}
