@@ -7,8 +7,9 @@ export type TouristSpot = {
   mapy: number;
   address: string;
   contentid: string;
-  firstimage: string | null;
   tel: string;
+  imageUrl: string | null;
+  contentTypeId: string;
 };
 
 type ApiTouristSpot = {
@@ -49,8 +50,9 @@ const fetchTouristSpots = async (latitude: number, longitude: number): Promise<T
     mapy: parseFloat(item.mapy),
     address: item.addr1 || "주소 정보 없음",
     contentid: item.contentid,
-    firstimage: item.firstimage || null,
     tel: item.tel || "전화번호 없음",
+    imageUrl: item.firstimage || null,
+    contentTypeId: "12",
   }));
 };
 
