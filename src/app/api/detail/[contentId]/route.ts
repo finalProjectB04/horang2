@@ -31,9 +31,9 @@ export const GET = async (request: NextRequest, { params }: { params: { contentI
 
       return NextResponse.json({ data });
     } else {
-      return NextResponse.json({ messasge: "데이타가 없습니다" });
+      return NextResponse.json({ messasge: "데이타가 없습니다." });
     }
   } catch (error) {
-    return NextResponse.json({ message: "데이터 펫칭 실패" });
+    return NextResponse.json({ message: "데이터 펫칭 실패." });
   }
 };
