@@ -56,7 +56,6 @@ const useAuth = () => {
         if (updateError) {
           console.error("Error updating user:", updateError);
         } else {
-          console.log("User information updated successfully");
           setUser(id as string, user_email as string, nickname, newProfileUrl, "provider_value", "provider_id_value");
         }
       } else {
@@ -68,7 +67,6 @@ const useAuth = () => {
         if (updateError) {
           console.error("Error updating user:", updateError);
         } else {
-          console.log("User information updated successfully");
           setUser(id as string, user_email as string, nickname, profileImageUrl, "provider_value", "provider_id_value");
         }
       }

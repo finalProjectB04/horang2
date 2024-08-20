@@ -1,7 +1,7 @@
+import { useUserStore } from "@/zustand/userStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useRef } from "react";
-import { useUserStore } from "@/zustand/userStore";
+import { useEffect, useRef, useState } from "react";
 
 const Nav = () => {
   const router = useRouter();
@@ -48,6 +48,9 @@ const Nav = () => {
 
   return (
     <nav className="ml-auto flex items-center space-x-4 relative">
+      <Link href="/about">
+        <span className="text-primary hover:text-gray-400 cursor-pointer">호랑 소개</span>
+      </Link>
       <div ref={dropdownRef} className="relative">
         <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleDropdownToggle}>
           여행지 추천

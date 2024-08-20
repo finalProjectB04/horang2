@@ -2,13 +2,24 @@ import { useUserStore } from "@/zustand/userStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { useModal } from "@/context/modal.context";
+
 const FloatingButton = () => {
   const { id: userId } = useUserStore();
   const router = useRouter();
+  const modal = useModal();
 
   const handleClick = () => {
     if (!userId) {
-      alert("로그인이 필요합니다.");
+      modal.open({
+        title: "로그인 해주세요",
+        content: (
+          <div className="text-center">
+            <p>로그인 유저만 </p>
+            <p> 이용 가능합니다</p>
+          </div>
+        ),
+      });
     } else {
       router.push("/chat");
     }
