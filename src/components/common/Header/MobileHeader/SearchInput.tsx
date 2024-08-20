@@ -27,7 +27,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   if (!isSearchOpen) return null;
 
   return (
-    <div className="absolute top-1/2 transform -translate-y-1/2 right-[32px] bg-transparent flex items-center search-content">
+    <div className="absolute top-1/2 transform -translate-y-1/2 right-[32px] bg-transparent flex items-center search-content z-50">
       <input
         type="text"
         value={searchTerm}

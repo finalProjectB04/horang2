@@ -306,7 +306,7 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
                   <Image
                     src={convertToHttps(item.firstimage)}
                     alt={item.title}
-                    layout="fill"
+                    fill
                     objectFit="cover"
                     className="rounded-t-[8px]"
                   />

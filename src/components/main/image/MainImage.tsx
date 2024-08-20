@@ -11,13 +11,7 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
     <>
       <div className="hidden lg:block">
         <div className="relative w-[1280px] h-[600px]">
-          <Image
-            src="/assets/images/ex6.png"
-            alt="background"
-            layout="fill"
-            objectFit="cover"
-            className="object-cover"
-          />
+          <Image src="/assets/images/ex6.png" alt="background" fill objectFit="cover" className="object-cover" />
           <div className="absolute bottom-10 left-0 w-full px-5 md:px-8 lg:px-10">
             <div className="max-w-3xl mx-auto my-36">
               <div className="relative w-full">
@@ -51,13 +45,7 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
       </div>
       <div className="block  lg:hidden">
         <div className=" relative w-[375px] h-[295px]">
-          <Image
-            src="/assets/images/ex6.png"
-            alt="background"
-            layout="fill"
-            objectFit="cover"
-            className="object-cover"
-          />
+          <Image src="/assets/images/ex6.png" alt="background" fill objectFit="cover" className="object-cover" />
         </div>
       </div>
     </>
