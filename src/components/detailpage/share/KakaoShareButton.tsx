@@ -38,11 +38,17 @@ const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
       return;
     }
     window.Kakao.Link.sendDefault({
-      objectType: "text",
-      text: "친구에게 가고 싶은 장소를 공유해보세요",
-      link: {
-        mobileWebUrl: shareUrl,
-        webUrl: shareUrl,
+      objectType: "feed",
+
+      content: {
+        title: "국내 여행 추천 웹 플랫폼 호랑 ",
+        description: "친구에게 가고 싶은 장소를 공유해보세요",
+        imageUrl:
+          "https://crjcsxutfsroqsqumefz.supabase.co/storage/v1/object/sign/thumnail/horang.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJ0aHVtbmFpbC9ob3JhbmcucG5nIiwiaWF0IjoxNzI0MTE0MzQyLCJleHAiOjIzNTQ4MzQzNDJ9.s9s4SN-e9lI-rsElSjbsohxPXId729r7VrIrFbMgtdc&t=2024-08-20T00%3A39%3A03.816Z",
+        link: {
+          mobileWebUrl: shareUrl,
+          webUrl: shareUrl,
+        },
       },
     });
   };
