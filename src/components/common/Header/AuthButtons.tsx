@@ -6,8 +6,12 @@ import Cookies from "js-cookie";
 import { useUserStore } from "@/zustand/userStore";
 
 const supabase = createClient();
+interface AuthButtonsProps {
+  userId: string | null;
+  handleLogout: () => Promise<void>;
+}
 
-const AuthButtons: React.FC = () => {
+const AuthButtons: React.FC<AuthButtonsProps> = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const { id, setUser, clearUser } = useUserStore((state) => ({
