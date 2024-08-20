@@ -9,6 +9,7 @@ export const results: { [key: string]: { title: string; image?: string | undefin
   },
   cheap: {
     title: "흥부 호랑이",
+    image: "/assets/images/travelMbtis/cheap.png",
     description: `흥부 호랑이는 돈을 아끼는 것을 중요시합니다. 그래서 입장료가 없는 관광지를 탐방하기로 결심합니다.
       그는 도시 공원과 무료 박물관을 방문하며, 현지 먹거리를 찾아다닙니다.
       저녁에는 지역 주민이 추천하는 가성비 맛집에서 맛있는 식사를 즐기며 여행의 가성비를 최대한으로 활용합니다.
@@ -33,6 +34,7 @@ export const results: { [key: string]: { title: string; image?: string | undefin
 
   active: {
     title: "활동형 호랑이",
+    image: "/assets/images/travelMbtis/active.png",
     description: `활동형 호랑이는 외부 활동을 중시하며, 테마파크와 액티비티를 만끽합니다.
       롤러코스터와 다양한 놀이기구, 워터파크에서 신나는 시간을 보내며 참여할 수 있는 모든 액티비티에 참여합니다. 저녁에는 야외 공연을 보며 여행의 끝을 화려하게 장식합니다.
       활동형 호랑이는 만난 사람들과의 소중한 인연을 기록하고, 액티비티와 다양한 스포츠 활동으로 하루하루가 지루할 틈이 없습니다.

@@ -35,10 +35,10 @@ const SurveyPage = () => {
 
   return (
     <div
-      className="w-full h-screen bg-cover bg-center relative"
+      className="w-full h-[calc(100vh-84px)] bg-cover bg-bottom relative"
       style={{ backgroundImage: "url(/assets/images/backgrounds/backgrounds.svg)" }}
     >
-      <div className="flex justify-center items-start h-full py-10 px-4">
+      <div className="flex justify-center items-start h-full py-10 sm:py-6 px-4">
         <div className="bg-white p-6 rounded-[40px] sm:w-[350px] w-[500px] h-[80vh] flex flex-col max-h-[80vh] overflow-auto relative">
           <div className="relative pb-16">
             <header className="absolute top-0 left-0 right-0 bg-white p-5 rounded-t-[40px] z-10">

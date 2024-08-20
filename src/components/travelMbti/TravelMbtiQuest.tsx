@@ -23,7 +23,7 @@ const TravelMbtiQuest: React.FC<TravelMbtiQuestProps> = ({
   return (
     <div>
       <p className="text-[12px] text-center text-grey-500">{`${currentQuestion + 1} / ${totalQuestions}`}</p>
-      <h2 className="md:text-[18px] lg:text-[18px] sm:text-[16px] text-center mb-4 font-bold sm:mt-6 md:mt-14 lg:mt-20">
+      <h2 className="md:text-[18px] lg:text-[18px] sm:text-[16px] text-center mb-4 font-bold sm:mt-6 md:mt-10 lg:mt-12">
         {question}
       </h2>
       <div className="flex flex-col mt-4">

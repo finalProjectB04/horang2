@@ -6,13 +6,14 @@ import { Item } from "@/types/APIResponse.type";
 import { fetchResultData } from "@/utils/travelMbti/FetchResultData";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { results } from "../results";
 import Image from "next/image";
 
 const TypeResultPage = () => {
   const params = useParams();
   const type = params.type as string;
+  const router = useRouter();
 
   const { data, error, isLoading }: UseQueryResult<Item[], Error> = useQuery({
     queryKey: ["resultData", type],
@@ -35,18 +36,20 @@ const TypeResultPage = () => {
 
   return (
     <div
-      className="w-full h-screen bg-cover bg-center relative"
+      className="w-full h-[calc(100vh-84px)] bg-cover bg-bottom relative"
       style={{ backgroundImage: "url(/assets/images/backgrounds/backgrounds.svg)" }}
     >
-      <div className="flex justify-center items-start h-full py-10 px-4">
-        <div className="bg-white p-6 rounded-[40px] sm:w-[350px] h-[80vh] w-[500px] flex flex-col max-h-[80vh] overflow-auto relative">
-          <header className="pb-6">
-            <h1 className="text-3xl sm:text-xl font-bold text-center">여행 MBTI 결과</h1>
-          </header>
+      <div className="flex justify-center items-start h-full py-10 sm:py-6 px-4">
+        <div className="bg-white p-6 rounded-[40px] sm:w-[350px] w-[500px] h-[80vh] flex flex-col max-h-[80vh] overflow-auto relative">
+          <div className="relative pb-16">
+            <header className="absolute top-0 left-0 right-0 bg-white p-5 rounded-t-[40px] z-10">
+              <h1 className="text-3xl sm:text-xl font-bold text-center">여행 MBTI 결과</h1>
+            </header>
+          </div>
 
-          <div className="flex flex-col flex-1 p-4 overflow-auto">
+          <div className="mt-4 sm:mt-1 flex flex-col flex-1 p-2 overflow-auto hidden-scroll">
             <div className="flex flex-col text-center mb-6 justify-center items-center">
-              <h2 className="text-3xl sm:text-xl font-semibold mb-2">당신의 유형은</h2>
+              <h2 className="text-3xl sm:text-xl font-semibold mb-4">당신의 유형은</h2>
               {result.image ? (
                 <Image src={result.image} alt={result.title} width={400} height={400} className="rounded-[20px]" />
               ) : (
