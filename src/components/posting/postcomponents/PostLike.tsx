@@ -102,7 +102,7 @@ const PostLike: React.FC<PostLikeProps> = React.memo(({ post_id, onLikesChange, 
       const { error } = await supabase.from("Post_likes").delete().eq("user_id", user_id).eq("post_id", post_id);
       if (error) throw error;
     }
-  }, [user_id, post_id, getLikes?.userLike, supabase]);
+  }, [user_id, post_id, getLikes?.userLike, supabase, modal]);
 
   const addMutation = useMutation({
     mutationFn: handleAddLike,
