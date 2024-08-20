@@ -7,9 +7,10 @@ import { useState } from "react";
 import { Festival } from "@/components/main/Festival";
 import MidImage from "@/components/main/image/MidImage";
 import Header from "@/components/common/Header";
+import { useSearchStore } from "@/zustand/searchStore";
 
 const Home = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const { searchTerm, setSearchTerm } = useSearchStore();
   const [selectedConsonant, setSelectedConsonant] = useState<string>("");
   const [selectedRegion, setSelectedRegion] = useState<string>("");
   const [selectedSigungu, setSelectedSigungu] = useState<string>("");

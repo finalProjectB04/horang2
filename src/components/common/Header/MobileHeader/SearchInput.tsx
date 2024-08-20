@@ -1,18 +1,12 @@
+import { useSearchStore } from "@/zustand/searchStore";
 import { useEffect } from "react";
 
 interface SearchInputProps {
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
   isSearchOpen: boolean;
   closeSearchOnClickOutside: (event: MouseEvent) => void;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({
-  searchTerm,
-  setSearchTerm,
-  isSearchOpen,
-  closeSearchOnClickOutside,
-}) => {
+const SearchInput: React.FC<SearchInputProps> = ({ isSearchOpen, closeSearchOnClickOutside }) => {
   useEffect(() => {
     if (isSearchOpen) {
       document.addEventListener("click", closeSearchOnClickOutside);
@@ -23,6 +17,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
       document.removeEventListener("click", closeSearchOnClickOutside);
     };
   }, [isSearchOpen]);
+
+  const { searchTerm, setSearchTerm } = useSearchStore();
 
   if (!isSearchOpen) return null;
 
