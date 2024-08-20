@@ -7,6 +7,7 @@ import "swiper/swiper-bundle.css";
 import "./globals.css";
 
 import ClientHeader from "@/components/common/Header/ClientHeader";
+import { Footer } from "@/components/common/footer/Footer";
 
 export const metadata: Metadata = {
   title: "horang",
@@ -41,8 +42,10 @@ export default function RootLayout({
         <ModalProvider>
           <body className="font-sans mt-[84px]">
             <ClientHeader />
+
             {children}
             <Script src="https://developers.kakao.com/sdk/js/kakao.min.js" />
+            <Footer />
           </body>
         </ModalProvider>
       </QueryProvider>
