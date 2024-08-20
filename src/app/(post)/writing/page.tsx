@@ -212,7 +212,7 @@ const Writing: React.FC = () => {
             </svg>
             <label
               htmlFor="place"
-              className="flex-shrink-0 text-grey-700 font-normal text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
+              className="flex-shrink-0 text-black font-bold text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
             >
               여행장소
             </label>
@@ -236,7 +236,7 @@ const Writing: React.FC = () => {
             </svg>
             <label
               htmlFor="departure"
-              className="flex-shrink-0 text-grey-700 font-normal text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
+              className="flex-shrink-0 text-black font-bold text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
             >
               출발장소
             </label>
@@ -269,7 +269,7 @@ const Writing: React.FC = () => {
             </svg>
             <label
               htmlFor="cost"
-              className="flex-shrink-0 text-grey-700 font-normal text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
+              className="flex-shrink-0 text-black font-bold text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
             >
               여행비용
             </label>
@@ -294,7 +294,7 @@ const Writing: React.FC = () => {
             </svg>
             <label
               htmlFor="period"
-              className="flex-shrink-0 text-grey-700 font-normal text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
+              className="flex-shrink-0 text-black font-bold text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
             >
               여행기간
             </label>
