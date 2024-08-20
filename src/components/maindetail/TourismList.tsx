@@ -13,6 +13,7 @@ import { SkeletonCard } from "./SkeletonCard";
 import { NoResultsFound } from "./NoResultsFound";
 import { useUserStore } from "@/zustand/userStore";
 import Control from "../main/Control";
+import { useSearchStore } from "@/zustand/searchStore";
 interface TourismListProps {
   contentTypeId: number;
   title: string;
@@ -63,14 +64,14 @@ const getInitialConsonant = (str: string) => {
 
 export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, img }) => {
   const [displayCount, setDisplayCount] = useState<number>(12);
-  const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedConsonant, setSelectedConsonant] = useState<string>("");
   const [selectedRegion, setSelectedRegion] = useState<string>("");
   const [selectedSigungu, setSelectedSigungu] = useState<string>("");
   const [isRegionSelectorOpen, setIsRegionSelectorOpen] = useState<boolean>(false);
   const { ref, inView } = useInView();
-  const [isSearching, setIsSearching] = useState<boolean>(false);
   const { id: userId } = useUserStore();
+  const { searchTerm, setSearchTerm, isSearching, setIsSearching } = useSearchStore();
+
   const {
     data: tourismData,
     isPending,
@@ -140,7 +141,7 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
         </div>
       </BackgroundImage>
       <Control />
-      <div className="flex my-6 gap-3 mx-auto max-w-[960px] mt-10">
+      <div className="flex my-6 gap-3 sm:mx-12 md:mx-auto lg:mx-auto max-w-[960px] mt-10">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <g clip-path="url(#clip0_1893_11600)">
             <path
@@ -178,7 +179,7 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
           ))}
         </div>
 
-        <div className="flex flex-wrap gap-1  lg:gap-[26px] py-8 max-w-[327px] lg:max-w-[960px]">
+        <div className="flex flex-wrap gap-1  lg:gap-[26px] pt-8 max-w-[327px] lg:max-w-[960px]">
           {isSearching ? (
             Array.from({ length: 12 }).map((_, index) => <SkeletonCard key={index} />)
           ) : displayedData.length > 0 ? (

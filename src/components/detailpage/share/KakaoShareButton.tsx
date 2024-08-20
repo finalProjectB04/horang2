@@ -53,7 +53,7 @@ const KakaoShareButton = ({ id }: KakaoShareButtonProps) => {
     });
   };
   return (
-    <div onClick={handleShare} className="lg:py-2 lg:text-gray-950 lg:rounded lg:cursor-pointer lg:bg-white">
+    <div onClick={handleShare} className="lg:py-2 lg:text-grey-950 lg:rounded lg:cursor-pointer lg:bg-white">
       <Image
         src="/assets/images/kakaoShare.png"
         alt="이미지가 없습니다"

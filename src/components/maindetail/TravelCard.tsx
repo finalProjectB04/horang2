@@ -208,19 +208,19 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
                 alt={liked ? "Unlike" : "Like"}
                 width={32}
                 height={32}
-                className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]"
+                className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px] opacity-70"
               />
             </button>
           </div>
         ) : (
-          <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded-t-[9.11px]">
-            <span className="text-gray-500 text-xs">No Image</span>
+          <div className="w-full h-full bg-grey-200 flex items-center justify-center rounded-t-[9.11px]">
+            <span className="text-grey-500 text-xs">No Image</span>
           </div>
         )}
       </div>
       <div className="absolute bottom-0 left-0 right-0 bg-white p-2 flex flex-col items-start gap-1.5 self-stretch">
-        <h2 className="text-sm font-semibold text-gray-800 truncate w-full">{item.title}</h2>
-        <p className="text-gray-600 text-xs truncate w-full">{item.addr1 || "Address not available"}</p>
+        <h2 className="text-sm font-semibold text-grey-800 truncate w-full">{item.title}</h2>
+        <p className="text-grey-600 text-xs truncate w-full">{item.addr1 || "Address not available"}</p>
       </div>
     </div>
   );
