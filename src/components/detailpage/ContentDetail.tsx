@@ -1,4 +1,5 @@
 import Image from "next/image";
+import React from "react";
 
 interface ContentDetailProps {
   title: string | null;
@@ -108,4 +109,4 @@ const ContentDetail: React.FC<ContentDetailProps> = ({ title, addr1, tel, homepa
   );
 };
 
-export default ContentDetail;
+export default React.memo(ContentDetail);

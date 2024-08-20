@@ -1,24 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import CommentSection from "@/components/common/comments/CommentSection";
+import ShareModal from "@/components/detailpage/share/ShareModal";
+import PostLike from "@/components/posting/postcomponents/PostLike";
 import { selectPostById } from "@/components/posting/select/route";
 import { updatePost } from "@/components/posting/update/route";
-import { deletePost } from "@/components/posting/delete/route";
+import { useModal } from "@/context/modal.context";
 import { fetchSessionData } from "@/utils/auth";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { createClient } from "@/utils/supabase/client";
+import { useUserStore } from "@/zustand/userStore";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
+import { useParams, useRouter } from "next/navigation";
+import React, { useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import CommentSection from "@/components/common/comments/CommentSection";
-import { useUserStore } from "@/zustand/userStore";
-import PostLike from "@/components/posting/postcomponents/PostLike";
-import ShareModal from "@/components/detailpage/ShareModal";
-import { createClient } from "@/utils/supabase/client";
-import { useModal } from "@/context/modal.context";
+import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 interface Post {
   content: string | null;
