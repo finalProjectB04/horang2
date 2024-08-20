@@ -7,8 +7,9 @@ export type TouristSpot = {
   mapy: number;
   address: string;
   contentid: string;
-  firstimage: string | null;
   tel: string;
+  imageUrl: string | null;
+  contentTypeId: string;
 };
 
 type ApiTouristSpot = {
@@ -26,14 +27,14 @@ const fetchTouristSpots = async (latitude: number, longitude: number): Promise<T
     params: {
       ServiceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
       contentTypeId: 12,
-      numOfRows: 100,
+      numOfRows: 1000,
       pageNo: 1,
       MobileOS: "ETC",
       MobileApp: "horang",
       _type: "json",
       mapX: longitude,
       mapY: latitude,
-      radius: 50000,
+      radius: 20000,
       listYN: "Y",
     },
     headers: {
@@ -49,8 +50,9 @@ const fetchTouristSpots = async (latitude: number, longitude: number): Promise<T
     mapy: parseFloat(item.mapy),
     address: item.addr1 || "주소 정보 없음",
     contentid: item.contentid,
-    firstimage: item.firstimage || null,
     tel: item.tel || "전화번호 없음",
+    imageUrl: item.firstimage || null,
+    contentTypeId: "12",
   }));
 };
 

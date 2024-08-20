@@ -69,15 +69,15 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
                 <Image
                   src={getFirstImageUrl(post.files)}
                   alt={`Image for ${post.title}`}
-                  layout="fill"
+                  fill
                   objectFit="cover"
                   loading="lazy"
                 />
               </div>
               <div className=" p-2">
                 <h3 className="text-lg font-semibold mb-2 truncate">{post.title}</h3>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">{post.content}</p>
-                <div className="flex justify-between items-center text-xs text-gray-500">
+                <p className="text-grey-600 text-sm mb-4 line-clamp-2">{post.content}</p>
+                <div className="flex justify-between items-center text-xs text-grey-500">
                   <span>{post.category}</span>
                   <time>{new Date(post.created_at || "").toLocaleDateString()}</time>
                   <PostLike
@@ -97,37 +97,41 @@ const PostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCategory,
           {sortedAndFilteredPosts.map((post: Post) => (
             <article
               key={post.id}
-              className="flex items-stretch overflow-hidden shadow-lg cursor-pointer"
+              className="flex items-stretch overflow-hidden shadow-lg cursor-pointer rounded-md"
               onClick={() => router.push(`/postDetail/${post.id}`)}
             >
-              <div className="relative w-[90px] h-[90px] flex-shrink-0">
+              <div className="relative w-[108px] h-[108px] flex-shrink-0">
                 <Image
                   src={getFirstImageUrl(post.files)}
                   alt={`Image for ${post.title}`}
-                  layout="fill"
+                  fill
                   objectFit="cover"
                   loading="lazy"
                 />
               </div>
               <div className="w-[238px]  p-2">
                 <h3 className="text-lg font-semibold mb-2 truncate">{post.title}</h3>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">{post.content}</p>
-                <div className="flex justify-between items-center text-xs text-gray-500">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 29" fill="none">
-                    <path
-                      d="M9 0.199951C4.02429 0.199951 0 3.62715 0 9.19995C0 16.76 9 28.9999 9 28.9999C9 28.9999 18 16.76 18 9.19995C18 3.62715 13.9757 0.199951 9 0.199951Z"
-                      fill="#FF5C00"
-                    />
-                    <circle cx="9.00002" cy="9.19985" r="3.6" fill="white" />
-                  </svg>
-                  <span>{post.category}</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 22 26" fill="none">
-                    <path
-                      d="M19.5556 3.22228H18.3333V0.777832H15.8889V3.22228H6.11111V0.777832H3.66667V3.22228H2.44444C1.08778 3.22228 0.0122222 4.32228 0.0122222 5.66672L0 22.7778C0 24.1223 1.08778 25.2223 2.44444 25.2223H19.5556C20.9 25.2223 22 24.1223 22 22.7778V5.66672C22 4.32228 20.9 3.22228 19.5556 3.22228ZM19.5556 22.7778H2.44444V10.5556H19.5556V22.7778ZM7.33333 15.4445H4.88889V13.0001H7.33333V15.4445ZM12.2222 15.4445H9.77778V13.0001H12.2222V15.4445ZM17.1111 15.4445H14.6667V13.0001H17.1111V15.4445ZM7.33333 20.3334H4.88889V17.8889H7.33333V20.3334ZM12.2222 20.3334H9.77778V17.8889H12.2222V20.3334ZM17.1111 20.3334H14.6667V17.8889H17.1111V20.3334Z"
-                      fill="#FF5C00"
-                    />
-                  </svg>
-                  <time>{new Date(post.created_at || "").toLocaleDateString()}</time>
+                <p className="text-grey-600 text-sm mb-4 line-clamp-2">{post.content}</p>
+                <div className="flex justify-between items-center text-xs text-grey-500">
+                  <div className="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 29" fill="none">
+                      <path
+                        d="M9 0.199951C4.02429 0.199951 0 3.62715 0 9.19995C0 16.76 9 28.9999 9 28.9999C9 28.9999 18 16.76 18 9.19995C18 3.62715 13.9757 0.199951 9 0.199951Z"
+                        fill="#FF5C00"
+                      />
+                      <circle cx="9.00002" cy="9.19985" r="3.6" fill="white" />
+                    </svg>
+                    <span className="mx-1">{post.category}</span>
+                  </div>
+                  <div className="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 22 26" fill="none">
+                      <path
+                        d="M19.5556 3.22228H18.3333V0.777832H15.8889V3.22228H6.11111V0.777832H3.66667V3.22228H2.44444C1.08778 3.22228 0.0122222 4.32228 0.0122222 5.66672L0 22.7778C0 24.1223 1.08778 25.2223 2.44444 25.2223H19.5556C20.9 25.2223 22 24.1223 22 22.7778V5.66672C22 4.32228 20.9 3.22228 19.5556 3.22228ZM19.5556 22.7778H2.44444V10.5556H19.5556V22.7778ZM7.33333 15.4445H4.88889V13.0001H7.33333V15.4445ZM12.2222 15.4445H9.77778V13.0001H12.2222V15.4445ZM17.1111 15.4445H14.6667V13.0001H17.1111V15.4445ZM7.33333 20.3334H4.88889V17.8889H7.33333V20.3334ZM12.2222 20.3334H9.77778V17.8889H12.2222V20.3334ZM17.1111 20.3334H14.6667V17.8889H17.1111V20.3334Z"
+                        fill="#FF5C00"
+                      />
+                    </svg>
+                    <time className="mx-1">{new Date(post.created_at || "").toLocaleDateString()}</time>
+                  </div>
                   <PostLike
                     post_id={post.id}
                     onLikesChange={(likes) => handleLikesChange(post.id, likes)}

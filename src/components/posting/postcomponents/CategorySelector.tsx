@@ -9,14 +9,14 @@ interface CategorySelectorProps {
 
 const CategorySelector: React.FC<CategorySelectorProps> = ({ selectedCategory, onCategoryChange }) => {
   return (
-    <div className="flex border-b border-gray-200">
+    <div className="flex border-b border-grey-200">
       {categories.map((category) => (
         <button
           key={category}
           className={`p-2 lg:px-4 lg:py-2 font-bold lg:text-base text-xs ${
             selectedCategory === category
               ? "font-bold text-black border-b-2 border-orange-500 "
-              : "text-gray-400 hover:text-gray-700"
+              : "text-grey-400 hover:text-grey-700"
           }`}
           onClick={() => onCategoryChange(category)}
         >

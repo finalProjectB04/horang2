@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import LoadingPage from "@/app/loading";
 import { convertToHttps } from "@/utils/convertToHttps";
+import DetailPageLikeButton from "../detailpage/DetailPageLikeButton";
 
 const KAKAO_MAP_API = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
 
@@ -26,8 +27,6 @@ const MapComponent: React.FC = () => {
   const [visibleSpots, setVisibleSpots] = useState<TouristSpot[]>([]);
   const [selectedSpot, setSelectedSpot] = useState<TouristSpot | null>(null);
   const [currentOverlay, setCurrentOverlay] = useState<kakao.maps.CustomOverlay | null>(null);
-
-  // 이전 지도 상태를 저장하기 위한 상태
   const [previousCenter, setPreviousCenter] = useState<kakao.maps.LatLng | null>(null);
   const [previousLevel, setPreviousLevel] = useState<number | null>(null);
 
@@ -140,7 +139,6 @@ const MapComponent: React.FC = () => {
       if (document.head.contains(script)) {
         document.head.removeChild(script);
       }
-      // Clean up map events and markers if necessary
       if (map) {
         markers.forEach((marker) => marker.setMap(null));
         setMarkers([]);
@@ -154,7 +152,6 @@ const MapComponent: React.FC = () => {
       map.setCenter(position);
       map.setLevel(4);
 
-      // 선택된 스팟의 인포윈도우 생성
       const infoWindowContent = `
       <a href="/detail/${selectedSpot.contentid}" class="info-window" style="padding: 10px; border-radius: 5px; background: white; border: 1px solid #ddd; display: flex; align-items: center; text-decoration: none;">
         <p style="font-size: 18px; font-weight: bold; margin-right: 5px; flex-grow: 1;">
@@ -219,9 +216,9 @@ const MapComponent: React.FC = () => {
         {selectedSpot ? (
           <div className="flex flex-col md:flex-row items-start m-10 sm:m-6">
             <div className="w-full md:w-1/2">
-              {selectedSpot.firstimage ? (
+              {selectedSpot.imageUrl ? (
                 <Image
-                  src={convertToHttps(selectedSpot.firstimage)}
+                  src={convertToHttps(selectedSpot.imageUrl)}
                   alt={selectedSpot.title}
                   width={200}
                   height={140}
@@ -240,11 +237,19 @@ const MapComponent: React.FC = () => {
             <div className="md:ml-10 md:mt-0 mt-8 md:w-1/2">
               <a href={`/detail/${selectedSpot.contentid}`} className="flex items-center">
                 <span className="text-[20px] lg:text-[24px] font-bold mr-4">{selectedSpot.title}</span>
-                <span className="border-b-2 border-primary-300 text-primary-300 text-[12px] lg:text-[14px]">
+                <span className="border-b-2 border-primary-300 text-primary-300 text-[12px] lg:text-[14px] mr-10">
                   더보기
                 </span>
+                <DetailPageLikeButton
+                  contentId={selectedSpot.contentid || ""}
+                  title={selectedSpot.title || ""}
+                  imageUrl={selectedSpot.imageUrl || "/assets/images/null_image.svg"}
+                  contentTypeId={selectedSpot.contentTypeId || "12"}
+                  addr1={selectedSpot.address || ""}
+                  tel={selectedSpot.tel || ""}
+                />
               </a>
-              <p className="text-secondary-700 text-[14px] lg:text-[16px] mt-2">
+              <p className="text-secondary-700 text-[14px] lg:text-[16px]">
                 {getDistance(latitude!, longitude!, selectedSpot.mapy, selectedSpot.mapx).toFixed(2)} km
               </p>
               <p className="text-grey-800 mt-2 text-[14px] lg:text-[16px]">{selectedSpot.address}</p>
@@ -268,9 +273,9 @@ const MapComponent: React.FC = () => {
                   className="flex items-center py-6 border-b border-grey-200 cursor-pointer text-sm md:text-[14px]"
                   onClick={() => setSelectedSpot(spot)}
                 >
-                  {spot.firstimage ? (
+                  {spot.imageUrl ? (
                     <Image
-                      src={convertToHttps(spot.firstimage)}
+                      src={convertToHttps(spot.imageUrl)}
                       alt={spot.title}
                       width={192}
                       height={128}
@@ -286,13 +291,20 @@ const MapComponent: React.FC = () => {
                     />
                   )}
                   <div className="flex flex-col mr-6">
-                    <p className="text-secondary-800 text-[16px] lg:text-[18px] mb-4 sm:mb-2 font-bold">{spot.title}</p>
-                    {/* <div className="flex items-center"> */}
+                    <div className="flex items-center mb-2">
+                      <p className="text-secondary-800 text-[16px] lg:text-[18px] font-bold mr-4">{spot.title}</p>
+                      <DetailPageLikeButton
+                        contentId={spot.contentid || ""}
+                        imageUrl={spot.imageUrl || "/assets/images/null_image.svg"}
+                        contentTypeId={spot.contentTypeId || "12"}
+                        addr1={spot.address || ""}
+                        title={spot.title || ""}
+                        tel={spot.tel || ""}
+                      />
+                    </div>
                     <p className="text-secondary-700 text-[12px] lg:text-[14px]">{distance.toFixed(2)} km</p>
-                    {/* <span className="border-l border-gray-300 h-6 mx-5"></span> */}
                     <p className="text-grey-800 text-[14px] leading-6 mt-2 sm:mt-1">{spot.address}</p>
                   </div>
-                  {/* </div> */}
                 </li>
               );
             })}

@@ -14,7 +14,7 @@ const ChatPage = async () => {
   if (!data) return;
 
   return (
-    <div className="w-full h-[screen-84px] flex justify-center items-center">
+    <div className="w-full sm:h-[calc(100vh-168px)] md:h-[calc(100vh-168px)] lg:h-[calc(100vh-168px)] flex justify-center items-center">
       <ChatList loggedInUser={data[0]} />
       <ChatScreen />
     </div>

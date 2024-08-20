@@ -15,7 +15,7 @@ const KakaoLoginButton = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
+        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/api/login/auth/callback`,
       },
     });
 
@@ -29,10 +29,10 @@ const KakaoLoginButton = () => {
   return (
     <button
       onClick={kakaoLogin}
-      className="flex items-center justify-center bg-[#FFD600] border border-gray-300 rounded-lg shadow-md hover:bg-yellow-400 cursor-pointer p-2"
+      className="flex items-center justify-center bg-[#FFD600] border border-grey-300 rounded-lg shadow-md hover:bg-yellow-400 cursor-pointer p-2"
     >
       <Image src="/assets/images/login_logo/kakao_logo.png" alt="Kakao Logo" width={24} height={24} />
-      <span className="font-semibold text-gray-800 ml-2">카카오 로그인</span>
+      <span className="font-semibold text-grey-800 ml-2">카카오 로그인</span>
     </button>
   );
 };

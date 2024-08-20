@@ -52,43 +52,43 @@ const Nav = () => {
         <span className="text-primary hover:text-gray-400 cursor-pointer">호랑 소개</span>
       </Link>
       <div ref={dropdownRef} className="relative">
-        <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleDropdownToggle}>
+        <span className="text-primary hover:text-grey-400 cursor-pointer" onClick={handleDropdownToggle}>
           여행지 추천
         </span>
         {isDropdownOpen && (
-          <div className="absolute left-0 mt-2 min-w-max bg-white border border-gray-200 shadow-lg rounded-md z-50">
+          <div className="absolute left-0 mt-2 min-w-max bg-white border border-grey-200 shadow-lg rounded-md z-50">
             <Link
               href="/travel"
               onClick={() => setIsDropdownOpen(false)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-grey-700 hover:bg-grey-100"
             >
               추천 여행지
             </Link>
             <Link
               href="/hotel"
               onClick={() => setIsDropdownOpen(false)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-grey-700 hover:bg-grey-100"
             >
               숙소
             </Link>
             <Link
               href="/leports"
               onClick={() => setIsDropdownOpen(false)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-grey-700 hover:bg-grey-100"
             >
               놀거리
             </Link>
             <Link
               href="/restaurant"
               onClick={() => setIsDropdownOpen(false)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-grey-700 hover:bg-grey-100"
             >
               음식점
             </Link>
             <Link
               href="/festival"
               onClick={() => setIsDropdownOpen(false)}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-grey-700 hover:bg-grey-100"
             >
               축제 및 행사
             </Link>
@@ -96,23 +96,23 @@ const Nav = () => {
         )}
       </div>
       <Link href="/location">
-        <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleNavigation("/location")}>
+        <span className="text-primary hover:text-grey-400 cursor-pointer" onClick={handleNavigation("/location")}>
           내 근처 여행지
         </span>
       </Link>
       <Link href="/travelMbti">
-        <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleNavigation("/travelMbti")}>
+        <span className="text-primary hover:text-grey-400 cursor-pointer" onClick={handleNavigation("/travelMbti")}>
           나만의 여행
         </span>
       </Link>
-      <Link href="/mypage">
-        <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleNavigation("/mypage")}>
-          나의 공간
+      <Link href="/community">
+        <span className="text-primary hover:text-grey-400 cursor-pointer" onClick={handleNavigation("/community")}>
+          호랑이 모임
         </span>
       </Link>
-      <Link href="/community">
-        <span className="text-primary hover:text-gray-400 cursor-pointer" onClick={handleNavigation("/community")}>
-          호랑이 모임
+      <Link href="/mypage">
+        <span className="text-primary hover:text-grey-400 cursor-pointer" onClick={handleNavigation("/mypage")}>
+          나의 공간
         </span>
       </Link>
     </nav>

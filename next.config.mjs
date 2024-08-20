@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     unoptimized: true,
-
+    domains: ["tong.visitkorea.or.kr", "k.kakaocdn.net"],
     remotePatterns: [
       {
         protocol: "https",
@@ -22,6 +22,7 @@ const nextConfig = {
       },
     ],
   },
+  reactStrictMode: true,
 };
 
 export default nextConfig;

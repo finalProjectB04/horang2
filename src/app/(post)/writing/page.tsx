@@ -189,7 +189,7 @@ const Writing: React.FC = () => {
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
+              className="block w-full rounded-md border-grey-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
             >
               <option value="">분류 선택</option>
               {categories.map((category) => (
@@ -212,7 +212,7 @@ const Writing: React.FC = () => {
             </svg>
             <label
               htmlFor="place"
-              className="flex-shrink-0 text-grey-700 font-normal text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
+              className="flex-shrink-0 text-black font-bold text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
             >
               여행장소
             </label>
@@ -222,7 +222,7 @@ const Writing: React.FC = () => {
               type="text"
               value={formData.place}
               onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
+              className="block w-full rounded-md border-grey-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
               placeholder="여행장소를 입력해주세요"
             />
             {errors.place && <p className="text-red-500 text-sm mt-1">{errors.place}</p>}
@@ -236,7 +236,7 @@ const Writing: React.FC = () => {
             </svg>
             <label
               htmlFor="departure"
-              className="flex-shrink-0 text-grey-700 font-normal text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
+              className="flex-shrink-0 text-black font-bold text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
             >
               출발장소
             </label>
@@ -246,7 +246,7 @@ const Writing: React.FC = () => {
               type="text"
               value={formData.departure}
               onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
+              className="block w-full rounded-md border-grey-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
               placeholder="출발장소를 입력해주세요"
             />
             {errors.departure && <p className="text-red-500 text-sm mt-1">{errors.departure}</p>}
@@ -269,7 +269,7 @@ const Writing: React.FC = () => {
             </svg>
             <label
               htmlFor="cost"
-              className="flex-shrink-0 text-grey-700 font-normal text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
+              className="flex-shrink-0 text-black font-bold text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
             >
               여행비용
             </label>
@@ -279,7 +279,7 @@ const Writing: React.FC = () => {
               type="text"
               value={formData.cost}
               onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
+              className="block w-full rounded-md border-grey-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
               placeholder="여행비용을 입력해주세요"
             />
             {errors.cost && <p className="text-red-500 text-sm mt-1">{errors.cost}</p>}
@@ -294,7 +294,7 @@ const Writing: React.FC = () => {
             </svg>
             <label
               htmlFor="period"
-              className="flex-shrink-0 text-grey-700 font-normal text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
+              className="flex-shrink-0 text-black font-bold text-[14px] leading-6 lg:text-[28px] lg:leading-[42px] tracking-tight"
             >
               여행기간
             </label>
@@ -304,7 +304,7 @@ const Writing: React.FC = () => {
               type="text"
               value={formData.period}
               onChange={handleChange}
-              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
+              className="block w-full rounded-md border-grey-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
               placeholder="여행기간을 입력해주세요"
             />
             {errors.period && <p className="text-red-500 text-sm mt-1">{errors.period}</p>}
@@ -334,7 +334,7 @@ const Writing: React.FC = () => {
             name="content"
             value={formData.content}
             onChange={handleChange}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
+            className="block w-full rounded-md border-grey-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 p-3"
             rows={12}
             placeholder="내용을 입력해주세요"
           />
@@ -366,12 +366,12 @@ const Writing: React.FC = () => {
             onChange={handleFileChange}
             accept="image/*"
             multiple
-            className="block w-full text-sm text-gray-500
+            className="block w-full text-sm text-grey-500
 file:mr-4 file:py-2 file:px-4
 file:rounded-full file:border-0
 file:text-sm file:font-semibold
-file:bg-gray-100 file:text-gray-700
-hover:file:bg-gray-200"
+file:bg-grey-100 file:text-grey-700
+hover:file:bg-grey-200"
           />
           {errors.files && <p className="text-red-500 text-sm mt-1">{errors.files}</p>}
         </div>

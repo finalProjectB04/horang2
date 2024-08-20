@@ -1,6 +1,5 @@
 import { ModalProvider } from "@/context/modal.context";
 import QueryProvider from "@/provider/QueryProvider";
-import RecoilProvider from "@/provider/RecoilProvider";
 import type { Metadata } from "next";
 import Head from "next/head";
 import Script from "next/script";
@@ -8,7 +7,7 @@ import "swiper/swiper-bundle.css";
 import "./globals.css";
 
 import ClientHeader from "@/components/common/Header/ClientHeader";
-import { ScrollToTopButton } from "@/components/maindetail/ScrollToTopButton";
+import { Footer } from "@/components/common/footer/Footer";
 
 export const metadata: Metadata = {
   title: "horang",
@@ -39,19 +38,17 @@ export default function RootLayout({
       <Head>
         <link rel="stylesheet" href="assets/fonts/pretendard.css" />
       </Head>
+      <QueryProvider>
+        <ModalProvider>
+          <body className="font-sans mt-[84px]">
+            <ClientHeader />
 
-      <RecoilProvider>
-        <QueryProvider>
-          <ModalProvider>
-            <body className="font-sans mt-[84px]">
-              <ClientHeader />
-              {children}
-              <ScrollToTopButton />
-              <Script src="https://developers.kakao.com/sdk/js/kakao.min.js" />
-            </body>
-          </ModalProvider>
-        </QueryProvider>
-      </RecoilProvider>
+            {children}
+            <Script src="https://developers.kakao.com/sdk/js/kakao.min.js" />
+            <Footer />
+          </body>
+        </ModalProvider>
+      </QueryProvider>
     </html>
   );
 }
