@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    unoptimized: true,
-
+    // unoptimized: true,
+    domains: ["tong.visitkorea.or.kr"],
     remotePatterns: [
       {
         protocol: "https",
@@ -22,6 +22,7 @@ const nextConfig = {
       },
     ],
   },
+  reactStrictMode: true,
 };
 
 export default nextConfig;

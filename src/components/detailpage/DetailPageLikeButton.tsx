@@ -181,7 +181,8 @@ const DetailPageLikeButton: React.FC<LikeButtonProps> = ({ contentId, imageUrl, 
     return <div>에러가 감지되었습니다....</div>;
   }
 
-  const handleLikeButton = async () => {
+  const handleLikeButton = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event?.stopPropagation();
     try {
       if (liked) {
         deleteMutation.mutate(userId!);

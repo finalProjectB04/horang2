@@ -20,7 +20,7 @@ const Recommend: React.FC<RecommendProps> = ({ data, MBTIResult }) => {
                 onClick={() => router.push(`/detail/${item.contentid}`)}
                 className="flex items-center justify-center w-36 h-36 sm:w-24 sm:h-24 rounded-full overflow-hidden"
               >
-                {item.firstimage ? (
+                {item?.firstimage ? (
                   <Image
                     src={item.firstimage}
                     alt={item.title}
@@ -42,7 +42,7 @@ const Recommend: React.FC<RecommendProps> = ({ data, MBTIResult }) => {
                 className="text-center font-medium"
                 style={{ maxWidth: "120px", whiteSpace: "normal", overflow: "hidden", textOverflow: "ellipsis" }}
               >
-                {item.title}
+                {item?.title}
               </p>
             </li>
           ))}
