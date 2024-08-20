@@ -27,14 +27,14 @@ const fetchTouristSpots = async (latitude: number, longitude: number): Promise<T
     params: {
       ServiceKey: process.env.NEXT_PUBLIC_TOURIST_API_KEY,
       contentTypeId: 12,
-      numOfRows: 100,
+      numOfRows: 1000,
       pageNo: 1,
       MobileOS: "ETC",
       MobileApp: "horang",
       _type: "json",
       mapX: longitude,
       mapY: latitude,
-      radius: 50000,
+      radius: 20000,
       listYN: "Y",
     },
     headers: {
