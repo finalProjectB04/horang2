@@ -159,7 +159,7 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
   }
 
   const handleLikeButton = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation(); //이벤트 버블링 방지
+    event.stopPropagation();
     try {
       if (liked) {
         deleteMutation.mutate(userId!);
@@ -213,9 +213,13 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
             </button>
           </div>
         ) : (
-          <div className="w-full h-full bg-grey-200 flex items-center justify-center rounded-t-[9.11px]">
-            <span className="text-grey-500 text-xs">No Image</span>
-          </div>
+          <Image
+            src="/assets/images/null_image.svg"
+            alt={item.title}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-t-[8px]"
+          />
         )}
       </div>
       <div className="absolute bottom-0 left-0 right-0 bg-white p-2 flex flex-col items-start gap-1.5 self-stretch">
