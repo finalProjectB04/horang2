@@ -139,7 +139,7 @@ export const questions: Question[] = [
       { answer: "가성비 좋고 깔끔한 숙소를 찾아요", type: "cheap" },
       { answer: "조용하고 아늑한 숙소가 좋아요", type: "homebody" },
       { answer: "숙소는 상관없어! 잠만 자는 곳이에요", type: "wanderer" },
-      { answer: "어쨋든 맛있는 조식이 있어야해요", type: "foodie" },
+      { answer: "무조건 맛있는 조식이 있어야해요", type: "foodie" },
     ],
   },
   {
@@ -203,11 +203,11 @@ export const questions: Question[] = [
     ],
   },
   {
-    question: "여행 중 예산 관리는 어떻게 할까?",
+    question: "여행 중 경비는 어떻게 쓸까?",
     options: [
       { answer: "예산을 계획적으로 짜고, 가성비가 중요해요", type: "cheap" },
-      { answer: "재한을 두지 않고 넉넉히 쓰자구!", type: "luxury" },
-      { answer: "숙소나 맛집이 가장 중요해요", type: "foodie" },
+      { answer: "제한을 두지 않고 넉넉히 쓰자구!", type: "luxury" },
+      { answer: "숙소나 맛집에 가장 많이 써요", type: "foodie" },
       { answer: "액티비티나 활동, 체험에 많이 써요", type: "active" },
       { answer: "예산을 유연하게, 필요에 따라 소비해요", type: "cultureLover" },
     ],

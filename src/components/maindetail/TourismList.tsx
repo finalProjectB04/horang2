@@ -158,15 +158,21 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
         <h3 className="text-[19px] font-bold">{title}</h3>
       </div>
 
-      <div className="mx-auto sm:max-w-[375px] lg:max-w-[960px] flex flex-col items-center justify-center ">
-        <div className="flex flex-wrap gap-[2px] lg:gap-2 lg:mb-4 justify-center">
+      <div className="mx-auto py-8 max-w-[960px] flex flex-col items-center justify-center ">
+        <div className="flex flex-wrap justify-center gap-2 mb-4 p-1  shadow-inner">
           {KOREAN_CONSONANTS.map((consonant) => (
             <button
               key={consonant}
               onClick={() => setSelectedConsonant(selectedConsonant === consonant ? "" : consonant)}
-              className={`px-3 py-1 rounded font-bold text-white ${
-                selectedConsonant === consonant ? "bg-orange-500 text-white" : "bg-[#0c4b75]"
-              }`}
+              className={`
+        px-2 py-1 rounded-full font-semibold text-sm transition-all duration-300 ease-in-out
+        ${
+          selectedConsonant === consonant
+            ? "bg-orange-500 text-white shadow-lg transform scale-110"
+            : "bg-orange-300 text-gray-700 hover:bg-gray-200 hover:shadow"
+        }
+        focus:outline-none focus:ring-2 focus:ring-orange-300
+      `}
             >
               {consonant}
             </button>
