@@ -14,6 +14,8 @@ import { NoResultsFound } from "./NoResultsFound";
 import { useUserStore } from "@/zustand/userStore";
 import Control from "../main/Control";
 import { useSearchStore } from "@/zustand/searchStore";
+import { getInitialConsonant, HANGUL } from "@/utils/hangul";
+
 interface TourismListProps {
   contentTypeId: number;
   title: string;
@@ -26,40 +28,6 @@ const fetchTourismData = async (contentTypeId: number): Promise<ApiInformation[]
     throw new Error(`Failed to fetch tourism data for contentTypeId ${contentTypeId}`);
   }
   return response.json();
-};
-
-const KOREAN_CONSONANTS = [
-  "ㄱ",
-  "ㄲ",
-  "ㄴ",
-  "ㄷ",
-  "ㄸ",
-  "ㄹ",
-  "ㅁ",
-  "ㅂ",
-  "ㅃ",
-  "ㅅ",
-  "ㅆ",
-  "ㅇ",
-  "ㅈ",
-  "ㅉ",
-  "ㅊ",
-  "ㅋ",
-  "ㅌ",
-  "ㅍ",
-  "ㅎ",
-];
-
-const getInitialConsonant = (str: string) => {
-  const firstChar = str.charAt(0);
-  const unicodeValue = firstChar.charCodeAt(0);
-
-  if (unicodeValue >= 44032 && unicodeValue <= 55203) {
-    const consonantIndex = Math.floor((unicodeValue - 44032) / 588);
-    return KOREAN_CONSONANTS[consonantIndex];
-  }
-
-  return firstChar.toUpperCase();
 };
 
 export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, img }) => {
@@ -158,9 +126,9 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
         <h3 className="text-[19px] font-bold">{title}</h3>
       </div>
 
-      <div className="mx-auto py-8 max-w-[960px] flex flex-col items-center justify-center ">
-        <div className="flex flex-wrap justify-center gap-2 mb-4 p-1  shadow-inner">
-          {KOREAN_CONSONANTS.map((consonant) => (
+      <div className="mx-auto sm:max-w-[375px] lg:max-w-[960px] flex flex-col items-center justify-center">
+        <div className="flex flex-wrap justify-center gap-2 mb-4 p-1">
+          {HANGUL.map((consonant) => (
             <button
               key={consonant}
               onClick={() => setSelectedConsonant(selectedConsonant === consonant ? "" : consonant)}

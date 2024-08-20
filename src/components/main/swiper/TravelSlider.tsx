@@ -320,9 +320,13 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
                   </button>
                 </div>
               ) : (
-                <div className="w-full h-full bg-grey-200 flex items-center justify-center rounded-t-[6px]">
-                  <span className="text-grey-500 text-sm">No Image Available</span>
-                </div>
+                <Image
+                  src="/assets/images/null_image.svg"
+                  alt={item.title}
+                  fill
+                  objectFit="cover"
+                  className="rounded-t-[8px]"
+                />
               )}
             </div>
             <div

@@ -47,14 +47,14 @@ export default function Person({
         height={64}
         src={url || "/assets/images/profile_ex.png"}
         alt={name}
-        className="sm:hidden md:w-10 md:h-10 rounded-full mr-6 my-9"
+        className="sm:hidden md:w-10 md:h-10 rounded-full mr-6 my-9 h-16"
       />
       <Image
         width={32}
         height={32}
         src={url || "/assets/images/profile_ex.png"}
         alt={name}
-        className="sm:block md:hidden lg:hidden rounded-full mr-3 my-2"
+        className="sm:block md:hidden lg:hidden rounded-full mr-3 my-2 h-8"
       />
       <div className="flex flex-col">
         <div className="flex gap-4 items-center mb-1">

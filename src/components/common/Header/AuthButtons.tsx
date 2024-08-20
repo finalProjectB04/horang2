@@ -1,52 +1,67 @@
 import { useEffect, useState } from "react";
-import { useUserStore } from "@/zustand/userStore";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { useUserStore } from "@/zustand/userStore";
 
 const supabase = createClient();
-
 interface AuthButtonsProps {
   userId: string | null;
   handleLogout: () => Promise<void>;
 }
 
-const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
+const AuthButtons: React.FC<AuthButtonsProps> = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
-  const { setUser, clearUser } = useUserStore((state) => ({
+  const { id, setUser, clearUser } = useUserStore((state) => ({
+    id: state.id,
     setUser: state.setUser,
     clearUser: state.clearUser,
   }));
 
   useEffect(() => {
-    const checkSessionAndFetchUser = async () => {
-      const { data: sessionData } = await supabase.auth.getSession();
+    const storedUser = Cookies.get("user-storage");
+    if (storedUser) {
+      const userData = JSON.parse(storedUser);
+      setUser(
+        userData.id,
+        userData.user_email,
+        userData.user_nickname,
+        userData.profile_url,
+        userData.provider,
+        userData.provider_id,
+      );
+    } else {
+      const checkSessionAndFetchUser = async () => {
+        const { data: sessionData } = await supabase.auth.getSession();
 
-      if (sessionData?.session?.user) {
-        const { id } = sessionData.session.user;
+        if (sessionData?.session?.user) {
+          const { id } = sessionData.session.user;
 
-        const { data: userData } = await supabase.from("Users").select("*").eq("id", id).single();
+          const { data: userData } = await supabase.from("Users").select("*").eq("id", id).maybeSingle();
 
-        if (userData) {
-          const { user_email = "", user_nickname = "", profile_url = "", provider = "", provider_id = "" } = userData;
+          if (userData) {
+            const { user_email = "", user_nickname = "", profile_url = "", provider = "", provider_id = "" } = userData;
 
-          setUser(id, user_email || "", user_nickname || "", profile_url || "", provider || "", provider_id || "");
+            setUser(id, user_email || "", user_nickname || "", profile_url || "", provider || "", provider_id || "");
+            Cookies.set("user-storage", JSON.stringify(userData), { expires: 7 });
+          } else {
+            clearUser();
+          }
         } else {
           clearUser();
         }
-      } else {
-        clearUser();
-      }
-    };
+      };
+
+      checkSessionAndFetchUser();
+    }
 
     setIsClient(true);
-    checkSessionAndFetchUser();
   }, [setUser, clearUser]);
 
   const onLogoutClick = async () => {
-    if (!userId) return;
+    if (!id) return;
 
     try {
       const response = await fetch("/api/logout", {
@@ -54,13 +69,15 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
       });
 
       if (response.ok) {
-        Cookies.remove("accessToken", { path: "/" });
+        Cookies.remove("user-storage");
 
         clearUser();
 
         router.push("/");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   if (!isClient) {
@@ -69,7 +86,7 @@ const AuthButtons: React.FC<AuthButtonsProps> = ({ userId, handleLogout }) => {
 
   return (
     <div className="flex-shrink-0 flex space-x-4 ml-4">
-      {!userId ? (
+      {!id ? (
         <>
           <Link href="/signin">
             <span className="bg-[#222222] text-[#FF912B] border border-[#FF912B] px-4 py-2 rounded hover:bg-[#333333] cursor-pointer">
