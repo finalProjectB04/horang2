@@ -12,7 +12,7 @@ const TravelSwiperSkeleton = () => {
           : "rounded-[8px] lg:h-full lg:w-[708px] h-[346px] flex flex-col items-start gap-3 self-stretch"
       }`}
     >
-      <div className={`flex ${isLgScreen ? "flex-row" : "flex-col lg:flex-row"} gap-4`}>
+      <div className={`flex ${isLgScreen ? "flex-row" : " lg:flex-row"} gap-4`}>
         {skeletonItems.map((_, index) => (
           <div
             key={index}
