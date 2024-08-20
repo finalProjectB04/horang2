@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 import TimeAgo from "javascript-time-ago";
 import ko from "javascript-time-ago/locale/ko.json";
-import { useModal } from "@/context/modal.context";
+import useCustomConfirm from "@/hooks/useCustomConfirm";
 
 TimeAgo.addDefaultLocale(ko);
 const timeAgo = new TimeAgo("ko-KR");
@@ -27,7 +27,7 @@ const ReplyItem: React.FC<{
   queryKey: string[];
 }> = ({ reply, userId, queryKey }) => {
   const queryClient = useQueryClient();
-  const modal = useModal();
+  const confirm = useCustomConfirm();
   const [editingReplyId, setEditingReplyId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState("");
 
@@ -49,16 +49,9 @@ const ReplyItem: React.FC<{
       queryClient.invalidateQueries({ queryKey });
       setEditingReplyId(null);
       setEditingContent("");
-      modal.open({
-        title: "성공!",
-        content: <div className="text-center">대댓글이 성공적으로 수정되었습니다.</div>,
-      });
     },
     onError: (error) => {
-      modal.open({
-        title: "실패!",
-        content: <div className="text-center">대댓글 수정에 실패했습니다. 오류: {error.message}</div>,
-      });
+      console.error("Failed to update reply:", error);
     },
   });
 
@@ -72,16 +65,9 @@ const ReplyItem: React.FC<{
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey });
-      modal.open({
-        title: "성공!",
-        content: <div className="text-center">대댓글이 성공적으로 삭제되었습니다.</div>,
-      });
     },
     onError: (error) => {
-      modal.open({
-        title: "실패!",
-        content: <div className="text-center">대댓글 삭제에 실패했습니다. 오류: {error.message}</div>,
-      });
+      console.error("Failed to delete reply:", error);
     },
   });
 
@@ -92,33 +78,17 @@ const ReplyItem: React.FC<{
 
   const handleSaveEdit = (replyId: string) => {
     if (editingContent.trim() === "") {
-      modal.open({
-        title: "경고!",
-        content: <div className="text-center">대댓글 내용이 비어 있습니다.</div>,
-      });
+      // Show warning modal if content is empty
       return;
     }
     updateReplyMutation.mutate({ replyId, newContent: editingContent });
   };
 
-  const handleDeleteReply = (replyId: string) => {
-    modal.open({
-      title: "삭제 확인",
-      content: (
-        <div className="text-center">
-          <p>정말로 이 대댓글을 삭제하시겠습니까?</p>
-          <button
-            onClick={() => {
-              deleteReplyMutation.mutate(replyId);
-              modal.close();
-            }}
-            className="bg-red-500 text-white px-4 py-2 rounded mt-4"
-          >
-            삭제
-          </button>
-        </div>
-      ),
-    });
+  const handleDeleteReply = async (replyId: string) => {
+    const confirmed = await confirm("정말로 이 대댓글을 삭제하시겠습니까?");
+    if (confirmed) {
+      deleteReplyMutation.mutate(replyId);
+    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>, replyId: string) => {
@@ -137,8 +107,8 @@ const ReplyItem: React.FC<{
         <div>
           <textarea
             value={editingContent}
-            onChange={(e) => setEditingContent(e.target.value)}
-            onKeyDown={(e) => handleKeyDown(e, reply.id)}
+            onChange={(event) => setEditingContent(event.target.value)}
+            onKeyDown={(event) => handleKeyDown(event, reply.id)}
             className="w-full p-2 border border-primary-100 rounded-lg mb-2 "
             rows={4}
           />
@@ -169,7 +139,7 @@ const ReplyItem: React.FC<{
             <p className="font-semibold" style={{ display: "inline-block", marginRight: "10px" }}>
               {reply.user_nickname}
             </p>
-            <p className="text-sm text-gray-500" style={{ marginTop: "5px" }}>
+            <p className="text-sm text-grey-500" style={{ marginTop: "5px" }}>
               {timeAgo.format(new Date(reply.created_at))}
             </p>
             {reply.user_id === userId && (
@@ -198,7 +168,7 @@ const ReplyItem: React.FC<{
               </div>
             )}
           </div>
-          <p className="mt-2 text-gray-800 text-sm" style={{ marginLeft: "35px" }}>
+          <p className="mt-2 text-grey-800 text-sm" style={{ marginLeft: "35px" }}>
             {reply.content}
           </p>
         </div>

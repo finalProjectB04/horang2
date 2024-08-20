@@ -16,7 +16,7 @@ export async function GET(): Promise<Response> {
         MobileApp: "horang",
         _type: "json",
         listYN: "Y",
-        arrange: "A",
+        arrange: "C",
         contentTypeId: "28",
       },
     });

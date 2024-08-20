@@ -5,10 +5,10 @@ import Recommend from "@/components/recommend/Recommend";
 import { Item } from "@/types/APIResponse.type";
 import { fetchResultData } from "@/utils/travelMbti/FetchResultData";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { results } from "../results";
-import Image from "next/image";
 
 const TypeResultPage = () => {
   const params = useParams();

@@ -12,7 +12,7 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
       <div className="hidden lg:block">
         <div className="relative w-[1280px] h-[600px]">
           <Image
-            src="/assets/images/ex6.png"
+            src="/assets/images/mainBanner.png"
             alt="background"
             layout="fill"
             objectFit="cover"
@@ -24,9 +24,9 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
                 <input
                   type="text"
                   value={searchTerm}
-                  placeholder="검색어를 입력해주세요"
+                  placeholder="지역을 입력해주세요"
                   onChange={(event) => setSearchTerm(event.target.value)}
-                  className="w-full p-3 md:p-4 text-base md:text-lg bg-black bg-opacity-70 text-white placeholder-gray-400 border-2 border-gray-600 rounded-full shadow-lg focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out"
+                  className="w-full p-3 md:p-4 text-base md:text-lg bg-black bg-opacity-70 text-white placeholder-grey-400 border-2 border-grey-600 rounded-full shadow-lg focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out"
                 />
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-white hover:text-blue-950 focus:outline-none px-10">
                   <svg
@@ -51,13 +51,7 @@ export const MainImage: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm 
       </div>
       <div className="block  lg:hidden">
         <div className=" relative w-[375px] h-[295px]">
-          <Image
-            src="/assets/images/ex6.png"
-            alt="background"
-            layout="fill"
-            objectFit="cover"
-            className="object-cover"
-          />
+          <Image src="/assets/images/ex6.png" alt="background" fill objectFit="cover" className="object-cover" />
         </div>
       </div>
     </>
