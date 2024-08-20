@@ -33,18 +33,18 @@ export default function Message({ message, createdAt, previousCreatedAt, isFromM
       )}
       <div className={`sm:hidden md:flex lg:flex flex items-start ${isFromMe ? "ml-auto" : "mr-auto"}`}>
         {!isFromMe && userImage && (
-          <Image width={64} height={64} src={userImage} alt="User" className="rounded-full mr-2" />
+          <Image width={64} height={64} src={userImage} alt="User" className="md:w-10 md:h-10 rounded-full mr-2" />
         )}
         <div className="flex flex-col">
-          {!isFromMe && <p className="text-secondary-800">{id}</p>}
+          {!isFromMe && <p className="text-secondary-800 sm:text-xs md:text-sm lg:text-base">{id}</p>}
           <div className="flex">
             {isFromMe && <p className="flex items-end text-[10px] text-primary-600">{formatDateToHours(createdAt)}</p>}
             <div
-              className={`w-fit max-w-[300px] mx-2 px-3 py-4 rounded-md ${
+              className={`w-fit max-w-[300px] mx-2 md:px-1 md:py-2 lg:px-3 lg:py-4 rounded-md ${
                 isFromMe ? "bg-primary-400 text-white" : "bg-grey-100 text-secondary-800"
               }`}
             >
-              <p>{message}</p>
+              <p className="sm:text-xs md:text-sm lg:text-base">{message}</p>
             </div>
             {!isFromMe && <p className="flex items-end text-[10px] text-primary-600">{formatDateToHours(createdAt)}</p>}
           </div>

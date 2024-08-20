@@ -26,7 +26,7 @@ const Home = () => {
       <div className="flex flex-col justify-center items-center">
         <MidImage />
       </div>
-      <div className="mb-[70px]">
+      <div className="lg:mb-[70px]">
         <Leports searchTerm={searchTerm} />
       </div>
 

@@ -47,7 +47,7 @@ export default function Person({
         height={64}
         src={url || "/assets/images/profile_ex.png"}
         alt={name}
-        className="sm:hidden rounded-full mr-6 my-9"
+        className="sm:hidden md:w-10 md:h-10 rounded-full mr-6 my-9"
       />
       <Image
         width={32}
