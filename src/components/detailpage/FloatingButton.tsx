@@ -23,7 +23,7 @@ const FloatingButton = () => {
   return (
     <button
       onClick={handleClick}
-      className="fixed right-[2%] bottom-[7%] rounded-ful lg:flex lg:flex-col lg:items-center z-50"
+      className="fixed right-[2%] bottom-[17%] rounded-ful lg:flex lg:flex-col lg:items-center z-50"
     >
       <Image
         className="opacity-70  hover:opacity-90"
