@@ -1,4 +1,4 @@
-# ![logo](/assets/images/readme/HoRang.png)
+# ![logo](/public/assets/images/readme/HoRang.png)
 
 ### 🔗 [호랑 둘러보기](https://horang2.vercel.app/)
 
@@ -18,7 +18,7 @@
 
 ## 📢프로젝트 소개
 
-![프로젝트 소개 이미지](/assets/images/readme/image-1.png)
+![프로젝트 소개 이미지](/public/assets/images/readme/image-1.png)
 
 ## 국내 여행 소개, 내 취향 여행지 추천 및 여행객 소통의 장 **“호랑”**
 
@@ -30,7 +30,7 @@
 
 ## 🏗️아키텍쳐
 
-![아키텍쳐](/assets/images/readme/image.png)
+![아키텍쳐](/public/assets/images/readme/image.png)
 
 <br/><br/>
 
@@ -49,10 +49,10 @@
     </tr>
     <tr>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-2.png" alt="로그인 이미지" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-2.png" alt="로그인 이미지" style="max-width: 100%; height: auto;">
         </td>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-3.png" alt="회원가입 이미지" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-3.png" alt="회원가입 이미지" style="max-width: 100%; height: auto;">
         </td>
     </tr>
 </table>
@@ -73,10 +73,10 @@
     </tr>
     <tr>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-4.png" alt="메인 페이지" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-4.png" alt="메인 페이지" style="max-width: 100%; height: auto;">
         </td>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-5.png" alt="여행지 추천" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-5.png" alt="여행지 추천" style="max-width: 100%; height: auto;">
         </td>
     </tr>
 </table>
@@ -97,7 +97,7 @@
     </tr>
     <tr>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-6.png" alt="상세 페이지" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-6.png" alt="상세 페이지" style="max-width: 100%; height: auto;">
         </td>
     </tr>
 </table>
@@ -118,7 +118,7 @@
     </tr>
     <tr>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-7.png" alt="내 근처 여행지" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-7.png" alt="내 근처 여행지" style="max-width: 100%; height: auto;">
         </td>
     </tr>
 </table>
@@ -141,10 +141,10 @@
     </tr>
     <tr>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-8.png" alt="설문조사" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-8.png" alt="설문조사" style="max-width: 100%; height: auto;">
         </td>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-9.png" alt="여행 MBTI 유형" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-9.png" alt="여행 MBTI 유형" style="max-width: 100%; height: auto;">
         </td>
     </tr>
 </table>
@@ -166,10 +166,10 @@
     </tr>
     <tr>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-10.png" alt="호랑이 모임" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-10.png" alt="호랑이 모임" style="max-width: 100%; height: auto;">
         </td>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-11.png" alt="글 작성 공간" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-11.png" alt="글 작성 공간" style="max-width: 100%; height: auto;">
         </td>
     </tr>
 </table>
@@ -188,7 +188,7 @@
     </tr>
     <tr>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-12.png" alt="나의 공간" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-12.png" alt="나의 공간" style="max-width: 100%; height: auto;">
         </td>
     </tr>
 </table>
@@ -211,10 +211,10 @@
     </tr>
     <tr>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-13.png" alt="호랑이 목록" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-13.png" alt="호랑이 목록" style="max-width: 100%; height: auto;">
         </td>
         <td style="text-align: center;">
-            <img src="/assets/images/readme/image-14.png" alt="대화하기" style="max-width: 100%; height: auto;">
+            <img src="/public/assets/images/readme/image-14.png" alt="대화하기" style="max-width: 100%; height: auto;">
         </td>
     </tr>
 </table>
