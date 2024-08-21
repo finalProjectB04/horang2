@@ -235,11 +235,13 @@ const MapComponent: React.FC = () => {
               )}
             </div>
             <div className="md:ml-10 md:mt-0 mt-8 md:w-1/2">
-              <a href={`/detail/${selectedSpot.contentid}`} className="flex items-center">
-                <span className="text-[20px] lg:text-[24px] font-bold mr-4">{selectedSpot.title}</span>
-                <span className="border-b-2 border-primary-300 text-primary-300 text-[12px] lg:text-[14px] mr-10">
-                  더보기
-                </span>
+              <div className="flex flex-row">
+                <a href={`/detail/${selectedSpot.contentid}`} className="flex items-center mb-1">
+                  <span className="text-[20px] lg:text-[24px] font-bold mr-4">{selectedSpot.title}</span>
+                  <span className="border-b-2 border-primary-300 text-primary-300 text-[12px] lg:text-[14px] mr-10">
+                    더보기
+                  </span>
+                </a>
                 <DetailPageLikeButton
                   contentId={selectedSpot.contentid || ""}
                   title={selectedSpot.title || ""}
@@ -248,7 +250,8 @@ const MapComponent: React.FC = () => {
                   addr1={selectedSpot.address || ""}
                   tel={selectedSpot.tel || ""}
                 />
-              </a>
+              </div>
+
               <p className="text-secondary-700 text-[14px] lg:text-[16px]">
                 {getDistance(latitude!, longitude!, selectedSpot.mapy, selectedSpot.mapx).toFixed(2)} km
               </p>
