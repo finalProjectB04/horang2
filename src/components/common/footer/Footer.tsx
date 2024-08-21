@@ -11,7 +11,7 @@ export const Footer = () => {
     return null;
   }
   return (
-    <footer className="bottom-0 w-full left-0 z-50 text-white  bg-cover bg-center bg-[url('/assets/images/header/header.png')]  bg-secondary-800">
+    <footer className=" bottom-0 w-full left-0 z-50 text-white  bg-cover bg-center bg-[url('/assets/images/header/header.png')]  bg-secondary-800">
       <div className="mx-auto max-w-[1080px]">
         <div className="flex flex-col lg:flex-row justify-between items-center ">
           <div className=" py-6">
