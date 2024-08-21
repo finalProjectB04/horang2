@@ -10,8 +10,8 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { fetchSessionData } from "@/utils/auth";
 import { selectPostById } from "@/components/posting/select/route";
-import { useUserStore } from "@/zustand/userStore";
 import { useModal } from "@/context/modal.context";
+import { getUserById } from "@/actions/chatActions";
 
 interface Post {
   id: string;
@@ -32,7 +32,6 @@ const PostDetail: React.FC = () => {
   const { id } = useParams() as { id: string };
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-  const { user_nickname, profile_url } = useUserStore();
   const modal = useModal();
 
   const {
@@ -63,13 +62,7 @@ const PostDetail: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-0 max-w-[960px]">
-      <PostHeader
-        post={post}
-        sessionData={sessionData}
-        userNickname={user_nickname || "Unknown User"}
-        profileUrl={profile_url}
-        onShareClick={() => setIsShareModalOpen(true)}
-      />
+      <PostHeader post={post} sessionData={sessionData} onShareClick={() => setIsShareModalOpen(true)} />
 
       <PostContent post={post} sessionData={sessionData} />
 
