@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import PostLike from "@/components/posting/postcomponents/PostLike";
+import { useQuery } from "@tanstack/react-query";
+import { getUserById } from "@/actions/chatActions";
 
 interface Post {
   id: string;
@@ -20,15 +22,21 @@ interface Post {
 interface PostHeaderProps {
   post: Post;
   sessionData: any;
-  userNickname: string;
-  profileUrl: string | null;
   onShareClick: () => void;
 }
 
-const PostHeader: React.FC<PostHeaderProps> = ({ post, sessionData, userNickname, profileUrl, onShareClick }) => {
+const PostHeader: React.FC<PostHeaderProps> = ({ post, sessionData, onShareClick }) => {
   const getImageUrls = (files: string | null): string[] => {
     return files ? files.split(",").filter((url) => url.trim() !== "") : [];
   };
+
+  const getUserQuery = useQuery({
+    queryKey: ["user", post.user_id],
+    queryFn: async () => {
+      const postUser = await getUserById(post.user_id);
+      return postUser;
+    },
+  });
 
   return (
     <div>
@@ -77,14 +85,14 @@ const PostHeader: React.FC<PostHeaderProps> = ({ post, sessionData, userNickname
       {sessionData && (
         <div className="flex items-center mb-[40px] sm:mb-[20px] sm:ml-4">
           <Image
-            src={profileUrl || "/path/to/default_profile_image.jpg"}
+            src={getUserQuery.data?.[0].profile_url || "/path/to/default_profile_image.jpg"}
             alt="프로필 이미지"
             width={30}
             height={30}
             className="rounded-full"
           />
           <div className="ml-4 sm:ml-2">
-            <p className="text-lg sm:text-base text-black">{userNickname}</p>
+            <p className="text-lg sm:text-base text-black">{getUserQuery.data?.[0].user_nickname}</p>
           </div>
         </div>
       )}
