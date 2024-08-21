@@ -67,14 +67,6 @@
 <table style="width: 100%; border-collapse: collapse;">
     <tr>
         <td style="text-align: center;">
-            <h3>메인 페이지</h3>
-        </td>
-        <td style="text-align: center;">
-            <h3>여행지 추천</h3>
-        </td>
-    </tr>
-    <tr>
-        <td style="text-align: center;">
             <img src="/public/assets/images/readme/image-4.png" alt="메인 페이지" style="max-width: 100%; height: auto;">
         </td>
         <td style="text-align: center;">
@@ -96,11 +88,6 @@
 <table style="width: 100%; border-collapse: collapse;">
     <tr>
         <td style="text-align: center;">
-            <h3>상세 페이지</h3>
-        </td>
-    </tr>
-    <tr>
-        <td style="text-align: center;">
             <img src="/public/assets/images/readme/image-6.png" alt="상세 페이지" style="max-width: 100%; height: auto;">
         </td>
     </tr>
@@ -117,11 +104,6 @@
 ### ✅내 근처 여행지
 
 <table style="width: 100%; border-collapse: collapse;">
-    <tr>
-        <td style="text-align: center;">
-            <h3>내 근처 여행지</h3>
-        </td>
-    </tr>
     <tr>
         <td style="text-align: center;">
             <img src="/public/assets/images/readme/image-7.png" alt="내 근처 여행지" style="max-width: 100%; height: auto;">
@@ -168,14 +150,6 @@
 <table style="width: 100%; border-collapse: collapse;">
     <tr>
         <td style="text-align: center;">
-            <h3>호랑이 모임</h3>
-        </td>
-        <td style="text-align: center;">
-            <h3>글 작성 공간</h3>
-        </td>
-    </tr>
-    <tr>
-        <td style="text-align: center;">
             <img src="/public/assets/images/readme/image-10.png" alt="호랑이 모임" style="max-width: 100%; height: auto;">
         </td>
         <td style="text-align: center;">
@@ -195,11 +169,6 @@
 <table style="width: 100%; border-collapse: collapse;">
     <tr>
         <td style="text-align: center;">
-            <h3>나의 공간</h3>
-        </td>
-    </tr>
-    <tr>
-        <td style="text-align: center;">
             <img src="/public/assets/images/readme/image-12.png" alt="나의 공간" style="max-width: 100%; height: auto;">
         </td>
     </tr>
@@ -212,17 +181,9 @@
 
 <br/>
 
-### 대화하기
+### ✅대화하기
 
 <table style="width: 100%; border-collapse: collapse;">
-    <tr>
-        <td style="text-align: center;">
-            <h3>호랑이 목록</h3>
-        </td>
-        <td style="text-align: center;">
-            <h3>대화하기</h3>
-        </td>
-    </tr>
     <tr>
         <td style="text-align: center;">
             <img src="/public/assets/images/readme/image-13.png" alt="호랑이 목록" style="max-width: 100%; height: auto;">
