@@ -99,10 +99,7 @@ const ReplyItem: React.FC<{
   };
 
   return (
-    <li
-      className="border border-primary-100 sm:border-none p-4 rounded-lg mb-2 mx-4"
-      style={{ padding: "10px 5px", position: "relative" }}
-    >
+    <li className="border border-primary-100 sm:border-none p-4 rounded-lg mb-2 mx-4" style={{ position: "relative" }}>
       {editingReplyId === reply.id ? (
         <div>
           <textarea

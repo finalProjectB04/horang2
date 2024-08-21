@@ -71,20 +71,28 @@ const PostContent: React.FC<PostContentProps> = ({ post, sessionData }) => {
     <div className="sm:ml-4">
       <div className="mb-10 sm:mb-5">
         <div className="flex items-center mb-2">
-          <Image src="/assets/images/icon1.png" alt="여행 장소" width={24} height={24} />
-          <p className="text-lg sm:text-base text-black ml-2 sm:ml-1">여행 장소 ㅣ {post.place || "미정"}</p>
+          <Image src="/assets/images/community/travel_spot.svg" alt="여행 장소" width={24} height={24} />
+          <p className="text-lg sm:text-base text-grey-900 ml-2 sm:ml-1 font-semibold">
+            여행 장소 <span className="text-grey-200 font-normal mx-2">ㅣ</span> {post.place || "미정"}
+          </p>
         </div>
         <div className="flex items-center mb-2">
-          <Image src="/assets/images/icon.png" alt="출발 장소" width={24} height={24} />
-          <p className="text-lg sm:text-base text-black ml-2 sm:ml-1">출발 장소 ㅣ {post.departure || "미정"}</p>
+          <Image src="/assets/images/community/travel_start.svg" alt="출발 장소" width={24} height={24} />
+          <p className="text-lg sm:text-base text-black ml-2 sm:ml-1 font-semibold">
+            출발 장소 <span className="text-grey-200 font-normal mx-2">ㅣ</span> {post.departure || "미정"}
+          </p>
         </div>
         <div className="flex items-center mb-2">
-          <Image src="/assets/images/icon2.png" alt="여행 비용" width={24} height={24} />
-          <p className="text-lg sm:text-base text-black ml-2 sm:ml-1">여행 비용 ㅣ {post.cost || "미정"}</p>
+          <Image src="/assets/images/community/travel_budget.svg" alt="여행 비용" width={24} height={24} />
+          <p className="text-lg sm:text-base text-black ml-2 sm:ml-1 font-semibold">
+            여행 비용 <span className="text-grey-200 font-normal mx-2">ㅣ</span> {post.cost || "미정"}
+          </p>
         </div>
         <div className="flex items-center">
-          <Image src="/assets/images/icon3.png" alt="여행 기간" width={24} height={24} />
-          <p className="text-lg sm:text-base text-black ml-2 sm:ml-1">여행 기간 ㅣ {post.period || "미정"}</p>
+          <Image src="/assets/images/community/travel_date.svg" alt="여행 기간" width={24} height={24} />
+          <p className="text-lg sm:text-base text-black ml-2 sm:ml-1 font-semibold">
+            여행 기간 <span className="text-grey-200 font-normal mx-2">ㅣ</span> {post.period || "미정"}
+          </p>
         </div>
       </div>{" "}
       <div className="prose max-w-none" style={{ minHeight: "100px" }}>
