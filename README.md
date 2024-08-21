@@ -1,55 +1,79 @@
-# 🐯Horang
+# Horang
 
-- ✅
-- ✅
+![logo](HoRang.png)
+
+- 🔗 [사이트](https://horang2.vercel.app/)
+- 🔗 [브로셔](https://react5thbrochure.oopy.io/0e2b4a9a-e5a7-4491-b2db-91413d002ccb)
 
 <br/><br/>
 
 ## 팀원
 
-|                                   안종현                                    |                                   서예은                                   |                                    양대우                                    |                                 김지환                                 |                                 김운성                                 |                                                             이지원                                                              |
-| :-------------------------------------------------------------------------: | :------------------------------------------------------------------------: | :--------------------------------------------------------------------------: | :--------------------------------------------------------------------: | :--------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------: |
-| <img src="https://avatars.githubusercontent.com/Ahnjonghyun87" width="200"> | <img src="https://avatars.githubusercontent.com/yeeunseo-dev" width="200"> | <img src="https://avatars.githubusercontent.com/DAEWOOYANG0310" width="200"> | <img src="https://avatars.githubusercontent.com/RingKim1" width="200"> | <img src="https://avatars.githubusercontent.com/host2024" width="200"> | <img src="https://crjcsxutfsroqsqumefz.supabase.co/storage/v1/object/public/profiles/public/horang_typography.png" width="200"> |
-|                                    리더                                     |                                   부리더                                   |                                     팀원                                     |                                  팀원                                  |                                  팀원                                  |                                                            디자이너                                                             |
-|              [Ahnjonghyun87](https://github.com/Ahnjonghyun87)              |              [yeeunseo-dev](https://github.com/yeeunseo-dev)               |             [DAEWOOYANG0310](https://github.com/DAEWOOYANG0310)              |                [RingKim1](https://github.com/RingKim1)                 |                [host2024](https://github.com/host2024)                 |                                                           [이지원]()                                                            |
+|                                                                                                안종현                                                                                                |                                                                                               서예은                                                                                                |                                                                                                양대우                                                                                                 |                                                                                             김지환                                                                                              |                                                                                             김운성                                                                                              |                                                                                                                          이지원                                                                                                                          |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| <div style="width: 200px; height: 200px; overflow: hidden;"><img src="https://avatars.githubusercontent.com/Ahnjonghyun87" style="width: 100%; height: 100%; object-fit: cover;" alt="안종현"></div> | <div style="width: 200px; height: 200px; overflow: hidden;"><img src="https://avatars.githubusercontent.com/yeeunseo-dev" style="width: 100%; height: 100%; object-fit: cover;" alt="서예은"></div> | <div style="width: 200px; height: 200px; overflow: hidden;"><img src="https://avatars.githubusercontent.com/DAEWOOYANG0310" style="width: 100%; height: 100%; object-fit: cover;" alt="양대우"></div> | <div style="width: 200px; height: 200px; overflow: hidden;"><img src="https://avatars.githubusercontent.com/RingKim1" style="width: 100%; height: 100%; object-fit: cover;" alt="김지환"></div> | <div style="width: 200px; height: 200px; overflow: hidden;"><img src="https://avatars.githubusercontent.com/host2024" style="width: 100%; height: 100%; object-fit: cover;" alt="김운성"></div> | <div style="width: 200px; height: 200px; overflow: hidden;"><img src="https://crjcsxutfsroqsqumefz.supabase.co/storage/v1/object/public/profiles/public/horang_typography.png" style="width: 100%; height: 100%; object-fit: cover;" alt="이지원"></div> |
+|                                                                                                 리더                                                                                                 |                                                                                               부리더                                                                                                |                                                                                                 팀원                                                                                                  |                                                                                              팀원                                                                                               |                                                                                              팀원                                                                                               |                                                                                                                         디자이너                                                                                                                         |
+|                                                                          [Ahnjonghyun87](https://github.com/Ahnjonghyun87)                                                                           |                                                                           [yeeunseo-dev](https://github.com/yeeunseo-dev)                                                                           |                                                                          [DAEWOOYANG0310](https://github.com/DAEWOOYANG0310)                                                                          |                                                                             [RingKim1](https://github.com/RingKim1)                                                                             |                                                                             [host2024](https://github.com/host2024)                                                                             |                                                                                                                        [이지원]()                                                                                                                        |
 
 <br/><br/>
 
-## 프로젝트 진행 기간
+## 프로젝트 소개
 
-- 2024.07.15 ~ 2024.08.22
+![프로젝트 소개 이미지](image-1.png)
 
-<br/><br/>
+## 국내 여행 소개, 내 취향 여행지 추천 및 여행객 소통의 장 **“호랑”**
 
-## 🛠️개발 환경
-
-<br/><br/>
-
-## 상세설명
-
-내 주변 여행지 찾기 - 내 주변 반경 50km까지 관광api를 기준으로 여행지를 찾을 수 있습니다. 마커 및 더보기를 누를시 디테일 페이지로 이동합니다
-
-메인페이지 - 전체적인 여행지 추천 목록을 확인 가능합니다. contentTypeId에 따른 분류로 크게 5가지 카테고리로 나눴습니다. 더보기를 누를시 해당 카테고리의 더 많은 여행지 추천 목록을 확인 가능합니다.
-
-검색 기능에선 검색api를 활용하여 검색시 키워드에 따른 검색 결과를 페이지에 출력합니다.
-
-회원가입 - 현재는 이메일을 통한 회원가입 기능만 가능합니다. 추후 소셜로그인 및 기타 유효성 로직 강화- 추가 할 예정입니다.
-
-마이페이지 - 프로필 이미지 및 닉네임이 변경 가능합니다. 내가 좋아요 한 글을 탭에서 확인 가능합니다.
-
-추후 커뮤니티 기능 관련 내가 쓴글/좋아요 목록도 추가할 예정입니다. 
-
-마이페이지에서 가입 유저들과 채팅하기 기능을 구동 가능합니다
-
-채팅하기 - 현재 기준으론 가입 전체 목록에서 한 유저를 지정후 채팅 가능합니다. 추후 편의기능 강화 예정
-
-장소디테일 페이지 - 장소의 메타정보를 불러옵니다. 좋아요 기능 및 소셜 공유, 댓글기능을 사용가능합니다.
-
-커뮤니티- 글쓰기 및 이미지업로드 가능합니다. 글 상세페이지에서 댓글은 대댓글까지 가능합니다.
-
+- 여행지, 숙소, 음식점과 축제 및 행사 등 다양한 **국내 여행 정보 제공 플랫폼**
+- 사용자의 **여행 MBTI 유형**을 나눠 사용자의 취향을 고려한 **맞춤형 추천 서비스 제공**
+- 호랑 여행객을 위한 **커뮤니티, 채팅 기능**을 통해 소통의 장 제공
 
 <br/><br/>
 
-## 링크
+## 🏗️아키텍쳐
 
-- 🔗[Team Notion](https://www.notion.so/teamsparta/B_4-366aa6b8804f48f6b39d982da0ea084c)
+![아키텍쳐](image.png)
+
+<br/><br/>
+
+## 화면구성 및 주요 기능
+
+<hr />
+
+### 로그인 / 회원가입
+
+- **호랑**은 기본적인 국내 여행 정보를 제공하지만 **내 근처 여행지, 나만의 여행 등** 맞춤형 여행 정보 제공을 위해 **로그인 기능이 필요**합니다.
+- 기본적인 **이메일 주소로 가입** 할 수 있으며, 구글, 카카오 등 **소셜 로그인 기능도 지원**합니다.
+<table style="width: 100%; border-collapse: collapse;">
+    <tr>
+        <td style="text-align: center;">
+            <h3>로그인</h3>
+            <img src="image-2.png" alt="로그인 이미지" style="max-width: 100%; height: auto;">
+        </td>
+        <td style="text-align: center;">
+            <h3>회원가입</h3>
+            <img src="image-3.png" alt="회원가입 이미지" style="max-width: 100%; height: auto;">
+        </td>
+    </tr>
+</table>
+
+### 메인페이지, 여행지 추천
+
+### 상세 페이지
+
+- 해당 장소의 **자세한 정보**를 볼 수 있습니다,
+- **좋아요 / 취소 기능**이 있습니다
+- 소셜 공유 아이콘을 클릭하면 url 복사와 카카오톡 **소셜 공유가 가능**합니다
+- 해당 장소에 대한 **상세한 위치**를 카카오 맵으로 제공하고 마커로 표시합니다.
+- 여행객이 해당 장소에 대해 리뷰를 남길 수 있도록 **댓글 기능**을 지원합니다.
+
+### 내 근처 여행지
+
+### 나만의 여행
+
+### 호랑이 모임
+
+### 나의 공간
+
+### 대화하기
+
+<br/><br/>
