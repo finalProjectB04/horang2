@@ -3,7 +3,7 @@
 }
 const nextConfig = {
   images: {
-    // unoptimized: true,
+    unoptimized: true,
     domains: ["tong.visitkorea.or.kr", "k.kakaocdn.net"],
     remotePatterns: [
       {
