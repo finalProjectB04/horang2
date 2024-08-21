@@ -1,3 +1,5 @@
+"use client";
+
 import { useParams } from "next/navigation";
 
 export const useContentId = () => {
@@ -13,5 +15,5 @@ export const useContentId = () => {
     contentId = contentId.replace(/^\[|\]$/g, "");
   }
 
-  return contentId;
+  return contentId || "";
 };

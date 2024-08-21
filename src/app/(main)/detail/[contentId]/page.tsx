@@ -9,14 +9,11 @@ import DetailPageLikeButton from "@/components/detailpage/DetailPageLikeButton";
 import DetailPageImage from "@/components/detailpage/DetailPageSwiper";
 import KakaoMap from "@/components/detailpage/KakaoMap";
 import ShareButtonWithModal from "@/components/detailpage/share/ShareButtonWithModal";
-import { useContentId } from "@/hooks/detailpage/useContentId";
-import { useContentItem } from "@/hooks/detailpage/useContentItem";
+import { useContentData } from "@/hooks/detailpage/useContentData";
 import { parseHTMLString } from "@/utils/detailpage/StringUtils";
 
 const DetailPage = () => {
-  const contentId = useContentId();
-
-  const { data: contentItemData, isPending: pendingContentItem, error: contentItemError } = useContentItem(contentId);
+  const { contentId, contentItemData, isPending: pendingContentItem, error: contentItemError } = useContentData();
   const {
     firstimage: imageUrl,
     contenttypeid: contentTypeId,

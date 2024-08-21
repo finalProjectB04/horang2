@@ -38,7 +38,7 @@ const ContentOverview: React.FC<ContentOverviewProps> = ({ overview }) => {
               className="
                          md:px-8 md:py-3 md:text-xl md:text-primary-500 md:font-bold sm:font-bold 
                          lg:px-8 lg:py-4 lg:text-[19px] text-primary-500 lg:font-black lg:bg-white rounded-xl border border-primary-200 
-                         /** 모바일 버튼 스타일 **/
+                        
                          sm:px-4 sm:py-2 sm:text-[14px] sm:rounded-lg"
             >
               {showMore ? "접기" : "더보기"}

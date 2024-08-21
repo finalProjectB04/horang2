@@ -230,11 +230,11 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
               {userId === comment.user_id && editCommentId !== comment.comment_id && (
                 <div className="sm:flex sm:space-x-2 sm:justify-end md:flex md:space-x-2 md:justify-end md:pr-[75px] md:mb-[20px] lg:flex lg:space-x-2 lg:justify-end lg:pr-[95px] lg:mb-[20px]">
                   {comment.comment && comment.comment.length > 300 && (
-                    <button onClick={toggleShowMore} className="sm:hidden">
+                    <button onClick={toggleShowMore}>
                       {showMore ? (
                         <Image src="/assets/images/detailpage/back.svg" alt="back.svg" width={17} height={17} />
                       ) : (
-                        <Image src="/assets/images/detailpage/Frame161.svg" alt="Frame161.svg" width={17} height={17} />
+                        <Image src="/assets/images/detailpage/back2.svg" alt="back2.svg" width={17} height={17} />
                       )}
                     </button>
                   )}

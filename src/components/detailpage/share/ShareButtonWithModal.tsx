@@ -15,7 +15,7 @@ const ShareButtonWithModal: React.FC = () => {
           alt="Custom Button Image"
           width={32}
           height={32}
-          className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px] lg:mb-2"
+          className="sm:w-[24px] sm:h-[24px] md:w-[28px] md:h-[28px]"
         />
       </button>
       <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
