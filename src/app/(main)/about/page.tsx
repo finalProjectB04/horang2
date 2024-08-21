@@ -123,7 +123,7 @@ const AboutPage = () => {
                      sm:w-[374px] sm:h-[36px] sm:text-[16px] 
                      md:w-[468px] md:h-[45px] md:text-[20px]"
             >
-              커뮤니티 바로가기
+              호랑모임 바로가기
             </button>
           </Link>
         </div>
