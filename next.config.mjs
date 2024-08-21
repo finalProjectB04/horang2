@@ -1,8 +1,10 @@
-/** @type {import('next').NextConfig} */
+{
+  import("next").NextConfig;
+}
 const nextConfig = {
   images: {
-    // unoptimized: true,
-    domains: ["tong.visitkorea.or.kr"],
+    unoptimized: true,
+    domains: ["tong.visitkorea.or.kr", "k.kakaocdn.net"],
     remotePatterns: [
       {
         protocol: "https",
@@ -15,10 +17,6 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "crjcsxutfsroqsqumefz.supabase.co",
-      },
-      {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
       },
       {
         protocol: "https",

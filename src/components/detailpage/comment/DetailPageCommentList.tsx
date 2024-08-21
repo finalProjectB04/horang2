@@ -227,45 +227,48 @@ const DetailPageCommentList: React.FC<DetailPageCommentListProps> = ({ contentId
                   </h2>
                 </div>
               </div>
-              {userId === comment.user_id && editCommentId !== comment.comment_id && (
-                <div className="sm:flex sm:space-x-2 sm:justify-end md:flex md:space-x-2 md:justify-end md:pr-[75px] md:mb-[20px] lg:flex lg:space-x-2 lg:justify-end lg:pr-[95px] lg:mb-[20px]">
-                  {comment.comment && comment.comment.length > 300 && (
-                    <button onClick={toggleShowMore}>
-                      {showMore ? (
-                        <Image src="/assets/images/detailpage/back.svg" alt="back.svg" width={17} height={17} />
-                      ) : (
-                        <Image src="/assets/images/detailpage/back2.svg" alt="back2.svg" width={17} height={17} />
-                      )}
+              <div className="sm:flex sm:space-x-2 sm:justify-end md:flex md:space-x-2 md:justify-end md:pr-[75px] md:mb-[20px] lg:flex lg:space-x-2 lg:justify-end lg:pr-[95px] lg:mb-[20px]">
+                {comment.comment && comment.comment.length > 300 && (
+                  <button onClick={toggleShowMore}>
+                    {showMore ? (
+                      <Image src="/assets/images/detailpage/back.svg" alt="back.svg" width={17} height={17} />
+                    ) : (
+                      <Image src="/assets/images/detailpage/back2.svg" alt="back2.svg" width={17} height={17} />
+                    )}
+                  </button>
+                )}
+
+                {userId === comment.user_id && editCommentId !== comment.comment_id && (
+                  <>
+                    <button
+                      onClick={() => handleEdit(comment)}
+                      className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:px-[13px] lg:text-[12px] lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:px-[13px] text-grey-600"
+                    >
+                      <Image
+                        src="/assets/images/detailpage/Mode_edit.svg"
+                        alt="수정"
+                        width={16}
+                        height={16}
+                        className="sm:block md:hidden lg:hidden"
+                      />
+                      <span className="hidden md:inline lg:inline">수정</span>
                     </button>
-                  )}
-                  <button
-                    onClick={() => handleEdit(comment)}
-                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:px-[13px] lg:text-[12px] lg:flex lg:justify-center lg:items-center lg:h-[36px] lg:px-[13px] text-grey-600"
-                  >
-                    <Image
-                      src="/assets/images/detailpage/Mode_edit.svg"
-                      alt="수정"
-                      width={16}
-                      height={16}
-                      className="sm:block md:hidden lg:hidden"
-                    />
-                    <span className="hidden md:inline lg:inline">수정</span>
-                  </button>
-                  <button
-                    onClick={() => handleDelete(comment.comment_id)}
-                    className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:ps-[13px] md:px-[13px] lg:flex lg:justify-center lg:items-center lg:text-[12px] lg:h-[36px] lg:px-[13px] text-grey-600"
-                  >
-                    <Image
-                      src="/assets/images/detailpage/Delete.svg"
-                      alt="삭제"
-                      width={16}
-                      height={16}
-                      className="sm:block md:hidden lg:hidden"
-                    />
-                    <span className="hidden md:inline lg:inline">삭제</span>
-                  </button>
-                </div>
-              )}
+                    <button
+                      onClick={() => handleDelete(comment.comment_id)}
+                      className="sm:flex sm:justify-center sm:items-center sm:h-[30px] sm:px-[16px] md:flex md:justify-center md:items-center md:h-[36px] md:ps-[13px] md:px-[13px] lg:flex lg:justify-center lg:items-center lg:text-[12px] lg:h-[36px] lg:px-[13px] text-grey-600"
+                    >
+                      <Image
+                        src="/assets/images/detailpage/Delete.svg"
+                        alt="삭제"
+                        width={16}
+                        height={16}
+                        className="sm:block md:hidden lg:hidden"
+                      />
+                      <span className="hidden md:inline lg:inline">삭제</span>
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
             <div className="sm:mt-2 sm:w-full md:mt-2 md:w-full lg:mt-2 lg:w-full">
               {editCommentId === comment.comment_id ? (
