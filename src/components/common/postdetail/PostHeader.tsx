@@ -45,7 +45,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({ post, sessionData, onShareClick
           modules={[Navigation, Pagination]}
           spaceBetween={0}
           slidesPerView={1}
-          navigation
+          // navigation
           pagination={{ clickable: true }}
           className="w-full h-auto max-w-full mx-auto overflow-hidden"
         >
@@ -66,7 +66,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({ post, sessionData, onShareClick
       )}
 
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl sm:text-xl font-bold sm:ml-4">{post.title}</h1>
+        <h1 className="text-3xl sm:text-xl font-bold sm:ml-4 mt-10">{post.title}</h1>
         <div className="flex items-center sm:ml-4 sm:mr-4">
           <PostLike post_id={post.id} onLikesChange={() => {}} initialLikes={0} />
           <Image
@@ -79,7 +79,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({ post, sessionData, onShareClick
           />
         </div>
       </div>
-      <div className="text-sm text-gray-500 mt-[30px] mb-[40px] sm:mt-[20px] sm:mb-[20px] sm:ml-4">
+      <div className="text-sm text-grey-500 mt-[30px] mb-[40px] sm:mt-[20px] sm:mb-[20px] sm:ml-4">
         작성일: {post.created_at ? new Date(post.created_at).toLocaleDateString() : "Unknown"}
       </div>
       {sessionData && (

@@ -227,7 +227,7 @@ const CommentItem: React.FC<{
   }, [replyPage, scrollToReplyForm]);
 
   return (
-    <li className="border border-primary-100 sm:border-none bg-white rounded-lg w-full max-w-full lg:max-w-[1440px] mx-auto h-auto ">
+    <li className="border border-primary-100 sm:border-none bg-white rounded-lg w-full max-w-full lg:max-w-[1440px] mx-auto h-auto p-4">
       {editingCommentId === comment.post_comment_id ? (
         <div className="bg-white rounded-lg shadow ">
           <textarea

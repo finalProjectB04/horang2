@@ -98,7 +98,7 @@ const MenuList: React.FC<MenuListProps> = ({ userId, handleLogout, toggleMenu })
         {buttons.map((button, index) => (
           <React.Fragment key={index}>
             <button className="flex flex-col items-center m-[9px]" onClick={button.onClick}>
-              <div className="w-[54px] h-[54px]  flex items-center justify-center">
+              <div className="w-[54px] h-[54px] flex items-center justify-center">
                 <Image width={32} height={32} sizes="100%" src={button.src} alt="Icon" />
               </div>
               <p className="text-[12px] text-secondary-800 whitespace-nowrap overflow-hidden text-ellipsis">
