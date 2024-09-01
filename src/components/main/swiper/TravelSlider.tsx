@@ -61,11 +61,6 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
     return <div>에러가 감지되었습니다....</div>;
   }
 
-  const likeImage =
-    data && data.find((like: { user_id: string | null }) => like.user_id === userId)
-      ? "/assets/images/successLikeIcon.svg"
-      : "/assets/images/defaultLikeIcon.svg";
-
   return (
     <Swiper
       modules={[Grid, A11y, Autoplay]}
@@ -117,7 +112,6 @@ export const MainTravelSlider: React.FC<MainTravelSliderProps> = ({ travel }) =>
                   <button
                     data-contentid={item.contentid}
                     onClick={(event) => handleLikeButton(event)}
-                    disabled={!userId}
                     className="absolute top-2 right-2 opacity-70"
                   >
                     <Image

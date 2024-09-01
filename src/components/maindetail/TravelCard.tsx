@@ -39,7 +39,7 @@ export const TravelCard: React.FC<TravelCardProps> = ({ item }) => {
         {item.firstimage ? (
           <div>
             <Image src={item.firstimage} alt={item.title} layout="fill" objectFit="cover" className="rounded-t-[8px]" />
-            <button onClick={handleLikeButton} disabled={!userId} className="absolute top-2 right-2">
+            <button onClick={handleLikeButton} className="absolute top-2 right-2">
               <Image
                 src={likeImage}
                 alt={liked ? "Unlike" : "Like"}

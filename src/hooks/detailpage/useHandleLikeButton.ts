@@ -47,21 +47,13 @@ export const useHandleLikeButton = ({ contentId, imageUrl, contentTypeId, title,
     onError: (error) => {
       modal.open({
         title: "에러",
-        content: "좋아요 취소 중 에러가 발생했습니다.",
+        content: "취소 중 에러가 발생했습니다.",
       });
     },
   });
 
   const addMutation = useMutation<Likes, Error, Partial<Likes>, ContextType>({
     mutationFn: async (variables) => {
-      if (!userId) {
-        modal.open({
-          title: "알림",
-          content: "로그인 후 좋아요를 누를 수 있습니다.",
-        });
-        throw new Error();
-      }
-
       const { data, error } = await supabase
         .from("Likes")
         .insert([
@@ -118,7 +110,7 @@ export const useHandleLikeButton = ({ contentId, imageUrl, contentTypeId, title,
     onError: (error) => {
       modal.open({
         title: "에러",
-        content: "좋아요 등록 중 에러가 발생했습니다.",
+        content: "에러가 발생했습니다.",
       });
     },
   });
@@ -126,6 +118,13 @@ export const useHandleLikeButton = ({ contentId, imageUrl, contentTypeId, title,
   const handleLikeButton = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event?.stopPropagation();
     try {
+      if (!userId) {
+        modal.open({
+          title: "알림",
+          content: "로그인 후 이용가능합니다.",
+        });
+        return;
+      }
       if (liked) {
         deleteMutation.mutate(userId!);
       } else {
