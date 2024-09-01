@@ -11,8 +11,10 @@ import KakaoMap from "@/components/detailpage/KakaoMap";
 import ShareButtonWithModal from "@/components/detailpage/share/ShareButtonWithModal";
 import { useContentData } from "@/hooks/detailpage/useContentData";
 import { parseHTMLString } from "@/utils/detailpage/StringUtils";
+import { useUserStore } from "@/zustand/userStore";
 
 const DetailPage = () => {
+  const { id: userId } = useUserStore();
   const { contentId, contentItemData, isPending: pendingContentItem, error: contentItemError } = useContentData();
   const {
     firstimage: imageUrl,
@@ -58,6 +60,7 @@ const DetailPage = () => {
             contentTypeId={contentTypeId || ""}
             addr1={addr1 || ""}
             tel={tel || ""}
+            userId={userId || ""}
           />
 
           <div>
