@@ -1,9 +1,10 @@
-import { TouristSpot, useTouristSpots } from "@/hooks/useTouristSpots";
-import { useLocationStore } from "@/zustand/locationStore";
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import LoadingPage from "@/app/loading";
+import { TouristSpot, useTouristSpots } from "@/hooks/useTouristSpots";
 import { convertToHttps } from "@/utils/convertToHttps";
+import { useLocationStore } from "@/zustand/locationStore";
+import { useUserStore } from "@/zustand/userStore";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import DetailPageLikeButton from "../detailpage/DetailPageLikeButton";
 
 const KAKAO_MAP_API = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
@@ -29,6 +30,7 @@ const MapComponent: React.FC = () => {
   const [currentOverlay, setCurrentOverlay] = useState<kakao.maps.CustomOverlay | null>(null);
   const [previousCenter, setPreviousCenter] = useState<kakao.maps.LatLng | null>(null);
   const [previousLevel, setPreviousLevel] = useState<number | null>(null);
+  const { id: userId } = useUserStore();
 
   useEffect(() => {
     if (latitude === null || longitude === null) return;
@@ -249,6 +251,7 @@ const MapComponent: React.FC = () => {
                   contentTypeId={selectedSpot.contentTypeId || "12"}
                   addr1={selectedSpot.address || ""}
                   tel={selectedSpot.tel || ""}
+                  userId={userId || ""}
                 />
               </div>
 
@@ -303,6 +306,7 @@ const MapComponent: React.FC = () => {
                         addr1={spot.address || ""}
                         title={spot.title || ""}
                         tel={spot.tel || ""}
+                        userId={userId || ""}
                       />
                     </div>
                     <p className="text-secondary-700 text-[12px] lg:text-[14px]">{distance.toFixed(2)} km</p>
