@@ -1,20 +1,20 @@
 "use client";
 
 import LoadingPage from "@/app/loading";
+import { RegionSelector } from "@/components/maindetail/RegionSelector";
 import { SearchBar } from "@/components/maindetail/SearchBar";
 import { TravelCard } from "@/components/maindetail/TravelCard";
-import { RegionSelector } from "@/components/maindetail/RegionSelector";
 import { ApiInformation } from "@/types/Main";
-import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo, useEffect } from "react";
-import { useInView } from "react-intersection-observer";
-import { BackgroundImage } from "./BackgroundImage";
-import { SkeletonCard } from "./SkeletonCard";
-import { NoResultsFound } from "./NoResultsFound";
-import { useUserStore } from "@/zustand/userStore";
-import Control from "../main/Control";
-import { useSearchStore } from "@/zustand/searchStore";
 import { getInitialConsonant, HANGUL } from "@/utils/hangul";
+import { useSearchStore } from "@/zustand/searchStore";
+import { useUserStore } from "@/zustand/userStore";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useMemo, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import Control from "../main/Control";
+import { BackgroundImage } from "./BackgroundImage";
+import { NoResultsFound } from "./NoResultsFound";
+import { SkeletonCard } from "./SkeletonCard";
 
 interface TourismListProps {
   contentTypeId: number;
@@ -151,19 +151,7 @@ export const TourismList: React.FC<TourismListProps> = ({ contentTypeId, title, 
           {isSearching ? (
             Array.from({ length: 12 }).map((_, index) => <SkeletonCard key={index} />)
           ) : displayedData.length > 0 ? (
-            displayedData.map((item) => (
-              <TravelCard
-                key={item.contentid}
-                item={item}
-                user_id={userId || ""}
-                imageUrl={item.firstimage || ""}
-                contentTypeId={item.contenttypeid || ""}
-                title={item.title || ""}
-                addr1={item.addr1 || ""}
-                tel={item.tel || ""}
-                contentId={""}
-              />
-            ))
+            displayedData.map((item) => <TravelCard key={item.contentid} item={item} />)
           ) : (
             <NoResultsFound />
           )}
