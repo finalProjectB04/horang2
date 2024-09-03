@@ -38,7 +38,10 @@ const AboutPage = () => {
     return <div className="text-center py-10 text-red-500">데이터를 불러오는 중 오류가 발생했습니다.</div>;
   }
 
-  const slicedData = data.slice(0, ITEMS_PER_PAGE);
+  const filteredData = selectedCategory === "전체" ? data : data.filter((post) => post.category === selectedCategory);
+
+  const slicedData = filteredData.slice(0, ITEMS_PER_PAGE);
+
   return (
     <main className=" w-auto h-auto justify-items-center min-w-[300px]">
       <section className=" w-auto h-auto bg-secondary-700 justify-items-center">

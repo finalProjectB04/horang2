@@ -1,22 +1,19 @@
 "use Client";
 
-import { useModal } from "@/context/modal.context";
+import { useHandleLikeButtonSwiper } from "@/hooks/detailpage/useHandleLikeButtonSwiper";
 import { Likes } from "@/types/Likes.types";
 import { ApiInformation } from "@/types/Main";
-import { createClient } from "@/utils/supabase/client";
+import { convertToHttps } from "@/utils/convertToHttps";
 import { useUserStore } from "@/zustand/userStore";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { A11y, Autoplay, Grid } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
-import { convertToHttps } from "@/utils/convertToHttps";
-import { NoResultsFound } from "../maindetail/NoResultsFound";
 import { MainListTitle } from "../common/MainListTitle";
-
-const supabase = createClient();
+import { NoResultsFound } from "../maindetail/NoResultsFound";
 
 interface TravelProps {
   searchTerm: string;
@@ -35,12 +32,9 @@ const FetchLeports = async (): Promise<ApiInformation[]> => {
 };
 
 export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
-  const [likedStates, setLikedStates] = useState<Record<string, boolean>>({});
   const [displayCount, setDisplayCount] = useState<number>(20);
   const router = useRouter();
-  const queryClient = useQueryClient();
   const { id: userId } = useUserStore();
-  const modal = useModal();
 
   const {
     data: leports,
@@ -72,200 +66,16 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
       .slice(0, displayCount);
   }, [leports, displayCount, searchTerm]);
 
-  const addMutation = useMutation<Likes, Error, Partial<Likes>, ContextType>({
-    mutationFn: async (variables) => {
-      if (!userId) {
-        modal.open({
-          title: "알림",
-          content: (
-            <div className="text-center">
-              <p>로그인 후 좋아요를 누를 수 있습니다.</p>
-            </div>
-          ),
-        });
-
-        throw new Error();
-      }
-
-      const { data, error } = await supabase
-        .from("Likes")
-        .insert([
-          {
-            user_id: userId,
-            content_id: variables.content_id,
-            image_url: variables.image_url,
-            content_type_id: variables.content_type_id,
-            title: variables.title,
-            address: variables.address,
-            tel: variables.tel,
-          },
-        ])
-        .select()
-        .single();
-
-      if (error) {
-        modal.open({
-          title: "에러",
-          content: (
-            <div className="text-center">
-              <p>에러가 발생했습니다</p>
-            </div>
-          ),
-        });
-        throw new Error();
-      }
-
-      return data as Likes;
-    },
-
-    onMutate: async (variables) => {
-      await queryClient.cancelQueries({ queryKey: ["likes", variables.content_id] });
-      const previousLikes = queryClient.getQueryData<Likes[]>(["likes", variables.content_id]);
-
-      if (previousLikes) {
-        const newLikes = [...previousLikes, variables as Likes];
-        queryClient.setQueryData<Likes[]>(["likes", variables.content_id], newLikes);
-      } else {
-        queryClient.setQueryData<Likes[]>(["likes", variables.content_id], [variables as Likes]);
-      }
-
-      return { previousLikes };
-    },
-
-    onSettled: (data, error, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["likes", variables?.content_id] });
-
-      if (error) {
-        modal.open({
-          title: "에러",
-          content: (
-            <div className="text-center">
-              <p>좋아요 등록 중 에러가 발생했습니다.</p>
-              <p>{error.message}</p>
-            </div>
-          ),
-        });
-      } else {
-      }
-    },
-    onSuccess: (data) => {
-      modal.open({
-        title: "알림",
-        content: (
-          <div className="text-center">
-            <p>장소가 나의 공간에</p>
-            <p>추가되었습니다.</p>
-          </div>
-        ),
-      });
-
-      queryClient.invalidateQueries({ queryKey: ["likes", data.content_id] });
-    },
-
-    onError: (error, variables, context) => {
-      modal.open({
-        title: "에러",
-        content: (
-          <div className="text-center">
-            <p>좋아요 등록 중 에러가 발생했습니다.</p>
-            <p>{error.message}</p>
-          </div>
-        ),
-      });
-
-      if (context?.previousLikes) {
-        queryClient.setQueryData<Likes[]>(["likes", variables?.content_id], context.previousLikes);
-      }
-    },
+  const { likedStates, isError, data, handleLikeButton } = useHandleLikeButtonSwiper({
+    travel: sortedLeports,
+    contentId: sortedLeports[0]?.contentid || "",
+    imageUrl: sortedLeports[0]?.firstimage || "",
+    contentTypeId: sortedLeports[0]?.contenttypeid || "",
+    title: sortedLeports[0]?.title || "",
+    addr1: sortedLeports[0]?.addr1 || "",
+    tel: sortedLeports[0]?.tel || "",
+    userId: userId || "",
   });
-
-  const handleLikeButton = useCallback(
-    async (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation();
-      const contentId = event.currentTarget.getAttribute("data-contentid");
-
-      if (!contentId) {
-        modal.open({
-          title: "에러",
-          content: (
-            <div className="text-center">
-              <p>Content ID가 없습니다!</p>
-            </div>
-          ),
-        });
-        return;
-      }
-
-      try {
-        if (likedStates[contentId]) {
-          await supabase.from("Likes").delete().match({ user_id: userId, content_id: contentId });
-          setLikedStates((prevStates) => ({
-            ...prevStates,
-            [contentId]: false,
-          }));
-        } else {
-          const item = sortedLeports.find((item) => item.contentid === contentId);
-          if (!item) {
-            modal.open({
-              title: "에러",
-              content: (
-                <div className="text-center">
-                  <p>Item not found 에러</p>
-                </div>
-              ),
-            });
-            return;
-          }
-
-          addMutation.mutate({
-            user_id: userId!,
-            content_id: item.contentid,
-            image_url: item.firstimage,
-            content_type_id: item.contenttypeid,
-            title: item.title,
-            address: item.addr1,
-            tel: item.tel,
-          });
-
-          setLikedStates((prevStates) => ({
-            ...prevStates,
-            [contentId]: true,
-          }));
-        }
-      } catch (error) {
-        modal.open({
-          title: "에러",
-          content: (
-            <div className="text-center">
-              <p>좋아요 상태 업데이트를 실패했습니다.</p>
-            </div>
-          ),
-        });
-      }
-    },
-    [likedStates, addMutation, sortedLeports, userId, modal],
-  );
-
-  useEffect(() => {
-    if (leports) {
-      const fetchLikes = async () => {
-        const { data: likes } = await supabase
-          .from("Likes")
-          .select("*")
-          .in(
-            "content_id",
-            leports.map((item) => item.contentid),
-          );
-        const newLikedStates = leports.reduce((acc, item) => {
-          const result = likes?.find((like) => like.user_id === userId && like.content_id === item.contentid);
-          acc[item.contentid] = !!result;
-          return acc;
-        }, {} as Record<string, boolean>);
-        setLikedStates(newLikedStates);
-      };
-      fetchLikes();
-    }
-  }, [leports, userId]);
 
   if (isPending) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
@@ -321,7 +131,6 @@ export const Leports: React.FC<TravelProps> = ({ searchTerm }) => {
                       <button
                         data-contentid={item.contentid}
                         onClick={(event) => handleLikeButton(event)}
-                        disabled={!userId}
                         className="absolute top-2 right-2"
                       >
                         <Image
