@@ -1,13 +1,13 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
-import { ApiInformation } from "@/types/Main";
-import { useRouter } from "next/navigation";
-import { MainListTitle } from "../common/MainListTitle";
-import { MainTravelSlider } from "./swiper/TravelSlider";
 import LoadingPage from "@/app/loading";
+import { ApiInformation } from "@/types/Main";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import { MainListTitle } from "../common/MainListTitle";
 import { NoResultsFound } from "../maindetail/NoResultsFound";
+import { MainTravelSlider } from "./swiper/TravelSlider";
 
 interface TravelProps {
   searchTerm: string;
@@ -69,7 +69,16 @@ export const Travel: React.FC<TravelProps> = ({ searchTerm }) => {
         <MainListTitle TitleName={`추천 여행지 `} onClick={() => router.push("/travel")} />
         <div className="mx-auto lg:max-w-[960px] lg:h-[243px] flex flex-col lg:gap-10 max-w-[327px]">
           {sortedAndFilteredTravel.length > 0 ? (
-            <MainTravelSlider travel={sortedAndFilteredTravel} />
+            <MainTravelSlider
+              travel={sortedAndFilteredTravel}
+              contentId={""}
+              imageUrl={""}
+              contentTypeId={""}
+              title={""}
+              addr1={""}
+              tel={""}
+              userId={""}
+            />
           ) : (
             <NoResultsFound />
           )}

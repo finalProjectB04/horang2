@@ -37,12 +37,12 @@ export const useHandleLikeButtonSwiper = ({
   const [likedStates, setLikedStates] = useState<Record<string, boolean>>({});
   const queryClient = useQueryClient();
   const { id: userId } = useUserStore();
-  const item = travel[0] as ApiInformation;
-  const { isPending, isError, data } = useLikes(travel[0].contentid, userId);
+  const item = travel.length > 0 ? (travel[0] as ApiInformation) : undefined;
+  const { isPending, isError, data } = useLikes(travel[0]?.contentid, userId);
 
   const deleteMutation = useMutation({
     mutationFn: async (userId: string) => {
-      const { error } = await supabase.from("Likes").delete().match({ user_id: userId, content_id: item.contentid });
+      const { error } = await supabase.from("Likes").delete().match({ user_id: userId, content_id: item?.contentid });
       if (error) {
         throw new Error(error.message);
       }
@@ -52,7 +52,7 @@ export const useHandleLikeButtonSwiper = ({
         title: "알림",
         content: "좋아요가 취소되었습니다.",
       });
-      queryClient.invalidateQueries({ queryKey: ["likes", item.contentid] });
+      queryClient.invalidateQueries({ queryKey: ["likes", item?.contentid] });
     },
     onError: (error) => {
       modal.open({

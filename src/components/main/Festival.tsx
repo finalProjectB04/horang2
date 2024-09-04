@@ -1,12 +1,12 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useState, useMemo } from "react";
 import { ApiInformation } from "@/types/Main";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
 import { MainListTitle } from "../common/MainListTitle";
-import { MainTravelSlider } from "./swiper/TravelSlider";
 import { NoResultsFound } from "../maindetail/NoResultsFound";
+import { MainTravelSlider } from "./swiper/TravelSlider";
 
 interface FestivalProps {
   searchTerm: string;
@@ -67,7 +67,20 @@ export const Festival = ({ searchTerm }: FestivalProps) => {
         <MainListTitle TitleName={`축제 및 행사`} onClick={() => router.push("/festival")} />
       </div>
       <div className=" mx-auto  lg:max-w-[960px] lg:h-[243px] flex flex-col lg:gap-10 max-w-[327px]">
-        {sortedFestival.length > 0 ? <MainTravelSlider travel={sortedFestival} /> : <NoResultsFound />}
+        {sortedFestival.length > 0 ? (
+          <MainTravelSlider
+            travel={sortedFestival}
+            contentId={""}
+            imageUrl={""}
+            contentTypeId={""}
+            title={""}
+            addr1={""}
+            tel={""}
+            userId={""}
+          />
+        ) : (
+          <NoResultsFound />
+        )}
       </div>
     </>
   );
