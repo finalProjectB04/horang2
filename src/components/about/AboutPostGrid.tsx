@@ -79,7 +79,7 @@ const AboutPostGrid: React.FC<PostGridProps> = React.memo(({ posts, selectedCate
                 <p className="text-primary-100 text-[24px] mb-4 line-clamp-2">{post.content}</p>
                 <div className="flex justify-between items-center text-xs text-grey-500">
                   <span className="text-primary-100 text-[24px]">{post.category}</span>
-                  {/* <time>{new Date(post.created_at || "").toLocaleDateString()}</time> */}
+                  <time>{new Date(post.created_at || "").toLocaleDateString()}</time>
                   <div className="ml-[20px] flex justify-start">
                     <PostLike
                       post_id={post.id}

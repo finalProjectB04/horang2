@@ -124,9 +124,9 @@ const AboutPage = () => {
               height={310}
             />
           </Link>
-          <Link href={"/myspace"}>
+          <Link href={"/mypage"}>
             {" "}
-            <Image src="/assets/images/about/my_space_square.svg" alt={"나의공간 바로가기"} width={364} height={310} />
+            <Image src="/assets/images/about/my_page_square.svg" alt={"나의공간 바로가기"} width={364} height={310} />
           </Link>
         </div>
 

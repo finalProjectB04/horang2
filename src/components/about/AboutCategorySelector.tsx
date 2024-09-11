@@ -1,6 +1,6 @@
 import React from "react";
 
-const categories = ["전체", "최신순", "좋아요순"];
+const categories = ["전체", "여행", "음식", "축제", "놀거리", "숙소"];
 
 interface CategorySelectorProps {
   selectedCategory: string;
