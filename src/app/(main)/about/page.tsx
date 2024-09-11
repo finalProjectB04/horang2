@@ -1,8 +1,9 @@
 "use client";
 
 import LoadingPage from "@/app/loading";
-import CategorySelector from "@/components/posting/postcomponents/CategorySelector";
-import PostGrid from "@/components/posting/postcomponents/PostGrid";
+import AboutCategorySelector from "@/components/about/AboutCategorySelector";
+import AboutPostGrid from "@/components/about/AboutPostGrid";
+
 import { SortOrder } from "@/components/posting/postcomponents/SortSelector";
 import { selectCommunityData } from "@/components/posting/select/route";
 import { useQuery } from "@tanstack/react-query";
@@ -45,7 +46,7 @@ const AboutPage = () => {
   return (
     <main className=" w-auto h-auto justify-items-center min-w-[300px]">
       <section className=" w-auto h-auto bg-secondary-700 justify-items-center">
-        <Image src="/assets/images/about/intro_main.png" alt={"3d타이포 몸체"} width={1920} height={1152} />
+        <Image src="/assets/images/about/intro_main.svg" alt={"3d타이포 몸체"} width={1920} height={1152} />
       </section>
       <section>
         <Image src="/assets/images/about/Rectangle1300.svg" alt={"Rectangle1300"} width={1920} height={12} />
@@ -55,71 +56,42 @@ const AboutPage = () => {
           <Image src="/assets/images/about/Vector.svg" alt={"Vector"} width={960} height={105} />
           <Image src="/assets/images/about/Vector.svg" alt={"Vector"} width={960} height={105} />
         </div>
-        <div className="w-auto h-auto flex mt-[40px]">
-          <Image
-            src="/assets/images/about/intro_under_typo.svg"
-            alt={"intro_under_typo.svg"}
-            width={1920}
-            height={248}
-          />
-        </div>
-        <div className="w-auto h-auto flex">
-          <Image src="/assets/images/about/composition1.png" alt={"composition1.png"} width={1920} height={812} />
-        </div>
-        <div className="w-auto h-auto flex">
-          <Image src="/assets/images/about/composition2.svg" alt={"composition2.svg"} width={1920} height={609} />
-        </div>
-        <div className="flex w-auto h-auto flex">
-          <Image src="/assets/images/about/composition3.svg" alt={"composition3.svg"} width={1920} height={668} />
-        </div>
-        <div className="flex ml-[241px] w-auto h-auto pt-[100px]">
-          <div>
+        <div className="w-auto h-auto grid mt-[90px] place-items-center"></div>
+      </section>
+      <section className="w-auto h-auto overflow-x-hidden bg-third-800 flex flex-col items-center justify-center">
+        <Image src="/assets/images/about/big_frame.svg" alt={"big_frame"} width={1920} height={3855} />
+        <Link href="/location">
+          <button
+            className="w-[562px] h-[54px] bg-primary-400 flex items-center justify-center text-white text-[16px] rounded-3xl relative top-[-340px]  
+    sm:w-[374px] sm:h-[36px] sm:text-[11px] 
+    md:w-[468px] md:h-[45px] md:text-[13px]"
+          >
             <Image
-              src="/assets/images/about/trip_around_text.svg"
-              alt={"trip_around_text.svg"}
-              width={1438}
-              height={128}
-              className="mb-[24px]"
+              src="/assets/images/about/my_near_travel_button.svg"
+              alt="내 근처 여행지 찾아보기"
+              width={562}
+              height={54}
+              className="object-contain"
             />
-          </div>
-        </div>
-        <div className="flex flex-col items-center justify-center mb-[100px]">
-          <div className="mb-[24px]">
-            <Image src="/assets/images/about/around.svg" alt={"around.svg"} width={1438} height={520} />
-          </div>
+          </button>
+        </Link>
+      </section>
+      <section>
+        <Image src="/assets/images/about/my_custom_travel.svg" alt={"my_custom_travel"} width={1920} height={818} />
+      </section>
 
-          <div className="flex items-center justify-center">
-            <Link href="/location">
-              <button
-                className="w-[562px] h-[54px] bg-primary-400 flex items-center justify-center text-white text-[16px] rounded-3xl 
-                     sm:w-[374px] sm:h-[36px] sm:text-[11px] 
-                     md:w-[468px] md:h-[45px] md:text-[13px]"
-              >
-                내 근처 여행지 찾아보기
-              </button>
-            </Link>
-          </div>
+      <section className="bg-third-800"></section>
+      <section className="w-full flex flex-col items-center justify-center bg-third-800">
+        <div className="w-auto h-auto mt-[100px] mb-[100px]">
+          <Image src="/assets/images/about/horang_commu.svg" alt={"horang_commu"} width={1438} height={196} />
         </div>
-      </section>
-      <section className="w-auto h-auto">
-        <Image src="/assets/images/about/composition5.svg" alt={"composition5.svg"} width={1920} height={738} />
-      </section>
-      <section className="bg-third-800">
-        <div>
-          <Image src="/assets/images/about/composition6.svg" alt={"composition6.svg"} width={1920} height={735} />
-        </div>
-        <div>
-          <Image src="/assets/images/about/Frame369.svg" alt={"Frame369.svg"} width={1920} height={447} />
-        </div>
-      </section>
-      <section className="w-full flex flex-col items-center justify-center">
         <div className="mb-[60px]">
-          <CategorySelector selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
+          <AboutCategorySelector selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
         </div>
-        <div className="w-full max-w-[1440px]">
-          <PostGrid posts={slicedData} selectedCategory={selectedCategory} sortOrder={sortOrder} />
+        <div className="w-full max-w-[1440px] ">
+          <AboutPostGrid posts={slicedData} selectedCategory={selectedCategory} sortOrder={sortOrder} />
         </div>
-        <div className="mt-[34px] mb-[667px] flex items-center justify-center">
+        <div className="mt-[34px] flex items-center justify-center">
           <Link href="/community">
             <button
               className="w-[562px] h-[54px] bg-primary-400 flex items-center justify-center text-white text-[24px] rounded-3xl 
@@ -130,9 +102,28 @@ const AboutPage = () => {
             </button>
           </Link>
         </div>
+        <div className="w-auto h-auto mt-[150px]">
+          <Image src="/assets/images/about/my_space.svg" alt={"my_space"} width={1444} height={378} />
+        </div>
+      </section>
+      <section>
+        <div className="">
+          <Image src="/assets/images/about/about_bottom.svg" alt={"about_bottom"} width={1919} height={407} />
+        </div>
       </section>
     </main>
   );
 };
 
 export default AboutPage;
+{
+  /* <Link href="/location">
+  <button
+    className="w-[562px] h-[54px] bg-primary-400 flex items-center justify-center text-white text-[16px] rounded-3xl  relative top-[-340px]  
+sm:w-[374px] sm:h-[36px] sm:text-[11px] 
+md:w-[468px] md:h-[45px] md:text-[13px]"
+  >
+    내 근처 여행지 찾아보기
+  </button>
+</Link>; */
+}
