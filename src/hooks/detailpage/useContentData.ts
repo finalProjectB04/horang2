@@ -1,4 +1,3 @@
-// src/hooks/useContentData.ts
 import { useContentId } from "@/hooks/detailpage/useContentId";
 import { useContentItem } from "@/hooks/detailpage/useContentItem";
 
