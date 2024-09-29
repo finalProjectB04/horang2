@@ -44,18 +44,32 @@ const AboutPage = () => {
   const slicedData = filteredData.slice(0, ITEMS_PER_PAGE);
 
   const handleScrollDown = () => {
-    window.scrollTo({
-      top: 1350,
-      behavior: "smooth",
-    });
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth <= 640) {
+      window.scrollTo({
+        top: 400,
+        behavior: "smooth",
+      });
+    } else if (screenWidth > 640 && screenWidth <= 1024) {
+      window.scrollTo({
+        top: 700,
+        behavior: "smooth",
+      });
+    } else if (screenWidth > 1024 && screenWidth <= 1366) {
+      window.scrollTo({
+        top: 1350,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
     <main className=" w-full h-auto justify-items-center min-w-[300px]">
       <section className=" w-auto h-auto bg-secondary-700 justify-items-center">
         <Image src="/assets/images/about/intro_main.svg" alt={"3d타이포 몸체"} width={1920} height={1152} />
-        <div className="absolute inset-0 flex items-center justify-center mt-[900px]">
-          <button onClick={handleScrollDown}>
+        <div className="absolute inset-0 flex items-center justify-center mt-[900px] sm:-mt-[150px] md:-mt-[270px]">
+          <button onClick={handleScrollDown} className="sm:w-[25px] sm:h-[25px] md:w-[50px] md:h-[50px]">
             <Image src="/assets/images/about/scroll_down.svg" width={80} height={80} alt="스크롤 다운 버튼" />
           </button>
         </div>
@@ -72,7 +86,7 @@ const AboutPage = () => {
       </section>
       <section className="w-auto h-auto overflow-x-hidden bg-third-800 flex flex-col items-center justify-center">
         <Image src="/assets/images/about/big_frame3.svg" alt={"메인프레임"} width={1920} height={3468} />
-        <div className="grid grid-cols-4 gap-1 place-items-center absolute -mt-[2470px]">
+        <div className="grid grid-cols-4 gap-1 place-items-center absolute top-[175%] sm:top-[75%] md:top-[77%] left-[10%] right-[10%]">
           <Image
             src="/assets/images/about/horang_function_text.svg"
             alt={"호랑이 기능을 소개합니다 텍스트"}
@@ -130,37 +144,28 @@ const AboutPage = () => {
           </Link>
         </div>
 
-        <div>
+        <div className="relative h-auto w-auto">
           <Link href={"/travel"}>
-            <button
-              className="relative top-[-1320px] mr-[860px]  
-   "
-            >
+            <button className="relative lg:top-[-1320px] lg:mr-[860px]  sm:top-[-270px] md:top-[-550px] sm:mr-[130px] md:mr-[270px]">
               <Image
                 src="/assets/images/about/introduce_travel_button.svg"
                 alt="여행지 소개"
                 width={562}
                 height={54}
-                className="object-contain"
+                className="object-contain sm:w-[145px] sm:h-[18px] md:w-[300px] md:h-[36px]"
               />
             </button>
           </Link>
         </div>
-        <div>
+        <div className="bg-primary-400 flex items-center justify-center text-white text-[16px] rounded-3xl relative top-[-100px] sm:top-[-42px] md:top-[-50px] sm:text-[11px] md:text-[13px]">
           <Link href="/location">
-            <button
-              className="w-[562px] h-[54px] bg-primary-400 flex items-center justify-center text-white text-[16px] rounded-3xl relative top-[-100px]  
-    sm:w-[374px] sm:h-[36px] sm:text-[11px] 
-    md:w-[468px] md:h-[45px] md:text-[13px]"
-            >
-              <Image
-                src="/assets/images/about/my_near_travel_button.svg"
-                alt="내 근처 여행지 찾아보기"
-                width={562}
-                height={54}
-                className="object-contain"
-              />
-            </button>
+            <Image
+              src="/assets/images/about/my_near_travel_button.svg"
+              alt="내 근처 여행지 찾아보기"
+              width={562}
+              height={54}
+              className="object-contain w-full sm:w-[274px] sm:h-[30px] md:w-[468px] md:h-[45px]"
+            />
           </Link>
         </div>
       </section>
@@ -170,8 +175,14 @@ const AboutPage = () => {
 
       <section className="bg-third-800"></section>
       <section className="w-full flex flex-col items-center justify-center bg-third-800">
-        <div className="w-auto h-auto mt-[100px] mb-[100px]">
-          <Image src="/assets/images/about/horang_commu.svg" alt={"horang_commu"} width={1438} height={196} />
+        <div className="w-auto h-auto mt-[100px] mb-[100px] sm:mt-[30px] sm:mb-[30px] md:mt-[50px] md:mb-[50px] ">
+          <Image
+            src="/assets/images/about/horang_commu.svg"
+            alt={"horang_commu"}
+            width={1438}
+            height={196}
+            className="w-full sm:w-[274px] md:w-[568px]"
+          />
         </div>
         <div className="mb-[60px]">
           <AboutCategorySelector selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
@@ -186,12 +197,18 @@ const AboutPage = () => {
               alt="호랑모임 바로가기 버튼"
               width={562}
               height={54}
-              className="cursor-pointer"
+              className="cursor-pointer w-full sm:w-[274px] sm:h-[30px] md:w-[468px] md:h-[45px]"
             />
           </Link>
         </div>
-        <div className="w-auto h-auto mt-[155px]">
-          <Image src="/assets/images/about/my_space.svg" alt={"my_space"} width={1444} height={378} />
+        <div className="w-auto h-auto mt-[155px] sm:mt-[50px] md:mt-[50px]">
+          <Image
+            src="/assets/images/about/my_space.svg"
+            alt={"my_space"}
+            width={1444}
+            height={378}
+            className="w-full sm:w-[274px] md:w-[568px] "
+          />
         </div>
       </section>
       <section>
